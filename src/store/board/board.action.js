@@ -1,23 +1,19 @@
-import { toyService } from "../../services/toy.service"
+import { boardService } from "../../services/board.service"
 // import { userService } from "../../services/user.service"
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service'
 
-export function getActionAddMsg(msg) {
-    return { type: 'ADD_MSG', msg }
-  }
 
-export function loadToys() {
+export function loadBoards() {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        const { filterBy } = getState().toyModule
-        console.log('filterBy from toyAction:', filterBy)
-        toyService.query(filterBy)
-            .then((toys) => {
-                dispatch({ type: 'SET_TOYS', toys })
+        const { filterBy } = getState().boardModule
+        boardService.query(filterBy)
+            .then((boards) => {
+                dispatch({ type: 'SET_BOARDS', boards })
             })
             .catch(err => {
-                showErrorMsg('Failed to load toys')
+                showErrorMsg('Failed to load boards')
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
@@ -25,20 +21,17 @@ export function loadToys() {
     }
 }
 
-export function removeToy(toyId) {
+export function removeBoard(boardId) {
     return (dispatch, getState) => {
-        // const { loggedinUser } = getState().userModule
-        // if (!loggedinUser) return showErrorMsg('You must login first')
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        toyService.remove(toyId)
+        boardService.remove(boardId)
             .then(() => {
-                showSuccessMsg('Toy removed')
-                dispatch({ type: 'REMOVE_TOY', toyId })
-                //     userService.addActivity({ txt: 'Removed toy', at: Date.now() })
+                showSuccessMsg('Board removed')
+                dispatch({ type: 'REMOVE_BOARD', boardId })
             })
             .catch(err => {
-                showErrorMsg('Failed to remove toy')
+                showErrorMsg('Failed to remove board')
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
@@ -53,13 +46,13 @@ export function setFilter(filterBy) {
     }
 }
 
-export function loadToy(toyId) {
+export function loadBoard(boardId) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        Promise.all([toyService.getById(toyId), toyService.getNeighborsId(toyId)])
-            .then(([toy, neighborsId]) => {
-                dispatch({ type: 'SET_TOY', toy, neighborsId })
+        Promise.all([boardService.getById(boardId), boardService.getNeighborsId(boardId)])
+            .then(([board, neighborsId]) => {
+                dispatch({ type: 'SET_BOARD', board, neighborsId })
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
@@ -67,23 +60,19 @@ export function loadToy(toyId) {
     }
 }
 
-export function addToy(toy) {
-    console.log('toy:', toy)
+export function addBoard(board) {
+    console.log('board:', board)
     return (dispatch, getState) => {
-        // const { loggedinUser } = getState().userModule
-        // if (!loggedinUser) return showErrorMsg('You must login first')
 
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        toyService.save(toy)
-            .then(savedToy => {
-                dispatch({ type: 'ADD_TOY', toy: savedToy })
-                showSuccessMsg('Toy added')
-                // userService.addActivity({ txt: 'Added toy', at: Date.now() })
-                //     .then((activity) => dispatch({ type: 'ADD_ACTIVITY', activity }))
+        boardService.save(board)
+            .then(savedBoard => {
+                dispatch({ type: 'ADD_BOARD', board: savedBoard })
+                showSuccessMsg('Board added')
             })
             .catch(err => {
-                showErrorMsg('Failed to add toy')
+                showErrorMsg('Failed to add board')
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
@@ -91,20 +80,18 @@ export function addToy(toy) {
     }
 }
 
-export function updateToy(toy) {
-    console.log('toy from toyAction:', toy)
+export function updateBoard(board) {
+    console.log('board from boardAction:', board)
     return (dispatch, getState) => {
-        console.log('toy:', toy)
+        console.log('board:', board)
         dispatch({ type: 'SET_LOADING', isLoading: true })
-        toyService.save(toy)
-            .then(savedToy => {
-                dispatch({ type: 'UPDATE_TOY', toy: savedToy })
-                showSuccessMsg('Toy updated')
-                // userService.addActivity({ txt: 'Updated toy', at: Date.now() })
-                //     .then((activity) => dispatch({ type: 'ADD_ACTIVITY', activity }))
+        boardService.save(board)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Board updated')
             })
             .catch(err => {
-                showErrorMsg('Failed to update toy')
+                showErrorMsg('Failed to update board')
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })

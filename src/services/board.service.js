@@ -9,14 +9,21 @@ export const boardService = {
   remove,
 }
 //?- Dev:
+const gBoards = require("../data/board.json")
 const STORAGE_KEY = 'boardDB'
 //?- Prod:
 // const BASE_URL = 'board/'
 
 function query(filterBy) {
   //?- Dev:
-  if (filterBy) return storageService.get(STORAGE_KEY, boardId)
-  return storageService.get(STORAGE_KEY, boardId)
+  let boards = storageService.query(STORAGE_KEY)
+  // Todo: filterBy
+  // if (filterBy) 
+  if (!boards || boards.length === 0) {
+    boards = gBoards
+    storageService.postMany(boards)
+  }
+  return boards
   //?- Prod:
   // if (filterBy) return httpService.get(BASE_URL, filterBy)
   // else return httpService.get(BASE_URL)
@@ -38,8 +45,8 @@ function remove(boardId) {
 
 function save(board) {
   //?- Dev:
-  if (board._id) return storageService.put(STORAGE_KEY, todo)
-  else return storageService.post(STORAGE_KEY, todo)
+  if (board._id) return storageService.put(STORAGE_KEY, board)
+  else return storageService.post(STORAGE_KEY, board)
   //?- Prod:
   // if (board._id) return httpService.put(BASE_URL + board._id, board)
   // else return httpService.post(BASE_URL, board)
