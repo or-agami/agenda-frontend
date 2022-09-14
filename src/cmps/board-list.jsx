@@ -1,5 +1,10 @@
-export const BoardList = () => {
-    return <section className="board-list">
+import { BoardPreview } from "./board-preview"
 
-    </section>
+export const BoardList = ({ boards }) => {
+    return (
+        <section className="board-list">
+            {boards.map((board) =>
+                <BoardPreview board={board} key={board._id} />)}
+        </section>
+    )
 }

@@ -1,5 +1,8 @@
-export const BoardPreview = () => {
-    return <section className="board-preview">
 
-    </section>
+export const BoardPreview = ({ board }) => {
+    return (
+        <section className="board-preview">
+            <h1>BoardId: {board._id}</h1>
+        </section>
+    )
 }

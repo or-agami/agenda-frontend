@@ -1,3 +1,11 @@
+//basics
+@import './basics/base.scss';
+
+
+//setup
+@import './setup/typography.scss';
+@import './setup/variables.scss';
+
 // cpms
 @import './cmps/_loader.scss';
 

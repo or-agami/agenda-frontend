@@ -1,19 +1,45 @@
 .index {
 
     .main-header {
+        padding: 20px;
         background-color: var(--clr-bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0px 4px 2px 0px rgba(106, 186, 247, 0.139);
 
         .logo {
             display: flex;
 
             h1 {
-                font-family: comfortaa-semibold;
+                font-family: comfortaa-bold;
+                font-size: 40px;
+                letter-spacing: -3px;
+                margin-inline-start: 5px;
             }
-
 
             img {
-                width: 70px;
+                width: 45px;
             }
+        }
+
+        .header-nav {
+
+            a {
+                text-decoration: none;
+                color: var(--clr-txt);
+                padding: 8px;
+                padding-top: 11px;
+                border-radius: 0.5em;
+                transition: color 0.2s;
+                font-size: 18px;
+
+                &:hover {
+                    background-color: #6c9ff619;
+                    color: #4f4fec;
+                }
+            }
+            
         }
     }
 }

@@ -17,14 +17,14 @@ export function boardReducer(state = initialState, action) {
             return { ...state, isLoading: action.isLoading }
 
 
-        case 'SET_TOYS':
+        case 'SET_BOARDS':
             return { ...state, boards: action.boards, boardsLength: action.boards.length }
 
-        case 'ADD_TOY':
+        case 'ADD_BOARD':
             boards = [action.board, ...state.boards]
             return { ...state, boards, boardsLength: boards.length }
 
-        case 'UPDATE_TOY':
+        case 'UPDATE_BOARD':
             boards = state.boards.map((board) => {
                 if (board._id !== action.board._id) return board
                 return action.board
@@ -35,7 +35,7 @@ export function boardReducer(state = initialState, action) {
             board = { ...state.board, msgs: [...state.board.msgs, action.msg] }
             return { ...state, board }
 
-        case 'REMOVE_TOY':
+        case 'REMOVE_BOARD':
             boards = state.boards.filter(board => board._id !== action.boardId)
             return { ...state, boards, boardsLength: boards.length }
 
@@ -44,7 +44,7 @@ export function boardReducer(state = initialState, action) {
             return { ...state, filterBy: { ...state.filterBy, ...action.filterBy, labels: [...action.filterBy.labels] } }
 
 
-        case 'SET_TOY':
+        case 'SET_BOARD':
             boardIdx = initialState.boards.findIndex(board => board._id === action.board._id)
             return { ...state, board: { ...action.board, idx: boardIdx }, boardsLength: initialState.boardsLength, neighborsId: action.neighborsId }
 
