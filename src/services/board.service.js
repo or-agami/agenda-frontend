@@ -1,4 +1,5 @@
 import { store } from "../store/store";
+import { storageService } from "./async-storage.service";
 import { httpService } from "./http.service"
 
 export const boardService = {
@@ -14,8 +15,8 @@ const STORAGE_KEY = 'boardDB'
 
 function query(filterBy) {
   //?- Dev:
-  if (filterBy) return storageService.get(STORAGE_KEY, todoId)
-  return storageService.get(STORAGE_KEY, todoId)
+  if (filterBy) return storageService.get(STORAGE_KEY, boardId)
+  return storageService.get(STORAGE_KEY, boardId)
   //?- Prod:
   // if (filterBy) return httpService.get(BASE_URL, filterBy)
   // else return httpService.get(BASE_URL)
@@ -23,14 +24,14 @@ function query(filterBy) {
 
 function getById(boardId) {
   //?- Dev:
-  return storageService.get(STORAGE_KEY, todoId)
+  return storageService.get(STORAGE_KEY, boardId)
   //?- Prod:
   // return httpService.get(BASE_URL + boardId)
 }
 
 function remove(boardId) {
   //?- Dev:
-  return storageService.remove(STORAGE_KEY, todoId)
+  return storageService.remove(STORAGE_KEY, boardId)
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }

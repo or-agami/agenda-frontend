@@ -1,0 +1,19 @@
+.index {
+
+    .main-header {
+        background-color: var(--clr-bg);
+
+        .logo {
+            display: flex;
+
+            h1 {
+                font-family: comfortaa-semibold;
+            }
+
+
+            img {
+                width: 70px;
+            }
+        }
+    }
+}

@@ -1,5 +1,9 @@
-
+import { Loader } from '../cmps/loader'
 export const Home = () => {
 
-    return 
+    return (
+        <section>
+            <Loader />
+        </section>
+    )
 }

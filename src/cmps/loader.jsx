@@ -1,8 +1,8 @@
 export const Loader = () => {
     return <section className="loader">
-        <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="512" height="512" viewBox="0 0 512 512" fill="none">
             <g id="Frame">
-                <mask id="mask0_1_3" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="501" height="502">
+                <mask id="mask0_1_3" maskUnits="userSpaceOnUse" x="5" y="5" width="501" height="502">
                     <ellipse id="Ellipse 5" cx="255.5" cy="256" rx="250.5" ry="251" fill="white" />
                 </mask>
                 <g mask="url(#mask0_1_3)">
@@ -21,5 +21,5 @@ export const Loader = () => {
                 </g>
             </g>
         </svg>
-    </section>
+    </section >
 }
