@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
+import { store } from './store/store';
 
+import RootCpm from './root-cmp';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <Router>
+      <RootCpm />
+    </Router>
+  </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change

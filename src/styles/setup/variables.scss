@@ -1,0 +1,57 @@
+:root {
+    //priority
+    --clr-critical: #333333;
+    --clr-medium: #5559df;
+    --clr-high: #401694;
+    --clr-low: #579bfc;
+
+    // status
+    --clr-pending: #ad967a;
+    --clr-waiting: #784bd1;
+    --clr-stuck: #e2445c;
+    --clr-help: #ffcb00;
+    --clr-done: #00c875;
+    --clr-workingOnIt: #fdab3d;
+
+    //status colors
+    --status-clr1: #116846;
+    --status-clr2: #7ca22b;
+    --status-clr3: #998c3d;
+    --status-clr4: #c15531;
+    --status-clr5: #be8587;
+    --status-clr6: #c16163;
+    --status-clr7: #91334c;
+    --status-clr8: #673971;
+    --status-clr9: #3b1e75;
+    --status-clr10: #4b4ead;
+    --status-clr11: #469d9a;
+    --status-clr12: #577f94;
+    --status-clr13: #7b8794;
+    --status-clr14: #69696a;
+    --status-clr15: #222222;
+    --status-clr16: #684943;
+    --status-clr17: #ae5d8d;
+    --status-clr18: #81b6c5;
+    --status-clr19: #946556;
+    --status-clr20: #225db5;
+    --status-clr21: #12484f;
+    --status-clr22: #9685c5;
+    --status-clr23: #8798ba;
+    --status-clr24: #7e7a94;
+    --status-clr25: #453232;
+    --status-clr26: #dc143c;
+
+    // backgrounds
+    --clr-item-bg: #ffffff;
+    --clr-bg: #f6f7fb;
+    --clr-bg-navBar: #292f4c;
+
+    //main
+    --clr-green-green: #4eb648;
+    --clr-logo-yellow: #ffcb04;
+    --clr-logo-red: #ee425a;
+
+    // miscellaneous
+    --box-shadow-high: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    --box-shadow-medium: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
