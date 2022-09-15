@@ -1,5 +1,6 @@
 .app-home {
-    background-color:#f5f6fa;
+    background-color: #f5f6fa;
+
     & .main-panel-container {
         margin-top: 16px;
         display: flex;
@@ -8,18 +9,42 @@
         border-radius: 8px;
         background-color: var(--clr-item-bg);
         box-shadow: var(--box-shadow-medium);
-        // width: 100%;
         height: fit-content;
         margin-left: 20px;
         margin-right: 20px;
 
+        & .app-home-myboards {
+            margin: 24px 24px;
+
+            & .app-home-myboards-header {
+                margin: 24px;
+                margin-bottom: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+            & h1 {
+                font-family: sofia-pro;
+                font-size: 18px;
+                font-weight: 700;
+                font-weight: bold;
+                margin-left: 3px;
+            }
+
+            & .arrow-down.open {
+                transform: rotate(-270deg);
+            }
+        }
+
         & .app-home-recent {
+            margin: 24px 24px;
+
             & .app-home-recent-header {
                 margin: 24px;
                 margin-bottom: 40px;
                 display: flex;
                 align-items: center;
-                
+
 
                 & h1 {
                     font-family: sofia-pro;
@@ -37,18 +62,20 @@
 
         & .app-home-inbox {
             margin: 24px 24px;
-            
+
 
             & .app-home-inbox-content {
                 text-align: center;
                 padding: 10px 10px;
                 font-size: 15px;
+
                 & .app-home-inbox-content-container {
                     padding: 10px;
                     border: 1px solid #dadeea;
-                border-radius: 8px;
+                    border-radius: 8px;
                 }
             }
+
             & .app-home-inbox-header {
                 margin: 24px;
                 margin-bottom: 40px;
@@ -71,7 +98,7 @@
     }
 
     & .app-home-header {
-    background-color: var(--clr-item-bg);
+        background-color: var(--clr-item-bg);
         display: grid;
         grid-template-columns: 0.8fr 3fr;
         grid-template-rows: 1fr;
@@ -105,6 +132,4 @@
     }
 }
 
-.main-layout-app-home {
-    
-}
+.main-layout-app-home {}

@@ -4,6 +4,7 @@ import { AppHome } from './views/app-home'
 import { Board } from './views/board'
 import { LoginSignup } from './views/login-signup'
 import { UserWork } from './views/user-work'
+import { Inbox } from './views/inbox'
 
 
 export default [
@@ -23,6 +24,10 @@ export default [
                 path: '/workspace/board',
                 component: <Board />,
             },
+            {
+                path: '/workspace/inbox',
+                component: <Inbox />
+            }
             // {
             //     path: '/workspace/board/:boardId',
             //     component: <Board />,

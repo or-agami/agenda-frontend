@@ -14,7 +14,7 @@ export const AppHome = () => {
             <section className='main-panel-container'>
                 <Inbox />
                 <Recent />
-                <MyWorkspaces />
+                <MyBoards />
             </section>
         </section>
     )
@@ -69,20 +69,37 @@ const Recent = () => {
             <ArrowRightSvg onClick={(ev) => onRecentOpen(ev)} />
             <h1>Recent</h1>
         </div>
-        <div className='app-home-inbox-content'>
+        <div className='app-home-recent-content'>
             {isRecentOpen && <RecentContent />}
         </div>
     </section>
 }
 
 const RecentContent = () => {
-    return <div className='app-home-inbox-content-container'>
-        
+    return <div className='app-home-recent-content-container'>
+
     </div>
 }
-// Workspaces
-const MyWorkspaces = () => {
-    return <section className='app-home-myworkspaces'>
-
+// MyBoards
+const MyBoards = () => {
+    const [isMyboardsOpen, setIsMyboardsOpen] = useState(true)
+    const onMyboardsOpen = ({ target }) => {
+        target.classList.toggle('open')
+        setIsMyboardsOpen(!isMyboardsOpen)
+    }
+    return <section className='app-home-myboards'>
+         <div className='app-home-myboards-header'>
+            <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
+            <h1>My boards</h1>
+        </div>
+        <div className='app-home-myboards-content'>
+            {isMyboardsOpen && <MyBoardsContent />}
+        </div>
     </section>
+}
+
+const MyBoardsContent = () => {
+    return <div className='app-home-myboards-content-container'>
+
+    </div>
 }
