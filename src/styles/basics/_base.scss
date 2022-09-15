@@ -1,11 +1,13 @@
+body {
+    margin: 0;
+    background-color: var(--clr-item-bg);
+}
+
 html {
     font-family: sofia-pro-light, roboto-light, Helvetica, sans-serif;
     color: var(--clr-txt);
 }
 
-body {
-    margin: 0;
-}
 
 h1,
 h2,
