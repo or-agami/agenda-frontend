@@ -15,11 +15,6 @@ export const NavBar = () => {
       </div>
       <NavLink to="/workspace/home">Home</NavLink>
       <NavLink to="/workspace/board">Board</NavLink>
-      <Routes>
-        <Route path="/home" element={<AppHome />} />
-        <Route path="/board" element={<Board />} />
-      </Routes>
-      {/* <Route path="/board:boardId" element={<Board />} /> */}
     </section>
   )
 }
