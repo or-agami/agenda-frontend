@@ -1,12 +1,15 @@
 import { Loader } from '../cmps/loader'
-import appHeaderImg from '../assets/icons/app-header-background.svg'
+import { ReactComponent as AppHeaderSvg } from '../assets/icons/app-header-background.svg'
+import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
+import fistBumpGif from '../assets/img/fist-bump.gif'
 import arrowSvg from '../'
+import { useState } from 'react'
 
 
 export const AppHome = () => {
 
     return (
-        <section className="app-home">
+        <section className="app-home main-layout-app-home">
             <Header />
             <section className='main-panel-container'>
                 <Inbox />
@@ -16,7 +19,7 @@ export const AppHome = () => {
         </section>
     )
 }
-
+// Header
 const Header = () => {
     return (
         <header className="app-home-header">
@@ -24,26 +27,60 @@ const Header = () => {
                 <h2>Good morning, User!</h2>
                 <h1>Let's start the day off right :{')'}</h1>
             </div>
-            <img src={appHeaderImg} alt="" />
+            <AppHeaderSvg />
         </header>
     )
 }
-
+//Inbox
 const Inbox = () => {
+    const [isInboxOpen, setIsInboxOpen] = useState(true)
+    const onInboxOpen = ({ target }) => {
+        target.classList.toggle('open')
+        setIsInboxOpen(!isInboxOpen)
+    }
     return <section className='app-home-inbox'>
-        <div>
-            <img src="" alt="" />
-            <h1></h1>
+        <div className='app-home-inbox-header'>
+            <ArrowRightSvg onClick={(ev) => onInboxOpen(ev)} />
+            <h1>Inbox</h1>
+        </div>
+        <div className='app-home-inbox-content'>
+            {isInboxOpen && <InboxContent />}
+
         </div>
     </section>
 }
 
+const InboxContent = () => {
+    return <div className='app-home-inbox-content-container'>
+        <img src={fistBumpGif} width={320} height={320} alt="" />
+        <p>Fist Bumb!</p>
+        <p>Your inbox is empty, We'll let you know when we get news</p>
+    </div>
+}
+// Recent
 const Recent = () => {
+    const [isRecentOpen, setIsRecentOpen] = useState(true)
+    const onRecentOpen = ({ target }) => {
+        target.classList.toggle('open')
+        setIsRecentOpen(!isRecentOpen)
+    }
     return <section className='app-home-recent'>
-
+        <div className='app-home-recent-header'>
+            <ArrowRightSvg onClick={(ev) => onRecentOpen(ev)} />
+            <h1>Recent</h1>
+        </div>
+        <div className='app-home-inbox-content'>
+            {isRecentOpen && <RecentContent />}
+        </div>
     </section>
 }
 
+const RecentContent = () => {
+    return <div className='app-home-inbox-content-container'>
+        
+    </div>
+}
+// Workspaces
 const MyWorkspaces = () => {
     return <section className='app-home-myworkspaces'>
 
