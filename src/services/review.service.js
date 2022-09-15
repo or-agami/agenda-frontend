@@ -1,21 +1,21 @@
 import { httpService } from './http.service'
 // import { storageService } from './async-storage.service'
 import { userService } from './user.service'
-import { socketService, SOCKET_EVENT_REVIEW_ADDED, SOCKET_EVENT_REVIEW_ABOUT_YOU } from './socket.service'
+// import { socketService, SOCKET_EVENT_REVIEW_ADDED, SOCKET_EVENT_REVIEW_ABOUT_YOU } from './socket.service'
 import { getActionRemoveReview, getActionAddReview } from '../store/review/review.action'
 import { store } from '../store/store'
 import { showSuccessMsg } from '../services/event-bus.service'
 
 /* ?- WebSocket */;
-(() => {
+// (() => {
   // reviewChannel.addEventListener('message', (ev) => {
   //   store.dispatch(ev.data)
   // })
-  socketService.on(SOCKET_EVENT_REVIEW_ADDED, (review) => {
-    console.log('GOT from socket', review)
-    store.dispatch(getActionAddReview(review))
-  })
-})()
+//   socketService.on(SOCKET_EVENT_REVIEW_ADDED, (review) => {
+//     console.log('GOT from socket', review)
+//     store.dispatch(getActionAddReview(review))
+//   })
+// })()
 
 
 

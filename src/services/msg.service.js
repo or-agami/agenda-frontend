@@ -1,16 +1,16 @@
 import { getActionAddMsg } from "../store/msg/msg.action"
 import { store } from "../store/store"
 import { httpService } from "./http.service"
-import { socketService } from "./socket.service"
+// import { socketService } from "./socket.service"
 
 
 /*?- WebSocket */;
-(() => {
-  socketService.on(SOCKET_EVENT_ADD_MSG, (msg) => {
-    console.log('GOT msg from socket', msg)
-    store.dispatch(getActionAddMsg(msg))
-  })
-})()
+// (() => {
+//   socketService.on(SOCKET_EVENT_ADD_MSG, (msg) => {
+//     console.log('GOT msg from socket', msg)
+//     store.dispatch(getActionAddMsg(msg))
+//   })
+// })()
 
 export const msgService = {
   query,
