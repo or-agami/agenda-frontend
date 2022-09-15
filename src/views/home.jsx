@@ -19,8 +19,8 @@ const Header = () => {
             </div>
             <nav className="header-nav">
                 <NavLink to="/">Home</NavLink>
-                <NavLink to="/board">Board</NavLink>
-                <NavLink to="/home">Board Home</NavLink>
+                <NavLink to="/workspace/board">Board</NavLink>
+                <NavLink to="/workspace/home">Board Home</NavLink>
                 <NavLink to="/login">login</NavLink>
             </nav>
         </header>
