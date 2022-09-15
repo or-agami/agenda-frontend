@@ -9,20 +9,17 @@ function RootCmp() {
   return (
     <div className="main-app">
       <UserMsg />
-      {/* <NavBar /> */}
-      <main className='container'>
-        <Routes>
-          {routes.map(route => {
-            return (route.children) ?
-              <Route key={route.path} path={route.path} element={route.component} >
-                {route.children.map(child =>
-                  <Route key={child.path} path={child.path} element={child.component} />)}
-              </Route> :
-              <Route key={route.path} path={route.path} element={route.component} />
-          }
-          )}
-        </Routes>
-      </main>
+      <Routes>
+        {routes.map(route => {
+          return (route.children) ?
+            <Route key={route.path} path={route.path} element={route.component} >
+              {route.children.map(child =>
+                <Route key={child.path} path={child.path} element={child.component} />)}
+            </Route> :
+            <Route key={route.path} path={route.path} element={route.component} />
+        }
+        )}
+      </Routes>
     </div>
   );
 }

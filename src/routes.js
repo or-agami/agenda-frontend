@@ -13,7 +13,7 @@ export default [
     },
     {
         path: '/workspace',
-        component: <NavBar />,
+        component: <section className="agenda-app"><NavBar /></section>,
         children: [
             {
                 path: '/workspace/home',
@@ -30,12 +30,22 @@ export default [
         ]
     },
     // {
-    //     path: '/workspace/home',
-    //     component: <AppHome />,
-    // },
-    // {
-    //     path: '/workspace/board',
-    //     component: <Board />,
+    //     path: '/workspace',
+    //     component: <NavBar />,
+    //     children: [
+    //         {
+    //             path: '/workspace/home',
+    //             component: <AppHome />,
+    //         },
+    //         {
+    //             path: '/workspace/board',
+    //             component: <Board />,
+    //         },
+    //         // {
+    //         //     path: '/workspace/board/:boardId',
+    //         //     component: <Board />,
+    //         // },
+    //     ]
     // },
     {
         path: '/login',
