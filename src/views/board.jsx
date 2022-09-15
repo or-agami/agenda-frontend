@@ -16,9 +16,11 @@ export const Board = () => {
   useEffect(() => {
     dispatch(loadBoards())
   }, [])
+
   console.log('isLoading:', isLoading)
   return (
     <Fragment>
+
       <BoardHeader />
       {/* {isLoading || true ? */}
       {isLoading ?
