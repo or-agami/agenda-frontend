@@ -21,3 +21,15 @@
 .grid {
   display: grid;
 }
+
+.btn-ri svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--clr-icon-svg);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
