@@ -11,30 +11,31 @@
         top: 0px;
         left: 0px;
 
-
-
-
         .main-header-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0px 32px;
 
             .logo {
                 display: flex;
 
                 h1 {
-                    font-family: comfortaa-bold;
-                    font-size: 40px;
+                    font-family: poppins-bold;
+                    font-size: 45px;
+                    color: var(--clr-logo-txt);
                     letter-spacing: -3px;
                     margin-inline-start: 5px;
                 }
 
                 img {
-                    width: 45px;
+                    width: 35px;
                 }
             }
 
             .header-nav {
+                display: flex;
+                flex-wrap: nowrap;
 
                 a {
                     text-decoration: none;
@@ -47,8 +48,45 @@
 
                     &:hover {
                         background-color: #6c9ff619;
-                        color: #4f4fec;
+                        color: #5a5ad5;
                     }
+
+                }
+
+                .btn-get-started {
+                    display: flex;
+                    align-items: center;
+                    background-color: #5a5ad5;
+                    padding: 5px 15px;
+                    border: 0;
+                    color: var(--clr-bg);
+                    border-radius: 2em;
+                    margin-inline-start: 10px;
+                    font-family: sofia-pro-light;
+                    transition: 0.3s;
+
+
+                    &:hover {
+                        background-color: #48489c;
+
+                        .arrow-right svg {
+                            transform: translateX(5px);
+                        }
+
+                    }
+
+                    .arrow-right {
+                        width: 15px;
+                        padding-inline-start: 5px;
+                        
+
+                        svg {
+                            padding-top: 2px;
+                            fill: var(--clr-bg);
+                            transition: transform .3s ease-out;
+                        }
+                    }
+
                 }
 
             }
