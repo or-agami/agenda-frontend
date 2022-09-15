@@ -1,6 +1,11 @@
+import { Fragment } from "react"
+import { BoardHeader } from "../cmps/board-header"
 
 export const Board = () => {
   return (
-    <h1>board</h1>
+    <Fragment>
+      <BoardHeader />
+      <h1>board</h1>
+    </Fragment>
   )
 }
