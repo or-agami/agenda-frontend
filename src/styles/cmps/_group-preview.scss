@@ -1,0 +1,15 @@
+.group {
+
+
+  .task-list {
+
+    .cmps {
+      
+    }
+    display: grid;
+    grid-template-areas:
+      /*  ╭───────┬───────────┬────────┬───────╮ */
+      '     task    developer   status   date  '
+      /*  ╰───────┴───────────┴────────┴───────╯ */
+  }
+}

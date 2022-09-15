@@ -1,5 +1,10 @@
-export const TaskList = () => {
-    return <section className="task-list">
-
-    </section>
+export const TaskPreview = ({ task }) => {
+    return (
+        <li key={task.id} className="task-row">
+            <span className="task">{task.title}</span>
+            <span className="developer">{task.memberIds ? task.memberIds[0] : ''}</span>
+            <span className="status">{task.status}</span>
+            <span className="date">{task.createdAt}</span>
+        </li>
+    )
 }
