@@ -22,3 +22,8 @@ button {
     border: none;
     padding: 0;
 }
+
+svg,
+svg * {
+    fill: var(--clr-icon-svg);
+}
