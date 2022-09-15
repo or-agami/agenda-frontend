@@ -29,6 +29,14 @@ export default [
             // },
         ]
     },
+    // {
+    //     path: '/workspace/home',
+    //     component: <AppHome />,
+    // },
+    // {
+    //     path: '/workspace/board',
+    //     component: <Board />,
+    // },
     {
         path: '/login',
         component: <LoginSignup />,
