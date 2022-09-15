@@ -7,6 +7,7 @@ export const AppHome = () => {
     return (
         <section className="app-home">
             <Header />
+            <h1>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h1>
         </section>
     )
 }
