@@ -2,7 +2,6 @@ import { Loader } from '../cmps/loader'
 import { ReactComponent as AppHeaderSvg } from '../assets/icons/app-header-background.svg'
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import fistBumpGif from '../assets/img/fist-bump.gif'
-import arrowSvg from '../'
 import { useState } from 'react'
 
 
@@ -88,7 +87,7 @@ const MyBoards = () => {
         setIsMyboardsOpen(!isMyboardsOpen)
     }
     return <section className='app-home-myboards'>
-         <div className='app-home-myboards-header'>
+        <div className='app-home-myboards-header'>
             <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
             <h1>My boards</h1>
         </div>

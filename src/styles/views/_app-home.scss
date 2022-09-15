@@ -2,6 +2,7 @@
     background-color: #f5f6fa;
     .arrow-down {
         cursor: pointer;
+        // transform: rotate(-270deg);
     }
     & .main-panel-container {
         margin-top: 16px;
@@ -33,8 +34,8 @@
                 margin-left: 3px;
             }
 
-            & .arrow-down.open {
-                transform: rotate(-270deg);
+            svg .arrow-down.open {
+                transform: rotate(-1deg);
             }
         }
 
@@ -57,7 +58,7 @@
                 }
 
                 & .arrow-down.open {
-                    transform: rotate(-270deg);
+                    
                 }
             }
         }
