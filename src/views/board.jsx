@@ -17,12 +17,9 @@ export const Board = () => {
     dispatch(loadBoards())
   }, [])
 
-  console.log('isLoading:', isLoading)
   return (
     <Fragment>
-
       <BoardHeader />
-      {/* {isLoading || true ? */}
       {isLoading ?
         <Loader /> :
         <BoardList boards={boards} />
