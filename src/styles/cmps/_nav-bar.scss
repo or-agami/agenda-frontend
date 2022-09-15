@@ -1,10 +1,7 @@
 .nav-bar {
-  display: fixed;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  left: 0;
-  width: 60px;
   background-color: var(--clr-bg-navbar);
 
   .svg-icon {
