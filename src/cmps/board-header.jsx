@@ -8,10 +8,10 @@ export const BoardHeader = () => {
     <section className="board-header">
       <div className="flex board-info">
         <h1 className="title">New Board</h1>
-        <div className="btns-container">
+        <div className="flex btns-container">
           <button className="btn btn-svg invite">
             <InviteSvg />
-            Invite
+            <span>Invite</span>
           </button>
           <button className="btn btn-svg invite">
             <BoardMenuSvg />
@@ -19,10 +19,10 @@ export const BoardHeader = () => {
         </div>
       </div>
       <div className="flex board-nav">
-        <div className="btns-container">
+        <div className="flex aline btns-container">
           <button className="btn btn-ri search">
             <BiSearch />
-            Search
+            <span>Search</span>
           </button>
         </div>
       </div>

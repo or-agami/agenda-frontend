@@ -6,14 +6,17 @@
     justify-content: space-between;
 
     .btns-container {
-      display: flex;
       align-items: center;
-      justify-content: center;
+
+
+    }
+  }
+
+  .board-nav {
+
+    .btns-container {
 
       .btn {
-        display: flex;
-        align-items: center;
-        // justify-content: center;
         height: 32px;
         line-height: 24px;
         padding: 8px 24px 8px 12px;
@@ -27,17 +30,6 @@
           position: absolute;
           top: 8px;
         }
-      }
-
-    }
-  }
-
-  .board-nav {
-
-    .btns-container {
-
-      .icon-search::before {
-        content: "\f3aa";
       }
     }
   }
