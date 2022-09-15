@@ -1,19 +1,22 @@
 /* || Setup || */
-@import './setup/typography.scss';
-@import './setup/variables.scss';
+@import './setup/typography';
+@import './setup/variables';
 
 
 /* || Basic || */
-@import './basics/base.scss';
-@import './basics/layout.scss';
+@import './basics/base';
+@import './basics/layout';
+@import './basics/helpers';
 
 
 /* || View || */
-@import './views/_home.scss';
+@import './views/home';
 @import './views/app-home';
+@import './views/inbox';
 
 
 /* || CMP || */
-@import './cmps/_loader.scss';
-@import './cmps/_nav-bar.scss';
-@import './cmps/_logo.scss';
+@import './cmps/loader';
+@import './cmps/nav-bar';
+@import './cmps/board-header';
+@import './cmps/_logo';

@@ -16,14 +16,15 @@ const STORAGE_KEY = 'boardDB'
 
 function query(filterBy) {
   //?- Dev:
-  let boards = storageService.query(STORAGE_KEY)
-  // Todo: filterBy
-  // if (filterBy) 
-  if (!boards || boards.length === 0) {
-    boards = gBoards
-    storageService.postMany(boards)
-  }
-  return boards
+  return storageService.query(STORAGE_KEY)
+    .then((boards) => {
+      if (!boards || boards.length === 0) {
+        boards = gBoards
+        storageService.postMany(STORAGE_KEY, boards)
+      }
+      return boards
+    })
+
   //?- Prod:
   // if (filterBy) return httpService.get(BASE_URL, filterBy)
   // else return httpService.get(BASE_URL)

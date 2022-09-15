@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom';
 import { AppHome } from '../views/app-home'
 import { Board } from '../views/board'
+import { Inbox } from '../views/inbox';
 
 export const NavBar = () => {
 
@@ -17,10 +18,12 @@ export const NavBar = () => {
         </div>
         <NavLink to="/workspace/home">Home</NavLink>
         <NavLink to="/workspace/board">Board</NavLink>
+        <NavLink to="/workspace/inbox">Inbox</NavLink>
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
         <Route path="/board" element={<Board />} />
+        <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Fragment>
   )

@@ -1,12 +1,12 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
 
 import thunk from 'redux-thunk'
-// import { userReducer } from './user/user.reducer'
+import { boardReducer } from './board/board.reducer'
 // import { toyReducer } from './board/toy.reducer'
 
 
 const rootReducer = combineReducers({
-    // userModule: userReducer,
+    boardModule: boardReducer,
     // toyModule: toyReducer,
 })
 

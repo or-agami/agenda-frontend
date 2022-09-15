@@ -2,22 +2,35 @@
   display: flex;
 }
 
-.column {
+.grid {
+  display: grid;
+}
+
+.flex.column {
   flex-direction: column;
 }
 
-.justify-center {
+.flex.justify-center,
+.grid.justify-center {
   justify-content: center;
 }
 
-.align-center {
+.flex.align-center,
+.grid.align-center {
   align-items: center;
 }
 
-.space-between {
+.flex.space-between {
   justify-content: space-between;
 }
 
-.grid {
-  display: grid;
+.btn-ri svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--clr-icon-svg);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
 }
