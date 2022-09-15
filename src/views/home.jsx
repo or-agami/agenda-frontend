@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 export const Home = () => {
 
     return (
-        <section className="home">
+        <section className="home main-layout">
             <Header />
         </section>
     )
@@ -13,6 +13,7 @@ export const Home = () => {
 const Header = () => {
     return (
         <header className="main-header">
+            <div className="main-header-container main-layout">
             <div className="logo">
                 <img src={logoIcon} />
                 <h1>agenda</h1>
@@ -23,6 +24,7 @@ const Header = () => {
                 <NavLink to="/workspace/home">Board Home</NavLink>
                 <NavLink to="/login">login</NavLink>
             </nav>
+            </div>
         </header>
     )
 }
