@@ -1,16 +1,29 @@
-body {
-    margin: 0;
-}
-
 html {
     font-family: sofia-pro-light, roboto-light, Helvetica, sans-serif;
     color: var(--clr-txt);
 }
 
-h1,h2,h3,h4,h5,h6 {
+body {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
 button {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+svg,
+svg * {
+    fill: var(--clr-icon-svg);
 }
