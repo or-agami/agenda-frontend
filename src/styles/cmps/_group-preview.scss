@@ -3,13 +3,15 @@
 
   .task-list {
 
-    .cmps {
-      
+    .cmps,
+    .task-row {
+      display: grid;
+      grid-template-areas:
+        /*  ╭───────┬───────────┬────────┬───────╮ */
+        '     task    developer   status   date  '
+        /*  ╰───────┴───────────┴────────┴───────╯ */
     }
-    display: grid;
-    grid-template-areas:
-      /*  ╭───────┬───────────┬────────┬───────╮ */
-      '     task    developer   status   date  '
-      /*  ╰───────┴───────────┴────────┴───────╯ */
+
+    text-align: center;
   }
 }

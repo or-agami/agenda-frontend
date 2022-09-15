@@ -7,7 +7,7 @@ export const GroupPreview = ({ group }) => {
     <div className="group">
       <h1 className="title">{title}</h1>
       <ul className="task-list">
-        <li className="cmps">
+        <li className="clean-list cmps">
           <span className="task">Task</span>
           <span className="developer">Developer</span>
           <span className="status">status</span>
