@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { UserMsg } from './cmps/user-msg';
-import { AppHeader } from './cmps/app-header';
+import { NavBar } from './cmps/nav-bar';
 
 import routes from './routes';
 import './styles/main.scss';
@@ -9,7 +9,7 @@ function RootCmp() {
   return (
     <div className="main-app">
       <UserMsg />
-      <AppHeader />
+      {/* <NavBar /> */}
       <main className='container'>
         <Routes>
           {routes.map(route => {
