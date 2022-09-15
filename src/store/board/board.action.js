@@ -10,6 +10,7 @@ export function loadBoards() {
         const { filterBy } = getState().boardModule
         boardService.query(filterBy)
             .then((boards) => {
+                console.log('boards from boardAction:', boards)
                 dispatch({ type: 'SET_BOARDS', boards })
             })
             .catch(err => {

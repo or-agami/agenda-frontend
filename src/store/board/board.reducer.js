@@ -18,6 +18,7 @@ export function boardReducer(state = initialState, action) {
 
 
         case 'SET_BOARDS':
+            console.log('action.boards:', action.boards)
             return { ...state, boards: action.boards, boardsLength: action.boards.length }
 
         case 'ADD_BOARD':
