@@ -1,9 +1,9 @@
 import { Home } from './views/home'
-import { AppHome } from './views/app-home'
-import { Board } from './views/board'
+import { NavBar } from './cmps/nav-bar'
+// import { AppHome } from './views/app-home'
+// import { Board } from './views/board'
 import { LoginSignup } from './views/login-signup'
 import { UserWork } from './views/user-work'
-import { NavBar } from './cmps/nav-bar'
 
 
 export default [
@@ -12,17 +12,17 @@ export default [
         component: <Home />,
     },
     {
-        path: '/workspace',
+        path: '/workspace/*',
         component: <NavBar />,
     },
-    {
-        path: '/workspace/home',
-        component: <AppHome />,
-    },
-    {
-        path: '/workspace/board/:boardId',
-        component: <Board />,
-    },
+    // {
+    //     path: '/workspace/home',
+    //     component: <AppHome />,
+    // },
+    // {
+    //     path: '/workspace/board/:boardId',
+    //     component: <Board />,
+    // },
     {
         path: '/login',
         component: <LoginSignup />,
