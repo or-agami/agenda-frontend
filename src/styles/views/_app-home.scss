@@ -1,6 +1,8 @@
 .app-home {
     background-color: #f5f6fa;
-
+    .arrow-down {
+        cursor: pointer;
+    }
     & .main-panel-container {
         margin-top: 16px;
         display: flex;

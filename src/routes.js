@@ -25,7 +25,7 @@ export default [
                 component: <Board />,
             },
             {
-                path: '/workspace/inbox',
+                path: '/inbox',
                 component: <Inbox />
             }
             // {
