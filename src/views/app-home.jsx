@@ -14,7 +14,7 @@ export const AppHome = () => {
 
 const Header = () => {
     return (
-        <header className="home-app-header">
+        <header className="app-home-header">
             <div>
                 <h2>Good morning, User!</h2>
                 <h1>Let's start the day off right :{')'}</h1>
