@@ -10,6 +10,7 @@ export function loadBoards() {
         const { filterBy } = getState().boardModule
         boardService.query(filterBy)
             .then((boards) => {
+                console.log('boards from boardAction:', boards)
                 dispatch({ type: 'SET_BOARDS', boards })
             })
             .catch(err => {
@@ -50,9 +51,9 @@ export function loadBoard(boardId) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        Promise.all([boardService.getById(boardId), boardService.getNeighborsId(boardId)])
-            .then(([board, neighborsId]) => {
-                dispatch({ type: 'SET_BOARD', board, neighborsId })
+        boardService.getById(boardId)
+            .then((board) => {
+                dispatch({ type: 'SET_BOARD', board })
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
@@ -101,6 +102,6 @@ export function updateBoard(board) {
 
 export function addMsg(msg) {
     return (dispatch, getState) => {
-        dispatch({type: 'ADD_MSG', msg})
+        dispatch({ type: 'ADD_MSG', msg })
     }
 }

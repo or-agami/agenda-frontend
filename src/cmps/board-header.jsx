@@ -7,11 +7,13 @@ import { ReactComponent as HideSvg } from '../assets/icons/hide.svg'
 import { ReactComponent as DownArrowSvg } from '../assets/icons/down-arrow.svg'
 import { BiSearch } from 'react-icons/bi'
 
-export const BoardHeader = () => {
+export const BoardHeader = ({ board }) => {
+  const { title } = board
+  
   return (
     <section className="board-header">
       <div className="flex board-info">
-        <h1 className="title">New Board</h1>
+        <h1 className="title">{title}</h1>
         <div className="flex btns-container">
           <button className="btn btn-svg invite">
             <InviteSvg />
