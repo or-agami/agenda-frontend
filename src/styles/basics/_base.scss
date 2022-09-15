@@ -1,10 +1,11 @@
 body {
+    box-sizing: border-box;
     margin: 0;
     background-color: var(--clr-item-bg);
 }
 
 html {
-    font-family: sofia-pro-light, roboto-light, Helvetica, sans-serif;
+    font-family: roboto, roboto-light, Helvetica, sans-serif;
     color: var(--clr-txt);
 }
 
@@ -19,6 +20,7 @@ h6 {
 }
 
 button {
+    font-family: roboto, roboto-light, Helvetica, sans-serif;
     cursor: pointer;
     background-color: transparent;
     border: none;

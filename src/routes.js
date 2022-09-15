@@ -16,11 +16,11 @@ export default [
         component: <section className="agenda-app"><NavBar /></section>,
         children: [
             {
-                path: '/workspace/home',
+                path: '/home',
                 component: <AppHome />,
             },
             {
-                path: '/workspace/board',
+                path: '/board',
                 component: <Board />,
             },
             // {
