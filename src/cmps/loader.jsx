@@ -3,7 +3,7 @@ export const Loader = () => {
         <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className="">
             <g id="Frame">
                 <mask id="mask0_1_3" maskUnits="userSpaceOnUse" x="5" y="5" width="501" height="502">
-                    <ellipse id="Ellipse 5" cx="255.5" cy="256" rx="250.5" ry="251" fill="white" className="svg-elem-1 blinker"></ellipse>
+                    <ellipse id="Ellipse 5" cx="255.5" cy="256" rx="250.5" ry="251" fill="white" className="svg-elem-1"></ellipse>
                 </mask>
                 <g mask="url(#mask0_1_3)">
                     <ellipse id="dot 4" cx="369.5" cy="79" rx="29.5" ry="29" fill="#FF3B57" className="svg-elem-2 blinker"></ellipse>
