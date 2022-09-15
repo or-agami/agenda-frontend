@@ -1,4 +1,6 @@
 import { Loader } from '../cmps/loader'
+import appHeaderImg from '../assets/icons/app-header-background.svg'
+
 
 export const AppHome = () => {
 
@@ -11,8 +13,12 @@ export const AppHome = () => {
 
 const Header = () => {
     return (
-        <header className="main-header">
-            <h1>app home header</h1>
+        <header className="home-app-header">
+            <div>
+                <h2>Good morning, User!</h2>
+                <h1>Let's start the day off right :{')'}</h1>
+            </div>
+            <img src={appHeaderImg} alt="" />
         </header>
     )
 }
