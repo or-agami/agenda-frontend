@@ -1,7 +1,7 @@
 // import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
 import { store } from '../store/store'
-import { socketService } from './socket.service'
+// import { socketService } from './socket.service'
 import { showSuccessMsg } from '../services/event-bus.service'
 
 export const userService = {
@@ -30,19 +30,19 @@ function getUsers() {
 async function login(userCred) {
     const user = await httpService.post(URL_AUTH + 'login', userCred)
     if (user) {
-        socketService.login(user._id)
+        // socketService.login(user._id)
         return saveLocalUser(user)
     }
 }
 async function signup(userCred) {
     const user = await httpService.post(URL_AUTH + 'signup', userCred)
-    socketService.login(user._id)
+    // socketService.login(user._id)
     return saveLocalUser(user)
 }
 
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-    socketService.logout()
+    // socketService.logout()
     return await httpService.post(URL_AUTH + 'logout')
 }
 
