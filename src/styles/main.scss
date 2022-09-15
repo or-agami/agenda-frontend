@@ -1,14 +1,17 @@
-//basics
-@import './basics/base.scss';
 
-
-//setup
+/* || Setup || */
 @import './setup/typography.scss';
 @import './setup/variables.scss';
 
-// cpms
-@import './cmps/_loader.scss';
+
+/* || Basic || */
+@import './basics/base.scss';
 
 
-// views
+/* || View || */
 @import './views/_index.scss';
+
+
+/* || CMP || */
+@import './cmps/_loader.scss';
+@import './cmps/_app-header.scss';

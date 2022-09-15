@@ -3,7 +3,15 @@ import { NavLink } from 'react-router-dom'
 
 export const Index = () => {
 
-    return <section className="index">
+    return (
+        <section className="index">
+            <Header />
+        </section>
+    )
+}
+
+const Header = () => {
+    return (
         <header className="main-header">
             <div className="logo">
                 <img src={logoIcon} />
@@ -16,5 +24,5 @@ export const Index = () => {
                 <NavLink to="/login">login</NavLink>
             </nav>
         </header>
-    </section>
+    )
 }
