@@ -22,19 +22,19 @@ export const NavBar = () => {
       <section className="nav-bar">
         <button className="btn btn-home">
           <NavLink to="/workspace/home"><AgendaLogoSvg />
-            <div class="selected-indication"></div>
+            <div className="selected-indication"></div>
           </NavLink>
         </button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-board">
-          <NavLink to="/workspace/board/tsChP"><BoardSvg />
-            <div class="selected-indication"></div>
+          <NavLink to="/workspace/board/b101"><BoardSvg />
+            <div className="selected-indication"></div>
           </NavLink>
         </button>
         <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
         <button className="btn btn-svg btn-index">
           <NavLink to="/workspace/inbox"><InboxSvg />
-          <div class="selected-indication"></div>
+          <div className="selected-indication"></div>
           </NavLink>
         </button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>

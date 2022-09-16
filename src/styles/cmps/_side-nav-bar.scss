@@ -1,0 +1,114 @@
+.side-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 66px;
+    background-color: var(--clr-bg);
+    width: 200px;
+    height: 100%;
+    color: var(--clr-txt);
+    padding: 20px 15px;
+    font-size: 14px;
+    z-index: 10;
+    transition: 0.2s;
+    border: 1px solid var(--clr-disabled);
+
+    &.closed {
+        left: -175px;
+        padding-right: 50px;
+    }
+
+
+    .toggle-nav-bar {
+        padding: 2px;
+        background-color: var(--clr-item-bg);
+        border-radius: 2em;
+        border: 1px solid var(--clr-disabled);
+        position: absolute;
+        top: 40px;
+        right: -10px;
+        transition: padding 0.2s;
+
+        &:hover {
+            background-color: var(--clr-btn-highlight);
+            padding-right: 10px;
+
+            svg * {
+                fill: var(--clr-item-bg);
+            }
+        }
+
+        svg {
+            width: 20px;
+            position: relative;
+            transform: rotate(90deg);
+        }
+    }
+
+    hr {
+        border: 1px solid var(--clr-disabled);
+    }
+
+
+    .side-board-opts {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        svg {
+            cursor: pointer;
+        }
+
+        .board-name {
+            color: var(--clr-icon-svg);
+
+            margin: 0;
+        }
+    }
+
+    .side-nav-details {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+
+        .side-nav {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 0.2em;
+
+            &:hover {
+                background-color: var(--clr-btn-bg-hover);
+            }
+
+            svg {
+                margin-inline-end: 10px;
+            }
+        }
+    }
+
+    .nav-board-list {
+        padding: 5px;
+
+        .nav-board-preview {
+            padding: 8px 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border-radius: 0.2em;
+
+            &:hover {
+                background-color: var(--clr-btn-bg-hover);
+            }
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+}
+
