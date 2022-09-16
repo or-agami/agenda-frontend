@@ -9,7 +9,7 @@ export const GroupPreview = ({ group }) => {
     target.classList.toggle('open')
     setIsOpen(prevState => prevState = !isOpen)
   }
-  console.log('group:', group)
+
   const { title } = group
   return <ul className="group-preview">
     <li className="group-header-color">

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { loadBoard, loadBoards } from "../store/board/board.action"
 import { Loader } from "../cmps/loader"
 import { GroupPreview } from "../cmps/group-preview"
+import { SideNavBar } from "../cmps/side-nav-bar"
 
 export const Board = () => {
 
@@ -19,7 +20,6 @@ export const Board = () => {
     dispatch(loadBoard(boardId))
   }, [])
 
-  console.log(board);
   return (
     <div className="board-app">
       {isLoading ?
@@ -27,6 +27,7 @@ export const Board = () => {
         board &&
         <Fragment>
           <BoardHeader board={board} />
+          <SideNavBar board={board} />
           <BoardDetails board={board} />
         </Fragment>
       }

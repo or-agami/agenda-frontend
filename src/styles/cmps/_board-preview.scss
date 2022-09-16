@@ -1,11 +1,3 @@
-.board-list {
-    padding: 0 30px;
-    display: flex;
-
-    a {
-        text-decoration: none;
-    }
-}
 
 .board-preview {
     color: var(--clr-txt);
@@ -16,7 +8,7 @@
     padding: 20px;
     border-radius: 0.5em;
     cursor: pointer;
-    
+
 
     &:hover {
         border: 1px solid transparent;
@@ -44,3 +36,5 @@
         }
     }
 }
+
+

@@ -1,0 +1,10 @@
+.board-list {
+    padding: 0 30px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    a {
+        text-decoration: none;
+    }
+}

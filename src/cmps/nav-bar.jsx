@@ -21,7 +21,7 @@ export const NavBar = () => {
     <Fragment>
       <section className="nav-bar">
         <button className="btn btn-home"><NavLink to="/workspace/home"><AgendaLogoSvg /></NavLink></button>
-        <button className="btn btn-board"><NavLink to="/workspace/board/b101"><BoardSvg /></NavLink></button>
+        <button className="btn btn-board"><NavLink to="/workspace/board/tsChP"><BoardSvg /></NavLink></button>
         <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
         <button className="btn btn-svg btn-index"><NavLink to="/workspace/inbox"><InboxSvg /></NavLink></button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>

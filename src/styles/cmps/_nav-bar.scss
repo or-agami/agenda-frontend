@@ -1,10 +1,11 @@
 .nav-bar {
+  width: 66px;
   position: fixed;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  padding: 5px 0 5px 0;
+  padding: 3px 0 3px 0;
   height: 100vh;
   background-color: var(--clr-bg-navbar);
 

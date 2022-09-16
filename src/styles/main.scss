@@ -13,6 +13,7 @@
 @import './views/home';
 @import './views/app-home';
 @import './views/inbox';
+@import './views/board';
 
 
 /* || CMP || */
@@ -21,4 +22,5 @@
 @import './cmps/board-header';
 @import './cmps/group-preview';
 @import './cmps/board-preview';
+@import './cmps/board-list';
 @import './cmps/_logo';
