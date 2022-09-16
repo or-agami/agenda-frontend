@@ -35,8 +35,23 @@
       justify-content: center;
       align-items: center;
 
+      .selected-indication{
+        right: -6px;
+      }
       &.active {
         background-color: #545970;
+
+        .selected-indication {
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 8px 6px 8px 0;
+          position: absolute;
+          right: 0;
+          opacity: 1;
+          transition: opacity .1s ease-in-out;
+          border-color: transparent var(--clr-bg) transparent transparent;
+        }
       }
     }
 

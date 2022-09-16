@@ -20,11 +20,23 @@ export const NavBar = () => {
   return (
     <Fragment>
       <section className="nav-bar">
-        <button className="btn btn-home"><NavLink to="/workspace/home"><AgendaLogoSvg /></NavLink></button>
+        <button className="btn btn-home">
+          <NavLink to="/workspace/home"><AgendaLogoSvg />
+            <div class="selected-indication"></div>
+          </NavLink>
+        </button>
         <div className="divider-horizontal"></div>
-        <button className="btn btn-board"><NavLink to="/workspace/board/tsChP"><BoardSvg /></NavLink></button>
+        <button className="btn btn-board">
+          <NavLink to="/workspace/board/tsChP"><BoardSvg />
+            <div class="selected-indication"></div>
+          </NavLink>
+        </button>
         <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
-        <button className="btn btn-svg btn-index"><NavLink to="/workspace/inbox"><InboxSvg /></NavLink></button>
+        <button className="btn btn-svg btn-index">
+          <NavLink to="/workspace/inbox"><InboxSvg />
+          <div class="selected-indication"></div>
+          </NavLink>
+        </button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
         <button className="btn btn-svg btn-favorites"><FavoritesSvg /></button>
         <button className="btn btn-svg btn-invite"><InviteSvg /></button>
