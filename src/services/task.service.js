@@ -32,10 +32,9 @@ function remove(boardId) {
   // return httpService.delete(BASE_URL + boardId)
 }
 
-function save(newTask) {
-  let group = store.boardModule.group
-  console.log('group:', group)
+async function save(newTask) {
+  let group = await groupService.getById(newTask.groupId,newTask.boardId)
   const task = { id: utilService.makeId(), title: newTask.title }
   group.tasks.push(task)
-  return groupService.save(group)
+  return groupService.save(group, newTask.boardId)
 }

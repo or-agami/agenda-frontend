@@ -102,6 +102,7 @@ export function updateBoard(board) {
 }
 
 export function addTask(task) {
+    console.log('task from boardAction:', task)
     return (dispatch, getState) => {
         taskService.save(task)
             .then(savedBoard => {

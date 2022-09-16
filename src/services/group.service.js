@@ -10,16 +10,17 @@ export const groupService = {
   remove,
 }
 
-function getById(boardId) {
+//?- Dev:
+const STORAGE_KEY = 'boardDB'
+//?- Prod:
+// const BASE_URL = 'board/'
+
+async function getById(groupId, boardId) {
   //?- Dev:
-  // return boardService.get(STORAGE_KEY, boardId)
-  //   .then((board) => {
-  //     if (!board) {
-  //       board = gBoards.find(board => board.id === boardId)
-  //       boardService.postMany(STORAGE_KEY, gBoards)
-  //     }
-  //     return board
-  //   })
+  // const group = 
+  const board = await boardService.getById(boardId)
+  console.log('board:', board)
+  return board.groups.find(g => g.id === groupId)
   //?- Prod:
   // return httpService.get(BASE_URL + boardId)
 }
@@ -31,12 +32,12 @@ function remove(boardId) {
   // return httpService.delete(BASE_URL + boardId)
 }
 
-function save(newGroup) {
-  const board = store.boardModule.board
+async function save(newGroup, boardId) {
+  const board = await boardService.getById(boardId)
   if (newGroup.id) {
     board.groups = board.groups.map(group =>
       (group.id === newGroup.id) ? newGroup : group)
   }
-  else board.groups.push({...newGroup, id: utilService.makeId()})
+  else board.groups.push({ ...newGroup, id: utilService.makeId() })
   return boardService.save(board)
 }
