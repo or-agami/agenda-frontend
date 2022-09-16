@@ -1,23 +1,41 @@
 .nav-bar {
+  position: fixed;
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 10px;
+  padding: 5px 0 5px 0;
   height: 100vh;
   background-color: var(--clr-bg-navbar);
 
-  .btn-home svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .btn:not(.btn-home, .btn-board) {
-    svg * {
-      fill: white;
-    }
-  }
 
   .btn {
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
 
+    &.btn-home {
+      width: 50px;
+      height: 50px;
+      box-shadow: 0px 1px 0px 0px #676879;
+      margin-bottom: 16px;
+
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    &:not(.btn-home, .btn-board) {
+      svg * {
+        fill: white;
+      }
+    }
+
+    &.btn-favorites {
+      margin-bottom: auto;
+    }
   }
 
 }
