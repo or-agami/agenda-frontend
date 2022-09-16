@@ -108,6 +108,6 @@ const MyBoards = () => {
             <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
             <h1>My boards</h1>
         </div>
-        {isMyboardsOpen && <BoardList boards={boards} />}
+        {isMyboardsOpen && boards && <BoardList boards={boards} />}
     </section>
 }

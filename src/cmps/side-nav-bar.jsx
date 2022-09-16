@@ -6,13 +6,25 @@ import { ReactComponent as PlusIcon } from '../assets/icons/plus-icon.svg'
 import { ReactComponent as FilterIcon } from '../assets/icons/filter.svg'
 import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg'
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
+import {ReactComponent as Arrow} from '../assets/icons/down-arrow.svg'
+import { useState } from "react"
 
 
 export const SideNavBar = ({boards}) => {
 
+const [isOpen, setStatus] = useState({isOpen: false})
+
+const toggleSideNav = () => {
+    setStatus(prevState => {})
+
+}
 
     console.log(boards);
+    if (!boards || boards.length < 1) return
     return <section className="side-nav-bar">
+            <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
+                <Arrow />
+            </button>
         <div className="side-board-opts">
             <p className="board-name">{boards[0].title}</p>
             <BoardMenu />

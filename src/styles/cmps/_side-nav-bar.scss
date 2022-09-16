@@ -10,6 +10,33 @@
     font-size: 14px;
     z-index: 10;
 
+
+    .toggle-nav-bar {
+        padding: 5px;
+        background-color: var(--clr-item-bg);
+        border-radius: 2em;
+        border: 1px solid var(--clr-disabled);
+        position: absolute;
+        top: 40px;
+        right: -10px;
+        transition: padding 0.2s;
+
+        &:hover {
+            background-color: var(--clr-btn-highlight);
+            padding-right: 10px;
+
+            svg * {
+                fill: var(--clr-item-bg);
+            }
+        }
+
+        svg {
+            width: 13px;
+            position: relative;
+            transform: rotate(90deg);
+        }
+    }
+
     hr {
         border: 1px solid var(--clr-disabled);
     }
@@ -26,14 +53,14 @@
 
         .board-name {
             color: var(--clr-icon-svg);
-           
+
             margin: 0;
         }
     }
 
     .side-nav-details {
         display: flex;
-        flex-direction:column;
+        flex-direction: column;
         margin-top: 30px;
 
         .side-nav {
