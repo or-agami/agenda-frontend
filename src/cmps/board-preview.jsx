@@ -13,5 +13,4 @@ export const BoardPreview = ({ board }) => {
             </section>
         </Link>
     )
-
 }

@@ -21,7 +21,7 @@ export const NavBar = () => {
     <Fragment>
       <section className="nav-bar">
         <button className="btn btn-home"><NavLink to="/workspace/home"><AgendaLogoSvg /></NavLink></button>
-        <button className="btn btn-board"><NavLink to="/workspace/board"><BoardSvg /></NavLink></button>
+        {/* <button className="btn btn-board"><NavLink to="/workspace/board/:boardId"><BoardSvg /></NavLink></button> */}
         <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
         <button className="btn btn-svg btn-inbox"><InboxSvg /></button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
@@ -35,7 +35,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
-        <Route path="/board" element={<Board />} />
+        <Route path="/board/:boardId" element={<Board />} />
         <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Fragment>
