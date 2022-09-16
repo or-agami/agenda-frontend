@@ -1,7 +1,6 @@
 .group-content {
     position: relative;
     margin-left: 40px;
-    height: 58px;
     display: flex;
     align-items: center;
     padding: 0;
@@ -14,7 +13,6 @@
     }
 
     li {
-        height: 100%;
         display: flex;
         align-items: center;
     }
@@ -48,7 +46,9 @@
     }
     
     .group-content-header {
+
         border: 1px solid var(--clr-disabled);
+        border-left: none;
         border-start-start-radius: 8px;
         min-height: 35px;
         margin: 0;
@@ -56,6 +56,10 @@
         display: flex;
         flex-direction: row;
         list-style-type: none;
+
+        .group-content-header-color:first-child {
+            border-start-start-radius: 8px;
+        }
 
         .group-content-header-color {
             width: 6px;

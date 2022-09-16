@@ -1,3 +1,78 @@
-.task-row {
+.task-preview {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--clr-disabled);
+
+    &:last-child {
+        border-end-start-radius: 8px;
+        .task-preview-group-color {
+            border-end-start-radius: 8px;
+        }
+    }
+
+    li {
+        // display: flex;
+        // align-items: center;
+    }
     
+    li:not(:nth-child(1)) {
+        // justify-content: center;
+        border-right: 1px solid var(--clr-disabled);
+    }
+
+    // li :nth-child(3) {
+    //     border: none;  
+    // }
+    
+    li:nth-child(n+3){
+        // min-width: 138px;
+    }
+    
+    li:nth-child(n+3):not(:last-child) {
+        // border-right: 1px solid var(--clr-disabled);
+        // overflow-x:hidden ;
+    }
+
+    .item-container {
+        display: flex;
+        min-width: calc(393px - 36px);
+        border-right: 1px solid var(--clr-disabled);
+
+        .item-container-right {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .item-preview-sub-task-expansion {
+            width: 35px;
+            height: 35px;
+        }
+
+        li {
+            border: none;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 35px;
+            width: 65px;
+            border-left: 1px solid var(--clr-disabled);
+        }
+    }
+
+    .task-preview-group-color{
+        width: 6px;
+        background-color: var(--clr-disabled);
+    }
+
+    .task-preview-checkbox {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
