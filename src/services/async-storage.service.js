@@ -55,7 +55,10 @@ function remove(entityType, entityId) {
 function postMany(entityType, newEntities) {
     return query(entityType)
         .then(entities => {
-            newEntities = newEntities.map(entity => ({ ...entity, _id: _makeId() }))
+            newEntities = newEntities.map(entity => {
+                if (!entity._id) return { ...entity, _id: _makeId() }
+                return entity
+            })
             entities.push(...newEntities)
             _save(entityType, entities)
             return entities
