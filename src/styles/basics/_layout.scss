@@ -7,4 +7,5 @@
 .agenda-app {
     display: grid;
     grid-template-columns: 66px 1fr;
+    overflow-x: hidden;
 }

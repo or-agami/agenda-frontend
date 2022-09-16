@@ -1,6 +1,7 @@
 .app-home {
     background-color: #f5f6fa;
     grid-column: 2;
+    overflow-x: auto;
 
     .arrow-down {
         cursor: pointer;
