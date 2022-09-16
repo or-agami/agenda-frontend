@@ -103,7 +103,6 @@ const MyBoards = () => {
 
     return <section className='app-home-myboards'>
 
-        <SideNavBar boards={boards} />
         <div className='app-home-myboards-header'>
             <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
             <h1>My boards</h1>

@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { BoardHeader } from "../cmps/board-header"
 import { BoardList } from "../cmps/board-list"
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +14,7 @@ export const Board = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
+  const [isOpen, setStatus] = useState({ isOpen: false })
 
   useEffect(() => {
     const boardId = params.boardId
@@ -26,7 +27,8 @@ export const Board = () => {
         <Loader /> :
         board &&
         <Fragment>
-          <BoardHeader board={board} />
+          <SideNavBar isOpen={isOpen} setStatus={setStatus} />
+          <BoardHeader  board={board} />
           <BoardDetails board={board} />
         </Fragment>
       }
@@ -37,7 +39,7 @@ export const Board = () => {
 const BoardDetails = ({ board }) => {
   return (
     <div className="board-details">
-      <GroupList board={board}/>
+      <GroupList board={board} />
     </div>
   )
 }
