@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 
 export const BoardPreview = ({ board }) => {
-    console.log('board:', board)
     return (
         <Link to={`/workspace/board/${board._id}`}>
             <section className="board-preview">
