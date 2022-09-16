@@ -9,10 +9,17 @@
     padding: 20px 15px;
     font-size: 14px;
     z-index: 10;
+    transition: 0.2s;
+    border: 1px solid var(--clr-disabled);
+
+    &.closed {
+        left: -175px;
+        padding-right: 50px;
+    }
 
 
     .toggle-nav-bar {
-        padding: 5px;
+        padding: 2px;
         background-color: var(--clr-item-bg);
         border-radius: 2em;
         border: 1px solid var(--clr-disabled);
@@ -31,7 +38,7 @@
         }
 
         svg {
-            width: 13px;
+            width: 20px;
             position: relative;
             transform: rotate(90deg);
         }
@@ -104,3 +111,4 @@
     }
 
 }
+

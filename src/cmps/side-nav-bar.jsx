@@ -15,13 +15,12 @@ export const SideNavBar = ({boards}) => {
 const [isOpen, setStatus] = useState({isOpen: false})
 
 const toggleSideNav = () => {
-    setStatus(prevState => {})
-
+    setStatus(!isOpen);
 }
 
-    console.log(boards);
+    console.log(isOpen);
     if (!boards || boards.length < 1) return
-    return <section className="side-nav-bar">
+    return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed" }>
             <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
                 <Arrow />
             </button>
