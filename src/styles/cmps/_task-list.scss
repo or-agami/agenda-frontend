@@ -1,10 +1,10 @@
 .task-list {
     display: flex;
     flex-direction: column;
-    // position: relative;
 
     .task-preview-container {
         display: flex;
+
         .btn-task-menu {
             position: absolute;
             left: -30px;

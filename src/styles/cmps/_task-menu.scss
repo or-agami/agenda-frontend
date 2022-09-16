@@ -1,0 +1,14 @@
+.task-menu {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--clr-item-bg);
+    padding: 20px;
+
+    .group-color-icon {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--clr-disabled);
+    }
+}
