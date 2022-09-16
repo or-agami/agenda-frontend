@@ -4,31 +4,69 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
-  padding: 3px 0 3px 0;
+  gap: 8px;
+  padding: 8px 0 8px 0;
   height: 100vh;
   background-color: var(--clr-bg-navbar);
 
+  .divider-horizontal {
+    width: 80%;
+    height: 1px;
+    margin-bottom: 4px;
+    background-color: #676879;
+  }
+
+  .divider-horizontal:last-of-type {
+    margin-bottom: 0;
+  }
 
   .btn {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     justify-content: center;
     align-items: center;
 
-    &.btn-home {
-      width: 50px;
-      height: 50px;
-      box-shadow: 0px 1px 0px 0px #676879;
-      margin-bottom: 16px;
+    a {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-      svg {
-        width: 30px;
-        height: 30px;
+      .selected-indication{
+        right: -6px;
+      }
+      &.active {
+        background-color: #545970;
+
+        .selected-indication {
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 8px 6px 8px 0;
+          position: absolute;
+          right: 0;
+          opacity: 1;
+          transition: opacity .1s ease-in-out;
+          border-color: transparent var(--clr-bg) transparent transparent;
+        }
       }
     }
 
-    &:not(.btn-home, .btn-board) {
+    &:hover {
+      background-color: #10131e;
+    }
+
+    &.btn-home {
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    &:not(.btn-home, .btn-board, .last-child) {
       svg * {
         fill: white;
       }
@@ -36,6 +74,29 @@
 
     &.btn-favorites {
       margin-bottom: auto;
+    }
+
+    &.btn-menu {
+      width: 46px;
+      height: 46px;
+
+      svg * {
+        width: 36px;
+        height: 36px;
+        fill: #8f8fff;
+      }
+    }
+
+    &.btn-user {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid white;
+      color: white;
+      font-family: roboto-medium;
+      font-size: 24px;
+      margin-bottom: 26px;
+      background-color: #569cfc;
     }
   }
 
