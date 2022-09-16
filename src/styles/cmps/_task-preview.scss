@@ -10,28 +10,9 @@
             border-end-start-radius: 8px;
         }
     }
-
-    li {
-        // display: flex;
-        // align-items: center;
-    }
-    
+ 
     li:not(:nth-child(1)) {
-        // justify-content: center;
         border-right: 1px solid var(--clr-disabled);
-    }
-
-    // li :nth-child(3) {
-    //     border: none;  
-    // }
-    
-    li:nth-child(n+3){
-        // min-width: 138px;
-    }
-    
-    li:nth-child(n+3):not(:last-child) {
-        // border-right: 1px solid var(--clr-disabled);
-        // overflow-x:hidden ;
     }
 
     .item-container {

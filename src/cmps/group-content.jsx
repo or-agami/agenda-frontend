@@ -39,12 +39,12 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen }) => {
             <li className="group-content-header-last-updated">
                 <h4>Last updated</h4>
             </li>
-            <li className="group-content-header-files">
+            {/* <li className="group-content-header-files">
                 <h4>Files</h4>
-            </li>
-            <li className="group-content-header-timeline">
+            </li> */}
+            {/* <li className="group-content-header-timeline">
                 <h4>TimeLine</h4>
-            </li>
+            </li> */}
         </ul>
         <div className='group-content-tasks'>
             <TaskList group={group} />

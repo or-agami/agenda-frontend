@@ -26,6 +26,7 @@ export const Board = () => {
     else document.documentElement.style.setProperty('--board-grid-column', '116px 1fr')
   }, [isOpen])
 
+  console.log('board ', board)
   return (
     <div className="board-app">
       {isLoading ?

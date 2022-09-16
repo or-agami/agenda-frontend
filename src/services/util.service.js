@@ -1,8 +1,11 @@
+import moment from "moment/moment";
+
 export const utilService = {
     makeId,
     makeLorem,
     getRandomIntInclusive,
     debounce,
+    getFormattedDateTime,
 }
 
 function makeId(length = 6) {
@@ -38,4 +41,8 @@ function debounce(func, timeout = 300) {
         clearTimeout(timer)
         timer = setTimeout(() => { func.apply(this, args); }, timeout);
     }
+}
+
+function getFormattedDateTime(date) {
+        return moment(date).format("MMM Do YY") 
 }
