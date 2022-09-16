@@ -15,7 +15,7 @@ export const GroupHeader = ({group, setIsHeaderOpen,isHeaderOpen}) => {
 
     </li>
     <li className="group-header-name">
-        <ArrowRightSvg onclick={(ev)=>{onSetIsHeaderOpen(ev)}}/>
+        <ArrowRightSvg onClick={(ev)=>{onSetIsHeaderOpen(ev)}}/>
         <h4>{title}</h4>
     </li>
     {/* <div className="wrapper"> */}
