@@ -1,6 +1,6 @@
 .group-header {
     position: relative;
-    margin-left: 20px;
+    margin-left: 40px;
     list-style-type: none;
     border: 1px solid var(--clr-disabled);
     border-radius: 8px;
@@ -8,14 +8,7 @@
     display: flex;
     align-items: center;
     padding: 0;
-
-    .arrow-down {
-        cursor: pointer;
-    }
-
-    .arrow-down.open {
-        transform: rotate(-270px);
-    }
+    width: fit-content;
   
     li {
       height: 100%;
@@ -35,15 +28,14 @@
 
     li:nth-child(n+3):not(:last-child) {
         border-right: 1px solid var(--clr-disabled);
-        // overflow-x:hidden ;
     }
   
-    .fixed {
-        position: fixed;
-    }
-    .inner-scroll-container {
+    // .fixed {
+    //     position: fixed;
+    // }
+    // .inner-scroll-container {
 
-    }
+    // }
 
     .group-header-color {
       background-color: var(--clr-disabled);

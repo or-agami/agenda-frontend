@@ -13,6 +13,8 @@ export const GroupPreview = ({group}) => {
         />}
         {!isHeaderOpen && <GroupContent
         group={group}
+        setIsHeaderOpen={setIsHeaderOpen}
+        isHeaderOpen={isHeaderOpen}
         />}
     </section>
 }

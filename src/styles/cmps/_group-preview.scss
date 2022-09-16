@@ -1,4 +1,10 @@
-// .group {
+.group-preview {
+  .btn-arrow-down {
+    svg * {
+      fill: var(--clr-disabled);
+    }
+  }
+}
 
 //   .task-list-container {
 
@@ -54,4 +60,3 @@
 
 //   }
 // }
-

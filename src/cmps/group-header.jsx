@@ -1,11 +1,9 @@
-import { TaskList } from "./task-list"
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 
 export const GroupHeader = ({group, setIsHeaderOpen,isHeaderOpen}) => {
     const {title} = group
 
     const onSetIsHeaderOpen = ({target}) => {
-        console.log(isHeaderOpen)
         target.classList.toggle('open')
         setIsHeaderOpen(prevState => prevState = !isHeaderOpen)
     }
@@ -15,7 +13,9 @@ export const GroupHeader = ({group, setIsHeaderOpen,isHeaderOpen}) => {
 
     </li>
     <li className="group-header-name">
-        <ArrowRightSvg onClick={(ev)=>{onSetIsHeaderOpen(ev)}}/>
+        <button className="btn btn-svg  btn-arrow-down" onClick={(ev)=>{onSetIsHeaderOpen(ev)}}>
+        <ArrowRightSvg/>
+        </button>
         <h4>{title}</h4>
     </li>
     {/* <div className="wrapper"> */}

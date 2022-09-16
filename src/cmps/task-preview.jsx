@@ -1,4 +1,5 @@
 export const TaskPreview = ({ task }) => {
+    console.log(task)
     return (
         <li key={task.id} className="clean-list task-row">
             <span className="task">{task.title}</span>
