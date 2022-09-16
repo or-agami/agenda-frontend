@@ -51,16 +51,15 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
             </div>
         </div>
         <hr />
-        <div className="nav-board-list">
-            {boards.map(board =>
-                <Link to={`/workspace/board/${board._id}`} key={board._id}>
-                    <div className="nav-board-preview" >
-                        <BoardIcon />
-                        <p className="nav-board-title">{board.title}</p>
-                    </div>
-                </Link>
-            )}
-
-        </div>
+        {boards &&
+            <div className="nav-board-list">
+                {boards.map(board =>
+                    <Link to={`/workspace/board/${board._id}`} key={board._id}>
+                        <div className="nav-board-preview" >
+                            <BoardIcon />
+                            <p className="nav-board-title">{board.title}</p>
+                        </div>
+                    </Link>)}
+            </div>}
     </section>
 }
