@@ -42,27 +42,27 @@ const BoardControls = () => {
           <DownArrowSvg />
         </button>
       </div>
-      <button className="btn btn-svg btn-ri search">
+      <button className="btn btn-svg btn-ri btn-search">
         <BiSearch />
         <span>Search</span>
       </button>
-      <button className="btn btn-svg btn-ri person">
+      <button className="btn btn-svg btn-ri btn-person">
         <PersonSvg />
         <span>Person</span>
       </button>
-      <button className="btn btn-svg btn-ri filter">
+      <button className="btn btn-svg btn-ri btn-filter">
         <FilterSvg />
         <span>Filter</span>
       </button>
-      <button className="btn btn-svg btn-ri sort">
+      <button className="btn btn-svg btn-ri btn-sort">
         <SortSvg />
         <span>Sort</span>
       </button>
-      <button className="btn btn-svg btn-ri hide">
+      <button className="btn btn-svg btn-ri btn-hide">
         <HideSvg />
         <span>Hide</span>
       </button>
-      <button className="btn btn-svg btn-ri task-menu">
+      <button className="btn btn-svg btn-ri btn-task-menu">
         <BoardMenuSvg />
       </button>
     </div>
