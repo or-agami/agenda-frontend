@@ -21,6 +21,11 @@ export const Board = () => {
     dispatch(loadBoard(boardId))
   }, [])
 
+  useEffect(() => {
+    if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '252px 1fr')
+    else document.documentElement.style.setProperty('--board-grid-column', '66px 1fr')
+  }, [isOpen])
+
   return (
     <div className="board-app">
       {isLoading ?
@@ -28,7 +33,7 @@ export const Board = () => {
         board &&
         <Fragment>
           <SideNavBar isOpen={isOpen} setStatus={setStatus} />
-          <BoardHeader  board={board} />
+          <BoardHeader board={board} />
           <BoardDetails board={board} />
         </Fragment>
       }

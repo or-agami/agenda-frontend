@@ -86,6 +86,12 @@
         height: 36px;
         fill: #8f8fff;
       }
+      
+      &:hover {
+        svg * {
+          fill: white;
+        }
+      }
     }
 
     &.btn-user {
@@ -98,6 +104,11 @@
       font-size: 24px;
       margin-bottom: 26px;
       background-color: #569cfc;
+      transition: scale .1s ease-out;
+
+      &:hover {
+        scale: 0.85
+      }
     }
   }
 

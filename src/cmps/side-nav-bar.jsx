@@ -18,9 +18,6 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
 
     const toggleSideNav = () => {
         setStatus(!isOpen)
-
-        if (isOpen) document.documentElement.setProperty('--board-grid-column', '252px 1fr')
-        else document.documentElement.setProperty('--board-grid-column', '66px 1fr')
     }
 
     useEffect(() => {
