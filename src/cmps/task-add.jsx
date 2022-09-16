@@ -1,7 +1,17 @@
+import { useDispatch } from "react-redux"
+import {addTask} from '../store/board/board.action'
 
 export const TaskAdd = ({groupId}) => {
-    const onAddTask =({taget}) => {
-        
+    const dispatch = useDispatch()
+    
+
+    const onAddTask =(ev) => {
+        ev.preventDefault()
+        console.log(ev.target[0].value)
+        const task = {groupId,title: ev.target[0].value}
+        dispatch(addTask())
+        ev.target[0].value = ''
+
     }
 
     return <ul className="task-add">
@@ -11,7 +21,9 @@ export const TaskAdd = ({groupId}) => {
             <input disabled type="checkbox" />
         </li>
         <li className="task-add-item">
-            <input type="text" placeholder="+ Add item" onSubmit={(ev)=>onAddTask(ev)}/>
+            <form onSubmit={(ev)=>onAddTask(ev)}>
+            <input type="text" placeholder="+ Add item"/>
+            </form>
         </li>
     </ul>
 }
