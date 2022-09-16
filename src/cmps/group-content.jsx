@@ -1,7 +1,7 @@
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import { TaskList } from './task-list'
 
-export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen }) => {
+export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
     const { title } = group
 
     const onSetIsHeaderOpen = ({ target }) => {
@@ -47,7 +47,10 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen }) => {
             </li> */}
         </ul>
         <div className='group-content-tasks'>
-            <TaskList group={group} />
+            <TaskList 
+            group={group} 
+            boardId={boardId}
+            />
         </div>
     </section>
 }

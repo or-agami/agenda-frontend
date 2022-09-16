@@ -1,14 +1,14 @@
 import { useDispatch } from "react-redux"
 import {addTask} from '../store/board/board.action'
 
-export const TaskAdd = ({groupId}) => {
+export const TaskAdd = ({groupId,boardId}) => {
     const dispatch = useDispatch()
     
 
     const onAddTask =(ev) => {
         ev.preventDefault()
         console.log(ev.target[0].value)
-        const task = {groupId,title: ev.target[0].value}
+        const task = {groupId,title: ev.target[0].value,boardId}
         dispatch(addTask(task))
         ev.target[0].value = ''
 

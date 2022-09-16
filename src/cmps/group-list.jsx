@@ -7,6 +7,7 @@ export const GroupList = ({ board }) => {
         <GroupPreview 
         key={idx} 
         group={group}
+        boardId={board._id}
         />)} 
   </section>  
 }
