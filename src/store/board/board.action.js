@@ -53,6 +53,7 @@ export function loadBoard(boardId) {
 
         boardService.getById(boardId)
             .then((board) => {
+                console.log('board from boardAction:', board)
                 dispatch({ type: 'SET_BOARD', board })
             })
             .finally(() => {

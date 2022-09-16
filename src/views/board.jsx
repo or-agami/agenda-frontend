@@ -15,11 +15,10 @@ export const Board = () => {
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
 
   useEffect(() => {
-    if (!boards || boards.length === 0) dispatch(loadBoards())
-    if (!board && boards.length > 0) dispatch(loadBoard(boards[0]._id))
-
-  }, [boards])
-
+    dispatch(loadBoard(params.boardId))
+  }, [])
+console.log('params.boardId:', params.boardId)
+console.log('board:', board)
   return (
     <div className="board-app">
       {isLoading ?
@@ -35,7 +34,6 @@ export const Board = () => {
 }
 
 const BoardDetails = ({ board }) => {
-  console.log('board:', board)
   return (
     <div className="board-details">
       {board.groups.map((group, idx) =>

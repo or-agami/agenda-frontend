@@ -35,7 +35,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
-        <Route path="/board" element={<Board />} />
+        <Route path="/board/:boardId" element={<Board />} />
         <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Fragment>

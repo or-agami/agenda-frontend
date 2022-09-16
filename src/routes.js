@@ -21,37 +21,15 @@ export default [
                 component: <AppHome />,
             },
             {
-                path: '/board',
+                path: '/board/:boardId',
                 component: <Board />,
             },
             {
                 path: '/inbox',
-                component: <Inbox />
+                component: <Inbox />,
             }
-            // {
-            //     path: '/workspace/board/:boardId',
-            //     component: <Board />,
-            // },
         ]
     },
-    // {
-    //     path: '/workspace',
-    //     component: <NavBar />,
-    //     children: [
-    //         {
-    //             path: '/workspace/home',
-    //             component: <AppHome />,
-    //         },
-    //         {
-    //             path: '/workspace/board',
-    //             component: <Board />,
-    //         },
-    //         // {
-    //         //     path: '/workspace/board/:boardId',
-    //         //     component: <Board />,
-    //         // },
-    //     ]
-    // },
     {
         path: '/login',
         component: <LoginSignup />,
