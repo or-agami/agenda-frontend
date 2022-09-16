@@ -13,25 +13,25 @@ export default [
         component: <Home />,
     },
     {
-        path: '/workspace',
+        path: '/workspace/*',
         component: <section className="agenda-app"><NavBar /></section>,
         children: [
             {
                 path: '/home',
                 component: <AppHome />,
             },
-            {
-                path: '/board',
-                component: <Board />,
-            },
+            // {
+            //     path: '/board',
+            //     component: <Board />,
+            // },
             {
                 path: '/inbox',
                 component: <Inbox />
-            }
-            // {
-            //     path: '/workspace/board/:boardId',
-            //     component: <Board />,
-            // },
+            },
+            {
+                path: '/board/:boardId',
+                component: <Board />,
+            },
         ]
     },
     // {
