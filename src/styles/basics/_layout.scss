@@ -6,6 +6,6 @@
 
 .agenda-app {
     display: grid;
-    grid-template-columns: 66px 1fr;
+    grid-template-columns: var(--board-grid-column);
     overflow-x: hidden;
 }

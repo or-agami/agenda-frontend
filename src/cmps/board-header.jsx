@@ -9,7 +9,7 @@ import { BiSearch } from 'react-icons/bi'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
-  
+
   return (
     <section className="board-header">
       <div className="flex board-info">
