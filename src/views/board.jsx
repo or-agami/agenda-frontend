@@ -22,8 +22,8 @@ export const Board = () => {
   }, [])
 
   useEffect(() => {
-    if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '252px 1fr')
-    else document.documentElement.style.setProperty('--board-grid-column', '66px 1fr')
+    if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '337px 1fr')
+    else document.documentElement.style.setProperty('--board-grid-column', '116px 1fr')
   }, [isOpen])
 
   return (
