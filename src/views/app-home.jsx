@@ -4,6 +4,9 @@ import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-ic
 import fistBumpGif from '../assets/img/fist-bump.gif'
 import { useState } from 'react'
 import { BoardList } from '../cmps/board-list'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { loadBoards } from '../store/board/board.action'
 
 
 export const AppHome = () => {
@@ -82,6 +85,15 @@ const RecentContent = () => {
 }
 // MyBoards
 const MyBoards = () => {
+
+    const dispatch = useDispatch()
+    const { boards } = useSelector(state => state.boardModule)
+
+
+    useEffect(() => {
+        dispatch(loadBoards())
+    }, [])
+
     const [isMyboardsOpen, setIsMyboardsOpen] = useState(true)
     const onMyboardsOpen = ({ target }) => {
         target.classList.toggle('open')
@@ -92,6 +104,6 @@ const MyBoards = () => {
             <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
             <h1>My boards</h1>
         </div>
-            {isMyboardsOpen && <BoardList />}
+        {isMyboardsOpen && <BoardList boards={boards} />}
     </section>
 }

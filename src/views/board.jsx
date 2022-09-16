@@ -15,10 +15,11 @@ export const Board = () => {
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
 
   useEffect(() => {
-    dispatch(loadBoard(params.boardId))
+    const boardId = params.boardId
+    dispatch(loadBoard(boardId))
   }, [])
-console.log('params.boardId:', params.boardId)
-console.log('board:', board)
+
+  console.log(board);
   return (
     <div className="board-app">
       {isLoading ?

@@ -13,7 +13,7 @@ export default [
         component: <Home />,
     },
     {
-        path: '/workspace',
+        path: '/workspace/*',
         component: <section className="agenda-app"><NavBar /></section>,
         children: [
             {

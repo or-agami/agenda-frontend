@@ -1,17 +1,57 @@
 .group {
 
+  .task-list-container {
+    
+  }
+  .group-color {
+    // float: inline-start;
+    width: 10px;
+    height: 20px;
+    background-color: var(--clr-disabled);
+  }
+  .group-header {
+    display: flex;
+  }
 
-  .task-list {
-
-    .cmps,
-    .task-row {
-      display: grid;
-      grid-template-areas:
-        /*  ╭───────┬───────────┬────────┬───────╮ */
-        '     task    developer   status   date  '
-        /*  ╰───────┴───────────┴────────┴───────╯ */
-    }
-
+  .column-header {
+    // display: flex;
     text-align: center;
+    justify-content: center;
+  }
+  .task-row {
+    list-style-type: none;
+  }
+  
+  .task-list {
+    border-radius: 8px;
+    border: 1px solid var(--clr-disabled);
+    list-style-type: none;
+    // width: fit-content;
+    // margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+    display: grid;
+    grid-template-areas:
+      /*  ╭───────┬───────────┬────────┬───────╮ */
+      '     task    developer   status   date  '
+      /*  ╰───────┴───────────┴────────┴───────╯ */;
+       .column-header-task {
+        display: flex;
+        // justify-content: space-between;
+        .group-color {
+          // position: absolute;
+          // left: 87px;
+          // display: flex;
+          align-self: baseline;
+        }
+
+        .task {
+          // right: 100px;
+        }
+       }
+
+
   }
 }
+
