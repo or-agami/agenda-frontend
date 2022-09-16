@@ -9,7 +9,7 @@ export const TaskAdd = ({groupId}) => {
         ev.preventDefault()
         console.log(ev.target[0].value)
         const task = {groupId,title: ev.target[0].value}
-        dispatch(addTask())
+        dispatch(addTask(task))
         ev.target[0].value = ''
 
     }

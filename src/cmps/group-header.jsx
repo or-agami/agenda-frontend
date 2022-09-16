@@ -13,7 +13,7 @@ export const GroupHeader = ({group, setIsHeaderOpen,isHeaderOpen}) => {
 
     </li>
     <li className="group-header-name">
-        <button className="btn btn-svg  btn-arrow-down" onClick={(ev)=>{onSetIsHeaderOpen(ev)}}>
+        <button className="btn btn-svg btn-arrow-down" onClick={(ev)=>{onSetIsHeaderOpen(ev)}}>
         <ArrowRightSvg/>
         </button>
         <h4>{title}</h4>

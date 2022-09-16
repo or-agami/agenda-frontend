@@ -22,7 +22,7 @@ export const TaskPreview = ({ task }) => {
                         <h4>{task.title}</h4>
                     </li>
                     <li className="task-preview-start-conversation">
-                        <button className="btn btn-svg  btn-start-conversation">
+                        <button className="btn btn-svg btn-start-conversation">
                             <StartConversationSvg />
                         </button>
                     </li>
