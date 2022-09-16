@@ -27,7 +27,6 @@ export const Board = () => {
         board &&
         <Fragment>
           <BoardHeader board={board} />
-          <SideNavBar board={board} />
           <BoardDetails board={board} />
         </Fragment>
       }
