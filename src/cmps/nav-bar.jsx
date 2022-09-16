@@ -27,7 +27,7 @@ export const NavBar = () => {
         </button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-board">
-          <NavLink to="/workspace/board/tsChP"><BoardSvg />
+          <NavLink to="/workspace/board/b101"><BoardSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
