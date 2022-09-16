@@ -18,7 +18,6 @@ export function boardReducer(state = initialState, action) {
 
 
         case 'SET_BOARDS':
-            console.log('action.boards:', action.boards)
             return { ...state, boards: action.boards, boardsLength: action.boards.length }
 
         case 'ADD_BOARD':
@@ -30,25 +29,10 @@ export function boardReducer(state = initialState, action) {
                 if (board._id !== action.board._id) return board
                 return action.board
             })
-            return { ...state, boards, boardsLength: boards.length }
+            return { ...state, boards, board: action.board }
 
         case 'UPDATE_GROUP':
             return { ...state, board: action.board }
-
-        case 'ADD_TASK': // EXAMPLE: { groupId: 'g101', title: 'new task' }
-            board = state.board
-            groupIdx = board.groups.findIndex((group) => group.id === action.groupId)
-            group = board.groups[groupIdx]
-            group.tasks.push(action.task)
-            board.groups.splice(groupIdx, 1, group)
-            return { ...state, board }
-
-        case 'REMOVE_TASK': // EXAMPLE: { groupId: 'g102', taskId: 'c103' }
-            board = state.board
-            groupIdx = board.groups.findIndex((group) => group.id === action.groupId)
-            group = board.groups[groupIdx].filter(task => task.id !== action.taskId)
-            board.groups.splice(groupIdx, 1, group)
-            return { ...state, board }
 
         case 'REMOVE_BOARD':
             boards = state.boards.filter(board => board._id !== action.boardId)

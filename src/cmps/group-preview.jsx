@@ -2,20 +2,21 @@ import { GroupHeader } from "./group-header"
 import { GroupContent } from "./group-content"
 import { useState } from "react"
 
-export const GroupPreview = ({group,boardId}) => {
-    const [isHeaderOpen,setIsHeaderOpen] = useState(true)
-    
+export const GroupPreview = ({ group, boardId }) => {
+    console.log('group from GroupPreview:', group)
+    const [isHeaderOpen, setIsHeaderOpen] = useState(true)
+
     return <section className="group-preview">
         {isHeaderOpen && <GroupHeader
-        group={group} 
-        setIsHeaderOpen={setIsHeaderOpen}
-        isHeaderOpen={isHeaderOpen}
+            group={group}
+            setIsHeaderOpen={setIsHeaderOpen}
+            isHeaderOpen={isHeaderOpen}
         />}
         {!isHeaderOpen && <GroupContent
-        group={group}
-        setIsHeaderOpen={setIsHeaderOpen}
-        isHeaderOpen={isHeaderOpen}
-        boardId={boardId}
+            group={group}
+            setIsHeaderOpen={setIsHeaderOpen}
+            isHeaderOpen={isHeaderOpen}
+            boardId={boardId}
         />}
     </section>
 }

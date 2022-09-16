@@ -102,9 +102,11 @@ export function updateBoard(board) {
 }
 
 export function addTask(task) {
+    console.log('task from boardAction:', task)
     return (dispatch, getState) => {
         taskService.save(task)
             .then(savedBoard => {
+                console.log('savedBoard.groups[0]:', savedBoard.groups[0])
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
                 showSuccessMsg('Task added')
             })

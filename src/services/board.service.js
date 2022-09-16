@@ -315,8 +315,7 @@ function getById(boardId) {
   return storageService.get(STORAGE_KEY, boardId)
     .then((board) => {
       if (!board) {
-        board = gBoards.find(board => board.id === boardId)
-        storageService.postMany(STORAGE_KEY, gBoards)
+        board = gBoards.find(board => board._id === boardId)
       }
       return board
     })

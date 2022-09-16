@@ -43,6 +43,7 @@ export const Board = () => {
 }
 
 const BoardDetails = ({ board }) => {
+  console.log('board from BoardDetails:', board)
   return (
     <div className="board-details">
       <GroupList board={board} />
