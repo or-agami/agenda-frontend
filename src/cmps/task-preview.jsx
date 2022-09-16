@@ -1,7 +1,6 @@
 import moment from 'moment/moment'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
 export const TaskPreview = ({ task }) => {
-    console.log(task)
     const getFormattedDateTime = (date) => {
         if(!date) return
             return moment(date).fromNow()
