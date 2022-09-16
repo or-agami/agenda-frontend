@@ -1,4 +1,5 @@
-export const TaskAdd = () => {
+
+export const TaskAdd = ({groupId}) => {
     const onAddTask =({taget}) => {
         
     }

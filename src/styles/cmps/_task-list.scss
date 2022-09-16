@@ -1,4 +1,29 @@
 .task-list {
     display: flex;
     flex-direction: column;
+    // position: relative;
+
+    .task-preview-container {
+        display: flex;
+        .btn-task-menu {
+            position: absolute;
+            left: -30px;
+            opacity: 0;
+            width: 35px;
+            height: 35px;
+
+            &:hover {
+                opacity: 1;
+            }
+        
+             svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+
+    }
+
+
 }
