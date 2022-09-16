@@ -13,13 +13,9 @@ export const GroupPreview = ({ group }) => {
   const { title } = group
   return (
     <div className="group">
-      {isOpen && <ul className="task-list">
-        <div className="group-header">
-          <ArrowRightSvg onClick={(ev) => onOpen(ev)} />
-          <h1 className="title">{title}</h1>
-        </div>
-        <li className="column-header column-header-task">
-          <div className="group-color"></div>
+      <h1 className="title">{title}</h1>
+      <ul className="task-list">
+        <li className="clean-list cmps">
           <span className="task">Task</span>
         </li>
         <li className="column-header column-header-developer">
@@ -31,12 +27,12 @@ export const GroupPreview = ({ group }) => {
         <li className="column-header column-header-date">
           <span className="date">Date</span>
         </li>
-      </ul>}
-      {isOpen && <div>
+      </ul>
+      <div>
         {group.tasks.map((task) => (
           <TaskPreview key={task.id} task={task} />
         ))}
-      </div>}
+      </div>
     </div>
   )
 }

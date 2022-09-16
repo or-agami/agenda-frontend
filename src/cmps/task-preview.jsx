@@ -1,6 +1,6 @@
 export const TaskPreview = ({ task }) => {
     return (
-        <li key={task.id} className="task-row">
+        <li key={task.id} className="clean-list task-row">
             <span className="task">{task.title}</span>
             <span className="developer">{task.memberIds ? task.memberIds[0] : ''}</span>
             <span className="status">{task.status}</span>
