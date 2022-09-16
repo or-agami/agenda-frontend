@@ -37,5 +37,5 @@ function save(newTask) {
   console.log('group:', group)
   const task = { id: utilService.makeId(), title: newTask.title }
   group.tasks.push(task)
-  groupService.save(group)
+  return groupService.save(group)
 }

@@ -38,5 +38,5 @@ function save(newGroup) {
       (group.id === newGroup.id) ? newGroup : group)
   }
   else board.groups.push({...newGroup, id: utilService.makeId()})
-  boardService.save(board)
+  return boardService.save(board)
 }
