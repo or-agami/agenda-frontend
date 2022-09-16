@@ -7,6 +7,7 @@ import { BoardList } from '../cmps/board-list'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadBoards } from '../store/board/board.action'
+import { SideNavBar } from '../cmps/side-nav-bar'
 
 
 export const AppHome = () => {
@@ -99,7 +100,10 @@ const MyBoards = () => {
         target.classList.toggle('open')
         setIsMyboardsOpen(!isMyboardsOpen)
     }
+
     return <section className='app-home-myboards'>
+
+        <SideNavBar boards={boards} />
         <div className='app-home-myboards-header'>
             <ArrowRightSvg onClick={(ev) => onMyboardsOpen(ev)} />
             <h1>My boards</h1>
