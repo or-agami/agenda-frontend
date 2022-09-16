@@ -1,6 +1,7 @@
 import { boardService } from "../../services/board.service"
 // import { userService } from "../../services/user.service"
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service'
+import { taskService } from "../../services/task.service"
 
 
 export function loadBoards() {
@@ -100,8 +101,15 @@ export function updateBoard(board) {
     }
 }
 
-export function addMsg(msg) {
+export function addTask(task) {
     return (dispatch, getState) => {
-        dispatch({ type: 'ADD_MSG', msg })
+        taskService.save(task)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Task added')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to add task')
+            })
     }
 }
