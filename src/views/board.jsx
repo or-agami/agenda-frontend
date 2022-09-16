@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { loadBoard, loadBoards } from "../store/board/board.action"
 import { Loader } from "../cmps/loader"
-import { GroupPreview } from "../cmps/group-preview"
+import { GroupList } from "../cmps/group-list"
 import { SideNavBar } from "../cmps/side-nav-bar"
 
 export const Board = () => {
@@ -38,8 +38,7 @@ export const Board = () => {
 const BoardDetails = ({ board }) => {
   return (
     <div className="board-details">
-      {board.groups.map((group, idx) =>
-        <GroupPreview group={group} key={idx} />)}
+      <GroupList board={board}/>
     </div>
   )
 }

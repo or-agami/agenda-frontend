@@ -55,23 +55,3 @@
 //   }
 // }
 
-.group-preview {
-  list-style-type: none;
-  border: 1px solid var(--clr-disabled);
-  border-radius: 8px;
-  height: 58px;
-  display: flex;
-  align-items: center;
-
-  .group-header-color {
-    background-color: var(--clr-disabled);
-    width: 6px;
-    height: 60px;
-  }
-
-  .group-header-name {
-    display: flex;
-  }
-
-
-}
