@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
+import { ReactComponent as RightArrowSvg } from '../assets/icons/right-arrow.svg'
 
 export const LoginSignup = () => {
 
@@ -103,23 +104,23 @@ const Login = (props) => {
             <h1 className="title">Log in to your account</h1>
             <form className="flex form form-user-login"
                 onSubmit={(ev) => onUserLogin(ev)}>
-                <label class="enter-work-email" for="user_email">Enter your work email address</label>
+                <label class="label-username" for="username">Enter your work email address</label>
                 <input className="input input-username"
                     name="username"
                     type="text"
                     // value={username}
-                    placeholder="username"
-                    // onChange={handleChange} 
-                    />
-                <input className="input input-password"
+                    placeholder="Example@company.com"
+                // onChange={handleChange} 
+                />
+                {/* <input className="input input-password"
                     name="password"
                     type="password"
-                    // value={password}
+                    value={password}
                     placeholder="password"
-                    // onChange={handleChange} 
-                    />
+                    onChange={handleChange}
+                /> */}
                 <input type="submit" hidden />
-                <button className="btn btn-login">Login</button>
+                <button className="btn btn-svg btn-next">Next <RightArrowSvg /></button>
             </form>
         </section>
     )
