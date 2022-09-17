@@ -24,7 +24,7 @@ export const NavBar = () => {
 
   useEffect(() => {
     if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '317px 1fr')
-    else document.documentElement.style.setProperty('--board-grid-column', '96px 1fr')
+    else document.documentElement.style.setProperty('--board-grid-column', `${(params['*'] !== 'home') ? '96px' : '66px'} 1fr`)
     return (() => document.documentElement.style.removeProperty('--board-grid-column'))
   }, [isOpen, params])
 
