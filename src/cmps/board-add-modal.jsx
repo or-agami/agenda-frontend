@@ -1,13 +1,16 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import { addBoard } from "../store/board/board.action"
 
 export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
 
+    const navigate = useNavigate()
+    const board = useSelector(state => state.boardModule.board)
     const dispatch = useDispatch()
+
     useEffect(() => {
         document.body.classList.add('add-board-modal-open')
-
         return () => {
             document.body.classList.remove('add-board-modal-open')
         }
@@ -36,8 +39,8 @@ export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
                 </label>
                 <input autoFocus type="txt" id="name" />
                 <div className="add-modal-btns">
-                <button className="btn-create-board">Create</button>
-                <button onClick={onCloseAddModal}>Cancel</button>
+                    <button className="btn-create-board">Create</button>
+                    <button onClick={onCloseAddModal}>Cancel</button>
                 </div>
             </form>
         </div>

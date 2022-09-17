@@ -16,35 +16,23 @@ import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
 
 
-export const SideNavBar = ({ isOpen, setStatus }) => {
-
+export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
 
     const dispatch = useDispatch()
-    const boards = useSelector(state => state.boardModule.boards)
     const [isAddBoard, setIsAddBoard] = useState(false)
 
-
     const toggleSideNav = () => {
-        setStatus(!isOpen)
+        setIsOpen(!isOpen)
     }
 
-    useEffect(() => {
-        if (!boards || boards.length < 1) {
-            dispatch(loadBoards())
-        }
-    }, [])
-
-
-
     if (!boards || boards.length < 1) return
-    console.log('bolean', isAddBoard);
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
         <div className="side-board-opts">
-            <p className="board-name">{boards[0].title}</p>
-            <BoardMenu />
+            <p className="board-name">Workspace</p>
+            {/* <BoardMenu /> */}
         </div>
         <div className="side-nav-details">
             <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
@@ -64,7 +52,10 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
         {boards &&
             <div className="nav-board-list">
                 {boards.map(board =>
-                    <NavBoardPreview board={board} key={board._id} />)}
+                    <NavBoardPreview setCurrBoard={setCurrBoard} 
+                    board={board} 
+                    key={board._id} 
+                    boards={boards} />)}
             </div>}
         {isAddBoard &&
             <AddBoardModal setIsAddBoard={setIsAddBoard}
@@ -74,7 +65,8 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
 
 
 
-const NavBoardPreview = ({ board }) => {
+
+const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
 
     const dispatch = useDispatch()
     const [isBoardOpts, setIsBoardOpts] = useState(false)
@@ -92,6 +84,7 @@ const NavBoardPreview = ({ board }) => {
         ev.stopPropagation()
         dispatch(removeBoard(boardId))
         setIsBoardOpts(!isBoardOpts)
+        setCurrBoard(boards[0])
     }
 
     const onEditBoard = (ev) => {
@@ -111,13 +104,12 @@ const NavBoardPreview = ({ board }) => {
 
     if (isRenaming) return <form className="rename-board" onSubmit={onRenameBoard} onBlur={onRenameBoard}>
         <BoardIcon />
-        <input autoFocus type="text" name='title' value={renameBoard.title} onChange={handleChange}/>
+        <input autoFocus type="text" name='title' value={renameBoard.title} onChange={handleChange} />
     </form>
-
     return (
         <NavLink to={`/workspace/board/${board._id}`} className="nav-board-preview">
             <BoardIcon />
-                <p className="nav-board-title">{board.title}</p>
+            <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
             {isBoardOpts && <div className='board-opts-modal'>
                 <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">

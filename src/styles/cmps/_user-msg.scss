@@ -1,18 +1,24 @@
 .user-msg {
   position: fixed;
   top: 10px;
-  right: 10px;
+  right: 50%;
+  transform: translate(-50% -50%);
   display: flex;
-  flex-direction: column;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 5px 20px;
+  color: var(--clr-item-bg);
+  border-radius: 0.3em;
   gap: 10px;
+  z-index: 100;
+
+  button {
+    color: var(--clr-item-bg);
+  }
 
   &.success {
-      background-color: lightgreen;
+      background-color: #25874f;
   }
 
   &.error {
-      background-color: lightcoral;
+      background-color: #d83a52;
   }
 }

@@ -15,34 +15,55 @@ import { ReactComponent as HelpSvg } from '../assets/icons/nav-bar/help.svg';
 import { ReactComponent as MenuSvg } from '../assets/icons/nav-bar/menu.svg';
 import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-color.svg';
 import { SideNavBar } from './side-nav-bar';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from './loader';
+import { loadBoard, loadBoards } from '../store/board/board.action';
 
 
 export const NavBar = () => {
 
+  const dispatch = useDispatch()
+  const { board, boards } = useSelector(state => state.boardModule)
   const params = useParams()
-  const [isOpen, setStatus] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [currBoard, setCurrBoard] = useState()
 
   useEffect(() => {
-    if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '317px 1fr')
-    else document.documentElement.style.setProperty('--board-grid-column', `${(params['*'] !== 'home') ? '96px' : '66px'} 1fr`)
+    if (!boards || boards.length <= 0) {
+      dispatch(loadBoards())
+    }
+    if (boards.length > 0 && !board) {
+      dispatch(loadBoard(boards[0]._id))
+      setCurrBoard(boards[0])
+    }
+  }, [boards, board])
+
+  useEffect(() => {
+    if (isOpen){
+      document.documentElement.style.setProperty('--board-grid-column', '317px')
+    } 
+    else {
+      document.documentElement.style.setProperty('--board-grid-column', `${(params['*'] !== 'home') ? '96px' : '66px'}`)
+    } 
     return (() => document.documentElement.style.removeProperty('--board-grid-column'))
   }, [isOpen, params])
 
 
-
+  if (!currBoard) return <Loader />
+  console.log(boards, currBoard);
   return (
     <Fragment>
       {params['*'] !== 'home' &&
-        <SideNavBar isOpen={isOpen} setStatus={setStatus} />}
+        <SideNavBar setCurrBoard={setCurrBoard} boards={boards} board={currBoard} isOpen={isOpen} setIsOpen={setIsOpen} />}
       <section className="nav-bar">
         <button className="btn btn-home">
-          <NavLink to="/workspace/home"><AgendaLogoSvg />
+          <NavLink onClick={() => setIsOpen(false)} to="/workspace/home"><AgendaLogoSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-board">
-          <NavLink to="/workspace/board/b101"><BoardSvg />
+          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${params.boardId ? 'active' : ''}`}><BoardSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
