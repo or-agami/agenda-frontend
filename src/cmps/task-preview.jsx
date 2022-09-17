@@ -45,7 +45,7 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
                 <li className="task-preview-item">
                     {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{task.title}</h4>}
                     {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)} onBlur={updateTitle}>
-                        <input type="text" value={editedTask.title} name="title" onChange={handleChange} />
+                        <input type="text" autoFocus value={editedTask.title} name="title" onChange={handleChange} />
                     </form>}
                 </li>
                 <li className="task-preview-start-conversation">

@@ -51,6 +51,8 @@
     .group-header-name {
       min-width: 392px;
       display: flex;
+      font-size: 18px;
+      font-weight: 500;
     }
   
     .group-header-name:not(:last-child) {

@@ -1,8 +1,16 @@
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import { TaskList } from './task-list'
+import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
+import { useState } from 'react'
+import { GroupMenu } from './group-menu'
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
+    const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const { title } = group
+
+    const onSetIsGroupMenuOpen = () => {
+        setIsGroupMenuOpen(prevState => prevState = !isGroupMenuOpen)
+    }
 
     const onSetIsHeaderOpen = ({ target }) => {
         target.classList.toggle('open')
@@ -13,6 +21,8 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
 
     return <section className="group-content">
         <div className='group-content-title'>
+            <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+            {isGroupMenuOpen && <GroupMenu groupId={group.id} boardId={boardId} />}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg />
             </button>
@@ -47,9 +57,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
             </li> */}
         </ul>
         <div className='group-content-tasks'>
-            <TaskList 
-            group={group} 
-            boardId={boardId}
+            <TaskList
+                group={group}
+                boardId={boardId}
             />
         </div>
     </section>
