@@ -3,9 +3,15 @@ import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
 import { TaskMenu } from './task-menu'
 import { useState } from 'react'
+import { useForm } from '../hooks/useForm'
+import { updateTask } from '../store/board/board.action'
+import { useDispatch } from 'react-redux'
+
 export const TaskPreview = ({ task, groupId, boardId }) => {
     const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
+    const [editedTask, handleChange, setTask] = useForm(task)
+    const dispatch = useDispatch()
 
     const onSetIsTaskMenuOpen = () => {
         setIsTaskMenuOpen(prevState => prevState = !isTaskMenuOpen)
@@ -17,9 +23,11 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
     }
 
     const updateTitle = (ev) => {
-        // (ev.target.value) ? task.title = ev.target.innerText : task.title = ev.target[0]
-        // console.log(task.title)
+        if (ev) ev.preventDefault()
+        dispatch(updateTask({task:editedTask,groupId,boardId}))
+        setIsEditTitle(prevState => prevState = !isEditTitle)
     }
+
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
@@ -36,8 +44,8 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             <div className='item-container-right'>
                 <li className="task-preview-item">
                     {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{task.title}</h4>}
-                    {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)}>
-                        <input type="text" placeholder={task.title} onBlur={(ev) => updateTitle(ev)} />
+                    {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)} onBlur={updateTitle}>
+                        <input type="text" value={editedTask.title} name="title" onChange={handleChange} />
                     </form>}
                 </li>
                 <li className="task-preview-start-conversation">
