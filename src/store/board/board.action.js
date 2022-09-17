@@ -84,9 +84,9 @@ export function addBoard(board) {
 export function updateBoard(board) {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
-        boardService.save(board)
-            .then(savedBoard => {
-                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+        boardService.update(board)
+            .then(updatedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
                 showSuccessMsg('Board updated')
             })
             .catch(err => {

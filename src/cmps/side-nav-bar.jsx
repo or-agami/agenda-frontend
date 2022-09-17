@@ -8,10 +8,12 @@ import { useState } from "react"
 import { Link, NavLink, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { loadBoards, removeBoard } from '../store/board/board.action'
+import { loadBoards, removeBoard, updateBoard } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
 import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
+import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
+import { useForm } from '../hooks/useForm'
 
 
 export const SideNavBar = ({ isOpen, setStatus }) => {
@@ -76,6 +78,8 @@ const NavBoardPreview = ({ board }) => {
 
     const dispatch = useDispatch()
     const [isBoardOpts, setIsBoardOpts] = useState(false)
+    const [isRenaming, setIsRenaming] = useState(false)
+    const [renameBoard, handleChange] = useForm({ title: board.title })
 
     const openBoardSettings = (ev) => {
         ev.preventDefault()
@@ -90,15 +94,41 @@ const NavBoardPreview = ({ board }) => {
         setIsBoardOpts(!isBoardOpts)
     }
 
-    return <NavLink to={`/workspace/board/${board._id}`} className="nav-board-preview">
+    const onEditBoard = (ev) => {
+        ev.preventDefault()
+        ev.stopPropagation()
+        setIsRenaming(!isRenaming)
+        setIsBoardOpts(!isBoardOpts)
+    }
+
+    const onRenameBoard = (ev) => {
+        ev.preventDefault()
+        board = { ...board, ...renameBoard }
+        setIsRenaming(!isRenaming)
+        dispatch(updateBoard(board))
+    }
+
+
+    if (isRenaming) return <form className="rename-board" onSubmit={onRenameBoard} onBlur={onRenameBoard}>
         <BoardIcon />
-        <p className="nav-board-title">{board.title}</p>
-        <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-        {isBoardOpts && <div className='board-opts-modal'>
-            <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
-                <TrashIcon />
-                <span>Remove board</span>
-            </div>
-        </div>}
-    </NavLink>
+        <input autoFocus type="text" name='title' value={renameBoard.title} onChange={handleChange}/>
+    </form>
+
+    return (
+        <NavLink to={`/workspace/board/${board._id}`} className="nav-board-preview">
+            <BoardIcon />
+                <p className="nav-board-title">{board.title}</p>
+            <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
+            {isBoardOpts && <div className='board-opts-modal'>
+                <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
+                    <PencilIcon />
+                    <span>Rename Board</span>
+                </div>
+                <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
+                    <TrashIcon />
+                    <span>Remove Board</span>
+                </div>
+            </div>}
+        </NavLink>
+    )
 }
