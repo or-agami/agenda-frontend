@@ -15,7 +15,7 @@ export const TaskPreview = ({ task }) => {
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {isTaskMenuOpen && <TaskMenu/>}
+        {isTaskMenuOpen && <TaskMenu />}
         <li className="task-preview-group-color">
         </li>
         <li className='task-preview-checkbox'>
