@@ -16,14 +16,14 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
 
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boardModule.boards)
-    const [isAddBoard, setIsAddBoard] = useState({ isAddBoard: false })
+    const [isAddBoard, setIsAddBoard] = useState(false)
 
     const toggleSideNav = () => {
         setStatus(!isOpen)
     }
 
     useEffect(() => {
-        setIsAddBoard(!isAddBoard)
+        // setIsAddBoard(!isAddBoard)
         if (!boards || boards.length < 1) {
             dispatch(loadBoards())
         }
@@ -64,6 +64,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
                         </div>
                     </Link>)}
             </div>}
-        {isAddBoard && <AddBoardModal />}
+        {isAddBoard &&
+         <AddBoardModal />}
     </section>
 }

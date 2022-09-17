@@ -14,7 +14,7 @@ export const Board = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
-  const [isOpen, setStatus] = useState({ isOpen: false })
+  const [isOpen, setStatus] = useState(false)
 
   useEffect(() => {
     const boardId = params.boardId
