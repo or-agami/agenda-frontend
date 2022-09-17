@@ -3,7 +3,6 @@ import { GroupContent } from "./group-content"
 import { useState } from "react"
 
 export const GroupPreview = ({ group, boardId }) => {
-    console.log('group from GroupPreview:', group)
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
 
     return <section className="group-preview">
