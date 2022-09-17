@@ -162,3 +162,16 @@ export function updateGroup(group) {
             })
     }
 }
+
+export function removeGroup(group) {
+    return (dispatch, getState) => {
+        groupService.remove(group)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Group removed')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to remove group')
+            })
+    }
+}

@@ -1,5 +1,12 @@
 .board-app {
+  position: relative;
   grid-column: 2;
   overflow-x: auto;
   min-height: 100vh;
+  padding-left: 20px;
+
+  .board-details {
+    position: relative;
+    top: 130px;
+  }
 }
