@@ -1,6 +1,7 @@
 import { store } from "../store/store";
 import { storageService } from "./async-storage.service";
 import { httpService } from "./http.service"
+import { utilService } from "./util.service";
 
 export const boardService = {
   query,
@@ -341,6 +342,8 @@ function update(board) {
 
 function save(board) {
   //?- Dev:
+  // Todo: board.createBy
+  board.groups = [{ id: utilService.makeId(), title: 'Group 1', tasks: [] }]
   return storageService.post(STORAGE_KEY, board)
   //?- Prod:
   // if (board._id) return httpService.put(BASE_URL + board._id, board)
