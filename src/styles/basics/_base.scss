@@ -1,15 +1,14 @@
+html {
+    font-family: roboto, roboto-light, Helvetica, sans-serif;
+    color: var(--clr-txt);
+}
+
 body {
     box-sizing: border-box;
     margin: 0;
     background-color: var(--clr-item-bg);
     min-height: 100vh;
 }
-
-html {
-    font-family: roboto, roboto-light, Helvetica, sans-serif;
-    color: var(--clr-txt);
-}
-
 
 
 h1,
