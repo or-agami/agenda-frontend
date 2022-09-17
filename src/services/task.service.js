@@ -8,33 +8,37 @@ import { utilService } from "./util.service";
 export const taskService = {
   getById,
   save,
+  update,
   remove,
 }
 
-function getById(boardId) {
+async function getById({ taskId, groupId, boardId }) {
   //?- Dev:
-  // return boardService.get(STORAGE_KEY, boardId)
-  //   .then((board) => {
-  //     if (!board) {
-  //       board = gBoards.find(board => board.id === boardId)
-  //       boardService.postMany(STORAGE_KEY, gBoards)
-  //     }
-  //     return board
-  //   })
+  const group = await groupService.getById(groupId, boardId)
+  const task = group.tasks.find(t => t.id === taskId)
+  return task
   //?- Prod:
   // return httpService.get(BASE_URL + boardId)
 }
 
-function remove(boardId) {
+async function remove({ taskId, groupId, boardId }) {
   //?- Dev:
-  // return boardService.remove(STORAGE_KEY, boardId)
+  const group = await groupService.getById(groupId, boardId)
+  group.tasks = group.tasks.filter((t) => t.id !== taskId)
+  return groupService.save(group, boardId)
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }
 
-async function save(newTask) {
-  let group = await groupService.getById(newTask.groupId,newTask.boardId)
-  const task = { id: utilService.makeId(), title: newTask.title }
+async function update({ task, groupId, boardId }) {
+  const group = await groupService.getById(groupId, boardId)
+  group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
+  return groupService.save(group, boardId)
+}
+
+async function save({ taskTitle, groupId, boardId }) {
+  const group = await groupService.getById(groupId, boardId)
+  const task = { id: utilService.makeId(), title: taskTitle }
   group.tasks.push(task)
-  return groupService.save(group, newTask.boardId)
+  return groupService.save(group, boardId)
 }
