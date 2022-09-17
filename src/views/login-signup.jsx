@@ -2,6 +2,7 @@ import { login, signup } from '../store/user/user.action'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useForm } from '../hooks/useForm'
 
 export const LoginSignup = () => {
 
@@ -21,7 +22,7 @@ export const LoginSignup = () => {
     }
     return (
         <section className="login-signup">
-            <form className="form user-signup"
+            {/* <form className="form user-signup"
                 onSubmit={(ev) => onUserSignup(ev)}>
                 <input className="input input-username"
                     name="username"
@@ -43,7 +44,7 @@ export const LoginSignup = () => {
                     onChange={handleChange} />
                 <input type="submit" hidden />
                 <button className="btn btn-register">Register</button>
-            </form>
+            </form> */}
         </section>
     )
 }
@@ -63,7 +64,7 @@ const Signup = (props) => {
     }
     return (
         <section className="login-signup">
-            <form className="form user-signup"
+            {/* <form className="form user-signup"
                 onSubmit={(ev) => onUserSignup(ev)}>
                 <input className="input input-username"
                     name="username"
@@ -85,7 +86,7 @@ const Signup = (props) => {
                     onChange={handleChange} />
                 <input type="submit" hidden />
                 <button className="btn btn-register">Register</button>
-            </form>
+            </form> */}
         </section>
     )
 }
@@ -99,12 +100,12 @@ const Login = (props) => {
 
     const onUserLogin = (ev) => {
         ev.preventDefault()
-        console.log('signupFields:', signupFields)
+        // console.log('signupFields:', signupFields)
     }
 
     return (
         <section className="user-login">
-            <form className="form user-login"
+            {/* <form className="form user-login"
                 onSubmit={(ev) => onUserLogin(ev)}>
                 <input className="input input-username"
                     name="username"
@@ -120,7 +121,7 @@ const Login = (props) => {
                     onChange={handleChange} />
                 <input type="submit" hidden />
                 <button className="btn btn-login">Login</button>
-            </form>
+            </form> */}
         </section>
     )
 }
