@@ -3,11 +3,15 @@ import { TaskList } from './task-list'
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { useState } from 'react'
 import { GroupMenu } from './group-menu'
+import { useDispatch } from 'react-redux'
+import { useForm } from '../hooks/useForm'
+import { updateGroup } from '../store/board/board.action'
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
     const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
-    const { title } = group
-
+    const [isEditTitle, setIsEditTitle] = useState(false)
+    const [editedGroup, handleChange, setGroup] = useForm(group)
+    const dispatch = useDispatch()
     const onSetIsGroupMenuOpen = () => {
         setIsGroupMenuOpen(prevState => prevState = !isGroupMenuOpen)
     }
@@ -17,6 +21,11 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
         setIsHeaderOpen(prevState => prevState = !isHeaderOpen)
     }
 
+    const updateGroupName = (ev) => {
+        if (ev) ev.preventDefault()
+        dispatch(updateGroup({group:editedGroup,boardId}))
+        setIsEditTitle(prevState => prevState = !isEditTitle)
+    }
 
 
     return <section className="group-content">
@@ -26,7 +35,10 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg />
             </button>
-            <h4>{title}</h4>
+            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{group.title}</h4>}
+            {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} />
+            </form>}
         </div>
         <ul className="group-content-header">
             <li className="group-content-header-color">

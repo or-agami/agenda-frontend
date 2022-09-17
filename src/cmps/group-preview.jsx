@@ -10,6 +10,7 @@ export const GroupPreview = ({ group, boardId }) => {
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
+            boardId={boardId}
         />}
         {!isHeaderOpen && <GroupContent
             group={group}
