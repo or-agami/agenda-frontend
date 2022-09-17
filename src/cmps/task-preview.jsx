@@ -37,7 +37,7 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
 
 
     return <ul key={task.id} className="clean-list task-preview">
-        <button className='btn btn-svg btn-task-menu' onClick={onSetIsTaskMenuOpen}><BoardMenu /></button>
+        <button className='btn btn-svg btn-task-menu' onClick={()=>onSetIsTaskMenuOpen()}><BoardMenu /></button>
         {isTaskMenuOpen && <TaskMenu taskId={task.id} groupId={groupId} boardId={boardId} />}
         <li className="task-preview-group-color">
         </li>
@@ -67,10 +67,10 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             {!task.members && <NoPersonSvg className="svg-no-person" />}
             {task.members && <h4> {task.members[0].fullname}</h4>}
         </li>
-        <li className="task-preview-status same-width" onClick={onSetTaskStatusMenuOpen()}>
+        <li className="task-preview-status same-width" onClick={()=>onSetTaskStatusMenuOpen()}>
             <h4>{task.status}</h4>
         </li>
-        {/* {isTaskStatusMenuOpen && <TaskStatusMenu taskId={task.id} groupId={groupId} boardId={boardId} />} */}
+        {isTaskStatusMenuOpen && <TaskStatusMenu taskId={task.id} groupId={groupId} boardId={boardId} />}
         <li className="task-preview-priority same-width">
             <h4>{task.priority}</h4>
         </li>
