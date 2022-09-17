@@ -21,9 +21,9 @@
         justify-content: center;
     }
     
-    li:nth-child(n+3){
-        min-width: 138px;
-    }
+    // li:nth-child(n+4){
+       
+    // }
     
     li:nth-child(n+3):not(:last-child) {
         border-right: 1px solid var(--clr-disabled);
@@ -54,10 +54,15 @@
         min-height: 35px;
         margin: 0;
         // margin-left: 28px;
+        // margin-right: 60px;
         padding: 0;
         display: flex;
         flex-direction: row;
         list-style-type: none;
+
+        .same-width {
+            min-width: 138px;
+        }
 
         .group-content-header-color:first-child {
             border-start-start-radius: 8px;

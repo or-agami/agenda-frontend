@@ -27,16 +27,16 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
             <li className="group-content-header-item">
                 <h4>Item</h4>
             </li>
-            <li className="group-content-header-developer">
+            <li className="group-content-header-developer same-width">
                 <h4>Person</h4>
             </li>
-            <li className="group-content-header-status">
+            <li className="group-content-header-status same-width">
                 <h4>Status</h4>
             </li>
-            <li className="group-content-header-priority">
+            <li className="group-content-header-priority same-width">
                 <h4>Priority</h4>
             </li>
-            <li className="group-content-header-last-updated">
+            <li className="group-content-header-last-updated same-width">
                 <h4>Last updated</h4>
             </li>
             {/* <li className="group-content-header-files">

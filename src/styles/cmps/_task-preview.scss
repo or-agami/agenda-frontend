@@ -4,11 +4,12 @@
     padding: 0;
     border-bottom: 1px solid var(--clr-disabled);
 
+    .same-width {
+        min-width: 138px;
+    }
+
     &:last-child {
         border-end-start-radius: 8px;
-        .task-preview-group-color {
-            // border-end-start-radius: 8px;
-        }
     }
  
     li:not(:nth-child(1)) {
