@@ -35,7 +35,7 @@ const BoardControls = () => {
   return (
     <div className="flex aline btns-container">
       <div className="btn btn-highlight btn-options">
-        <button className="btn new-task">
+        <button className="btn btn-new-task">
           <span>New Task</span>
         </button>
         <button className="btn btn-drop-down">
@@ -46,23 +46,23 @@ const BoardControls = () => {
         <BiSearch />
         <span>Search</span>
       </button>
-      <button className="btn btn-svg btn-ri btn-person">
+      <button className="btn btn-svg btn-person">
         <PersonSvg />
         <span>Person</span>
       </button>
-      <button className="btn btn-svg btn-ri btn-filter">
+      <button className="btn btn-svg btn-filter">
         <FilterSvg />
         <span>Filter</span>
       </button>
-      <button className="btn btn-svg btn-ri btn-sort">
+      <button className="btn btn-svg btn-sort">
         <SortSvg />
         <span>Sort</span>
       </button>
-      <button className="btn btn-svg btn-ri btn-hide">
+      <button className="btn btn-svg btn-hide">
         <HideSvg />
         <span>Hide</span>
       </button>
-      <button className="btn btn-svg btn-ri btn-task-menu">
+      <button className="btn btn-svg btn-task-menu">
         <BoardMenuSvg />
       </button>
     </div>
