@@ -16,7 +16,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
 
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boardModule.boards)
-    const [isAddBoard, setIsAddBoard] = useState({ isAddBoard: false })
+    const [isAddBoard, setIsAddBoard] = useState(false)
 
     const toggleSideNav = () => {
         setStatus(!isOpen)
