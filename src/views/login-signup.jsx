@@ -65,7 +65,7 @@ const Signup = (props) => {
               <h1 className="title">Welcome to agenda.com</h1>
               <h2 className="sub-title">Get started - it's free. No credit card needed.</h2>
             </div>
-            <form className="flex column form form-user-signup"
+            <form className="flex column form form-user-login-signup"
               onSubmit={(ev) => onUserSignup(ev)}>
               <label className="label-username" for="username">Enter email</label>
               <input className="input input-username"
@@ -83,7 +83,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                 /> */}
               <input type="submit" hidden />
-              <button className="btn btn-svg btn-next">Next <RightArrowSvg /></button>
+              <button className="btn btn-svg btn-continue">Continue</button>
             </form>
             <div className="flex justify-center align-center login-signup-separator split-line">
               <span className="separator-line"></span>
