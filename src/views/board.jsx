@@ -16,8 +16,14 @@ export const Board = () => {
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
 
   useEffect(() => {
+    if (isLoading) return
     const boardId = params.boardId
-    if (!board || board._id !== boardId) dispatch(loadBoard(boardId))
+    if ((!board || board._id !== boardId)){
+      dispatch(loadBoard(boardId))
+    } 
+    // if (board) {
+      
+    // }
   }, [params])
   
   return (

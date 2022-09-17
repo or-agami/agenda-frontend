@@ -70,10 +70,9 @@ export function addBoard(board) {
         boardService.save(board)
             .then(savedBoard => {
                 dispatch({ type: 'ADD_BOARD', board: savedBoard })
-                showSuccessMsg('Board added')
             })
             .catch(err => {
-                showErrorMsg('Failed to add board')
+                showErrorMsg('Failed to add board try again')
             })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })

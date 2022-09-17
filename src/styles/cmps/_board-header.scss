@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: 20px 10px 10px 20px;
   position: fixed;
-  width: calc(100vw - 360px);
+  width: calc(100vw - var(--board-grid-column) - 40px);
 
   .board-info {
     justify-content: space-between;

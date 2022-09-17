@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { eventBusService } from '../services/event-bus.service'
-
+import { HiCheck } from 'react-icons/hi'
 
 export class UserMsg extends Component {
 
@@ -29,9 +29,10 @@ export class UserMsg extends Component {
         const msgClass = msg.type || ''
         return (
             <section className={'user-msg ' + msgClass}>
+                <HiCheck />
                 {this.state.msg.txt}
                 <button onClick={() => { this.setState({ msg: null }) }}>
-                    Dismiss
+                    X
                 </button>
             </section>
         )

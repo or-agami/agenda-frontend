@@ -6,7 +6,7 @@
 
 .agenda-app {
     display: grid;
-    grid-template-columns: var(--board-grid-column);
+    grid-template-columns: var(--board-grid-column) 1fr;
     overflow-x: hidden;
 }
 
