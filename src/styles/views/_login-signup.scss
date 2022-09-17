@@ -1,47 +1,222 @@
 .login-signup {
     * {
         box-sizing: border-box;
+        font-family: roboto-light;
     }
 
     .main-header {
         width: 100%;
-        margin-bottom: 60px;
+        margin-bottom: 75px;
+        padding: 0px 14px;
+        width: 100%;
+        display: block;
+        padding-top: 5px;
+        padding-left: 8px;
+        border-bottom: 1px solid #e0e0e0;
+        height: 65px;
+        background: #f7f7f7;
 
         .main-header-container {
-            padding: 0px 14px;
+            // padding: 0px 14px;
+            // width: 100%;
+            // display: block;
+            // padding-top: 5px;
+            // padding-left: 8px;
+            // border-bottom: 1px solid #e0e0e0;
+            // height: 65px;
+            // background: #f7f7f7;
+        }
+    }
+
+    .form-user-login {
+        gap: 4px;
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 32px;
+        width: 360px;
+
+        .label-username {
+            font-family: roboto-medium;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .input {
             width: 100%;
-            display: block;
-            padding-top: 5px;
-            padding-left: 8px;
-            border-bottom: 1px solid #e0e0e0;
-            height: 65px;
-            background: #f7f7f7;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #555;
+            outline: none;
+        }
+
+        .btn-next {
+            width: 100%;
+            min-width: 100%;
+            height: 48px;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 28px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            background-color: var(--clr-btn-highlight);
+            color: #fff;
+            gap: 11px;
+            font-family: roboto;
+
+            svg * {
+                fill: white;
+            }
+        }
+    }
+
+    .login-signup-separator {
+        margin-bottom: 32px;
+
+        h2 {
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .separator-line {
+            width: 200px;
+            border: .5px solid #c5c7d0;
+            margin: 16px;
+        }
+    }
+
+    .btn-login-google {
+        padding: 12px 16px;
+        border-radius: 4px;
+        border: 1px solid #c5c7d0;
+        gap: 8px;
+        margin-bottom: 32px;
+
+        .img {
+            width: 16px;
+        }
+
+        span {
+            font-family: tahoma;
+            font-size: 14px;
+        }
+    }
+
+    .suggest-signup {
+        .suggest-signup-prefix {
+            padding-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0fa2e2;
+        }
+    }
+
+    .signup {
+        background-image: url("https://dapulse-res.cloudinary.com/image/upload/monday_platform/signup/signup-background.png");
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-attachment: fixed;
+        background-size: cover;
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        font-family: Roboto, helvetica;
+
+        .signup-split-container {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 535px;
+            border-radius: 1rem;
+            background-color: white;
+
+            .signup-content-wrapper {
+                // flex: 1;
+                // padding: 48px 56px;
+                padding: 48px 0;
+                margin: 0 auto;
+                position: relative;
+
+                .signup-content {
+                    max-width: 360px;
+                    margin: 0 auto;
+
+                    .signup-titles {
+                        .title {
+                            font-family: roboto-medium;
+                            font-size: 24px;
+                            color: var(--task-text-color);
+                        }
+
+                        .sub-title {
+                            font-family: roboto;
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 26px;
+                            color: var(--clr-txt-asphalt);
+                        }
+                    }
+                }
+            }
+
+            .side-img-wrapper {
+                width: 262px;
+
+                .img-container {
+                    height: 100%;
+
+                    .img {
+                        width: 262px;
+                        height: 100%;
+                    }
+                }
+
+                .side-text-wrapper {
+                    margin: 0 auto;
+                    position: relative;
+                    font-weight: 300;
+                    color: white;
+                    bottom: 90px;
+                    text-align: center;
+                    width: 200px;
+                }
+            }
+
         }
     }
 
     .login {
-        flex-direction: column;
-        align-items: center;
 
         .title {
             font-family: roboto-thin;
             font-size: 40px;
             font-weight: 100;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .form-user-login {
-            // align-items: center;
-            flex-direction: column;
             gap: 4px;
             text-align: center;
             margin: 0 auto;
+            margin-bottom: 32px;
             width: 360px;
 
             .label-username {
                 font-family: roboto-medium;
                 font-weight: 500;
-                // margin-bottom: 4px;
+                margin-bottom: 2px;
             }
 
             .input {
@@ -51,6 +226,7 @@
                 border: 1px solid #ccc;
                 padding: 6px 12px;
                 font-size: 16px;
+                margin-bottom: 16px;
                 color: #555;
                 outline: none;
             }
@@ -70,10 +246,55 @@
                 font-size: 18px;
                 background-color: var(--clr-btn-highlight);
                 color: #fff;
+                gap: 11px;
+                font-family: roboto;
 
                 svg * {
                     fill: white;
                 }
+            }
+        }
+
+        .login-signup-separator {
+            margin-bottom: 32px;
+
+            h2 {
+                font-size: 16px;
+                font-weight: 300;
+            }
+
+            .separator-line {
+                width: 200px;
+                border: .5px solid #c5c7d0;
+                margin: 16px;
+            }
+        }
+
+        .btn-login-google {
+            padding: 12px 16px;
+            border-radius: 4px;
+            border: 1px solid #c5c7d0;
+            gap: 8px;
+            margin-bottom: 32px;
+
+            .img {
+                width: 16px;
+            }
+
+            span {
+                font-family: tahoma;
+                font-size: 14px;
+            }
+        }
+
+        .suggest-signup {
+            .suggest-signup-prefix {
+                padding-right: 5px;
+            }
+
+            a {
+                text-decoration: none;
+                color: #0fa2e2;
             }
         }
     }
