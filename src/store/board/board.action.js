@@ -124,6 +124,19 @@ export function updateTask(task) {
     }
 }
 
+export function removeTask(task) {
+    return (dispatch, getState) => {
+        taskService.remove(task)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Task removed')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to remove task')
+            })
+    }
+}
+
 export function addGroup(group) {
     return (dispatch, getState) => {
         groupService.save(group)
