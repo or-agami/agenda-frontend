@@ -6,6 +6,7 @@ export const boardService = {
   query,
   getById,
   save,
+  update,
   remove,
 }
 //?- Dev:
@@ -330,10 +331,17 @@ function remove(boardId) {
   // return httpService.delete(BASE_URL + boardId)
 }
 
-function save(board) {
+function update(board) {
   //?- Dev:
   if (board._id) return storageService.put(STORAGE_KEY, board)
-  else return storageService.post(STORAGE_KEY, board)
+  //?- Prod:
+  // if (board._id) return httpService.put(BASE_URL + board._id, board)
+  // else return httpService.post(BASE_URL, board)
+}
+
+function save(board) {
+  //?- Dev:
+  return storageService.post(STORAGE_KEY, board)
   //?- Prod:
   // if (board._id) return httpService.put(BASE_URL + board._id, board)
   // else return httpService.post(BASE_URL, board)
