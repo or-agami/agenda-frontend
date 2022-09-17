@@ -4,8 +4,47 @@
     padding: 0;
     border-bottom: 1px solid var(--clr-disabled);
 
+
+
+
+
     .task-preview-status {
-        
+        background-color: var(--clr-empty);
+        // font-family:arial,sans-serif;
+        font-weight: bold;
+        color: white;
+        box-sizing: border-box;
+        // text-transform:uppercase;
+        text-align: center;
+
+        // background:#20b5bf;
+        position: relative;
+
+        .fold {
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            border-width: 0;
+            border-style: solid;
+            background: rgba(0, 0, 0, 0.352);
+            display: block;
+            border-color: transparent #fff transparent #fff;
+            transition: border-width 0.2s ease-out;
+        }
+
+        &:hover .fold {
+            border-width: 0px 10px 10px 0px;
+            transition-delay: .2s;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+
+
     }
 
     .task-preview-item input {
@@ -30,7 +69,7 @@
 
         svg {
             width: 30px;
-            fill: var( --clr-disabled-permenent);
+            fill: var(--clr-disabled-permenent);
         }
 
         &:hover .btn-add-developer {
@@ -41,7 +80,7 @@
             width: 15px;
             height: 15px;
             display: flex;
-            
+
             align-items: center;
             justify-content: center;
             border-radius: 50%;
@@ -79,14 +118,15 @@
             .task-preview-start-conversation {
                 &:hover .btn-start-conversation {
                     svg * {
-                        fill:var(--clr-btn-highlight);
+                        fill: var(--clr-btn-highlight);
                     }
                 }
+
                 .btn-start-conversation {
                     svg * {
                         fill: var(--clr-disabled-permenent);
                     }
-                    
+
                 }
             }
         }
@@ -122,6 +162,30 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .Workingonit {
+        background-color: var(--clr-workingOnIt);
+    }
+
+    .Stuck {
+        background-color: var(--clr-stuck);
+    }
+
+    .Done {
+        background-color: var(--clr-done);
+    }
+
+    .WaitingforQA {
+        background-color: var(--clr-waiting);
+    }
+
+    .Needhelp {
+        background-color: var(--clr-help);
+    }
+
+    .Pending {
+        background-color: var(--clr-pending);
     }
 
 }
