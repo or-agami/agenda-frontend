@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
 import { ReactComponent as Arrow } from '../assets/icons/down-arrow.svg'
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadBoards } from '../store/board/board.action'
@@ -13,6 +13,7 @@ import { AddBoardModal } from './board-add-modal'
 
 
 export const SideNavBar = ({ isOpen, setStatus }) => {
+
 
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boardModule.boards)
@@ -23,7 +24,6 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
     }
 
     useEffect(() => {
-        // setIsAddBoard(!isAddBoard)
         if (!boards || boards.length < 1) {
             dispatch(loadBoards())
         }
@@ -65,6 +65,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
                     </Link>)}
             </div>}
         {isAddBoard &&
-         <AddBoardModal />}
+            <AddBoardModal setIsAddBoard={setIsAddBoard}
+                isAddBoard={isAddBoard} />}
     </section>
 }
