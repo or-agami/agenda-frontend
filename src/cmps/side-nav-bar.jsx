@@ -8,7 +8,7 @@ import { useState } from "react"
 import { Link, NavLink, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { loadBoards } from '../store/board/board.action'
+import { loadBoards, removeBoard } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
 import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
@@ -74,6 +74,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
 
 const NavBoardPreview = ({ board }) => {
 
+    const dispatch = useDispatch()
     const [isBoardOpts, setIsBoardOpts] = useState(false)
 
     const openBoardSettings = (ev) => {
@@ -85,7 +86,7 @@ const NavBoardPreview = ({ board }) => {
     const onRemoveBoard = (ev, boardId) => {
         ev.preventDefault()
         ev.stopPropagation()
-        console.log(boardId);
+        dispatch(removeBoard(boardId))
         setIsBoardOpts(!isBoardOpts)
     }
 

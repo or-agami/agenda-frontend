@@ -13,7 +13,7 @@
     border: 1px solid var(--clr-disabled);
 
     &.closed {
-        left: -190px;
+        left: -123px;
         padding-right: 50px;
 
         .toggle-nav-bar {
@@ -111,12 +111,12 @@
 
         .nav-board-preview {
             position: relative;
-            padding: 8px 5px;
+            padding: 18px 5px;
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            border-radius: 0.5em;
+            border-radius: 0.3em;
             height: 20px;
             text-decoration: none;
             color: var(--clr-icon-svg);
@@ -143,6 +143,7 @@
             }
 
             .board-opts-modal {
+                width: 200px;
                 display: flex;
                 position: absolute;
                 right: 0px;
@@ -157,7 +158,6 @@
 
                 .nav-board-menu-opt {
                     display: flex;
-                    justify-content: space-between;
                     padding: 5px;
                     border-radius: 0.2em;
 
