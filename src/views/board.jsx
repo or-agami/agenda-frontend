@@ -19,7 +19,7 @@ export const Board = () => {
   useEffect(() => {
     const boardId = params.boardId
     dispatch(loadBoard(boardId))
-  }, [])
+  }, [params])
 
   // useEffect(() => {
   //   if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '317px 1fr')
