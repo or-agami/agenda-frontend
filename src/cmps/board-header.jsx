@@ -6,14 +6,36 @@ import { ReactComponent as SortSvg } from '../assets/icons/sort.svg'
 import { ReactComponent as HideSvg } from '../assets/icons/hide.svg'
 import { ReactComponent as DownArrowSvg } from '../assets/icons/down-arrow.svg'
 import { BiSearch } from 'react-icons/bi'
+import { useForm } from '../hooks/useForm'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateBoard } from '../store/board/board.action'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
 
+  const dispatch = useDispatch()
+  const [isRenaming, setIsRenaming] = useState(false)
+  const [renameTitle, handleChange] = useForm({ title: board.title })
+
+  const changeBoardTitle = () => {
+    setIsRenaming(!isRenaming)
+  }
+
+  const onRenameBoard = (ev) => {
+    ev.preventDefault()
+    board = { ...board, ...renameTitle }
+    setIsRenaming(!isRenaming)
+    dispatch(updateBoard(board))
+  }
+
   return (
     <section className="board-header">
       <div className="flex board-info">
-        <h1 className="title">{title}</h1>
+        {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
+          <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
+        </form>
+          : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
         <div className="flex btns-container">
           <button className="btn btn-svg invite">
             <InviteSvg />
