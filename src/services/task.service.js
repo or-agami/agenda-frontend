@@ -23,7 +23,7 @@ async function remove({ taskId, groupId, boardId }) {
   //?- Dev:
   const group = await groupService.getById(groupId, boardId)
   group.tasks = group.tasks.filter((t) => t.id !== taskId)
-  return groupService.update(group, boardId)
+  return groupService.update({group, boardId})
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }
@@ -32,7 +32,7 @@ async function update({ task, groupId, boardId }) {
   const group = await groupService.getById(groupId, boardId)
   // Todo: add user activity to the task
   group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
-  return groupService.update(group, boardId)
+  return groupService.update({group, boardId})
 }
 
 async function save({ title, groupId, boardId }) {
@@ -41,5 +41,5 @@ async function save({ title, groupId, boardId }) {
   console.log('title from taskService:', title)
   const task = { id: utilService.makeId(), title }
   group.tasks.push(task)
-  return groupService.update(group, boardId)
+  return groupService.update({group, boardId})
 }
