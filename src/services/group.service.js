@@ -1,5 +1,3 @@
-import { store } from "../store/store";
-import { storageService } from "./async-storage.service";
 import { boardService } from "./board.service";
 import { httpService } from "./http.service"
 import { utilService } from "./util.service";
@@ -7,6 +5,7 @@ import { utilService } from "./util.service";
 export const groupService = {
   getById,
   save,
+  update,
   remove,
 }
 
@@ -25,19 +24,26 @@ async function getById(groupId, boardId) {
   // return httpService.get(BASE_URL + boardId)
 }
 
-function remove(boardId) {
+async function remove(groupId, boardId) {
   //?- Dev:
-  // return boardService.remove(STORAGE_KEY, boardId)
+  const board = await boardService.getById(boardId)
+  // Todo: add user activity
+  board.groups = board.groups.filter(g => g.id !== groupId)
+  return boardService.update(board)
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }
 
-async function save(newGroup, boardId) {
+async function update(group, boardId) {
   const board = await boardService.getById(boardId)
-  if (newGroup.id) {
-    board.groups = board.groups.map(group =>
-      (group.id === newGroup.id) ? newGroup : group)
-  }
-  else board.groups.push({ ...newGroup, id: utilService.makeId() })
-  return boardService.save(board)
+  // Todo: add user activity
+  board.groups = board.groups.map(g => (g.id !== group.id) ? g : group)
+  return boardService.update(board)
+}
+
+async function save(group, boardId) {
+  const board = await boardService.getById(boardId)
+  // Todo: add user activity
+  board.groups.push({ id: utilService.makeId(), ...group })
+  return boardService.update(board)
 }

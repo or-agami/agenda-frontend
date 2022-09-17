@@ -1,5 +1,3 @@
-import { store } from "../store/store";
-import { storageService } from "./async-storage.service";
 import { boardService } from "./board.service";
 import { groupService } from "./group.service";
 import { httpService } from "./http.service"
@@ -8,33 +6,40 @@ import { utilService } from "./util.service";
 export const taskService = {
   getById,
   save,
+  update,
   remove,
 }
 
-function getById(boardId) {
+async function getById({ taskId, groupId, boardId }) {
   //?- Dev:
-  // return boardService.get(STORAGE_KEY, boardId)
-  //   .then((board) => {
-  //     if (!board) {
-  //       board = gBoards.find(board => board.id === boardId)
-  //       boardService.postMany(STORAGE_KEY, gBoards)
-  //     }
-  //     return board
-  //   })
+  const group = await groupService.getById(groupId, boardId)
+  const task = group.tasks.find((t) => t.id === taskId)
+  return task
   //?- Prod:
   // return httpService.get(BASE_URL + boardId)
 }
 
-function remove(boardId) {
+async function remove({ taskId, groupId, boardId }) {
   //?- Dev:
-  // return boardService.remove(STORAGE_KEY, boardId)
+  const group = await groupService.getById(groupId, boardId)
+  group.tasks = group.tasks.filter((t) => t.id !== taskId)
+  return groupService.update(group, boardId)
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }
 
-async function save(newTask) {
-  let group = await groupService.getById(newTask.groupId,newTask.boardId)
-  const task = { id: utilService.makeId(), title: newTask.title }
+async function update({ task, groupId, boardId }) {
+  const group = await groupService.getById(groupId, boardId)
+  // Todo: add user activity to the task
+  group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
+  return groupService.update(group, boardId)
+}
+
+async function save({ title, groupId, boardId }) {
+  const group = await groupService.getById(groupId, boardId)
+  // Todo: add user activity to the task
+  console.log('title from taskService:', title)
+  const task = { id: utilService.makeId(), title }
   group.tasks.push(task)
-  return groupService.save(group, newTask.boardId)
+  return groupService.update(group, boardId)
 }

@@ -1,6 +1,7 @@
 import { boardService } from "../../services/board.service"
 // import { userService } from "../../services/user.service"
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service'
+import { groupService } from "../../services/group.service"
 import { taskService } from "../../services/task.service"
 
 
@@ -41,7 +42,6 @@ export function removeBoard(boardId) {
     }
 }
 
-// var debounceTimer
 export function setFilter(filterBy) {
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER', filterBy })
@@ -63,7 +63,6 @@ export function loadBoard(boardId) {
 }
 
 export function addBoard(board) {
-    console.log('board:', board)
     return (dispatch, getState) => {
 
         dispatch({ type: 'SET_LOADING', isLoading: true })
@@ -83,9 +82,7 @@ export function addBoard(board) {
 }
 
 export function updateBoard(board) {
-    console.log('board from boardAction:', board)
     return (dispatch, getState) => {
-        console.log('board:', board)
         dispatch({ type: 'SET_LOADING', isLoading: true })
         boardService.save(board)
             .then(savedBoard => {
@@ -102,16 +99,53 @@ export function updateBoard(board) {
 }
 
 export function addTask(task) {
-    console.log('task from boardAction:', task)
     return (dispatch, getState) => {
         taskService.save(task)
             .then(savedBoard => {
-                console.log('savedBoard.groups[0]:', savedBoard.groups[0])
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
                 showSuccessMsg('Task added')
             })
             .catch(err => {
                 showErrorMsg('Failed to add task')
+            })
+    }
+}
+
+export function updateTask(task) {
+    return (dispatch, getState) => {
+        taskService.update(task)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Task updated')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to update task')
+            })
+    }
+}
+
+export function addGroup(group) {
+    return (dispatch, getState) => {
+        groupService.save(group)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Group added')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to add group')
+            })
+    }
+}
+
+export function updateGroup(group) {
+    return (dispatch, getState) => {
+        groupService.update(group)
+            .then(savedBoard => {
+                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+                showSuccessMsg('Group updated')
+            })
+            .catch(err => {
+                showErrorMsg('Failed to update group')
             })
     }
 }

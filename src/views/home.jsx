@@ -3,7 +3,6 @@ import bgImg from '../assets/img/home-bg-img.jpg'
 import { Logo } from '../cmps/logo'
 
 export const Home = () => {
-
     return (
         <section className="home">
             <Header />
@@ -25,8 +24,6 @@ export const Home = () => {
         </section>
     )
 }
-
-
 
 const Header = () => {
     return (
