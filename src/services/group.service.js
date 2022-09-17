@@ -14,7 +14,7 @@ const STORAGE_KEY = 'boardDB'
 //?- Prod:
 // const BASE_URL = 'board/'
 
-async function getById({groupId, boardId}) {
+async function getById({ groupId, boardId }) {
   //?- Dev:
   // const group = 
   const board = await boardService.getById(boardId)
@@ -24,7 +24,7 @@ async function getById({groupId, boardId}) {
   // return httpService.get(BASE_URL + boardId)
 }
 
-async function remove({groupId, boardId}) {
+async function remove({ groupId, boardId }) {
   //?- Dev:
   const board = await boardService.getById(boardId)
   // Todo: add user activity
@@ -34,16 +34,17 @@ async function remove({groupId, boardId}) {
   // return httpService.delete(BASE_URL + boardId)
 }
 
-async function update({group, boardId}) {
+async function update({ group, boardId }) {
   const board = await boardService.getById(boardId)
   // Todo: add user activity
   board.groups = board.groups.map(g => (g.id !== group.id) ? g : group)
   return boardService.update(board)
 }
 
-async function save({group, boardId}) {
+async function save({ group, boardId }) {
   const board = await boardService.getById(boardId)
+  if (!group) group = { id: utilService.makeId(), title: 'New Group', tasks: [] }
   // Todo: add user activity
-  board.groups.push({ id: utilService.makeId(), ...group })
+  board.groups.push(group)
   return boardService.update(board)
 }
