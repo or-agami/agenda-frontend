@@ -164,6 +164,7 @@ export function updateGroup(group) {
 }
 
 export function removeGroup(group) {
+    console.log('group:', group)
     return (dispatch, getState) => {
         groupService.remove(group)
             .then(savedBoard => {
