@@ -31,8 +31,18 @@ export default [
         ]
     },
     {
-        path: '/login',
+        path: '/auth/*',
         component: <LoginSignup />,
+        // children: [
+        //     {
+        //         path: '/login',
+        //         component: <Login />
+        //     },
+        //     {
+        //         path: '/signup',
+        //         component: <Signup />
+        //     },
+        // ]
     },
     {
         path: '/workspace/my-work',

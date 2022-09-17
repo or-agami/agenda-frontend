@@ -1,0 +1,40 @@
+.login-signup {
+
+    .main-header {
+        width: 100%;
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .main-header-container {
+            padding: 0px 14px;
+            width: 100%;
+            display: block;
+            padding-top: 5px;
+            padding-left: 8px;
+            border-bottom: 1px solid #e0e0e0;
+            height: 65px;
+            background: #f7f7f7;
+        }
+    }
+
+    .btn-login {
+        background-color: var(--clr-btn-highlight);
+    }
+
+    .login {
+        flex-direction: column;
+        align-items: center;
+
+        .title {
+            font-family: roboto-light;
+            font-size: 40px;
+        }
+
+        .form-user-login {
+            max-width: 360px;
+            flex-direction: column;
+        }
+    }
+}
