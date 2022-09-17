@@ -41,10 +41,9 @@ async function update({ group, boardId }) {
   return boardService.update(board)
 }
 
-async function save({ group, boardId }) {
+async function save(boardId) {
   const board = await boardService.getById(boardId)
-  if (!group) group = { id: utilService.makeId(), title: 'New Group', tasks: [] }
   // Todo: add user activity
-  board.groups.push(group)
+  board.groups.push({ id: utilService.makeId(), title: 'New Group', tasks: [] })
   return boardService.update(board)
 }

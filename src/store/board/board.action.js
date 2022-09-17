@@ -137,9 +137,9 @@ export function removeTask(task) {
     }
 }
 
-export function addGroup(group) {
+export function addGroup(boardId) {
     return (dispatch, getState) => {
-        groupService.save(group)
+        groupService.save(boardId)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
                 showSuccessMsg('Group added')
@@ -150,7 +150,7 @@ export function addGroup(group) {
     }
 }
 
-export function updateGroup(group) {
+export function updateGroup(group) { // 👈 group is obj prop: { group, boardId }
     return (dispatch, getState) => {
         groupService.update(group)
             .then(savedBoard => {
