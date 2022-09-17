@@ -11,12 +11,12 @@ export const AddBoardModal = () => {
     }, [])
 
     return <section className="add-board-modal">
-        <div>
+        <div className="add-modal">
             <h2>Create New Board</h2>
-            <label>
+            <label htmlFor="name">
                 Board name:
-                <input type='txt' />
             </label>
+            <input type="txt" id="name" />
         </div>
     </section>
 }

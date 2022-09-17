@@ -11,8 +11,8 @@
 }
 
 .add-board-modal-open {
-    
     *:not(.add-board-modal) {
-        z-index: -100;
+        z-index: -10;
     }
+
 }
