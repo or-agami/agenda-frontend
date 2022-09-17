@@ -5,7 +5,6 @@
     border-bottom: 1px solid var(--clr-disabled);
 
     .task-preview-item input {
-        // border: 1px solid rgb(15, 119, 255);
         border: none;
         outline: 1px solid rgb(69, 149, 253);
         border-radius: 4px;
@@ -17,10 +16,48 @@
         min-width: 138px;
     }
 
+    .svg-no-person {
+        width: 35px;
+        height: 35px;
+    }
+
+    .task-preview-developer {
+        position: relative;
+
+        svg {
+            width: 30px;
+            fill: var( --clr-disabled-permenent);
+        }
+
+        &:hover .btn-add-developer {
+            opacity: 1;
+        }
+
+        .btn-add-developer {
+            width: 15px;
+            height: 15px;
+            display: flex;
+            
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.0625rem;
+            color: #fff;
+            background-color: var(--clr-btn-highlight);
+            opacity: 0;
+            // align-self: flex-start;
+            position: absolute;
+            left: 10px;
+
+        }
+    }
+
+
+
     &:last-child {
         border-end-start-radius: 8px;
     }
- 
+
     li:not(:nth-child(1)) {
         border-right: 1px solid var(--clr-disabled);
     }
@@ -34,7 +71,22 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+
+            .task-preview-start-conversation {
+                &:hover .btn-start-conversation {
+                    svg * {
+                        fill:var(--clr-btn-highlight);
+                    }
+                }
+                .btn-start-conversation {
+                    svg * {
+                        fill: var(--clr-disabled-permenent);
+                    }
+                    
+                }
+            }
         }
+
         .item-preview-sub-task-expansion {
             width: 35px;
             height: 35px;
@@ -54,7 +106,7 @@
         }
     }
 
-    .task-preview-group-color{
+    .task-preview-group-color {
         width: 5px;
         height: 105%;
         background-color: var(--clr-disabled);
@@ -67,4 +119,5 @@
         justify-content: center;
         align-items: center;
     }
+
 }

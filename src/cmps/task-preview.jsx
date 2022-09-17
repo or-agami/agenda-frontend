@@ -1,6 +1,7 @@
 import moment from 'moment/moment'
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
+import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { TaskMenu } from './task-menu'
 import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
@@ -24,7 +25,7 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
 
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateTask({task:editedTask,groupId,boardId}))
+        dispatch(updateTask({ task: editedTask, groupId, boardId }))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -56,7 +57,9 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             </div>
         </div>
         <li className="task-preview-developer same-width">
-            <h4>{task.members && task.members[0].fullname}</h4>
+            <button className="btn btn-add-developer">+</button>
+            {!task.members && <NoPersonSvg className="svg-no-person" />}
+            {task.members && <h4> {task.members[0].fullname}</h4>}
         </li>
         <li className="task-preview-status same-width">
             <h4>{task.status}</h4>
