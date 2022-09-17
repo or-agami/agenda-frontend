@@ -5,26 +5,21 @@
     background-color: var(--clr-bg);
     width: 220px;
     height: 100%;
-    color: var(--clr-txt);
+    color: var(--clr-icon-svg);
     padding: 13px 15px;
     font-size: 14px;
     z-index: 10;
     transition: 0.2s;
     border: 1px solid var(--clr-disabled);
 
-    a {
-        text-decoration: none;
-        color: var(--clr-txt);
-    }
-
     &.closed {
-        left: -190px;
+        left: -123px;
         padding-right: 50px;
 
         .toggle-nav-bar {
             svg {
                 transform: rotate(270deg);
-                
+
             }
 
             &:hover {
@@ -52,7 +47,7 @@
             background-color: var(--clr-btn-highlight);
             width: 35px;
             padding-right: 15px;
-            
+
 
             svg * {
                 fill: var(--clr-item-bg);
@@ -112,16 +107,19 @@
     }
 
     .nav-board-list {
-        padding: 5px;
+        padding: 5px 0px;
 
         .nav-board-preview {
-            padding: 8px 5px;
+            position: relative;
+            padding: 18px 5px;
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            border-radius: 0.2em;
+            border-radius: 0.3em;
             height: 20px;
+            text-decoration: none;
+            color: var(--clr-icon-svg);
 
             .icon {
                 display: none;
@@ -130,7 +128,7 @@
             &:hover {
                 background-color: var(--clr-btn-bg-hover);
 
-               .icon {
+                .icon {
                     display: inline-flex;
                 }
             }
@@ -139,7 +137,42 @@
                 flex-grow: 1;
                 margin: 0;
             }
+
+            &.active {
+                background-color: #cce5ff;
+            }
+
+            .board-opts-modal {
+                width: 200px;
+                display: flex;
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                transform: translate(80% , 90%);
+                flex-direction: column;
+                background-color: var(--clr-item-bg);
+                padding: 10px;
+                box-shadow: var(--box-shadow-medium);
+                border-radius: 0.5em;
+                z-index: 20;
+
+                .nav-board-menu-opt {
+                    display: flex;
+                    padding: 5px;
+                    border-radius: 0.2em;
+
+                    .icon {
+                        display: inline-flex;
+                        margin-inline-end: 10px;
+                    }
+
+                    &:hover {
+                        background-color: var(--clr-btn-bg-hover);
+                    }
+                }
+            }
         }
     }
+
 
 }
