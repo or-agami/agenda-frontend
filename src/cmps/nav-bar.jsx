@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import { NavLink } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom';
 import { AppHome } from '../views/app-home'
 import { Board } from '../views/board'
@@ -14,11 +14,26 @@ import { ReactComponent as SearchSvg } from '../assets/icons/nav-bar/search.svg'
 import { ReactComponent as HelpSvg } from '../assets/icons/nav-bar/help.svg';
 import { ReactComponent as MenuSvg } from '../assets/icons/nav-bar/menu.svg';
 import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-color.svg';
+import { SideNavBar } from './side-nav-bar';
+
 
 export const NavBar = () => {
 
+  const params = useParams()
+  const [isOpen, setStatus] = useState(false)
+
+  useEffect(() => {
+    if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '317px 1fr')
+    else document.documentElement.style.setProperty('--board-grid-column', '96px 1fr')
+    return (() => document.documentElement.style.removeProperty('--board-grid-column'))
+  }, [isOpen, params])
+
+
+
   return (
     <Fragment>
+      {params['*'] !== 'home' &&
+        <SideNavBar isOpen={isOpen} setStatus={setStatus} />}
       <section className="nav-bar">
         <button className="btn btn-home">
           <NavLink to="/workspace/home"><AgendaLogoSvg />
@@ -34,7 +49,7 @@ export const NavBar = () => {
         <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
         <button className="btn btn-svg btn-index">
           <NavLink to="/workspace/inbox"><InboxSvg />
-          <div className="selected-indication"></div>
+            <div className="selected-indication"></div>
           </NavLink>
         </button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
@@ -45,6 +60,7 @@ export const NavBar = () => {
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
         <button className="btn btn-svg btn-user">O</button>
+
 
       </section>
       <Routes>
