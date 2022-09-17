@@ -33,7 +33,6 @@ export const Board = () => {
         <Loader /> :
         board &&
         <Fragment>
-          {/* <SideNavBar isOpen={isOpen} setStatus={setStatus} /> */}
           <BoardHeader board={board} />
           <BoardDetails board={board} />
         </Fragment>

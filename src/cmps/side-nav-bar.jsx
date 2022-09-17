@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadBoards } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
+import {ReactComponent as MenuIcon} from '../assets/icons/board-menu.svg'
 
 
 export const SideNavBar = ({ isOpen, setStatus }) => {
@@ -61,6 +62,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
                         <div className="nav-board-preview" >
                             <BoardIcon />
                             <p className="nav-board-title">{board.title}</p>
+                            <MenuIcon />
                         </div>
                     </Link>)}
             </div>}
