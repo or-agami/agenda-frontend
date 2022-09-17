@@ -9,25 +9,28 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadBoards } from '../store/board/board.action'
+import { AddBoardModal } from './board-add-modal'
 
 
 export const SideNavBar = ({ isOpen, setStatus }) => {
 
     const dispatch = useDispatch()
     const boards = useSelector(state => state.boardModule.boards)
+    const [isAddBoard, setIsAddBoard] = useState({ isAddBoard: false })
 
     const toggleSideNav = () => {
         setStatus(!isOpen)
     }
 
     useEffect(() => {
+        setIsAddBoard(!isAddBoard)
         if (!boards || boards.length < 1) {
             dispatch(loadBoards())
         }
     }, [])
 
-    console.log(boards);
     if (!boards || boards.length < 1) return
+    console.log('bolean', isAddBoard);
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
@@ -37,7 +40,7 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
             <BoardMenu />
         </div>
         <div className="side-nav-details">
-            <div className="side-nav side-nav-add">
+            <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
                 <PlusIcon />
                 Add
             </div>
@@ -61,5 +64,6 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
                         </div>
                     </Link>)}
             </div>}
+        {isAddBoard && <AddBoardModal />}
     </section>
 }

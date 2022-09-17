@@ -9,3 +9,10 @@
     grid-template-columns: var(--board-grid-column);
     overflow-x: hidden;
 }
+
+.add-board-modal-open {
+    
+    *:not(.add-board-modal) {
+        z-index: -100;
+    }
+}
