@@ -52,6 +52,7 @@
             background-color: var(--clr-btn-highlight);
             width: 35px;
             padding-right: 15px;
+            
 
             svg * {
                 fill: var(--clr-item-bg);
@@ -120,12 +121,22 @@
             gap: 10px;
             cursor: pointer;
             border-radius: 0.2em;
+            height: 20px;
+
+            .icon {
+                display: none;
+            }
 
             &:hover {
                 background-color: var(--clr-btn-bg-hover);
+
+               .icon {
+                    display: inline-flex;
+                }
             }
 
             p {
+                flex-grow: 1;
                 margin: 0;
             }
         }

@@ -14,26 +14,18 @@ export const Board = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { board, boards, isLoading } = useSelector(state => state.boardModule)
-  // const [isOpen, setStatus] = useState(false)
 
   useEffect(() => {
     const boardId = params.boardId
-    dispatch(loadBoard(boardId))
+    if (!board || board._id !== boardId) dispatch(loadBoard(boardId))
   }, [params])
-
-  // useEffect(() => {
-  //   if (isOpen) document.documentElement.style.setProperty('--board-grid-column', '317px 1fr')
-  //   else document.documentElement.style.setProperty('--board-grid-column', '96px 1fr')
-  //   return (() => document.documentElement.style.removeProperty('--board-grid-column'))
-  // }, [isOpen])
-
+  
   return (
     <div className="board-app">
       {isLoading ?
         <Loader /> :
         board &&
         <Fragment>
-          {/* <SideNavBar isOpen={isOpen} setStatus={setStatus} /> */}
           <BoardHeader board={board} />
           <BoardDetails board={board} />
         </Fragment>
