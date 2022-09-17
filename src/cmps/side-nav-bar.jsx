@@ -26,7 +26,6 @@ export const SideNavBar = ({ isOpen, setStatus }) => {
         }
     }, [])
 
-    console.log(boards);
     if (!boards || boards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
