@@ -3,19 +3,27 @@ import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
 import { TaskMenu } from './task-menu'
 import { useState } from 'react'
-export const TaskPreview = ({ task }) => {
+export const TaskPreview = ({ task, groupId, boardId }) => {
     const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
+    const [isEditTitle, setIsEditTitle] = useState(false)
+
     const onSetIsTaskMenuOpen = () => {
         setIsTaskMenuOpen(prevState => prevState = !isTaskMenuOpen)
     }
+
     const getFormattedDateTime = (date) => {
         if (!date) return
         return moment(date).fromNow()
     }
 
+    const updateTitle = (ev) => {
+        // (ev.target.value) ? task.title = ev.target.innerText : task.title = ev.target[0]
+        // console.log(task.title)
+    }
+
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {isTaskMenuOpen && <TaskMenu />}
+        {isTaskMenuOpen && <TaskMenu taskId={task.id} groupId={groupId} boardId={boardId} />}
         <li className="task-preview-group-color">
         </li>
         <li className='task-preview-checkbox'>
@@ -27,7 +35,10 @@ export const TaskPreview = ({ task }) => {
             </li>
             <div className='item-container-right'>
                 <li className="task-preview-item">
-                    <h4>{task.title}</h4>
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{task.title}</h4>}
+                    {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)}>
+                        <input type="text" placeholder={task.title} onBlur={(ev) => updateTitle(ev)} />
+                    </form>}
                 </li>
                 <li className="task-preview-start-conversation">
                     <button className="btn btn-svg btn-start-conversation">
