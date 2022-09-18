@@ -4,10 +4,22 @@
     padding: 0;
     border-bottom: 1px solid var(--clr-disabled);
 
-    .profile-img-icon {
-        width: 30px;
-        height: 30px;
+    .developer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,20px );
+        width: 100%;
+        justify-content: center;
+        
+        .profile-img-icon {
+            width: 30px;
+            height: 30px;
+    
+        }
+        .profile-img-icon:not(:first-child) {
+    
+        }
     }
+
     .task-preview-priority {
         background-color: var(--clr-empty);
         font-weight: bold;

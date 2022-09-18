@@ -84,7 +84,9 @@ export const TaskPreview = ({ task, groupId, board }) => {
         <li className="task-preview-developer same-width">
             <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
             {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
+            <div className='developer-container'>
             {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
+            </div>
         </li>
         {isTaskPersonMenuOpen && <TaskPersonMenu task={task} groupId={groupId} board={board} setIsTaskPersonMenuOpen={setIsTaskPersonMenuOpen} />}
         <li className={`task-preview-status same-width ${makeClass(task.status)}`} onClick={() => onSetTaskStatusMenuOpen()}>
