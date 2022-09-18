@@ -10,30 +10,28 @@
     font-size: 14px;
     color: var(--task-text-color);
     font-family: roboto-light;
-    
 
-    .group-content-tasks {
-        
-    }
+
+    .group-content-tasks {}
 
     li {
         display: flex;
         align-items: center;
     }
-    
+
     li:not(:nth-child(2)) {
         justify-content: center;
     }
-    
+
     // li:nth-child(n+4){
-       
+
     // }
-    
+
     li:nth-child(n+3):not(:last-child) {
         border-right: 1px solid var(--clr-disabled);
         // overflow-x:hidden ;
     }
-    
+
     .group-content-title {
         display: flex;
         align-self: flex-start;
@@ -48,27 +46,28 @@
             top: -5px;
             width: 35px;
             height: 35px;
-            
+
 
             &:hover {
                 opacity: 1;
             }
-        
-             svg {
+
+            svg {
                 width: 20px;
                 height: 20px;
             }
         }
-        
+
         .btn-arrow-down {
             transform: rotate(-270deg);
         }
+
         ul {
             display: block;
         }
-        
+
     }
-    
+
     .group-content-header {
 
         border: 1px solid var(--clr-disabled);
@@ -105,6 +104,49 @@
 
         .group-content-header-item {
             min-width: calc(393px - 36px);
+            position: relative;
+
+            
+            .btn-sort {
+                flex-direction: column;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 15px;
+                width: 15px;
+                background-color: var(--clr-item-bg);
+                border: 1px solid var(--clr-disabled);
+                border-radius: 2em;
+                padding-top: 6px;
+                display: none;
+                
+                &:hover {
+                    background-color: var(--clr-btn-highlight);
+                    color: white;
+                    
+                    .arrow-up-sort {
+                        color: rgba(255, 255, 255, 0.419);
+                    }
+                }
+                
+                svg {
+                    transform: scale(3);
+                }
+                
+                .arrow-down-sort {
+                    transform: translateY(10px);
+                }
+                
+            }
+
+            &:hover {
+    
+                .btn-sort {
+                    display: flex;
+                }
+
+            }
         }
     }
 }

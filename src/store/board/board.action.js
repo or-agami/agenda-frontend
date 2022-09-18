@@ -48,11 +48,18 @@ export function setFilter(filterBy) {
     }
 }
 
-export function loadBoard(boardId) {
-    return (dispatch, getState) => {
-        dispatch({ type: 'SET_LOADING', isLoading: true })
+export function setSort(sortBy) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_SORT', sortBy })
+    }
+}
 
-        boardService.getById(boardId)
+export function loadBoard(boardId, sortBy) {
+    return (dispatch, getState) => {
+
+        if (!sortBy) dispatch({ type: 'SET_LOADING', isLoading: true })
+        
+        boardService.getById(boardId, sortBy)
             .then((board) => {
                 dispatch({ type: 'SET_BOARD', board })
             })

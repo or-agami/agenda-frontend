@@ -312,13 +312,19 @@ function query(filterBy) {
   // else return httpService.get(BASE_URL)
 }
 
-function getById(boardId) {
+function getById(boardId, sortBy) {
   //?- Dev:
   return storageService.get(STORAGE_KEY, boardId)
     .then((board) => {
       if (!board) {
         board = gBoards.find(board => board._id === boardId)
       }
+
+      if (sortBy) {
+        if (sortBy.by === 'title') board.groups.forEach(group =>
+          group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title)))
+      }
+
       return board
     })
   //?- Prod:

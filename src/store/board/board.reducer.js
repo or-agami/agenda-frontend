@@ -4,6 +4,7 @@ const initialState = {
     boards: [],
     board: null,
     filterBy: null,
+    sortBy: null,
 }
 
 export function boardReducer(state = initialState, action) {
@@ -38,10 +39,11 @@ export function boardReducer(state = initialState, action) {
             boards = state.boards.filter(board => board._id !== action.boardId)
             return { ...state, boards, boardsLength: boards.length }
 
-
         case 'SET_FILTER':
-            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy, labels: [...action.filterBy.labels] } }
+            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy}}
 
+        case 'SET_SORT':
+            return { ...state, sortBy: { ...state.sortBy, ...action.sortBy }}
 
         case 'SET_BOARD':
             boardIdx = initialState.boards.findIndex(board => board._id === action.board._id)

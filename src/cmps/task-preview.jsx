@@ -97,7 +97,6 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
 }
 
 const makeClass = (status) => {
-    console.log(status)
     if(!status) return
     return status.split(' ').join('')
 }

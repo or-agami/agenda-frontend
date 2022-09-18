@@ -3,15 +3,20 @@ import { TaskList } from './task-list'
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { useState } from 'react'
 import { GroupMenu } from './group-menu'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../hooks/useForm'
-import { updateGroup } from '../store/board/board.action'
+import { setSort, updateGroup } from '../store/board/board.action'
+import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
+
+
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
     const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const dispatch = useDispatch()
+
+
     const onSetIsGroupMenuOpen = () => {
         setIsGroupMenuOpen(prevState => prevState = !isGroupMenuOpen)
     }
@@ -27,6 +32,12 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
+    const onSortBy = (sortBy) => {
+        const sort = {
+            by: sortBy,
+        }
+        dispatch(setSort(sort))
+    }
 
     return <section className="group-content">
         <div className='group-content-title'>
@@ -47,6 +58,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
                 <input type="checkbox" />
             </li>
             <li className="group-content-header-item">
+                <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows /> </button>
                 <h4>Item</h4>
             </li>
             <li className="group-content-header-developer same-width">
