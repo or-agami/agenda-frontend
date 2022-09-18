@@ -59,7 +59,7 @@ export function loadBoard(boardId, sortBy) {
     return (dispatch, getState) => {
 
         if (!sortBy) dispatch({ type: 'SET_LOADING', isLoading: true })
-        
+
         boardService.getById(boardId, sortBy)
             .then((board) => {
                 dispatch({ type: 'SET_BOARD', board })

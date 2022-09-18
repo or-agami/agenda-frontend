@@ -321,8 +321,17 @@ function getById(boardId, sortBy) {
       }
 
       if (sortBy) {
-        if (sortBy.by === 'title') board.groups.forEach(group =>
-          group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title)))
+        console.log(sortBy);
+        board.groups.forEach(group => {
+          if (sortBy.by === 'title') {
+            group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title))
+          }
+          if (sortBy.isDecending) {
+            group.tasks = group.tasks.reverse()
+          }
+        })
+
+
       }
 
       return board
