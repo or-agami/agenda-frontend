@@ -3,7 +3,7 @@ import { updateTask } from '../store/board/board.action'
 // import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
 // import { removeTask } from '../store/board/board.action'
 
-export const TaskPriorityMenu = ({task,groupId,boardId}) => {
+export const TaskPriorityMenu = ({task,groupId,boardId,setIsTaskPriorityMenuOpen}) => {
     const dispatch = useDispatch()
     // const onRemoveTask =() => {
     //     const removeObj = {taskId,groupId,boardId}
@@ -13,6 +13,7 @@ export const TaskPriorityMenu = ({task,groupId,boardId}) => {
     const onUpdatePriority = (priority) => {
         const updatedTask = {...task,priority}
         dispatch(updateTask({task:updatedTask,groupId,boardId}))
+        setIsTaskPriorityMenuOpen(false)
     }
 
 return <section className="task-priority-menu">

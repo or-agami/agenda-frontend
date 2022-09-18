@@ -77,12 +77,12 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             <span className='fold'></span>
             <h4>{task.status}</h4>
         </li>
-        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={boardId}/>}
+        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={boardId} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen}/>}
         <li className={`task-preview-priority same-width ${makeClass(task.priority)}`} onClick={() => onSetTaskPriorityMenuOpen()}>
         <span className='fold'></span>
             <h4>{task.priority}</h4>
         </li>
-        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={boardId}/>}
+        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={boardId} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
         <li className="task-preview-last-updated same-width">
             <h4>{getFormattedDateTime(task.createdAt)}</h4>
         </li>
