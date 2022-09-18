@@ -12,7 +12,6 @@ export function loadBoards() {
         // const { filterBy } = getState().boardModule
         boardService.query()
             .then((boards) => {
-                console.log('boards from boardAction:', boards)
                 dispatch({ type: 'SET_BOARDS', boards })
             })
             .catch(err => {
@@ -43,7 +42,6 @@ export function removeBoard(boardId) {
 }
 
 export function setFilter(filterBy) {
-    console.log('filterBy:', filterBy)
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER', filterBy })
     }
@@ -171,7 +169,6 @@ export function updateGroup(group) { // 👈 group is obj prop: { group, boardId
 }
 
 export function removeGroup(group) {
-    console.log('group:', group)
     return (dispatch, getState) => {
         groupService.remove(group)
             .then(savedBoard => {

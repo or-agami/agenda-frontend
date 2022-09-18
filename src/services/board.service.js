@@ -331,7 +331,6 @@ function getById(boardId, sortBy, filterBy) {
       }
       // Todo: merge sort with filter !!
       if (sortBy) {
-        console.log(sortBy);
         board.groups.forEach(group => {
           if (sortBy.by === 'title') {
             group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title))
