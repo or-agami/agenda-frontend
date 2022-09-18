@@ -25,7 +25,17 @@
     "members": [
       {
         "_id": "u101",
-        "fullname": "Tal Tarablus",
+        "fullname": "Tal Ben Atiya",
+        "imgUrl": "https://www.google.com"
+      },
+      {
+        "_id": "u102",
+        "fullname": "Gal Wender",
+        "imgUrl": "https://www.google.com"
+      },
+      {
+        "_id": "u103",
+        "fullname": "Or Agami",
         "imgUrl": "https://www.google.com"
       }
     ],

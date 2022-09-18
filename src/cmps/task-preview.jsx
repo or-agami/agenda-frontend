@@ -9,11 +9,14 @@ import { updateTask } from '../store/board/board.action'
 import { useDispatch } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
+import { TaskPersonMenu } from './task-person-menu'
 
-export const TaskPreview = ({ task, groupId, boardId }) => {
+
+export const TaskPreview = ({ task, groupId, board }) => {
     const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
     const [isTaskStatusMenuOpen, setIsTaskStatusMenuOpen] = useState(false)
     const [isTaskPriorityMenuOpen, setIsTaskPriorityMenuOpen] = useState(false)
+    const [isTaskPersonMenuOpen, setIsTaskPersonMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -29,7 +32,7 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
 
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateTask({ task: editedTask, groupId, boardId }))
+        dispatch(updateTask({ task: editedTask, groupId, boardId: board._id }))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -38,13 +41,23 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
     }
 
     const onSetTaskPriorityMenuOpen = () => {
-        setIsTaskPriorityMenuOpen(prevState => prevState =!isTaskPriorityMenuOpen)
+        setIsTaskPriorityMenuOpen(prevState => prevState = !isTaskPriorityMenuOpen)
     }
 
+    const onSetTaskPersonMenuOpen = () => {
+        setIsTaskPersonMenuOpen(prevState => prevState = !isTaskPersonMenuOpen)
+    }
 
+    const GetMemberImgFromId = (board, memberId) => {
+        console.log('img url', board.members.find(member => member._id === memberId).imgUrl)
+        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
+        return <img className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+    }
+
+    console.log(task.memberIds)
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {isTaskMenuOpen && <TaskMenu taskId={task.id} groupId={groupId} boardId={boardId}  setIsTaskMenuOpen={setIsTaskMenuOpen}/>}
+        {isTaskMenuOpen && <TaskMenu taskId={task.id} groupId={groupId} boardId={board._id} setIsTaskMenuOpen={setIsTaskMenuOpen} />}
         <li className="task-preview-group-color">
         </li>
         <li className='task-preview-checkbox'>
@@ -69,34 +82,35 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             </div>
         </div>
         <li className="task-preview-developer same-width">
-            <button className="btn btn-add-developer">+</button>
-            {!task.members && <NoPersonSvg className="svg-no-person" />}
-            {task.members && <h4> {task.members[0].fullname}</h4>}
+            <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
+            {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
+            {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
         </li>
+        {isTaskPersonMenuOpen && <TaskPersonMenu task={task} groupId={groupId} board={board} setIsTaskPersonMenuOpen={setIsTaskPersonMenuOpen} />}
         <li className={`task-preview-status same-width ${makeClass(task.status)}`} onClick={() => onSetTaskStatusMenuOpen()}>
             <span className='fold'></span>
             <h4>{task.status}</h4>
         </li>
-        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={boardId} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen}/>}
+        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen} />}
         <li className={`task-preview-priority same-width ${makeClass(task.priority)}`} onClick={() => onSetTaskPriorityMenuOpen()}>
-        <span className='fold'></span>
+            <span className='fold'></span>
             <h4>{task.priority}</h4>
         </li>
-        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={boardId} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
+        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
         <li className="task-preview-last-updated same-width">
             <h4>{getFormattedDateTime(task.createdAt)}</h4>
         </li>
         {/* <li className="task-preview-files">
                 <h4>Cookie file</h4>
-            </li> */}
-        {/* <li className="task-preview-timeline">
+            </li>
+        <li className="task-preview-timeline">
                 <h4>Nov 1</h4>
             </li> */}
-
     </ul>
 }
 
 const makeClass = (status) => {
-    if(!status) return
+    if (!status) return
     return status.split(' ').join('')
 }
+

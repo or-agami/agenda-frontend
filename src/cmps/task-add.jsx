@@ -7,7 +7,6 @@ export const TaskAdd = ({groupId,boardId}) => {
 
     const onAddTask =(ev) => {
         ev.preventDefault()
-        console.log(ev.target[0].value)
         const task = {groupId,title: ev.target[0].value,boardId}
         dispatch(addTask(task))
         ev.target[0].value = ''

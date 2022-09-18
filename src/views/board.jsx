@@ -29,7 +29,7 @@ export const Board = () => {
     }
   }, [sortBy, filterBy])
   
-  console.log('board For Check', board);
+ 
   return (
     <div className="board-app">
       {isLoading ?

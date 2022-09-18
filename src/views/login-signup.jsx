@@ -19,14 +19,11 @@ export const LoginSignup = () => {
   })
 
   useEffect(() => {
-    console.log('params:', params)
     if (params['*'] !== 'login' && params['*'] !== 'signup') navigate('/auth/login')
-    console.log('window.location:', window.location)
   }, [params])
 
   const onUserSignup = (ev) => {
     ev.preventDefault()
-    console.log('signupFields:', signupFields)
   }
   return (
     <section className="login-signup">
@@ -54,7 +51,6 @@ const Signup = (props) => {
 
   const onUserSignup = (ev) => {
     ev.preventDefault()
-    console.log('signupFields:', signupFields)
   }
   return (
     <section className="signup">
@@ -122,7 +118,6 @@ const Login = (props) => {
 
   const onUserLogin = (ev) => {
     ev.preventDefault()
-    // console.log('signupFields:', signupFields)
   }
 
   return (

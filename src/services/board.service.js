@@ -38,8 +38,18 @@ const gBoards = [
     "members": [
       {
         "_id": "u101",
-        "fullname": "Tal Tarablus",
-        "imgUrl": "https://www.google.com"
+        "fullname": "Tal Ben Atiya",
+        "imgUrl": "profile-img-gal"
+      },
+      {
+        "_id": "u102",
+        "fullname": "Gal Wender",
+        "imgUrl": "profile-img-or"
+      },
+      {
+        "_id": "u103",
+        "fullname": "Or Agami",
+        "imgUrl": "profile-img-tal"
       }
     ],
     "groups": [
@@ -321,7 +331,6 @@ function getById(boardId, sortBy, filterBy) {
       }
       // Todo: merge sort with filter !!
       if (sortBy) {
-        console.log(sortBy);
         board.groups.forEach(group => {
           if (sortBy.by === 'title') {
             group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title))

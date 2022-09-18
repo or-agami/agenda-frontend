@@ -10,7 +10,7 @@ import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.
 
 
 
-export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
+export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) => {
     const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
@@ -29,7 +29,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
 
     const updateGroupName = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateGroup({group:editedGroup,boardId}))
+        dispatch(updateGroup({group:editedGroup,boardId:board._id}))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -46,7 +46,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {isGroupMenuOpen && <GroupMenu groupId={group.id} boardId={boardId} />}
+            {isGroupMenuOpen && <GroupMenu groupId={group.id} boardId={board._id} />}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg />
             </button>
@@ -87,7 +87,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) 
         <div className='group-content-tasks'>
             <TaskList
                 group={group}
-                boardId={boardId}
+                board={board}
             />
         </div>
     </section>
