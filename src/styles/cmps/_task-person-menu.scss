@@ -1,0 +1,49 @@
+.task-person-menu {
+    position: absolute;
+    transform: translate(280px, 35px);
+    width: 309px;
+    font-size: 14px;
+    height: fit-content;
+    background-color: var(--clr-item-bg);
+    padding: 10px;
+    gap: 10px;
+    box-shadow: var(--box-shadow-large);
+    border-radius: 8px;
+    z-index: 7;
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .member-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #e5f4ff;
+        border-radius: 8px;
+        height: 25px;
+        padding: 2px;
+        cursor: pointer;
+    }
+
+    .member-container > * {
+        padding: 5px;
+    }
+
+    .btn-remove-person-from-task {
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: var(--clr-item-bg);
+        }
+    }
+
+}

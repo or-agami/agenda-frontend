@@ -15,7 +15,7 @@ export const GroupList = ({ board }) => {
         <GroupPreview 
         key={idx} 
         group={group}
-        boardId={board._id}
+        board={board}
         />)} 
 
         <button className="btn btn-svg add-group-btn" onClick={onAddGroup}><PlusIcon/> Add new group</button>
