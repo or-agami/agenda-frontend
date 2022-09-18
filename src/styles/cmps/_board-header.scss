@@ -92,5 +92,25 @@
         }
       }
     }
+
+    .board-search-filter {
+      background-color: #cce5ff;
+      border: 1px solid #0073ea;
+      border-radius: 6px;
+      padding: 0 8px;
+
+      .input-container {
+
+        .input-search {
+          padding-left: 5px;
+          background-color: transparent;
+          transition: background-color .1s cubic-bezier(0, 0, 0.35, 1), width .1s cubic-bezier(0, 0, 0.35, 1);
+          border: unset;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
   }
 }
