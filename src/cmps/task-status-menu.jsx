@@ -1,15 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { updateTask } from '../store/board/board.action'
-// import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
-// import { removeTask } from '../store/board/board.action'
 
 export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen }) => {
     const dispatch = useDispatch()
-    // const onRemoveTask =() => {
-    //     const removeObj = {taskId,groupId,boardId}
-    //     dispatch(removeTask(removeObj))
-
-    // }
     const onUpdateStatus = (status) => {
         const updatedTask = { ...task, status }
         dispatch(updateTask({ task: updatedTask, groupId, boardId }))
