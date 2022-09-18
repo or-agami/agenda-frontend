@@ -51,7 +51,7 @@ export const TaskPreview = ({ task, groupId, board }) => {
     const GetMemberImgFromId = (board, memberId) => {
         console.log('img url', board.members.find(member => member._id === memberId).imgUrl)
         const imgUrl = board.members.find(member => member._id === memberId).imgUrl
-        return <img className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+        return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
     console.log(task.memberIds)

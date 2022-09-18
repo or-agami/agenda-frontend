@@ -26,17 +26,17 @@
       {
         "_id": "u101",
         "fullname": "Tal Ben Atiya",
-        "imgUrl": "https://www.google.com"
+        "imgUrl": "profile-img-gal"
       },
       {
         "_id": "u102",
         "fullname": "Gal Wender",
-        "imgUrl": "https://www.google.com"
+        "imgUrl": "profile-img-or"
       },
       {
         "_id": "u103",
         "fullname": "Or Agami",
-        "imgUrl": "https://www.google.com"
+        "imgUrl": "profile-img-tal"
       }
     ],
     "groups": [
