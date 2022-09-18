@@ -1,7 +1,7 @@
-.task-status-menu {
+.task-priority-menu {
     position: absolute;
-    transform: translate(420px, 35px);
-    width: 360px;
+    transform: translate(655px, 35px);
+    width: 175px;
     font-size: 14px;
     height: fit-content;
     background-color: var(--clr-item-bg);
@@ -13,7 +13,7 @@
     display: flex;
     flex-wrap: wrap;
 
-    .btn-status {
+    .btn-priority {
         font-size: 14px;
         text-align: center;
         width: 150px;
@@ -22,13 +22,9 @@
         color: var(--clr-item-bg);
     }
 
-    .working-on-it {background-color: var(--clr-workingOnIt);}
-    .stuck{background-color: var(--clr-stuck);}
-    .done{background-color: var(--clr-done);}
+    .critical {background-color: var(--clr-critical);}
+    .medium{background-color: var(--clr-medium);}
+    .high{background-color: var(--clr-high);}
+    .low{background-color: var(--clr-low);}
     .empty-status{background-color: var(--clr-empty);}
-    .waiting-for-qa{background-color: var(--clr-waiting);}
-    .need-help{background-color: var(--clr-help);}
-    .pending{background-color: var(--clr-pending);}
-    
-
 }

@@ -11,9 +11,7 @@ export const TaskStatusMenu = ({task,groupId,boardId}) => {
         
     // }
     const onUpdateStatus = (status) => {
-        console.log(task)
         const updatedTask = {...task,status}
-        console.log(updatedTask)
         dispatch(updateTask({task:updatedTask,groupId,boardId}))
     }
 

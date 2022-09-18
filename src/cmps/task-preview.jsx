@@ -8,10 +8,12 @@ import { useForm } from '../hooks/useForm'
 import { updateTask } from '../store/board/board.action'
 import { useDispatch } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
+import { TaskPriorityMenu } from './task-priority-menu'
 
 export const TaskPreview = ({ task, groupId, boardId }) => {
     const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
     const [isTaskStatusMenuOpen, setIsTaskStatusMenuOpen] = useState(false)
+    const [isTaskPriorityMenuOpen, setIsTaskPriorityMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -33,6 +35,10 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
 
     const onSetTaskStatusMenuOpen = () => {
         setIsTaskStatusMenuOpen(prevState => prevState = !isTaskStatusMenuOpen)
+    }
+
+    const onSetTaskPriorityMenuOpen = () => {
+        setIsTaskPriorityMenuOpen(prevState => prevState =!isTaskPriorityMenuOpen)
     }
 
 
@@ -67,14 +73,16 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
             {!task.members && <NoPersonSvg className="svg-no-person" />}
             {task.members && <h4> {task.members[0].fullname}</h4>}
         </li>
-        <li className={`task-preview-status same-width ${makeStatusClass(task.status)}`} onClick={() => onSetTaskStatusMenuOpen()}>
+        <li className={`task-preview-status same-width ${makeClass(task.status)}`} onClick={() => onSetTaskStatusMenuOpen()}>
             <span className='fold'></span>
             <h4>{task.status}</h4>
         </li>
-        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={boardId} />}
-        <li className="task-preview-priority same-width">
+        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={boardId}/>}
+        <li className={`task-preview-priority same-width ${makeClass(task.priority)}`} onClick={() => onSetTaskPriorityMenuOpen()}>
+        <span className='fold'></span>
             <h4>{task.priority}</h4>
         </li>
+        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={boardId}/>}
         <li className="task-preview-last-updated same-width">
             <h4>{getFormattedDateTime(task.createdAt)}</h4>
         </li>
@@ -88,7 +96,7 @@ export const TaskPreview = ({ task, groupId, boardId }) => {
     </ul>
 }
 
-const makeStatusClass = (status) => {
+const makeClass = (status) => {
     console.log(status)
     if(!status) return
     return status.split(' ').join('')
