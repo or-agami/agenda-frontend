@@ -6,7 +6,6 @@ export const GroupMenu = ({groupId,boardId}) => {
     const dispatch = useDispatch()
     const onRemoveGroup =() => {
         const removeObj = {groupId,boardId}
-        console.log(removeObj)
         dispatch(removeGroup(removeObj))
         
     }

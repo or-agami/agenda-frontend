@@ -30,6 +30,25 @@
         }
     }
 
+    .side-board-workspace-name {
+        display: flex;
+        align-items: center;
+
+        h5 {
+            font-size: 15px;
+            font-family: roboto-bold;
+        }
+
+        .board-preview-icon {
+            background-color: var(--status-clr5);
+            color: var(--clr-item-bg);
+            padding: 6px 12px;
+            border-radius: 0.2em;
+            margin-inline-end: 15px;
+            font-size: 20px;
+            width: fit-content;
+        }
+    }
 
     .toggle-nav-bar {
         width: 25px;
@@ -148,7 +167,7 @@
                 position: absolute;
                 right: 0px;
                 bottom: 0px;
-                transform: translate(80% , 90%);
+                transform: translate(80%, 90%);
                 flex-direction: column;
                 background-color: var(--clr-item-bg);
                 padding: 10px;
@@ -186,7 +205,7 @@
         .icon {
             width: 25px;
         }
-        
+
         input {
             margin-inline-start: 10px;
             border: 1px solid var(--clr-btn-highlight);

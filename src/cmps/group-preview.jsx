@@ -6,13 +6,13 @@ export const GroupPreview = ({ group, board }) => {
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
 
     return <section className="group-preview">
-        {isHeaderOpen && <GroupHeader
+        {!isHeaderOpen && <GroupHeader
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
             boardId={board._id}
         />}
-        {!isHeaderOpen && <GroupContent
+        {isHeaderOpen && <GroupContent
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
