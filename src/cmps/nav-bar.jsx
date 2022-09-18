@@ -50,7 +50,6 @@ export const NavBar = () => {
 
 
   if (!currBoard) return <Loader />
-  console.log(boards, currBoard);
   return (
     <Fragment>
       {params['*'] !== 'home' &&

@@ -43,6 +43,7 @@ export function removeBoard(boardId) {
 }
 
 export function setFilter(filterBy) {
+    console.log('filterBy:', filterBy)
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER', filterBy })
     }

@@ -40,7 +40,7 @@ export function boardReducer(state = initialState, action) {
             return { ...state, boards, boardsLength: boards.length }
 
         case 'SET_FILTER':
-            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy}}
+            return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
 
         case 'SET_SORT':
             return { ...state, sortBy: { ...state.sortBy, ...action.sortBy }}
