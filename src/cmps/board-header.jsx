@@ -6,10 +6,12 @@ import { ReactComponent as SortSvg } from '../assets/icons/sort.svg'
 import { ReactComponent as HideSvg } from '../assets/icons/hide.svg'
 import { ReactComponent as DownArrowSvg } from '../assets/icons/down-arrow.svg'
 import { BiSearch } from 'react-icons/bi'
+import { AiFillCloseCircle } from 'react-icons/ai'
 import { useForm } from '../hooks/useForm'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateBoard } from '../store/board/board.action'
+import { useFilter } from '../hooks/useFilter'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
@@ -54,6 +56,13 @@ export const BoardHeader = ({ board }) => {
 }
 
 const BoardControls = () => {
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  const onToggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
+
   return (
     <div className="flex aline btns-container">
       <div className="btn btn-highlight btn-options">
@@ -64,10 +73,23 @@ const BoardControls = () => {
           <DownArrowSvg />
         </button>
       </div>
-      <button className="btn btn-svg btn-ri btn-search">
-        <BiSearch />
-        <span>Search</span>
-      </button>
+      {isSearchOpen ?
+        <SearchFilter isSearchOpen={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />
+        // <input className="input input-search"
+        //   onBlur={(ev) => onToggleSearch(ev.target.value)}
+        //   autoFocus
+        //   type="text"
+        //   name="term"
+        //   value={filterBy?.term || ''}
+        //   onChange={(ev) => handleFilterChange({ term: ev.target.value })}
+        // />
+        :
+        <button className="btn btn-svg btn-ri btn-search"
+          onClick={onToggleSearch}>
+          <BiSearch />
+          <span>Search</span>
+        </button>
+      }
       <button className="btn btn-svg btn-person">
         <PersonSvg />
         <span>Person</span>
@@ -87,6 +109,44 @@ const BoardControls = () => {
       <button className="btn btn-svg btn-task-menu">
         <BoardMenuSvg />
       </button>
+    </div>
+  )
+}
+
+const SearchFilter = ({ isSearchOpen, setIsSearchOpen }) => {
+
+  const [filterBy, handleFilterChange, setFilterBy] = useFilter(null)
+
+  const onToggleSearch = (inputValue) => {
+    if (filterBy?.term && inputValue) return
+    setIsSearchOpen(!isSearchOpen)
+  }
+
+  const onClearSearch = () => {
+    setFilterBy({ term: '' })
+  }
+
+  return (
+    <div className={`flex align-center board-search-filter ${filterBy?.term ? 'active' : ''}`}
+      onBlur={(ev) => onToggleSearch(ev.target.value)}
+    >
+      <span className="icon icon-bi">
+        <BiSearch />
+      </span>
+      <div className="input-container">
+        <input className="input input-search"
+          autoFocus
+          type="text"
+          name="term"
+          placeholder="Search"
+          value={filterBy?.term || ''}
+          onChange={(ev) => handleFilterChange({ term: ev.target.value })} />
+      </div>
+      {filterBy?.term &&
+        <button className="btn btn-svg btn-clear-search"
+        onClick={onClearSearch} >
+        <AiFillCloseCircle />
+      </button>}
     </div>
   )
 }

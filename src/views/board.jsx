@@ -13,7 +13,7 @@ export const Board = () => {
   const params = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { board, boards, isLoading } = useSelector(state => state.boardModule)
+  const { board, boards, isLoading, sortBy, filterBy } = useSelector(state => state.boardModule)
 
   useEffect(() => {
     if (isLoading) return
@@ -21,11 +21,15 @@ export const Board = () => {
     if ((!board || board._id !== boardId)){
       dispatch(loadBoard(boardId))
     } 
-    // if (board) {
-      
-    // }
   }, [params])
+
+  useEffect(() => {
+    if (board) {
+      dispatch(loadBoard(board._id, sortBy, filterBy))
+    }
+  }, [sortBy, filterBy])
   
+  console.log('board For Check', board);
   return (
     <div className="board-app">
       {isLoading ?

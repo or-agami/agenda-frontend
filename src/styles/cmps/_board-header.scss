@@ -92,5 +92,41 @@
         }
       }
     }
+
+    .board-search-filter {
+      border-radius: 6px;
+      padding: 0 8px;
+      border: 1px solid var(--clr-btn-highlight);
+      
+      &.active {
+        background-color: #cce5ff;
+      }
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .input-container {
+
+        .input-search {
+          padding-left: 5px;
+          background-color: transparent;
+          border: unset;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          outline: none;
+          transition: background-color .1s cubic-bezier(0, 0, 0.35, 1), width .1s cubic-bezier(0, 0, 0.35, 1);
+        }
+      }
+
+      .btn-clear-search {
+        svg * {
+          fill: var(--clr-btn-highlight);
+        }
+      }
+    }
   }
 }

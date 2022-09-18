@@ -4,7 +4,8 @@ import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-ic
 import { useForm } from '../hooks/useForm'
 import { updateGroup } from '../store/board/board.action'
 
-export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen,boardId }) => {
+
+export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
     const dispatch = useDispatch()
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
@@ -16,7 +17,7 @@ export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen,boardId }) =>
 
     const updateGroupName = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateGroup({group:editedGroup,boardId}))
+        dispatch(updateGroup({ group: editedGroup, boardId }))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 

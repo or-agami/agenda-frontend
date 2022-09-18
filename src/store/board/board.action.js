@@ -9,8 +9,8 @@ export function loadBoards() {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
-        const { filterBy } = getState().boardModule
-        boardService.query(filterBy)
+        // const { filterBy } = getState().boardModule
+        boardService.query()
             .then((boards) => {
                 console.log('boards from boardAction:', boards)
                 dispatch({ type: 'SET_BOARDS', boards })
@@ -43,16 +43,24 @@ export function removeBoard(boardId) {
 }
 
 export function setFilter(filterBy) {
+    console.log('filterBy:', filterBy)
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER', filterBy })
     }
 }
 
-export function loadBoard(boardId) {
-    return (dispatch, getState) => {
-        dispatch({ type: 'SET_LOADING', isLoading: true })
+export function setSort(sortBy) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_SORT', sortBy })
+    }
+}
 
-        boardService.getById(boardId)
+export function loadBoard(boardId, sortBy, filterBy) {
+    return (dispatch, getState) => {
+
+        if (!sortBy && !filterBy) dispatch({ type: 'SET_LOADING', isLoading: true })
+        
+        boardService.getById(boardId, sortBy, filterBy)
             .then((board) => {
                 dispatch({ type: 'SET_BOARD', board })
             })
