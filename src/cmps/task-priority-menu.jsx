@@ -8,6 +8,7 @@ export const TaskPriorityMenu = ({task,groupId,boardId,setIsTaskPriorityMenuOpen
         dispatch(updateTask({task:updatedTask,groupId,boardId}))
         setIsTaskPriorityMenuOpen(false)
     }
+    
 
 return <section className="task-priority-menu">
     <button className='btn-priority critical' onClick={()=>onUpdatePriority('Critical ⚠')}>Critical⚠</button>
