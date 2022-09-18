@@ -26,24 +26,29 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
     }
 
     if (!boards || boards.length < 1) return
+    console.log('from side nav bar', board);
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
         <div className="side-board-opts">
             <p className="board-name">Workspace</p>
-            {/* <BoardMenu /> */}
+            <BoardMenu />
+        </div>
+        <div className="side-board-workspace-name">
+            <div className="board-preview-icon">A</div>
+            <h5>agenda workspace</h5>
         </div>
         <div className="side-nav-details">
             <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
                 <PlusIcon />
                 Add
             </div>
-            <div className=" side-nav side-nav-filter">
+            <div className="side-nav side-nav-filter">
                 <FilterIcon />
                 Filter
             </div>
-            <div className=" side-nav side-nav-search">
+            <div className="side-nav side-nav-search">
                 <SearchIcon />
                 Search
             </div>
@@ -52,10 +57,10 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         {boards &&
             <div className="nav-board-list">
                 {boards.map(board =>
-                    <NavBoardPreview setCurrBoard={setCurrBoard} 
-                    board={board} 
-                    key={board._id} 
-                    boards={boards} />)}
+                    <NavBoardPreview setCurrBoard={setCurrBoard}
+                        board={board}
+                        key={board._id}
+                        boards={boards} />)}
             </div>}
         {isAddBoard &&
             <AddBoardModal setIsAddBoard={setIsAddBoard}

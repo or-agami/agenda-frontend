@@ -64,7 +64,7 @@ export const TaskPreview = ({ task, group, board }) => {
             {console.log(group.style)}
         </li>
         <li className='task-preview-checkbox'>
-            <input type="checkbox" />
+            <input className='task-check-input' type="checkbox" />
         </li>
         <div className='item-container'>
             <li className='item-preview-sub-task-expansion'>

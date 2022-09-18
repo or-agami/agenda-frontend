@@ -43,7 +43,10 @@ export function boardReducer(state = initialState, action) {
             return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
 
         case 'SET_SORT':
-            return { ...state, sortBy: { ...state.sortBy, ...action.sortBy }}
+            return action.sortBy ? 
+            { ...state, sortBy: { ...state.sortBy, ...action.sortBy }}
+            : {...state , sortBy: null}
+            
 
         case 'SET_BOARD':
             boardIdx = initialState.boards.findIndex(board => board._id === action.board._id)

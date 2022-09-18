@@ -14,7 +14,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
-    const [isDecending , setisDecending] = useState(false)
+    const [isDecending, setisDecending] = useState(false)
     const dispatch = useDispatch()
 
 
@@ -29,18 +29,24 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
 
     const updateGroupName = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateGroup({group:editedGroup,boardId:board._id}))
+        dispatch(updateGroup({ group: editedGroup, boardId: board._id }))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
     const onSortBy = (sortBy) => {
         setisDecending(!isDecending)
-        
+
         const sort = {
             by: sortBy,
             isDecending
         }
         dispatch(setSort(sort))
+    }
+
+    const clearSort = (ev) => {
+        ev.preventDefault()
+        ev.stopPropagation()
+        dispatch(setSort(null))
     }
 
     return <section className="group-content">
@@ -62,7 +68,11 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
                 <input type="checkbox" />
             </li>
             <li className="group-head-row group-content-header-item">
-                <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows /> </button>
+                <div className="sort-container">
+                    <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
+                        <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
+                    </button>
+                </div>
                 <h4>Item</h4>
             </li>
             <li className="group-content-header-developer same-width">

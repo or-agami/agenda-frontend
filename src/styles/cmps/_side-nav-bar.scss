@@ -3,7 +3,7 @@
     top: 0;
     left: 66px;
     background-color: var(--clr-bg);
-    width: 220px;
+    width: 254px;
     height: 100%;
     color: var(--clr-icon-svg);
     padding: 13px 15px;
@@ -13,7 +13,7 @@
     border: 1px solid var(--clr-disabled);
 
     &.closed {
-        left: -123px;
+        left: -157px;
         padding-right: 50px;
 
         .toggle-nav-bar {
@@ -23,13 +23,36 @@
             }
 
             &:hover {
-                padding-left: 15px;
+                padding-left: 10px;
                 padding-right: 0px;
                 transform: translateX(23px);
             }
         }
     }
 
+    .side-board-workspace-name {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--clr-icon-svg);
+        padding: 7px 5px;
+        border-radius: 0.3em;
+        margin-top: 5px;
+
+        h5 {
+            font-size: 15px;
+            font-family: roboto-bold;
+        }
+
+        .board-preview-icon {
+            background-color: var(--status-clr22);
+            color: var(--clr-item-bg);
+            padding: 3px 8px;
+            border-radius: 0.4em;
+            margin-inline-end: 5px;
+            font-size: 16px;
+            width: fit-content;
+        }
+    }
 
     .toggle-nav-bar {
         width: 25px;
@@ -45,8 +68,8 @@
 
         &:hover {
             background-color: var(--clr-btn-highlight);
-            width: 35px;
-            padding-right: 15px;
+            width: 30px;
+            padding-right: 10px;
 
 
             svg * {
@@ -85,13 +108,12 @@
     .side-nav-details {
         display: flex;
         flex-direction: column;
-        margin-top: 30px;
+        margin-top: 20px;
 
         .side-nav {
             font-size: 14px;
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
             cursor: pointer;
             padding: 5px;
             border-radius: 0.2em;
@@ -148,7 +170,7 @@
                 position: absolute;
                 right: 0px;
                 bottom: 0px;
-                transform: translate(80% , 90%);
+                transform: translate(80%, 90%);
                 flex-direction: column;
                 background-color: var(--clr-item-bg);
                 padding: 10px;
@@ -186,7 +208,7 @@
         .icon {
             width: 25px;
         }
-        
+
         input {
             margin-inline-start: 10px;
             border: 1px solid var(--clr-btn-highlight);

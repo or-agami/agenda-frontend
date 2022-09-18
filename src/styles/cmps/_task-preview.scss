@@ -210,6 +210,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .task-check-input {
+            width: 15px;
+            height: 15px;
+        }
     }
 
     .Workingonit {
