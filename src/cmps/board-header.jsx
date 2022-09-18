@@ -122,23 +122,31 @@ const SearchFilter = ({ isSearchOpen, setIsSearchOpen }) => {
     setIsSearchOpen(!isSearchOpen)
   }
 
+  const onClearSearch = () => {
+    setFilterBy({ term: '' })
+  }
+
   return (
-    <div className="flex align-center board-search-filter">
+    <div className={`flex align-center board-search-filter ${filterBy?.term ? 'active' : ''}`}
+      onBlur={(ev) => onToggleSearch(ev.target.value)}
+    >
       <span className="icon icon-bi">
         <BiSearch />
       </span>
       <div className="input-container">
         <input className="input input-search"
-          onBlur={(ev) => onToggleSearch(ev.target.value)}
           autoFocus
           type="text"
           name="term"
+          placeholder="Search"
           value={filterBy?.term || ''}
           onChange={(ev) => handleFilterChange({ term: ev.target.value })} />
       </div>
-      <button className="btn btn-svg btn-search">
+      {filterBy?.term &&
+        <button className="btn btn-svg btn-clear-search"
+        onClick={onClearSearch} >
         <AiFillCloseCircle />
-      </button>
+      </button>}
     </div>
   )
 }

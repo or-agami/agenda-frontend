@@ -13,7 +13,7 @@ export const Board = () => {
   const params = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { board, boards, isLoading, sortBy } = useSelector(state => state.boardModule)
+  const { board, boards, isLoading, sortBy, filterBy } = useSelector(state => state.boardModule)
 
   useEffect(() => {
     if (isLoading) return
@@ -25,9 +25,9 @@ export const Board = () => {
 
   useEffect(() => {
     if (board) {
-      dispatch(loadBoard(board._id, sortBy))
+      dispatch(loadBoard(board._id, sortBy, filterBy))
     }
-  }, [sortBy])
+  }, [sortBy, filterBy])
   
   console.log('board For Check', board);
   return (

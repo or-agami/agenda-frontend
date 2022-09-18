@@ -312,19 +312,26 @@ function query(filterBy) {
   // else return httpService.get(BASE_URL)
 }
 
-function getById(boardId, sortBy) {
+function getById(boardId, sortBy, filterBy) {
   //?- Dev:
   return storageService.get(STORAGE_KEY, boardId)
     .then((board) => {
       if (!board) {
         board = gBoards.find(board => board._id === boardId)
       }
-
+      // Todo: merge sort with filter !!
       if (sortBy) {
         if (sortBy.by === 'title') board.groups.forEach(group =>
           group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title)))
       }
 
+      if (filterBy) {
+        board.groups.map((group) =>
+          group.tasks = group.tasks.filter((task) =>
+            (filterBy.term) ? task.title.toLowerCase().includes(filterBy.term.toLowerCase()) : true
+          )
+        )
+      }
       return board
     })
   //?- Prod:
