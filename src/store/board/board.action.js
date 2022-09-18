@@ -58,7 +58,7 @@ export function setSort(sortBy) {
 export function loadBoard(boardId, sortBy, filterBy) {
     return (dispatch, getState) => {
 
-        if (!sortBy) dispatch({ type: 'SET_LOADING', isLoading: true })
+        if (!sortBy && !filterBy) dispatch({ type: 'SET_LOADING', isLoading: true })
         
         boardService.getById(boardId, sortBy, filterBy)
             .then((board) => {
