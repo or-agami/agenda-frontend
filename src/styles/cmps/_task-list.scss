@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
 
+
     .task-preview-container {
         display: flex;
 
@@ -15,12 +16,13 @@
             &:hover {
                 opacity: 1;
             }
-        
-             svg {
+
+            svg {
                 width: 20px;
                 height: 20px;
             }
         }
+
         &:hover .btn-task-menu {
             opacity: 1;
         }
