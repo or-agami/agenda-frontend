@@ -2,6 +2,8 @@ import { GroupPreview } from "./group-preview"
 import { ReactComponent as PlusIcon } from '../assets/icons/plus-icon.svg'
 import { useDispatch } from "react-redux"
 import { addGroup } from "../store/board/board.action"
+import { ModalScreen } from "./modal-screen"
+import { useState } from "react"
 
 export const GroupList = ({ board }) => {
   const dispatch = useDispatch()
@@ -11,6 +13,7 @@ export const GroupList = ({ board }) => {
   }
 
   return <section className="group-list">
+    <ModalScreen />
     {board.groups.map((group, idx) =>
         <GroupPreview 
         key={idx} 

@@ -18,6 +18,7 @@ import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
 import { loadBoard, loadBoards } from '../store/board/board.action';
+import { ModalScreen } from './modal-screen';
 
 
 export const NavBar = () => {
@@ -52,6 +53,7 @@ export const NavBar = () => {
   if (!currBoard) return <Loader />
   return (
     <Fragment>
+      <ModalScreen/>
       {params['*'] !== 'home' &&
         <SideNavBar setCurrBoard={setCurrBoard} boards={boards} board={currBoard} isOpen={isOpen} setIsOpen={setIsOpen} />}
       <section className="nav-bar">

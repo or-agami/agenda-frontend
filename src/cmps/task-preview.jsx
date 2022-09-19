@@ -5,24 +5,22 @@ import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.sv
 import { TaskMenu } from './task-menu'
 import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
-import { updateTask } from '../store/board/board.action'
-import { useDispatch } from 'react-redux'
+import { openModal, updateTask } from '../store/board/board.action'
+import { useDispatch, useSelector } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
 import { useRef } from 'react'
 
-export const TaskPreview = ({ task, group, board }) => {
-    const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
 
+export const TaskPreview = ({ task, group, board }) => {
+    const { taskId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen,isScreenOpen } = useSelector(state => state.boardModule.modals)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
 
-
-
     const onSetIsTaskMenuOpen = () => {
-        setIsTaskMenuOpen(prevState => prevState = !isTaskMenuOpen)
+        dispatch(openModal('isTaskMenuOpen', task.id))
     }
 
     const getFormattedDateTime = (date) => {
@@ -36,26 +34,23 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
-    // const onSetTaskStatusMenuOpen = () => {
-    //     setIsTaskStatusMenuOpen(prevState => prevState = !isTaskStatusMenuOpen)
-    // }
+    const onSetTaskStatusMenuOpen = () => {
+        dispatch(openModal('isTaskStatusMenuOpen', task.id))
+    }
 
-    // const onSetTaskPriorityMenuOpen = () => {
-    //     setIsTaskPriorityMenuOpen(prevState => prevState = !isTaskPriorityMenuOpen)
-    // }
+    const onSetTaskPriorityMenuOpen = () => {
+        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
+    }
 
-    // const onSetTaskPersonMenuOpen = () => {
-    //     // isTaskPersonMenuOpen? 
-    //     // document.body.removeEventListener("click", onSetTaskPersonMenuOpen):
-    //     // document.body.addEventListener("click", onSetTaskPersonMenuOpen)
-    //     setIsTaskPersonMenuOpen(prevState => prevState = !isTaskPersonMenuOpen)
-    // }
+    const onSetTaskPersonMenuOpen = () => {
+        dispatch(openModal('isTaskPersonMenuOpen', task.id))
+    }
 
 
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {isTaskMenuOpen && <TaskMenu taskId={task.id} group={group} boardId={board._id} setIsTaskMenuOpen={setIsTaskMenuOpen} />}
+        {(isTaskMenuOpen && taskId===task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
         <li className={`task-preview-group-color ${group.style}`}>
         </li>
         <li className='task-preview-checkbox'>
@@ -174,12 +169,3 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
         </li>
     </>
 }
-
-
-// "cmpsOrder": [
-    //     "member",
-//     "status",
-//     "priority",
-//     "attachments",
-//     "timeline"
-//   ]

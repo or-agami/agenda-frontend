@@ -27,3 +27,6 @@ export function showErrorMsg(txt) {
     showUserMsg({txt, type: 'error'})
 }
 
+export function isUsernameVerified(isVerified) {
+    eventBusService.emit('username-verify', isVerified)
+}

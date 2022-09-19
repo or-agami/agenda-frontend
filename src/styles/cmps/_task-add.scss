@@ -5,7 +5,11 @@
     border-bottom:  1px solid var(--clr-disabled);
     border-end-start-radius: 8px;
     height: 35px;
-    width: 955px;
+    // & > li:last-child {
+        // margin-left: calc(50% - 50vw);
+        // width: 100vw;
+    // }
+    min-width: 100%;
 
     &:hover .task-add-group-color {
         filter: opacity(100%);

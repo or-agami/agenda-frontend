@@ -2,7 +2,7 @@ import { GroupHeader } from "./group-header"
 import { GroupContent } from "./group-content"
 import { useState } from "react"
 
-export const GroupPreview = ({ group, board }) => {
+export const GroupPreview = ({ group, board}) => {
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
 
     return <section className="group-preview">

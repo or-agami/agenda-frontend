@@ -1,22 +1,18 @@
 import { Logo } from '../cmps/logo'
-import { login, signup } from '../store/user/user.action'
+import { checkUsername, login, signup } from '../store/user/user.action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Fragment, useEffect, useState } from 'react'
-import { NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { Navigate, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import { ReactComponent as RightArrowSvg } from '../assets/icons/right-arrow.svg'
+import { eventBusService } from '../services/event-bus.service'
+import { MdDoNotDisturbAlt } from 'react-icons/md'
 
 export const LoginSignup = () => {
 
   const params = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const [signupFields, handleSignupChange, setSignupFields] = useForm({
-    fullname: '',
-    username: '',
-    password: '',
-  })
 
   useEffect(() => {
     if (params['*'] !== 'login' && params['*'] !== 'signup') navigate('/auth/login')
@@ -63,7 +59,7 @@ const Signup = (props) => {
             </div>
             <form className="flex column form form-user-login-signup"
               onSubmit={(ev) => onUserSignup(ev)}>
-              <label className="label-username" for="username">Enter email</label>
+              <label className="label-username" htmlFor="username">Enter email</label>
               <input className="input input-username"
                 name="username"
                 type="text"
@@ -79,7 +75,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                 /> */}
               <input type="submit" hidden />
-              <button className="btn btn-svg btn-continue">Continue</button>
+              <button className="btn btn-svg btn-next">Continue</button>
             </form>
             <div className="flex justify-center align-center login-signup-separator split-line">
               <span className="separator-line"></span>
@@ -91,7 +87,7 @@ const Signup = (props) => {
               <span>Continue with Google</span>
             </button>
             <div className="suggest-signup">
-              <span class="suggest-signup-prefix">Already have an account?</span>
+              <span className="suggest-signup-prefix">Already have an account?</span>
               <NavLink to='/auth/login'>Log in</NavLink>
             </div>
           </div>
@@ -110,14 +106,43 @@ const Signup = (props) => {
 }
 
 const Login = (props) => {
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [isUsernameVerified, setUserNameVerified] = useState(false)
+
   const [loginFields, handleLoginChange, setLoginFields] = useForm({
     username: '',
     password: '',
   })
 
+  const unsubscribeRef = useRef()
+
+  useEffect(() => {
+    unsubscribeRef.current = eventBusService.on('username-verify', (isVerified) => {
+      console.log('username-verify:', isVerified)
+      setUserNameVerified(isVerified)
+    })
+    return () => { unsubscribeRef.current() }
+  })
+
+  useEffect(() => {
+    if (isUsernameVerified === 'LOGGEDIN_SUCCESSFULLY') {
+      navigate('/workspace/home')
+    }
+  })
+
   const onUserLogin = (ev) => {
     ev.preventDefault()
+    const { username, password } = loginFields
+    if (isUsernameVerified !== 'VERIFIED' && password === '') {
+      dispatch(checkUsername(username))
+    }
+    if (isUsernameVerified === 'VERIFIED') {
+      dispatch(login(loginFields))
+    }
+    console.log('loginFields:', loginFields)
   }
 
   return (
@@ -125,25 +150,46 @@ const Login = (props) => {
       <Header />
       <section className="flex align-center column login">
         <h1 className="title">Log in to your account</h1>
-        <form className="flex column form form-user-login"
+        {isUsernameVerified === 'NOT_FOUND' &&
+          <div className="flex align-center username-not-found">
+            <div className="icon icon-svg"><MdDoNotDisturbAlt /></div>
+            <div className="flex column align-center not-found-txt">
+              <span className="msg">We couldn't find this email. Would you like to</span>
+              <NavLink to='/auth/signup'>sign up instead?</NavLink>
+            </div>
+          </div>}
+        <form className="flex column form form-user-login-signup"
           onSubmit={(ev) => onUserLogin(ev)}>
-          <label className="label-username" for="username">Enter your work email address</label>
+          {isUsernameVerified === 'VERIFIED' ?
+            <label className="label-username verified" htmlFor="username">Email</label>
+            :
+            <label className="label-username" htmlFor="username">Enter your work email address</label>
+          }
           <input className="input input-username"
             name="username"
             type="text"
-            // value={username}
+            value={loginFields.username}
             placeholder="Example@company.com"
-          // onChange={handleChange} 
+            onChange={handleLoginChange}
           />
-          {/* <input className="input input-password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    placeholder="password"
-                    onChange={handleChange}
-                /> */}
+          {isUsernameVerified === 'VERIFIED' &&
+            <Fragment>
+              <label className="label-username verified" htmlFor="password">Password</label>
+              <input className="input input-password"
+                name="password"
+                type="password"
+                value={loginFields.password}
+                placeholder="password"
+                onChange={handleLoginChange}
+              />
+            </Fragment>
+          }
           <input type="submit" hidden />
-          <button className="btn btn-svg btn-next">Next <RightArrowSvg /></button>
+          {isUsernameVerified === 'VERIFIED' ?
+            <button className="btn btn-svg btn-next"><span>Log</span>In<RightArrowSvg /></button>
+            :
+            <button className="btn btn-svg btn-next">Next<RightArrowSvg /></button>
+          }
         </form>
         <div className="flex justify-center align-center login-signup-separator split-line">
           <span className="separator-line"></span>
@@ -155,7 +201,7 @@ const Login = (props) => {
           <span>Google</span>
         </button>
         <div className="suggest-signup">
-          <span class="suggest-signup-prefix">Don't have an account yet?</span>
+          <span className="suggest-signup-prefix">Don't have an account yet?</span>
           <NavLink to='/auth/signup'>Sign up</NavLink>
         </div>
       </section>
