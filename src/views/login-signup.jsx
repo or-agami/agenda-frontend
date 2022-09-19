@@ -149,7 +149,9 @@ const Login = (props) => {
     <Fragment>
       <Header />
       <section className="flex align-center column login">
-        <h1 className="title">Log in to your account</h1>
+        {isUsernameVerified === 'VERIFIED' ?
+          <h1 className="title"><span>Log</span>In</h1> :
+          <h1 className="title">Log in to your account</h1>}
         {isUsernameVerified === 'NOT_FOUND' &&
           <div className="flex align-center username-not-found">
             <div className="icon icon-svg"><MdDoNotDisturbAlt /></div>

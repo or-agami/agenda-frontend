@@ -19,15 +19,14 @@
         }
     }
 
-    & > li:last-child {
+    &>li:last-child {
         margin-left: calc(50% - 50vw);
         width: 100vw;
-        
+
     }
 
     .task-preview-priority {
         background-color: var(--clr-empty);
-        font-weight: bold;
         color: white;
         box-sizing: border-box;
         text-align: center;
@@ -61,7 +60,6 @@
 
     .task-preview-status {
         background-color: var(--clr-empty);
-        font-weight: bold;
         color: white;
         box-sizing: border-box;
         text-align: center;
