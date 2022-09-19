@@ -15,6 +15,7 @@ const initialState = {
         isTaskPersonMenuOpen: false,
         isColorMenuOpen: false,
         isBoardOptsOpen:false,
+        isUserMenuOpen:false,
     }
 
 

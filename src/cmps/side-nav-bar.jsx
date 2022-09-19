@@ -87,7 +87,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
 
     const dispatch = useDispatch()
     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
-    const taskId = useSelector(state => state.boardModule.modals.taskId)
+    const itemId = useSelector(state => state.boardModule.modals.itemId)
     const isBoardOptsOpen = useSelector(state => state.boardModule.modals.isBoardOptsOpen)
     // const [isBoardOpts, setIsBoardOpts] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
@@ -131,7 +131,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-            {(isBoardOptsOpen && taskId === board._id && isScreenOpen) &&
+            {(isBoardOptsOpen && itemId === board._id && isScreenOpen) &&
                 <div className='board-opts-modal modal'>
                     <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
                         <PencilIcon />

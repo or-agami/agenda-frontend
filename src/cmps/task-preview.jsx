@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
-import { useRef } from 'react'
 
 
 export const TaskPreview = ({ task, group, board }) => {
