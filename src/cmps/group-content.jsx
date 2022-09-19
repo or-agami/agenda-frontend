@@ -5,21 +5,24 @@ import { useState } from 'react'
 import { GroupMenu } from './group-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../hooks/useForm'
-import { setSort, updateGroup } from '../store/board/board.action'
+import { openModal, setSort, updateGroup } from '../store/board/board.action'
 import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
+import { ModalScreen } from './modal-screen'
 
 
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) => {
-    const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
+
+    // const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setisDecending] = useState(false)
+    const {isScreenOpen,isGroupMenuOpen,taskId} = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
 
 
     const onSetIsGroupMenuOpen = () => {
-        setIsGroupMenuOpen(prevState => prevState = !isGroupMenuOpen)
+        dispatch(openModal('isGroupMenuOpen',group.id))
     }
 
     const onSetIsHeaderOpen = ({ target }) => {
@@ -52,7 +55,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {isGroupMenuOpen && <GroupMenu group={group} boardId={board._id} setIsGroupMenuOpen={setIsGroupMenuOpen} />}
+            {(isGroupMenuOpen && taskId===group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id}/>}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg className={`${group.style} no-background`}/>
             </button>

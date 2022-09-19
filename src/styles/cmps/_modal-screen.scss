@@ -1,0 +1,14 @@
+.modal-screen {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    opacity: .3;
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.modal {
+    z-index: 20;
+}

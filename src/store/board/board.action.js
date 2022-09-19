@@ -180,3 +180,21 @@ export function removeGroup(group) {
             })
     }
 }
+
+export function closeModals() {
+    return (dispatch) => {
+        dispatch({type:'CLOSE_MODALS'})
+    }
+}
+
+export function openModal(stateName,taskId) {
+    return (dispatch) => {
+        dispatch({type:'OPEN_MODAL',stateName,taskId})
+    }
+}
+
+export function openScreenModal() {
+    return (dispatch)=>{
+        dispatch({type:'OPEN_SCREEN_MODAL'})
+    }
+}

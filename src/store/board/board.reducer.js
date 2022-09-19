@@ -5,6 +5,18 @@ const initialState = {
     board: null,
     filterBy: null,
     sortBy: null,
+    modals: {
+        taskId: null,
+        isScreenOpen: false,
+        isGroupMenuOpen: false,
+        isTaskMenuOpen: false,
+        isTaskStatusMenuOpen: false,
+        isTaskPriorityMenuOpen: false,
+        isTaskPersonMenuOpen: false,
+        isColorMenuOpen: false,
+    }
+
+
 }
 
 export function boardReducer(state = initialState, action) {
@@ -43,16 +55,21 @@ export function boardReducer(state = initialState, action) {
             return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
 
         case 'SET_SORT':
-            return action.sortBy ? 
-            { ...state, sortBy: { ...state.sortBy, ...action.sortBy }}
-            : {...state , sortBy: null}
-            
+            return action.sortBy ?
+                { ...state, sortBy: { ...state.sortBy, ...action.sortBy } }
+                : { ...state, sortBy: null }
+
 
         case 'SET_BOARD':
             boardIdx = initialState.boards.findIndex(board => board._id === action.board._id)
             return { ...state, board: { ...action.board, idx: boardIdx }, boardsLength: initialState.boardsLength, neighborsId: action.neighborsId }
 
-
+        case 'CLOSE_MODALS':
+            return { ...state, modals: initialState.modals }
+        case 'OPEN_MODAL':
+            return { ...state, modals: { ...state.modals, [action.stateName]: true, isScreenOpen: true ,taskId:action.taskId} }
+        case 'OPEN_SCREEN_MODAL':
+            return {...state,modals:{...state.modals,isScreenOpen:true}}
         default:
             return state
     }

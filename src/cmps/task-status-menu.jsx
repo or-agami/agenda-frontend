@@ -1,15 +1,17 @@
 import { useDispatch } from 'react-redux'
-import { updateTask } from '../store/board/board.action'
+import { closeModals, updateTask } from '../store/board/board.action'
 
-export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen }) => {
+export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen ,setIsScreenOpen}) => {
     const dispatch = useDispatch()
     const onUpdateStatus = (status) => {
         const updatedTask = { ...task, status }
+        dispatch(closeModals())
+        // setIsScreenOpen(prevState => prevState=false)
+        // setIsTaskStatusMenuOpen(prevState => prevState=false)
         dispatch(updateTask({ task: updatedTask, groupId, boardId }))
-        setIsTaskStatusMenuOpen(false)
     }
 
-    return <section className="task-status-menu">
+    return <section className="task-status-menu modal">
         <button className='btn-status working-on-it' onClick={() => onUpdateStatus('Working on it')}>Working on it</button>
         <button className='btn-status stuck' onClick={() => onUpdateStatus('Stuck')}>Stuck</button>
         <button className='btn-status done' onClick={() => onUpdateStatus('Done')}>Done</button>

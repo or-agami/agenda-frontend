@@ -1,44 +1,38 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
-import { removeGroup, updateGroup } from '../store/board/board.action'
+import { closeModals, openModal, removeGroup, updateGroup } from '../store/board/board.action'
 
-export const GroupMenu = ({ group, boardId, setIsGroupMenuOpen }) => {
+export const GroupMenu = ({ group, boardId }) => {
     const dispatch = useDispatch()
-    const [isColorMenuOpen, setIsColorMenuOpen] = useState(false)
+    const isColorMenuOpen = useSelector(state => state.boardModule.modals.isColorMenuOpen)
     const onRemoveGroup = () => {
         const removeObj = { groupId: group.id, boardId }
-        console.log(removeObj)
+        dispatch(closeModals())
         dispatch(removeGroup(removeObj))
-        setIsGroupMenuOpen(false)
     }
 
     const openColorMenu = () => {
-        setIsColorMenuOpen(true)
+        dispatch(openModal('isColorMenuOpen',group.id))
     }
-    if (isColorMenuOpen) return <ColorMenu group={group} boardId={boardId} setIsColorMenuOpen={setIsColorMenuOpen} setIsGroupMenuOpen={setIsGroupMenuOpen}/>
-    return <section className="group-menu">
+    if (isColorMenuOpen) return <ColorMenu group={group} boardId={boardId} />
+    return <section className="group-menu modal">
         <div className="group-color-icon-container" onClick={openColorMenu}>
-            <div className="group-color-icon"></div>
+            <div className={`group-color-icon ${group.style}`}></div>
             <button>Change group color</button>
         </div>
         <button onClick={onRemoveGroup} className='btn btn-svg btn-trash-task'><Trash /> Delete</button>
     </section>
 }
 
-const ColorMenu = ({ group, boardId, setIsColorMenuOpen,setIsGroupMenuOpen }) => {
-    console.log('hello')
+const ColorMenu = ({ group, boardId}) => {
     const dispatch = useDispatch()
     const changeGroupColor = (color) => {
         let updatedGroup = { ...group, style: color }
-        console.log(updatedGroup)
+        dispatch(closeModals())
         dispatch(updateGroup({ group: updatedGroup, boardId }))
-        setIsColorMenuOpen(false)
-        setIsGroupMenuOpen(false)
-
     }
 
-    return <section className='color-menu'>
+    return <section className='color-menu modal'>
         <div className='clr1' onClick={() => changeGroupColor('clr1')}></div>
         <div className='clr2' onClick={() => changeGroupColor('clr2')}></div>
         <div className='clr3' onClick={() => changeGroupColor('clr3')}></div>

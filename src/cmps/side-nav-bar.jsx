@@ -8,7 +8,7 @@ import { useState } from "react"
 import { Link, NavLink, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { loadBoards, removeBoard, updateBoard } from '../store/board/board.action'
+import { closeModals, loadBoards, openScreenModal, removeBoard, updateBoard } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
 import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
@@ -26,7 +26,6 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
     }
 
     if (!boards || boards.length < 1) return
-    console.log('from side nav bar', board);
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
@@ -74,6 +73,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
 
     const dispatch = useDispatch()
+    const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
     const [isBoardOpts, setIsBoardOpts] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
@@ -82,13 +82,15 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
         ev.preventDefault()
         ev.stopPropagation()
         setIsBoardOpts(!isBoardOpts)
+        dispatch(openScreenModal())
     }
 
     const onRemoveBoard = (ev, boardId) => {
         ev.preventDefault()
         ev.stopPropagation()
         dispatch(removeBoard(boardId))
-        setIsBoardOpts(!isBoardOpts)
+        dispatch(closeModals())
+        // setIsBoardOpts(!isBoardOpts)
         setCurrBoard(boards[0])
     }
 
@@ -96,7 +98,8 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
         ev.preventDefault()
         ev.stopPropagation()
         setIsRenaming(!isRenaming)
-        setIsBoardOpts(!isBoardOpts)
+        // setIsBoardOpts(!isBoardOpts)
+        dispatch(closeModals())
     }
 
     const onRenameBoard = (ev) => {
@@ -116,7 +119,8 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-            {isBoardOpts && <div className='board-opts-modal'>
+            {(isBoardOpts && isScreenOpen) && 
+            <div className='board-opts-modal modal'>
                 <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
                     <PencilIcon />
                     <span>Rename Board</span>
