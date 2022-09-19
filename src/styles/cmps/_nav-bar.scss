@@ -67,7 +67,7 @@
       }
     }
 
-    &:not(.btn-home, .btn-board, .last-child) {
+    &:not(.btn-home, .btn-board,.btn-logout, .last-child) {
       svg * {
         fill: white;
       }
