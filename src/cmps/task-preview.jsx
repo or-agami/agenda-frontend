@@ -70,8 +70,9 @@ export const TaskPreview = ({ task, groupId, board, idx,  moveListItem }) => {
     }
 
     const updateTitle = (ev) => {
+        console.log(group.id)
         if (ev) ev.preventDefault()
-        dispatch(updateTask({ task: editedTask, groupId, boardId: board._id }))
+        dispatch(updateTask({ task: editedTask, groupId:group.id, boardId: board._id }))
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -84,6 +85,9 @@ export const TaskPreview = ({ task, groupId, board, idx,  moveListItem }) => {
     }
 
     const onSetTaskPersonMenuOpen = () => {
+        // isTaskPersonMenuOpen? 
+        // document.body.removeEventListener("click", onSetTaskPersonMenuOpen):
+        // document.body.addEventListener("click", onSetTaskPersonMenuOpen)
         setIsTaskPersonMenuOpen(prevState => prevState = !isTaskPersonMenuOpen)
     }
 
@@ -96,8 +100,9 @@ export const TaskPreview = ({ task, groupId, board, idx,  moveListItem }) => {
     return <ul key={task.id} className="clean-list task-preview"
         ref={dragDropRef} style={{opacity}}>
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {isTaskMenuOpen && <TaskMenu taskId={task.id} groupId={groupId} boardId={board._id} setIsTaskMenuOpen={setIsTaskMenuOpen} />}
-        <li className="task-preview-group-color">
+        {isTaskMenuOpen && <TaskMenu taskId={task.id} group={group} boardId={board._id} setIsTaskMenuOpen={setIsTaskMenuOpen} />}
+        <li className={`task-preview-group-color ${group.style}`}>
+            {console.log(group.style)}
         </li>
         <li className='task-preview-checkbox'>
             <input className='task-check-input' type="checkbox" />
@@ -122,24 +127,28 @@ export const TaskPreview = ({ task, groupId, board, idx,  moveListItem }) => {
         </div>
         <li className="task-preview-developer same-width">
             <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
+            <div className='developer-container'>
             {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
             <div className='developer-container'>
                 {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
             </div>
         </li>
-        {isTaskPersonMenuOpen && <TaskPersonMenu task={task} groupId={groupId} board={board} setIsTaskPersonMenuOpen={setIsTaskPersonMenuOpen} />}
+        {isTaskPersonMenuOpen && <TaskPersonMenu task={task} groupId={group.id} board={board} setIsTaskPersonMenuOpen={setIsTaskPersonMenuOpen} />}
         <li className={`task-preview-status same-width ${makeClass(task.status)}`} onClick={() => onSetTaskStatusMenuOpen()}>
             <span className='fold'></span>
             <h4>{task.status}</h4>
         </li>
-        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen} />}
+        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={group.id} boardId={board._id} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen} />}
         <li className={`task-preview-priority same-width ${makeClass(task.priority)}`} onClick={() => onSetTaskPriorityMenuOpen()}>
             <span className='fold'></span>
             <h4>{task.priority}</h4>
         </li>
-        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
+        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={group.id} boardId={board._id} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
         <li className="task-preview-last-updated same-width">
             <h4>{getFormattedDateTime(task.createdAt)}</h4>
+        </li>
+        <li>
+            
         </li>
         {/* <li className="task-preview-files">
                 <h4>Cookie file</h4>

@@ -45,12 +45,12 @@ export const TaskList = ({ group, board }) => {
     return <section className="task-list">
         {tasks.map((task, idx) => (
             <div key={task.id} className='task-preview-container'>
-                <TaskPreview task={task} groupId={group.id} board={board} idx={idx} moveListItem={moveListItem} />
+                <TaskPreview task={task} group={group} board={board} idx={idx} moveListItem={moveListItem} />
             </div>
         ))}
 
         <TaskAdd
-            groupId={group.id}
+            group={group}
             boardId={board._id}
         />
     </section>

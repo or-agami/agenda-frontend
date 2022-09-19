@@ -22,16 +22,16 @@ export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) =
     }
 
     return <ul className="group-header">
-        <li className="group-header-color">
+        <li className={`group-header-color ${group.style}`}>
 
         </li>
         <li className="group-header-name">
             <button className="btn btn-svg btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg />
+                <ArrowRightSvg className={`${group.style} no-background`}/>
             </button>
-            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{group.title}</h4>}
+            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-header-title-h4`}>{group.title}</h4>}
             {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} />
+                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
             </form>}
         </li>
         {/* <div className="wrapper"> */}

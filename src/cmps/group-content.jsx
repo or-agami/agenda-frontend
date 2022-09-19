@@ -52,17 +52,17 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {isGroupMenuOpen && <GroupMenu groupId={group.id} boardId={board._id} />}
+            {isGroupMenuOpen && <GroupMenu group={group} boardId={board._id} setIsGroupMenuOpen={setIsGroupMenuOpen} />}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg />
+                <ArrowRightSvg className={`${group.style} no-background`}/>
             </button>
-            {!isEditTitle && <h4 className="group-content-name" onClick={() => setIsEditTitle(!isEditTitle)}>{group.title}</h4>}
+            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
             {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} />
+                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`}/>
             </form>}
         </div>
         <ul className="group-content-header">
-            <li className="group-content-header-color">
+            <li className={`group-content-header-color ${group.style}`}>
             </li>
             <li className='group-content-header-checkbox'>
                 <input type="checkbox" />
@@ -86,6 +86,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
             </li>
             <li className="group-content-header-last-updated same-width">
                 <h4>Last updated</h4>
+            </li>
+            <li>
+
             </li>
             {/* <li className="group-content-header-files">
                 <h4>Files</h4>

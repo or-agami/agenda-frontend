@@ -1,20 +1,20 @@
 import { useDispatch } from "react-redux"
 import {addTask} from '../store/board/board.action'
 
-export const TaskAdd = ({groupId,boardId}) => {
+export const TaskAdd = ({group,boardId}) => {
     const dispatch = useDispatch()
     
 
     const onAddTask =(ev) => {
         ev.preventDefault()
-        const task = {groupId,title: ev.target[0].value,boardId}
+        const task = {groupId:group.id,title: ev.target[0].value,boardId}
         dispatch(addTask(task))
         ev.target[0].value = ''
 
     }
 
     return <ul className="task-add">
-        <li className="task-add-group-color">
+        <li className={`task-add-group-color ${group.style}`}>
         </li>
         <li className='task-add-checkbox'>
             <input disabled type="checkbox" />
