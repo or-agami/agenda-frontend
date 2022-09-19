@@ -2,6 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import bgImg from '../assets/img/home-bg-img.jpg'
 import { Logo } from '../cmps/logo'
 
+
+
 export const Home = () => {
 
     const navigate = useNavigate()
@@ -12,7 +14,7 @@ export const Home = () => {
 
     return (
         <section className="home">
-            <Header />
+                <Header />
             <div className="home-bg-div">
                 <img className='bg-img' src={bgImg} />
                 <div className="home-hero main-layout">
@@ -27,7 +29,7 @@ export const Home = () => {
                     <p className='home-btn-txt'>Start here your own <span>agenda</span></p>
                 </div>
             </div>
-                <Footer />
+            <Footer />
         </section>
     )
 }

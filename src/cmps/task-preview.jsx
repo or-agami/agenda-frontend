@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
+import { useRef } from 'react'
+import { useDrag, useDrop } from 'react-dnd'
 
 
 export const TaskPreview = ({ task, group, board }) => {
@@ -17,6 +19,44 @@ export const TaskPreview = ({ task, group, board }) => {
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
+
+    // useDrag - the list item is draggable
+    const [{ isDragging }, dragRef] = useDrag({
+        type: 'task',
+        item: { idx },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    })
+
+    // useDrop - the list item is also a drop area
+    const [spec, dropRef] = useDrop({
+        accept: 'task',
+        hover: (item, monitor) => {
+            const dragIndex = item.idx
+            const hoverIndex = idx
+            //  console.log('dragIndex', dragIndex);
+            // console.log('hoverIndex', hoverIndex);
+            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top
+
+            // if dragging down, continue only when hover is smaller than middle Y
+            if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return
+            // if dragging up, continue only when hover is bigger than middle Y
+            if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return
+
+            moveListItem(dragIndex, hoverIndex)
+            item.idx = hoverIndex
+        },
+    })
+
+    // Join the 2 refs together into one (both draggable and can be dropped on)
+    const ref = useRef(null)
+    const dragDropRef = dragRef(dropRef(ref))
+
+    // Make items being dragged transparent, so it's easier to see where we drop them
+    const opacity = isDragging ? 0 : 1
 
     const onSetIsTaskMenuOpen = () => {
         dispatch(openModal('isTaskMenuOpen', task.id))
@@ -50,7 +90,9 @@ export const TaskPreview = ({ task, group, board }) => {
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
-    return <ul key={task.id} className="clean-list task-preview">
+
+    return <ul key={task.id} className="clean-list task-preview"
+        ref={dragDropRef} style={{ opacity }}>
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
         {(isTaskMenuOpen && taskId===task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
         <li className={`task-preview-group-color ${group.style}`}>
