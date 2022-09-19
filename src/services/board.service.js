@@ -1,6 +1,6 @@
-import { store } from "../store/store";
+// import { store } from "../store/store";
 import { storageService } from "./async-storage.service";
-import { httpService } from "./http.service"
+// import { httpService } from "./http.service"
 import { utilService } from "./util.service";
 
 export const boardService = {
@@ -590,16 +590,14 @@ const STORAGE_KEY = 'boardDB'
 //?- Prod:
 // const BASE_URL = 'board/'
 
-function query(filterBy) {
+async function query(filterBy) {
   //?- Dev:
-  return storageService.query(STORAGE_KEY)
-    .then((boards) => {
-      if (!boards || boards.length === 0) {
-        boards = gBoards
-        storageService.postMany(STORAGE_KEY, gBoards)
-      }
-      return boards
-    })
+  let boards = await storageService.query(STORAGE_KEY)
+  if (!boards || boards.length === 0) {
+    boards = gBoards
+    storageService.postMany(STORAGE_KEY, boards)
+  }
+  return boards
 
   //?- Prod:
   // if (filterBy) return httpService.get(BASE_URL, filterBy)

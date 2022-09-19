@@ -7,6 +7,7 @@ import { utilService } from './util.service'
 export const userService = {
     getUsers,
     login,
+    verifyUsername,
     signup,
     logout,
     getLoggedinUser,
@@ -207,6 +208,13 @@ async function getById(userId) {
     // return user
 }
 
+async function verifyUsername(username) {
+    //?-Dev:
+    const isVerified = gUsers.some((user) => user.username === username)
+    if (!isVerified) throw new Error('NOT_FOUND')
+    //?-Prod
+}
+
 async function login(creds) {
     //?- Dev:
     let users = await storageService.query(STORAGE_KEY)
@@ -218,6 +226,8 @@ async function login(creds) {
         (user.username === creds.username) &&
         (user.password === creds.password)
     )
+    // console.log('users from userService:', users)
+    // console.log('user from userService:', user)
     if (!user) throw 'Wrong username or password'
     delete user.password
     saveLocalUser(user)
