@@ -2,13 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 
 import { UserMsg } from './cmps/user-msg';
 import { NavBar } from './cmps/nav-bar';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import routes from './routes';
 import './styles/main.scss';
 function RootCmp() {
   return (
-    <DndProvider backend={HTML5Backend}>
+    
       <div className="main-app">
         <UserMsg />
         <Routes>
@@ -23,7 +21,6 @@ function RootCmp() {
           )}
         </Routes>
       </div>
-    </DndProvider>
   );
 }
 
