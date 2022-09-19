@@ -29,8 +29,8 @@ export function removeBoard(boardId) {
 
         boardService.remove(boardId)
             .then(() => {
-                showSuccessMsg('Board removed')
                 dispatch({ type: 'REMOVE_BOARD', boardId })
+                showSuccessMsg('Board removed succesfully')
             })
             .catch(err => {
                 showErrorMsg('Failed to remove board')
@@ -88,11 +88,9 @@ export function addBoard(board) {
 
 export function updateBoard(board) {
     return (dispatch, getState) => {
-        dispatch({ type: 'SET_LOADING', isLoading: true })
         boardService.update(board)
             .then(updatedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
-                showSuccessMsg('Board updated')
             })
             .catch(err => {
                 showErrorMsg('Failed to update board')
@@ -108,7 +106,6 @@ export function addTask(task) {
         taskService.save(task)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Task added')
             })
             .catch(err => {
                 showErrorMsg('Failed to add task')
@@ -121,7 +118,6 @@ export function updateTask(task) {
         taskService.update(task)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Task updated')
             })
             .catch(err => {
                 showErrorMsg('Failed to update task')
@@ -134,7 +130,7 @@ export function removeTask(task) {
         taskService.remove(task)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Task removed')
+                showSuccessMsg('Task removed succesfully')
             })
             .catch(err => {
                 showErrorMsg('Failed to remove task')
@@ -147,7 +143,6 @@ export function addGroup(boardId) {
         groupService.save(boardId)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Group added')
             })
             .catch(err => {
                 showErrorMsg('Failed to add group')
@@ -160,7 +155,6 @@ export function updateGroup(group) { // 👈 group is obj prop: { group, boardId
         groupService.update(group)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Group updated')
             })
             .catch(err => {
                 showErrorMsg('Failed to update group')
@@ -173,7 +167,7 @@ export function removeGroup(group) {
         groupService.remove(group)
             .then(savedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-                showSuccessMsg('Group removed')
+                showSuccessMsg('Group removed succesfully')
             })
             .catch(err => {
                 showErrorMsg('Failed to remove group')

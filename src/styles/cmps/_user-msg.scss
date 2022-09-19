@@ -4,6 +4,7 @@
   right: 50%;
   translate: 50%;
   display: flex;
+  align-items: center;
   padding: 5px 20px;
   color: var(--clr-item-bg);
   border-radius: 0.3em;
@@ -20,5 +21,16 @@
 
   &.error {
       background-color: #d83a52;
+  }
+
+  .btn-close-user-msg {
+    border-radius: 0.3em;
+    padding: 4px;
+
+    
+    &:hover {
+      
+      background-color: rgba(0, 0, 0, 0.266)
+    }
   }
 }

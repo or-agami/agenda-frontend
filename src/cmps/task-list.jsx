@@ -13,8 +13,6 @@ export const TaskList = ({ group, board }) => {
     const [tasks, setTasks] = useState(group.tasks)
 
     const handleOnDragEnd = (ev) => {
-        console.log(ev);
-        console.log(ev.destination);
         const updatedTasks = [...tasks]
         const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
         updatedTasks.splice(ev.destination.index, 0, draggedItem)
@@ -25,7 +23,7 @@ export const TaskList = ({ group, board }) => {
     useEffect(() => {
         if (tasks !== group.tasks) {
             group.tasks = tasks
-            dispatch(updateGroup({group, boardId: board._id}))
+            dispatch(updateGroup({ group, boardId: board._id }))
         }
     }, [tasks])
 

@@ -31,7 +31,7 @@ export class UserMsg extends Component {
             <section className={'user-msg ' + msgClass}>
                 <HiCheck />
                 {this.state.msg.txt}
-                <button onClick={() => { this.setState({ msg: null }) }}>
+                <button className='btn-close-user-msg' onClick={() => { this.setState({ msg: null }) }}>
                     X
                 </button>
             </section>

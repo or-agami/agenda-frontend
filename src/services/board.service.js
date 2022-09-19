@@ -585,8 +585,9 @@ const gBoards = [
     ],
     "cmpsOrder": [
       "member",
-      "status",
       "priority",
+      "status",
+      "lastUpdated",
       "attachments",
       "timeline"
     ]

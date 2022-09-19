@@ -5,9 +5,10 @@ import { useState } from 'react'
 import { GroupMenu } from './group-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../hooks/useForm'
-import { openModal, setSort, updateGroup } from '../store/board/board.action'
+import { openModal, setSort, updateBoard, updateGroup } from '../store/board/board.action'
 import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
 import { ModalScreen } from './modal-screen'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
 
@@ -17,12 +18,14 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setisDecending] = useState(false)
-    const {isScreenOpen,isGroupMenuOpen,taskId} = useSelector(state => state.boardModule.modals)
+    const { isScreenOpen, isGroupMenuOpen, taskId } = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
+    const [categories, setCategories] = useState(board.cmpsOrder)
+
 
 
     const onSetIsGroupMenuOpen = () => {
-        dispatch(openModal('isGroupMenuOpen',group.id))
+        dispatch(openModal('isGroupMenuOpen', group.id))
     }
 
     const onSetIsHeaderOpen = ({ target }) => {
@@ -39,7 +42,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     const onSortBy = (sortBy) => {
 
         setisDecending(!isDecending)
-        
+
         const sort = {
             by: sortBy,
             isDecending
@@ -53,54 +56,64 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
         dispatch(setSort(null))
     }
 
+    const handleOnDragEnd = (ev) => {
+        const updatedCategories = [...categories]
+        const [draggedItem] = updatedCategories.splice(ev.source.index, 1)
+        updatedCategories.splice(ev.destination.index, 0, draggedItem)
+        
+        setCategories(updatedCategories)
+        board.cmpsOrder = updatedCategories
+        dispatch(updateBoard(board))
+    }
+
+    console.log(board.cmpsOrder);
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && taskId===group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id}/>}
+            {(isGroupMenuOpen && taskId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg className={`${group.style} no-background`}/>
+                <ArrowRightSvg className={`${group.style} no-background`} />
             </button>
             {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
             {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`}/>
+                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
             </form>}
         </div>
-        <ul className="group-content-header">
-            <li className={`group-content-header-color ${group.style}`}>
-            </li>
-            <li className='group-content-header-checkbox'>
-                <input type="checkbox" />
-            </li>
-            <li className="group-head-row group-content-header-item">
-                <div className="sort-container">
-                    <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
-                        <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
-                    </button>
-                </div>
-                <h4>Item</h4>
-            </li>
-            <li className="group-content-header-developer same-width">
-                <h4>Person</h4>
-            </li>
-            <li className="group-content-header-status same-width">
-                <h4>Status</h4>
-            </li>
-            <li className="group-content-header-priority same-width">
-                <h4>Priority</h4>
-            </li>
-            <li className="group-content-header-last-updated same-width">
-                <h4>Last updated</h4>
-            </li>
-            <li>
 
-            </li>
-            {/* <li className="group-content-header-files">
-                <h4>Files</h4>
-            </li> */}
-            {/* <li className="group-content-header-timeline">
-                <h4>TimeLine</h4>
-            </li> */}
-        </ul>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId='group-category' direction="horizontal">
+                {(droppableProvided) => {
+                    return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-content-header">
+                        <li className={`group-content-header-color ${group.style}`}>
+                        </li>
+                        <li className='group-content-header-checkbox'>
+                            <input type="checkbox" />
+                        </li>
+                        <li className="group-head-row group-content-header-item">
+                            <div className="sort-container">
+                                <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
+                                    <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
+                                </button>
+                            </div>
+                            <h4>Item</h4>
+                        </li>
+                        {categories.map((category, idx) =>
+                            <Draggable key={category} draggableId={category} index={idx} >
+                                {(provided) => {
+                                    return <div ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}>
+                                        <DynamicCmp category={category} />
+                                    </div>
+                                }}
+                            </Draggable>
+                        )}
+                        {droppableProvided.placeholder}
+                    </ul>
+                }}
+            </Droppable>
+        </DragDropContext>
+
         <div className='group-content-tasks'>
             <TaskList
                 group={group}
@@ -108,4 +121,45 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
             />
         </div>
     </section>
+}
+
+
+
+
+const DynamicCmp = ({ category }) => {
+    let text
+
+    switch (category) {
+        case 'member':
+            text = `Developer`
+            break;
+
+        case 'status':
+            text = `Status`
+
+            break;
+        case 'priority':
+            text = `Priority`
+
+            break;
+        case 'lastUpdated':
+            text = `Last updated`
+
+            break;
+        case 'attachments':
+            text = `Files`
+
+            break;
+        case 'timeline':
+            text = `Timeline`
+
+            break;
+        default:
+
+            break;
+    }
+
+    return <li className="group-content-header same-width">
+        <h4>{text}</h4>
+    </li>
 }
