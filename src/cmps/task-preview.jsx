@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
+import { TaskDetail } from './task-detail'
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId,isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -34,8 +35,11 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
+    const openTaskDetail = () => { 
+        dispatch(openModal('isTaskDetailOpen',task.id))
+    }
 
-
+    // TODO: task detail continue 
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
@@ -57,9 +61,10 @@ export const TaskPreview = ({ task, group, board }) => {
                     </form>}
                 </li>
                 <li className="task-preview-start-conversation">
-                    <button className="btn btn-svg btn-start-conversation">
+                    <button className="btn btn-svg btn-start-conversation" onClick={() => openTaskDetail()}>
                         <StartConversationSvg />
                     </button>
+                    <TaskDetail />
                 </li>
             </div>
         </div>
@@ -72,7 +77,7 @@ export const TaskPreview = ({ task, group, board }) => {
 
 
 const DynamicCmp = ({ board, task, category, groupId }) => {
-    
+
     const dispatch = useDispatch()
     const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isIncludeCat = ['priority', 'status'].includes(category)
