@@ -142,16 +142,46 @@
                     }
 
                     .form-user-login-signup {
-                        .label-username {
+
+                        .label {
                             font-family: roboto;
                             font-size: 15px;
+                        }
+
+                        .label-username {
                             margin-bottom: 12px;
                         }
 
                         .input-username {
                             height: 38px;
-                            margin-bottom: 20px;
+
+                            // margin-bottom: 20px;
+                            &.error {
+                                border: 1px solid #d83a52;
+                            }
                         }
+
+
+                        .mail-error {
+                            opacity: 0;
+                            font-family: roboto;
+                            font-size: 14px;
+                            color: #e2445c;
+
+                            &.error {
+                                opacity: 1;
+                            }
+                        }
+
+                        .label.valid-mail {
+                            margin-bottom: 4px;
+                        }
+
+                        .input.valid-mail {
+                            margin-bottom: 29px;
+                            height: 36px;
+                        }
+
 
                         .btn-next {
                             height: 40px;

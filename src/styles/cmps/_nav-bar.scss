@@ -8,7 +8,7 @@
   padding: 8px 0 8px 0;
   height: 100vh;
   background-color: var(--clr-bg-navbar);
-  z-index: 15;
+  z-index: 10;
 
   .divider-horizontal {
     width: 80%;
@@ -67,7 +67,7 @@
       }
     }
 
-    &:not(.btn-home, .btn-board, .last-child) {
+    &:not(.btn-home, .btn-board,.btn-logout, .last-child) {
       svg * {
         fill: white;
       }

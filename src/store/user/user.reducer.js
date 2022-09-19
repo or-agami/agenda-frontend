@@ -14,7 +14,7 @@ export function userReducer(state = initialState, action) {
 
         case 'SET_PROFILE_PAGE':
             return { ...state, profilePage: action.profilePage }
-            
+
         default:
             return state
     }

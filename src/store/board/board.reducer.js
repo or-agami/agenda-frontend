@@ -1,6 +1,6 @@
 
 const initialState = {
-    isLoading: true,
+    isLoading: false,
     boards: [],
     board: null,
     filterBy: null,
@@ -15,6 +15,7 @@ const initialState = {
         isTaskPersonMenuOpen: false,
         isColorMenuOpen: false,
         isBoardOptsOpen:false,
+        isUserMenuOpen:false,
     }
 
 

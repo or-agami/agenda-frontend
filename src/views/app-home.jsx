@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { BoardList } from '../cmps/board-list'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { loadBoards } from '../store/board/board.action'
 import { SideNavBar } from '../cmps/side-nav-bar'
 
 
@@ -88,13 +87,7 @@ const RecentContent = () => {
 // MyBoards
 const MyBoards = () => {
 
-    const dispatch = useDispatch()
     const { boards } = useSelector(state => state.boardModule)
-
-
-    useEffect(() => {
-        dispatch(loadBoards())
-    }, [])
 
     const [isMyboardsOpen, setIsMyboardsOpen] = useState(true)
     const onMyboardsOpen = ({ target }) => {

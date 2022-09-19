@@ -8,26 +8,21 @@ import { ReactComponent as RightArrowSvg } from '../assets/icons/right-arrow.svg
 import { eventBusService } from '../services/event-bus.service'
 import { MdDoNotDisturbAlt } from 'react-icons/md'
 
+
 export const LoginSignup = () => {
 
   const params = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const loggedinUser = useSelector(store => store.userModule.loggedinUser)
 
   useEffect(() => {
     if (params['*'] !== 'login' && params['*'] !== 'signup') navigate('/auth/login')
+    if (loggedinUser) navigate('/workspace/home')
   }, [params])
 
-  const onUserSignup = (ev) => {
-    ev.preventDefault()
-  }
   return (
     <section className="login-signup">
-      {/* {params['*'] !== 'login' &&
-                <Login/>} */}
-
-      {/* {params['*'] !== 'signup' &&
-                <NavLink to='/auth/signup'>Signup</NavLink>} */}
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -37,6 +32,8 @@ export const LoginSignup = () => {
 }
 
 const Signup = (props) => {
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [signupFields, handleSignupChange, setSignupFields] = useForm({
     fullname: '',
@@ -44,10 +41,19 @@ const Signup = (props) => {
     password: '',
   })
 
+  const [validMail, setIsMailValid] = useState(null)
 
   const onUserSignup = (ev) => {
     ev.preventDefault()
+    const { username } = signupFields
+    const isMailValid = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(username)
+    if (!validMail) return setIsMailValid(isMailValid)
+    dispatch(signup(signupFields))
+    navigate('/workspace/home')
+    // console.log('reg.test(username):', reg.test(username))
   }
+
+  const { username, fullname, password } = signupFields
   return (
     <section className="signup">
       <div className="flex signup-split-container">
@@ -59,37 +65,55 @@ const Signup = (props) => {
             </div>
             <form className="flex column form form-user-login-signup"
               onSubmit={(ev) => onUserSignup(ev)}>
-              <label className="label-username" htmlFor="username">Enter email</label>
-              <input className="input input-username"
-                name="username"
-                type="text"
-                // value={username}
-                placeholder="name@company.com"
-              // onChange={handleChange} 
-              />
-              {/* <input className="input input-password"
+              {validMail !== true ?
+                <Fragment>
+                  <label className="label label-username" htmlFor="username">Enter email</label>
+                  <input className={`input input-username ${validMail !== false ? '' : 'error'}`}
+                    name="username"
+                    type="text"
+                    onFocus={() => setIsMailValid(null)}
+                    value={username}
+                    placeholder="name@company.com"
+                    onChange={handleSignupChange} />
+                  <div className={`mail-error ${validMail !== false ? '' : 'error'}`}>Please enter a valid email address</div>
+                </Fragment>
+                :
+                <Fragment>
+                  <label className="label label-fullname valid-mail" htmlFor="fullname">Full Name</label>
+                  <input className="input input-fullname valid-mail"
+                    name="fullname"
+                    type="text"
+                    value={fullname}
+                    onChange={handleSignupChange}
+                  />
+                  <label className="label label-username valid-mail" htmlFor="password">Create a password</label>
+                  <input className="input input-password valid-mail"
                     name="password"
                     type="password"
                     value={password}
-                    placeholder="password"
-                    onChange={handleChange}
-                /> */}
+                    onChange={handleSignupChange}
+                  />
+                </Fragment>
+              }
               <input type="submit" hidden />
               <button className="btn btn-svg btn-next">Continue</button>
             </form>
-            <div className="flex justify-center align-center login-signup-separator split-line">
-              <span className="separator-line"></span>
-              <h2>OR</h2>
-              <span className="separator-line"></span>
-            </div>
-            <button className="btn btn-login-google">
-              <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="" />
-              <span>Continue with Google</span>
-            </button>
-            <div className="suggest-signup">
-              <span className="suggest-signup-prefix">Already have an account?</span>
-              <NavLink to='/auth/login'>Log in</NavLink>
-            </div>
+            {validMail !== true &&
+              <Fragment>
+                <div className="flex justify-center align-center login-signup-separator split-line">
+                  <span className="separator-line"></span>
+                  <h2>OR</h2>
+                  <span className="separator-line"></span>
+                </div>
+                <button className="btn btn-login-google">
+                  <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="" />
+                  <span>Continue with Google</span>
+                </button>
+                <div className="suggest-signup">
+                  <span className="suggest-signup-prefix">Already have an account?</span>
+                  <NavLink to='/auth/login'>Log in</NavLink>
+                </div>
+              </Fragment>}
           </div>
         </div>
         <div className="side-img-wrapper">

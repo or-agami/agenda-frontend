@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
-import { useRef } from 'react'
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
     const { itemId, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -31,7 +31,11 @@ export const TaskPreview = ({ task, group, board }) => {
 
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
+        if (task.title !== editedTask.title) {
+            // Todo: Prevent guests from editing tasks
+            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser._id || 'Guest' }
+            dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
+        }
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -73,7 +77,7 @@ export const TaskPreview = ({ task, group, board }) => {
 
 
 const DynamicCmp = ({ board, task, category, groupId }) => {
-    
+
     const dispatch = useDispatch()
     const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isIncludeCategory = ['priority', 'status'].includes(category)
@@ -141,14 +145,25 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     if (isIncludeCategory && category !== 'lastUpdated') className += makeClass(task[category])
 
     return <>
-        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
-        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />}
-        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />}
+        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskPersonMenu task={task} groupId={groupId} board={board} />
+        }
+        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />
+        }
+        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />
+        }
         <li className={className} onClick={cb}>
-            {category === 'member' && <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>}
-            {category === 'member' && <div className='developer-container'>
-                {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
-                {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
+            {category === 'member' && 
+            <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+            </button>}
+            {category === 'member' && 
+            <div className='developer-container'>
+                {task.memberIds ?
+                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                 :
+                 <NoPersonSvg className="svg-no-person" />}
             </div>}
             {isIncludeCategory && <>
                 <span className='fold'></span>

@@ -184,10 +184,6 @@ async function getUsers() {
         users = gUsers
         storageService.postMany(STORAGE_KEY, users)
     }
-    users = gUsers.map((user) => {
-        delete user.password
-        return user
-    })
     return users
 
     //?- Prod:
@@ -197,7 +193,6 @@ async function getUsers() {
 async function getById(userId) {
     //?- Dev:
     const user = gUsers.find(user => user.id === userId)
-    delete user.password
     saveLocalUser(user)
     return user
 
@@ -210,7 +205,12 @@ async function getById(userId) {
 
 async function verifyUsername(username) {
     //?-Dev:
-    const isVerified = gUsers.some((user) => user.username === username)
+    let users = await storageService.query(STORAGE_KEY)
+    if (!users || users.length === 0) {
+        users = gUsers
+        storageService.postMany(STORAGE_KEY, users)
+    }
+    const isVerified = users.some((user) => user.username === username)
     if (!isVerified) throw new Error('NOT_FOUND')
     //?-Prod
 }
@@ -218,6 +218,7 @@ async function verifyUsername(username) {
 async function login(creds) {
     //?- Dev:
     let users = await storageService.query(STORAGE_KEY)
+    console.log('users:', users)
     if (!users || users.length === 0) {
         users = gUsers
         storageService.postMany(STORAGE_KEY, users)
@@ -226,10 +227,7 @@ async function login(creds) {
         (user.username === creds.username) &&
         (user.password === creds.password)
     )
-    // console.log('users from userService:', users)
-    // console.log('user from userService:', user)
     if (!user) throw 'Wrong username or password'
-    delete user.password
     saveLocalUser(user)
     return user
 
@@ -246,7 +244,6 @@ async function signup(userCreds) {
     const user = await storageService.post(STORAGE_KEY, userCreds)
     gUsers.push(user)
     login(user)
-    delete user.password
     return user
 
     //?- Prod:
@@ -257,7 +254,7 @@ async function signup(userCreds) {
 
 async function logout() {
     //?- Dev:
-    sessionStorage.remove(STORAGE_KEY_LOGGEDIN_USER)
+    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 
     //?- Prod:
     // sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
