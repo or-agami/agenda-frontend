@@ -16,17 +16,6 @@ import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
 import { ModalScreen } from './modal-screen'
 
-// const ModalScreenNav = () => {
-//     const dispatch = useDispatch()
-//     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
-
-//     const handleOnModalClick = () => {
-//         dispatch(closeModals())
-//     }
-//     if (isScreenOpen) return <section className="modal-screen" onClick={handleOnModalClick}>
-//     </section>
-//     return <></>
-// }
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
 
@@ -89,7 +78,6 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
     const itemId = useSelector(state => state.boardModule.modals.itemId)
     const isBoardOptsOpen = useSelector(state => state.boardModule.modals.isBoardOptsOpen)
-    // const [isBoardOpts, setIsBoardOpts] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
 

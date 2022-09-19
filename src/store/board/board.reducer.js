@@ -1,6 +1,6 @@
 
 const initialState = {
-    isLoading: true,
+    isLoading: false,
     boards: [],
     board: null,
     filterBy: null,

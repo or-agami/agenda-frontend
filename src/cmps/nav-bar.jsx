@@ -60,6 +60,7 @@ export const NavBar = () => {
   if (!currBoard) return <Loader />
   return (
     <Fragment>
+      {/* <ModalScreen /> */}
       {params['*'] !== 'home' &&
         <SideNavBar setCurrBoard={setCurrBoard} boards={boards} board={currBoard} isOpen={isOpen} setIsOpen={setIsOpen} />}
       <section className="nav-bar">
