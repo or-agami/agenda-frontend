@@ -17,14 +17,18 @@ import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-col
 import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
-import { closeModals, loadBoard, loadBoards } from '../store/board/board.action';
+import { closeModals, loadBoard, loadBoards, openModal } from '../store/board/board.action';
 import { ModalScreen } from './modal-screen';
+import { UserMenu } from './user-menu';
 
 
 export const NavBar = () => {
 
   const dispatch = useDispatch()
+  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const { board, boards } = useSelector(state => state.boardModule)
+  const isUserMenuOpen = useSelector(state => state.boardModule.modals.isUserMenuOpen)
+  const itemId = useSelector(state => state.boardModule.modals.itemId)
   const params = useParams()
   const [isOpen, setIsOpen] = useState(false)
   const [currBoard, setCurrBoard] = useState()
@@ -40,15 +44,18 @@ export const NavBar = () => {
   }, [boards, board])
 
   useEffect(() => {
-    if (isOpen){
+    if (isOpen) {
       document.documentElement.style.setProperty('--board-grid-column', '317px')
-    } 
+    }
     else {
       document.documentElement.style.setProperty('--board-grid-column', `${(params['*'] !== 'home') ? '96px' : '66px'}`)
-    } 
+    }
     return (() => document.documentElement.style.removeProperty('--board-grid-column'))
   }, [isOpen, params])
 
+  const openUserMenu = () => {
+    dispatch(openModal('isUserMenuOpen',loggedinUser._id))
+  }
 
   if (!currBoard) return <Loader />
   return (
@@ -81,7 +88,8 @@ export const NavBar = () => {
         <button className="btn btn-svg btn-help"><HelpSvg /></button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
-        <button className="btn btn-svg btn-user">O</button>
+        {(isUserMenuOpen && loggedinUser._id === itemId) && <UserMenu />}
+        <button className="btn btn-svg btn-user" onClick={() => openUserMenu()}>O</button>
 
 
       </section>
