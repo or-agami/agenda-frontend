@@ -12,12 +12,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
 
-export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) => {
+export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx }) => {
 
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setisDecending] = useState(false)
-    const {isScreenOpen,isGroupMenuOpen,itemId} = useSelector(state => state.boardModule.modals)
+    const { isScreenOpen, isGroupMenuOpen, itemId } = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
 
@@ -59,17 +59,16 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
         const updatedCategories = [...categories]
         const [draggedItem] = updatedCategories.splice(ev.source.index, 1)
         updatedCategories.splice(ev.destination.index, 0, draggedItem)
-        
+
         setCategories(updatedCategories)
         board.cmpsOrder = updatedCategories
         dispatch(updateBoard(board))
     }
 
-    console.log(board.cmpsOrder);
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && itemId===group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id}/>}
+            {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg className={`${group.style} no-background`} />
             </button>
@@ -158,7 +157,7 @@ const DynamicCmp = ({ category }) => {
             break;
     }
 
-    return <li className="group-content-header same-width">
+    return <li className="group-content-header-category same-width">
         <h4>{text}</h4>
     </li>
 }

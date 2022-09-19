@@ -75,8 +75,8 @@ export const TaskPreview = ({ task, group, board }) => {
 const DynamicCmp = ({ board, task, category, groupId }) => {
     
     const dispatch = useDispatch()
-    const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isIncludeCat = ['priority', 'status'].includes(category)
+    const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const isIncludeCategory = ['priority', 'status'].includes(category)
     let className = `same-width task-preview-`
     let headerTxt
     let cb = () => { }
@@ -138,7 +138,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             break;
     }
 
-    if (isIncludeCat) className += makeClass(task[category])
+    if (isIncludeCategory && category !== 'lastUpdated') className += makeClass(task[category])
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
@@ -150,7 +150,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
                 {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
                 {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
             </div>}
-            {isIncludeCat && <>
+            {isIncludeCategory && <>
                 <span className='fold'></span>
                 <h4>{headerTxt}</h4>
             </>}
