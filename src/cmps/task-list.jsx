@@ -1,57 +1,54 @@
 import { TaskAdd } from './task-add'
 import { TaskPreview } from './task-preview'
-import { useCallback } from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateGroup } from '../store/board/board.action'
 
 
 export const TaskList = ({ group, board }) => {
 
-
     const dispatch = useDispatch()
     const [tasks, setTasks] = useState(group.tasks)
 
-    const moveListItem = useCallback(
-        (dragIndex, hoverIndex) => {
-            const dragItem = tasks[dragIndex]
-            const hoverItem = tasks[hoverIndex]
-            // Swap places of dragItem and hoverItem in the pets array
-            setTasks(tasks => {
-                const updatedTasks = [...tasks]
-                updatedTasks[dragIndex] = hoverItem
-                updatedTasks[hoverIndex] = dragItem
-                return updatedTasks
-            })
-        },
-        [tasks],
-    )
+    const handleOnDragEnd = (ev) => {
+        console.log(ev);
+        console.log(ev.destination);
+        const updatedTasks = [...tasks]
+        const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
+        updatedTasks.splice(ev.destination.index, 0, draggedItem)
 
-    const debounceTimer = useRef()
+        setTasks(updatedTasks)
+    }
 
     useEffect(() => {
-        clearTimeout(debounceTimer.current)
         if (tasks !== group.tasks) {
-            debounceTimer.current = setTimeout(() => {
-                group.tasks = tasks 
-                console.log("in timeout");
-                dispatch(updateGroup({group, boardId: board._id}))
-            }, 1000)
+            group.tasks = tasks
+            dispatch(updateGroup({group, boardId: board._id}))
         }
     }, [tasks])
 
-    return <section className="task-list">
-        {tasks.map((task, idx) => (
-            <div key={task.id} className='task-preview-container'>
-                <TaskPreview task={task} group={group} board={board} idx={idx} moveListItem={moveListItem} />
-            </div>
-        ))}
+    return <>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId='tasks'>
+                {(droppableProvided) => {
+                    return <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="task-list">
 
-        <TaskAdd
-            group={group}
-            boardId={board._id}
-        />
-    </section>
+                        {tasks.map((task, idx) => (
+                            <Draggable key={task.id} draggableId={task.id} index={idx} >
+                                {(provided) => {
+                                    return <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className='task-preview-container'>
+                                        <TaskPreview task={task} group={group} board={board} />
+                                    </div>
+                                }}
+                            </Draggable>
+                        ))}
+                        {droppableProvided.placeholder}
+                        <TaskAdd group={group} boardId={board._id} />
+                    </div>
+                }}
+            </Droppable>
+        </DragDropContext>
+    </>
 }

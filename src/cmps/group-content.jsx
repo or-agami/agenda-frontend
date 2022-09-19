@@ -34,8 +34,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     }
 
     const onSortBy = (sortBy) => {
-        setisDecending(!isDecending)
 
+        setisDecending(!isDecending)
+        
         const sort = {
             by: sortBy,
             isDecending

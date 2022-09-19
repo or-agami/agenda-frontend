@@ -582,6 +582,13 @@ const gBoards = [
           }
         ]
       }
+    ],
+    "cmpsOrder": [
+      "member",
+      "status",
+      "priority",
+      "attachments",
+      "timeline"
     ]
   }
 ]

@@ -282,8 +282,8 @@
       }
     ],
     "cmpsOrder": [
-      "member",
       "status",
+      "member",
       "priority",
       "attachments",
       "timeline"
