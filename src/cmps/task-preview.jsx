@@ -14,7 +14,8 @@ import { useRef } from 'react'
 
 
 export const TaskPreview = ({ task, group, board }) => {
-    const { taskId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen,isScreenOpen } = useSelector(state => state.boardModule.modals)
+
+    const { taskId, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -34,23 +35,12 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
-    const onSetTaskStatusMenuOpen = () => {
-        dispatch(openModal('isTaskStatusMenuOpen', task.id))
-    }
-
-    const onSetTaskPriorityMenuOpen = () => {
-        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
-    }
-
-    const onSetTaskPersonMenuOpen = () => {
-        dispatch(openModal('isTaskPersonMenuOpen', task.id))
-    }
 
 
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {(isTaskMenuOpen && taskId===task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
+        {(isTaskMenuOpen && taskId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
         <li className={`task-preview-group-color ${group.style}`}>
         </li>
         <li className='task-preview-checkbox'>
@@ -83,26 +73,24 @@ export const TaskPreview = ({ task, group, board }) => {
 
 
 const DynamicCmp = ({ board, task, category, groupId }) => {
-
+    
+    const dispatch = useDispatch()
+    const { taskId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isIncludeCat = ['priority', 'status'].includes(category)
     let className = `same-width task-preview-`
     let headerTxt
     let cb = () => { }
 
-    const [isTaskStatusMenuOpen, setIsTaskStatusMenuOpen] = useState(false)
-    const [isTaskPriorityMenuOpen, setIsTaskPriorityMenuOpen] = useState(false)
-    const [isTaskPersonMenuOpen, setIsTaskPersonMenuOpen] = useState(false)
-
     const onSetTaskStatusMenuOpen = () => {
-        setIsTaskStatusMenuOpen(prevState => prevState = !isTaskStatusMenuOpen)
+        dispatch(openModal('isTaskStatusMenuOpen', task.id))
     }
 
     const onSetTaskPriorityMenuOpen = () => {
-        setIsTaskPriorityMenuOpen(prevState => prevState = !isTaskPriorityMenuOpen)
+        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
     }
 
     const onSetTaskPersonMenuOpen = () => {
-        setIsTaskPersonMenuOpen(prevState => prevState = !isTaskPersonMenuOpen)
+        dispatch(openModal('isTaskPersonMenuOpen', task.id))
     }
 
     const GetMemberImgFromId = (board, memberId) => {
@@ -153,9 +141,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     if (isIncludeCat) className += makeClass(task[category])
 
     return <>
-        {isTaskPersonMenuOpen && <TaskPersonMenu task={task} groupId={groupId} board={board} setIsTaskPersonMenuOpen={setIsTaskPersonMenuOpen} />}
-        {isTaskStatusMenuOpen && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} setIsTaskStatusMenuOpen={setIsTaskStatusMenuOpen} />}
-        {isTaskPriorityMenuOpen && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} setIsTaskPriorityMenuOpen={setIsTaskPriorityMenuOpen} />}
+        {(isTaskPersonMenuOpen && taskId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
+        {(isTaskStatusMenuOpen && taskId === task.id && isScreenOpen) && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />}
+        {(isTaskPriorityMenuOpen && taskId === task.id && isScreenOpen) && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />}
         <li className={className} onClick={cb}>
             {category === 'member' && <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>}
             {category === 'member' && <div className='developer-container'>
