@@ -16,6 +16,7 @@ import { TaskDetail } from './task-detail'
 export const TaskPreview = ({ task, group, board }) => {
 
     const { itemId,isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -31,7 +32,11 @@ export const TaskPreview = ({ task, group, board }) => {
 
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
-        dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
+        if (task.title !== editedTask.title) {
+            // Todo: Prevent guests from editing tasks
+            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser._id || 'Guest' }
+            dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
+        }
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
@@ -80,10 +85,15 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
     const dispatch = useDispatch()
     const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isIncludeCat = ['priority', 'status'].includes(category)
+    const isCategoryInc = ['priority', 'status', 'lastUpdated'].includes(category)
     let className = `same-width task-preview-`
     let headerTxt
     let cb = () => { }
+
+    const getFormattedDateTime = (date) => {
+        if (!date) return
+        return moment(date).fromNow()
+    }
 
     const onSetTaskStatusMenuOpen = () => {
         dispatch(openModal('isTaskStatusMenuOpen', task.id))
@@ -134,7 +144,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
             break;
         case 'lastUpdated':
-
+            headerTxt = getFormattedDateTime(task[category]?.date)
+            className += `last-updated `
+            
 
             break;
 
@@ -142,19 +154,37 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             break;
     }
 
-    if (isIncludeCat) className += makeClass(task[category])
+    if (isCategoryInc && category !== 'lastUpdated') className += makeClass(task[category])
 
     return <>
-        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
-        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />}
-        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />}
+        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskPersonMenu task={task} groupId={groupId} board={board} />
+        }
+        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />
+        }
+        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) &&
+            <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />
+        }
         <li className={className} onClick={cb}>
-            {category === 'member' && <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>}
-            {category === 'member' && <div className='developer-container'>
-                {!task.memberIds && <NoPersonSvg className="svg-no-person" />}
-                {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
+            {category === 'member' && 
+            <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+            </button>}
+            {category === 'member' && 
+            <div className='developer-container'>
+                {task.memberIds ?
+                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                 :
+                 <NoPersonSvg className="svg-no-person" />}
             </div>}
-            {isIncludeCat && <>
+            {/* {category === 'lastUpdated' && 
+            <div className='last-updated'>
+                {task.last ?
+                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                 :
+                 <NoPersonSvg className="svg-no-person" />}
+            </div>} */}
+            {isCategoryInc && <>
                 <span className='fold'></span>
                 <h4>{headerTxt}</h4>
             </>}

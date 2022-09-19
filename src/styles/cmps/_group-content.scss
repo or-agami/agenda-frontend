@@ -41,6 +41,7 @@
         margin-left: 7px;
         margin-bottom: 10px;
         font-size: 18px;
+        width: 100%;
 
         input {
             padding: 5px;
@@ -105,17 +106,25 @@
     }
 
     .group-content-header {
-
         border: 1px solid var(--clr-disabled);
         border-left: none;
         border-start-start-radius: 8px;
         min-height: 35px;
-
         margin: 0;
         padding: 0;
         display: flex;
-        flex-direction: row;
         list-style-type: none;
+
+
+        .group-content-header-category {
+            border-inline-end: 1px solid var(--clr-disabled);
+            min-height: 35px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style-type: none;
+
+        }
 
         &>li:last-child {
             margin-left: calc(50% - 50vw);

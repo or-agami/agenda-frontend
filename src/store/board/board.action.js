@@ -6,38 +6,31 @@ import { taskService } from "../../services/task.service"
 
 
 export function loadBoards() {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
-
-        // const { filterBy } = getState().boardModule
-        boardService.query()
-            .then((boards) => {
-                dispatch({ type: 'SET_BOARDS', boards })
-            })
-            .catch(err => {
-                showErrorMsg('Failed to load boards')
-            })
-            .finally(() => {
-                dispatch({ type: 'SET_LOADING', isLoading: false })
-            })
+        try {
+            const boards = await boardService.query()
+            dispatch({ type: 'SET_BOARDS', boards })
+        } catch (err) {
+            showErrorMsg('Failed to load boards')
+        } finally {
+            dispatch({ type: 'SET_LOADING', isLoading: false })
+        }
     }
 }
 
 export function removeBoard(boardId) {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
-
-        boardService.remove(boardId)
-            .then(() => {
-                dispatch({ type: 'REMOVE_BOARD', boardId })
-                showSuccessMsg('Board removed succesfully')
-            })
-            .catch(err => {
-                showErrorMsg('Failed to remove board')
-            })
-            .finally(() => {
-                dispatch({ type: 'SET_LOADING', isLoading: false })
-            })
+        try {
+            boardService.remove(boardId)
+            dispatch({ type: 'REMOVE_BOARD', boardId })
+            showSuccessMsg('Board removed succesfully')
+        } catch (err) {
+            showErrorMsg('Failed to remove board')
+        } finally {
+            dispatch({ type: 'SET_LOADING', isLoading: false })
+        }
     }
 }
 
@@ -54,17 +47,16 @@ export function setSort(sortBy) {
 }
 
 export function loadBoard(boardId, sortBy, filterBy) {
-    return (dispatch, getState) => {
-
+    return async (dispatch, getState) => {
         if (!sortBy && !filterBy) dispatch({ type: 'SET_LOADING', isLoading: true })
-        
-        boardService.getById(boardId, sortBy, filterBy)
-            .then((board) => {
-                dispatch({ type: 'SET_BOARD', board })
-            })
-            .finally(() => {
-                dispatch({ type: 'SET_LOADING', isLoading: false })
-            })
+        try {
+            const board = await boardService.getById(boardId, sortBy, filterBy)
+            dispatch({ type: 'SET_BOARD', board })
+        } catch (err) {
+            showErrorMsg('Failed to load board try again later')
+        } finally {
+            dispatch({ type: 'SET_LOADING', isLoading: false })
+        }
     }
 }
 
@@ -74,12 +66,12 @@ export function addBoard(board) {
         dispatch({ type: 'SET_LOADING', isLoading: true })
 
         boardService.save(board)
-            .then(savedBoard => {
-                dispatch({ type: 'ADD_BOARD', board: savedBoard })
-            })
-            .catch(err => {
-                showErrorMsg('Failed to add board try again')
-            })
+        .then(savedBoard => {
+            dispatch({ type: 'ADD_BOARD', board: savedBoard })
+        })
+        .catch(err => {
+            showErrorMsg('Failed to add board try again')
+        })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
             })
@@ -114,14 +106,13 @@ export function addTask(task) {
 }
 
 export function updateTask(task) {
-    return (dispatch, getState) => {
-        taskService.update(task)
-            .then(savedBoard => {
-                dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
-            })
-            .catch(err => {
-                showErrorMsg('Failed to update task')
-            })
+    return async (dispatch, getState) => {
+        try {
+            const savedBoard = await taskService.update(task)
+            dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+        } catch (err) {
+            showErrorMsg('Failed to update task')
+        }
     }
 }
 
@@ -177,12 +168,12 @@ export function removeGroup(group) {
 
 export function closeModals() {
     return (dispatch) => {
-        dispatch({type:'CLOSE_MODALS'})
+        dispatch({ type: 'CLOSE_MODALS' })
     }
 }
 
-export function openModal(stateName,itemId) {
+export function openModal(stateName, itemId) {
     return (dispatch) => {
-        dispatch({type:'OPEN_MODAL',stateName,itemId})
+        dispatch({ type: 'OPEN_MODAL', stateName, itemId })
     }
 }
