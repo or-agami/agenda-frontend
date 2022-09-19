@@ -8,13 +8,25 @@ import { useState } from "react"
 import { Link, NavLink, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { closeModals, loadBoards, openScreenModal, removeBoard, updateBoard } from '../store/board/board.action'
+import { closeModals, loadBoards, openModal, removeBoard, updateBoard } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
 import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
+import { ModalScreen } from './modal-screen'
 
+// const ModalScreenNav = () => {
+//     const dispatch = useDispatch()
+//     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
+
+//     const handleOnModalClick = () => {
+//         dispatch(closeModals())
+//     }
+//     if (isScreenOpen) return <section className="modal-screen" onClick={handleOnModalClick}>
+//     </section>
+//     return <></>
+// }
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
 
@@ -27,6 +39,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 
     if (!boards || boards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
+        <ModalScreen />
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
@@ -74,41 +87,40 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
 
     const dispatch = useDispatch()
     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
-    const [isBoardOpts, setIsBoardOpts] = useState(false)
+    const taskId = useSelector(state => state.boardModule.modals.taskId)
+    const isBoardOptsOpen = useSelector(state => state.boardModule.modals.isBoardOptsOpen)
+    // const [isBoardOpts, setIsBoardOpts] = useState(false)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
 
     const openBoardSettings = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()
-        setIsBoardOpts(!isBoardOpts)
-        dispatch(openScreenModal())
+        dispatch(openModal('isBoardOptsOpen',board._id))
     }
 
     const onRemoveBoard = (ev, boardId) => {
         ev.preventDefault()
         ev.stopPropagation()
-        dispatch(removeBoard(boardId))
         dispatch(closeModals())
-        // setIsBoardOpts(!isBoardOpts)
+        dispatch(removeBoard(boardId))
         setCurrBoard(boards[0])
     }
 
     const onEditBoard = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()
-        setIsRenaming(!isRenaming)
-        // setIsBoardOpts(!isBoardOpts)
         dispatch(closeModals())
+        setIsRenaming(!isRenaming)
     }
 
     const onRenameBoard = (ev) => {
         ev.preventDefault()
+        dispatch(closeModals())
         board = { ...board, ...renameBoard }
         setIsRenaming(!isRenaming)
         dispatch(updateBoard(board))
     }
-
 
     if (isRenaming) return <form className="rename-board" onSubmit={onRenameBoard} onBlur={onRenameBoard}>
         <BoardIcon />
@@ -119,17 +131,17 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-            {(isBoardOpts && isScreenOpen) && 
-            <div className='board-opts-modal modal'>
-                <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
-                    <PencilIcon />
-                    <span>Rename Board</span>
-                </div>
-                <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
-                    <TrashIcon />
-                    <span>Remove Board</span>
-                </div>
-            </div>}
+            {(isBoardOptsOpen && taskId === board._id && isScreenOpen) &&
+                <div className='board-opts-modal modal'>
+                    <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
+                        <PencilIcon />
+                        <span>Rename Board</span>
+                    </div>
+                    <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
+                        <TrashIcon />
+                        <span>Remove Board</span>
+                    </div>
+                </div>}
         </NavLink>
     )
 }

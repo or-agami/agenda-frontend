@@ -15,7 +15,7 @@ import { useRef } from 'react'
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { taskId, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
@@ -40,7 +40,7 @@ export const TaskPreview = ({ task, group, board }) => {
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-        {(isTaskMenuOpen && taskId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
+        {(isTaskMenuOpen && itemId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
         <li className={`task-preview-group-color ${group.style}`}>
         </li>
         <li className='task-preview-checkbox'>
@@ -75,7 +75,7 @@ export const TaskPreview = ({ task, group, board }) => {
 const DynamicCmp = ({ board, task, category, groupId }) => {
     
     const dispatch = useDispatch()
-    const { taskId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isIncludeCat = ['priority', 'status'].includes(category)
     let className = `same-width task-preview-`
     let headerTxt
@@ -141,9 +141,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     if (isIncludeCat) className += makeClass(task[category])
 
     return <>
-        {(isTaskPersonMenuOpen && taskId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
-        {(isTaskStatusMenuOpen && taskId === task.id && isScreenOpen) && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />}
-        {(isTaskPriorityMenuOpen && taskId === task.id && isScreenOpen) && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />}
+        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) && <TaskPersonMenu task={task} groupId={groupId} board={board} />}
+        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) && <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />}
+        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) && <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />}
         <li className={className} onClick={cb}>
             {category === 'member' && <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>}
             {category === 'member' && <div className='developer-container'>

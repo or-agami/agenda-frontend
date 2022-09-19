@@ -17,7 +17,7 @@ import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-col
 import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
-import { loadBoard, loadBoards } from '../store/board/board.action';
+import { closeModals, loadBoard, loadBoards } from '../store/board/board.action';
 import { ModalScreen } from './modal-screen';
 
 
@@ -53,7 +53,6 @@ export const NavBar = () => {
   if (!currBoard) return <Loader />
   return (
     <Fragment>
-      <ModalScreen/>
       {params['*'] !== 'home' &&
         <SideNavBar setCurrBoard={setCurrBoard} boards={boards} board={currBoard} isOpen={isOpen} setIsOpen={setIsOpen} />}
       <section className="nav-bar">
@@ -93,3 +92,4 @@ export const NavBar = () => {
     </Fragment>
   )
 }
+

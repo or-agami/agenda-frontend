@@ -187,14 +187,8 @@ export function closeModals() {
     }
 }
 
-export function openModal(stateName,taskId) {
+export function openModal(stateName,itemId) {
     return (dispatch) => {
-        dispatch({type:'OPEN_MODAL',stateName,taskId})
-    }
-}
-
-export function openScreenModal() {
-    return (dispatch)=>{
-        dispatch({type:'OPEN_SCREEN_MODAL'})
+        dispatch({type:'OPEN_MODAL',stateName,itemId})
     }
 }
