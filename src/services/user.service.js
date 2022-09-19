@@ -227,8 +227,6 @@ async function login(creds) {
         (user.username === creds.username) &&
         (user.password === creds.password)
     )
-    // console.log('users from userService:', users)
-    // console.log('user from userService:', user)
     if (!user) throw 'Wrong username or password'
     saveLocalUser(user)
     return user

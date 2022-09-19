@@ -4,8 +4,7 @@ import { userService } from "../../services/user.service"
 const initialState = {
     loggedinUser: userService.getLoggedinUser(),
 }
-console.log('loggedinUser from userReducer:', initialState.loggedinUser)
-console.log('userService.getLoggedinUser() from userReducer:', userService.getLoggedinUser())
+
 export function userReducer(state = initialState, action) {
     var loggedinUser, activities
     switch (action.type) {

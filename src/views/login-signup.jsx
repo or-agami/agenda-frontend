@@ -21,16 +21,8 @@ export const LoginSignup = () => {
     if (loggedinUser) navigate('/workspace/home')
   }, [params])
 
-  const onUserSignup = (ev) => {
-    ev.preventDefault()
-  }
   return (
     <section className="login-signup">
-      {/* {params['*'] !== 'login' &&
-                <Login/>} */}
-
-      {/* {params['*'] !== 'signup' &&
-                <NavLink to='/auth/signup'>Signup</NavLink>} */}
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -55,7 +47,6 @@ const Signup = (props) => {
     ev.preventDefault()
     const { username } = signupFields
     const isMailValid = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(username)
-    console.log('signupFields:', signupFields)
     if (!validMail) return setIsMailValid(isMailValid)
     dispatch(signup(signupFields))
     navigate('/workspace/home')
