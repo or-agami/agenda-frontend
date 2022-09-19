@@ -26,7 +26,6 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
     }
 
     if (!boards || boards.length < 1) return
-    console.log('from side nav bar', board);
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
