@@ -1,6 +1,8 @@
 [
   {
-    "_id": "632476e04e46cdabedb1b1e0",
+    "_id": {
+      "$oid": "632476e04e46cdabedb1b1e0"
+    },
     "fullname": "Gal Werner",
     "username": "gal@werner.com",
     "password": "gal",
@@ -54,7 +56,9 @@
     ]
   },
   {
-    "_id": "632476e04e46cdabedb1b1e1",
+    "_id": {
+      "$oid": "632476e04e46cdabedb1b1e1"
+    },
     "fullname": "Or Agami",
     "username": "or@agami.com",
     "password": "agami",
@@ -108,7 +112,9 @@
     ]
   },
   {
-    "_id": "632476e04e46cdabedb1b1e2",
+    "_id": {
+      "$oid": "632476e04e46cdabedb1b1e2"
+    },
     "fullname": "Tal Ben Atiya",
     "username": "tal@benatiya.com",
     "password": "tal",

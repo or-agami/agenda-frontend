@@ -1,5 +1,5 @@
 import { boardService } from "./board.service";
-import { httpService } from "./http.service"
+// import { httpService } from "./http.service"
 import { utilService } from "./util.service";
 
 export const groupService = {
@@ -16,9 +16,7 @@ const STORAGE_KEY = 'boardDB'
 
 async function getById({ groupId, boardId }) {
   //?- Dev:
-  // const group = 
   const board = await boardService.getById(boardId)
-  console.log('board:', board)
   return board.groups.find(g => g.id === groupId)
   //?- Prod:
   // return httpService.get(BASE_URL + boardId)
