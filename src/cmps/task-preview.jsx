@@ -13,7 +13,7 @@ import { TaskPersonMenu } from './task-person-menu'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
-export const TaskPreview = ({ task, groupId, board, idx, moveListItem }) => {
+export const TaskPreview = ({ task, group, board, idx, moveListItem }) => {
     const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false)
     const [isTaskStatusMenuOpen, setIsTaskStatusMenuOpen] = useState(false)
     const [isTaskPriorityMenuOpen, setIsTaskPriorityMenuOpen] = useState(false)
