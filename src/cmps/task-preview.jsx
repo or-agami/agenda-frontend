@@ -80,10 +80,15 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
     const dispatch = useDispatch()
     const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isIncludeCat = ['priority', 'status'].includes(category)
+    const isCategoryInc = ['priority', 'status', 'lastUpdated'].includes(category)
     let className = `same-width task-preview-`
     let headerTxt
     let cb = () => { }
+
+    const getFormattedDateTime = (date) => {
+        if (!date) return
+        return moment(date).fromNow()
+    }
 
     const onSetTaskStatusMenuOpen = () => {
         dispatch(openModal('isTaskStatusMenuOpen', task.id))
@@ -134,7 +139,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
             break;
         case 'lastUpdated':
-
+            headerTxt = getFormattedDateTime(task[category]?.date)
+            className += `last-updated `
+            
 
             break;
 
@@ -142,7 +149,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             break;
     }
 
-    if (isIncludeCat) className += makeClass(task[category])
+    if (isCategoryInc && category !== 'lastUpdated') className += makeClass(task[category])
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
@@ -165,7 +172,14 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
                  :
                  <NoPersonSvg className="svg-no-person" />}
             </div>}
-            {isIncludeCat && <>
+            {/* {category === 'lastUpdated' && 
+            <div className='last-updated'>
+                {task.last ?
+                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                 :
+                 <NoPersonSvg className="svg-no-person" />}
+            </div>} */}
+            {isCategoryInc && <>
                 <span className='fold'></span>
                 <h4>{headerTxt}</h4>
             </>}
