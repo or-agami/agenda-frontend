@@ -29,6 +29,12 @@ export const TaskList = ({ group, board }) => {
         }
     }, [tasks])
 
+    useEffect(() => {
+        if (tasks !== group.tasks) {
+            setTasks(group.tasks)
+        }
+    }, [group.tasks])
+
     return <>
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId='tasks'>
