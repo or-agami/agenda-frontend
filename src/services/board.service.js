@@ -602,6 +602,7 @@ async function query(filterBy) {
   //?- Dev:
   let boards = await storageService.query(STORAGE_KEY)
   if (!boards || boards.length === 0) {
+    console.log('boards.length:', boards.length)
     boards = gBoards
     storageService.postMany(STORAGE_KEY, boards)
   }
