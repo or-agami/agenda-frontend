@@ -21,8 +21,8 @@ export const userService = {
 const gUsers = [
     {
         "_id": "632476e04e46cdabedb1b1e0",
-        "fullname": "Gal Werner",
-        "username": "gal@werner.com",
+        "fullname": "Gal Wender",
+        "username": "gal@wender.com",
         "password": "gal",
         "imgUrl": "profile-img-gal",
         "assignments": [

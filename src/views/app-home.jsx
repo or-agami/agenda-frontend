@@ -25,10 +25,11 @@ export const AppHome = () => {
 }
 // Header
 const Header = () => {
+    const loggedinUser = useSelector(store => store.userModule.loggedinUser)
     return (
         <header className="app-home-header">
             <div className='header-container'>
-                <h2>Good morning, User!</h2>
+                <h2>Good morning, {loggedinUser ? loggedinUser.fullname : 'User'}!</h2>
                 <h1>Let's start the day off right :{')'}</h1>
             </div>
             <AppHeaderSvg />

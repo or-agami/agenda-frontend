@@ -14,11 +14,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) => {
 
-    // const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setisDecending] = useState(false)
-    const { isScreenOpen, isGroupMenuOpen, taskId } = useSelector(state => state.boardModule.modals)
+    const {isScreenOpen,isGroupMenuOpen,itemId} = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
 
@@ -70,7 +69,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board }) =>
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && taskId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+            {(isGroupMenuOpen && itemId===group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id}/>}
             <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                 <ArrowRightSvg className={`${group.style} no-background`} />
             </button>
