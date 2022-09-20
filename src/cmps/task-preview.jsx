@@ -182,11 +182,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
                         <NoPersonSvg className="svg-no-person" />}
                 </div>}
             {category === 'lastUpdated' &&
-                <div className='last-updated'>
-                    {task.lastUpdated && task.lastUpdated.byUserId ?
-                        GetMemberImgFromId(board, task.lastUpdated.byUserId)
-                        :
-                        <NoPersonSvg className="svg-no-person" />}
+                <div className='flex align-center last-updated'>
+                    {task.lastUpdated && task.lastUpdated.byUserId &&
+                        GetMemberImgFromId(board, task.lastUpdated.byUserId)}
                 </div>}
             {isCategoryInc && <>
                 <span className='fold'></span>
