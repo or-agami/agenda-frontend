@@ -4,7 +4,10 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { loadTask, openModal } from "../store/board/board.action"
+import { ReactComponent as Like } from '../assets/icons/like.svg'
+import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
+import moment from "moment"
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
@@ -28,10 +31,6 @@ export const TaskDetail = () => {
         navigate(`/workspace/board/${boardId}`)
     }
 
-    const GetMemberImgFromId = (board, memberId) => {
-        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
-        return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
-    }
 
     const onSetTaskPersonMenuOpen = () => {
         dispatch(openModal('isTaskDetailPersonMenuOpen', taskId))
@@ -53,7 +52,7 @@ export const TaskDetail = () => {
                 <button onClick={() => setWhichRenders('isFiles')}>Files</button>
                 <button onClick={() => setWhichRenders('isActivity')}>Activity Log</button>
             </div>
-            {whichRenders === 'isUpdates' && <TaskDetailUpdates />}
+            {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} board={board}/>}
             {whichRenders === 'isFiles' && <TaskDetailFiles />}
             {whichRenders === 'isActivity' && <TaskDetailActivity />}
         </div>
@@ -61,9 +60,13 @@ export const TaskDetail = () => {
     </section>
 }
 
-const TaskDetailUpdates = () => {
-    return <section className='task-detail-updates'>
 
+const TaskDetailUpdates = ({task,board}) => {
+    if(!task.comments) return
+    return <section className='task-detail-updates'>
+        {task.comments.map(comment=>
+        <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt}/>
+        )}
     </section>
 }
 
@@ -96,8 +99,25 @@ const TaskDetailActivity = () => {
 //           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
 //         }
 
-const Comment = () => {
-    return <section className='comment'>
-        <div></div>
+const Post = ({ board, byMember, txt, createdAt }) => {
+    const getFormattedDateTime = (date) => {
+        if (!date) return
+        return moment(date).fromNow()
+    }
+    return <section className='post'>
+        <div>
+            <div className='img-container'>
+                {GetMemberImgFromId(board, byMember._id)}
+            </div>
+            <p>{getFormattedDateTime(createdAt)}</p>
+        </div>
+        <p>{txt}</p>
+        <button><Like/>Like</button>
+        <button><Reply/>Reply</button>
     </section>
 }
+const GetMemberImgFromId = (board, memberId) => {
+    const imgUrl = board.members.find(member => member._id === memberId).imgUrl
+    return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+}
+
