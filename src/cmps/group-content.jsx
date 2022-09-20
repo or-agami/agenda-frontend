@@ -11,7 +11,6 @@ import { ModalScreen } from './modal-screen'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
-
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx }) => {
 
     const [isEditTitle, setIsEditTitle] = useState(false)
@@ -71,17 +70,17 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     }
 
     return <section className="group-content">
-        <div className='group-content-title'>
-            <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
-            <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg className={`${group.style} no-background`} />
-            </button>
-            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
-            {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-            </form>}
-        </div>
+                 <div className='group-content-title'>
+                    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+                    {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+                    <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
+                        <ArrowRightSvg className={`${group.style} no-background`} />
+                    </button>
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
+                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+                    </form>}
+                </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='group-category' direction="horizontal">
@@ -106,7 +105,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                                     return <div ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}>
-                                        <DynamicCmp category={category}
+                                        <DynamicCmp board={board} category={category}
                                         />
                                     </div>
                                 }}
@@ -130,8 +129,24 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
 
 
-const DynamicCmp = ({ category, onSortBy, clearSort }) => {
+const DynamicCmp = ({ category, board }) => {
     let text
+
+
+    const onSortStatus = () => {
+        // const statusOpts = board.cmpsOrder
+
+        // board.groups.forEach(group => {
+        //     const res = []
+        //     statusOpts.forEach(currStatus => {
+        //         group.tasks.forEach(task => {
+        //             if (task.status === currStatus) res.push(task)
+        //         })
+        //     })
+        //     group.tasks = res
+        //     console.log(res);
+        // })
+    }
 
     switch (category) {
         case 'member':
@@ -164,11 +179,12 @@ const DynamicCmp = ({ category, onSortBy, clearSort }) => {
     }
 
     return <li className="group-content-header-category same-width">
-        {category === 'status' && <div className="sort-container">
-            <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
-                <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
-            </button>
-        </div>}
+        {category === "status" &&
+            <div className="sort-container">
+                <button onClick={onSortStatus} className='btn btn-sort'> <SortArrows />
+                    <span className="clear-sort">clear</span>
+                </button>
+            </div>}
         <h4>{text}</h4>
     </li>
 }
