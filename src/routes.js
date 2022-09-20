@@ -21,7 +21,7 @@ export default [
                 component: <AppHome />,
             },
             {
-                path: '/board/:boardId',
+                path: '/board/:boardId/*',
                 component: <Board />,
             },
             {

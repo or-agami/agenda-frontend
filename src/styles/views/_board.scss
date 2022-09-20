@@ -2,8 +2,9 @@
   position: relative;
   grid-column: 2;
   // overflow-y: hidden;
-  min-height: 100vh;
+  // min-height: 100vh;
   padding-left: 20px;
+  max-height: 100vh;
 
   .board-details {
     position: relative;

@@ -177,3 +177,15 @@ export function openModal(stateName, itemId) {
         dispatch({ type: 'OPEN_MODAL', stateName, itemId })
     }
 }
+
+export function loadTask(task) {
+    return (dispatch) => {
+        taskService.getById(task)
+        .then(task=>{
+            dispatch({type:'SET_TASK',task})
+        })
+        .catch(err=>{
+            showErrorMsg('Failed to load task')
+        })
+    }
+}

@@ -23,16 +23,18 @@
         line-height: 18px;
 
         .profile-img-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
 
         }
     }
 
     &>li:last-child {
-        margin-left: calc(50% - 50vw);
-        width: 100vw;
+        // margin-left: calc(50% - 80vw);
+        width: 70px;
+        // border-right: none;
+        // border-right: transparent;
 
     }
 
@@ -104,16 +106,43 @@
     }
 
     .task-preview-last-updated {
+        padding: 0 4px;
         font-family: roboto-light;
         font-size: 13px;
-        // gap: 4px;
+        gap: 4px;
         justify-content: flex-start;
 
         .last-updated {
-            align-self: flex-start;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+    }
+
+    .task-preview-timeline {
+        padding: 0 14px;
+        // font-family: roboto-light;
+        color: white;
+        font-size: 13px;
+        gap: 4px;
+
+        .timeline-wrapper {
+            background-color: black;
+            position: relative;
+            width: 100%;
+            border-radius: 2em;
+            overflow: hidden;
+
+            .time-progress-bar {
+                position: absolute;
+                left: 0;
+                height: 100%;
+                background-color: purple;
+            }
+
+            span {
+                z-index: 5;
+            }
         }
     }
 
@@ -185,6 +214,10 @@
             justify-content: space-between;
 
             .task-preview-start-conversation {
+                width: 65px;
+                justify-content: center;
+                align-items: center;
+                border-left: 1px solid var(--clr-disabled);
                 &:hover .btn-start-conversation {
                     svg * {
                         fill: var(--clr-btn-highlight);

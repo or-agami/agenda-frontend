@@ -1,6 +1,7 @@
 .modal-screen {
-    position: fixed;
-    z-index: 11;
+    position: absolute;
+    // position: fixed;
+    z-index: 15;
     top: 0;
     left: 0;
     opacity: 0;

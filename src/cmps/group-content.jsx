@@ -20,8 +20,6 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
 
-
-
     const onSetIsGroupMenuOpen = () => {
         dispatch(openModal('isGroupMenuOpen', group.id))
     }
@@ -70,17 +68,16 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     }
 
     return <section className="group-content">
-        <div className='group-content-title'>
-            <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
-            <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg className={`${group.style} no-background`} />
-            </button>
-            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
-            {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-            </form>}
-        </div>
+                 <div className='group-content-title'>
+                    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+                    <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
+                        <ArrowRightSvg className={`${group.style} no-background`} />
+                    </button>
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
+                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+                    </form>}
+                </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='group-category' direction="horizontal">
@@ -124,8 +121,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
             <TaskList
                 group={group}
                 board={board}
-            />
+                />
         </div>
+        {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
     </section>
 }
 
