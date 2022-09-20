@@ -36,6 +36,8 @@
 
 
     .group-content-title {
+        position: sticky;
+        top: 160px;
         display: flex;
         align-self: flex-start;
         margin-left: 7px;

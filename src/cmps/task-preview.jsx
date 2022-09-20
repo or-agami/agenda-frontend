@@ -11,15 +11,17 @@ import { TaskStatusMenu } from './task-status-menu'
 import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
 import { TaskDetail } from './task-detail'
+import { Link, Route, useNavigate } from 'react-router-dom'
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId,isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const onSetIsTaskMenuOpen = () => {
         dispatch(openModal('isTaskMenuOpen', task.id))
@@ -40,11 +42,10 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
-    const openTaskDetail = () => { 
-        dispatch(openModal('isTaskDetailOpen',task.id))
-    }
+    // const openTaskDetail = () => { 
+    //     dispatch(openModal('isTaskDetailOpen',task.id))
 
-    // TODO: task detail continue 
+    // }
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
@@ -66,14 +67,16 @@ export const TaskPreview = ({ task, group, board }) => {
                     </form>}
                 </li>
                 <li className="task-preview-start-conversation">
-                    <button className="btn btn-svg btn-start-conversation" onClick={() => openTaskDetail()}>
+                    <button to={`/workspace/board/${board._id}/${task.id}`} className="btn btn-svg btn-start-conversation">
                         <StartConversationSvg />
                     </button>
-                    <TaskDetail />
+
+                    {(isTaskDetailOpen && itemId === task.id) && <TaskDetail />}
                 </li>
             </div>
         </div>
         {board.cmpsOrder && board.cmpsOrder.map(category => <DynamicCmp key={category} board={board} category={category} task={task} groupId={group.id} />)}
+        <li></li>
     </ul>
 }
 
@@ -146,7 +149,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
         case 'lastUpdated':
             headerTxt = getFormattedDateTime(task[category]?.date)
             className += `last-updated `
-            
+
 
             break;
 
@@ -167,16 +170,16 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />
         }
         <li className={className} onClick={cb}>
-            {category === 'member' && 
-            <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
-            </button>}
-            {category === 'member' && 
-            <div className='developer-container'>
-                {task.memberIds ?
-                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
-                 :
-                 <NoPersonSvg className="svg-no-person" />}
-            </div>}
+            {category === 'member' &&
+                <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+                </button>}
+            {category === 'member' &&
+                <div className='developer-container'>
+                    {task.memberIds ?
+                        task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                        :
+                        <NoPersonSvg className="svg-no-person" />}
+                </div>}
             {/* {category === 'lastUpdated' && 
             <div className='last-updated'>
                 {task.last ?

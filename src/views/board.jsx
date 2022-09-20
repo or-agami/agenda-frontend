@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from "react"
 import { BoardHeader } from "../cmps/board-header"
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Routes,Route, useNavigate, useParams } from 'react-router-dom'
 import { loadBoard, loadBoards } from "../store/board/board.action"
 import { Loader } from "../cmps/loader"
 import { GroupList } from "../cmps/group-list"
+import { TaskDetail } from "../cmps/task-detail"
 
 
 export const Board = () => {
@@ -32,6 +33,9 @@ export const Board = () => {
 
   return (
     <div className="board-app">
+      <Routes>
+        <Route path="/workspace/board/:boardId/:taskId" element={TaskDetail}></Route>
+      </Routes>
       {isLoading ?
         <Loader /> :
         board &&

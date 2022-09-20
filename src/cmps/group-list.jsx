@@ -48,7 +48,6 @@ export const GroupList = ({ board }) => {
   //     {(droppableProvided) => {
   // TODO: put in section ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}
   return <section className="group-list">
-    <ModalScreen />
     {groups.map((group, idx) =>
       // <Draggable key={idx} draggableId={group.id + idx} index={idx} >
       //   {(provided) => {

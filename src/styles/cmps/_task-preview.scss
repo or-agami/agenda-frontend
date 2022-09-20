@@ -20,8 +20,10 @@
     }
 
     &>li:last-child {
-        margin-left: calc(50% - 50vw);
-        width: 100vw;
+        // margin-left: calc(50% - 80vw);
+        width: 70px;
+        // border-right: none;
+        // border-right: transparent;
 
     }
 
@@ -160,6 +162,9 @@
             justify-content: space-between;
 
             .task-preview-start-conversation {
+                width: 65px;
+                justify-content: center;
+                align-items: center;
                 &:hover .btn-start-conversation {
                     svg * {
                         fill: var(--clr-btn-highlight);

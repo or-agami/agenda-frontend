@@ -18,7 +18,7 @@ import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
 import { closeModals, loadBoard, loadBoards, openModal } from '../store/board/board.action';
-import { ModalScreen } from './modal-screen';
+// import { ModalScreen } from './modal-screen';
 import { UserMenu } from './user-menu';
 
 
@@ -95,7 +95,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
-        <Route path="/board/:boardId" element={<Board />} />
+        <Route path="/board/:boardId/*" element={<Board />} />
         <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Fragment>
