@@ -10,7 +10,6 @@ export const GroupPreview = ({ group, board, idx, isGroupDragging}) => {
     
     useEffect(() => {
         if (isGroupDragging) setIsHeaderOpen(false)
-
     }, [isGroupDragging])
 
     return <section className="group-preview">
@@ -30,3 +29,4 @@ export const GroupPreview = ({ group, board, idx, isGroupDragging}) => {
         />}
     </section>
 }
+

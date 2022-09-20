@@ -15,7 +15,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
-    const [isDecending, setisDecending] = useState(false)
+    const [isDecending, setIsDecending] = useState(false)
     const { isScreenOpen, isGroupMenuOpen, itemId } = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
@@ -39,7 +39,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
     const onSortBy = (sortBy) => {
 
-        setisDecending(!isDecending)
+        setIsDecending(!isDecending)
 
         const sort = {
             by: sortBy,
@@ -70,17 +70,17 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     }
 
     return <section className="group-content">
-                 <div className='group-content-title'>
-                    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-                    {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
-                    <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                        <ArrowRightSvg className={`${group.style} no-background`} />
-                    </button>
-                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
-                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-                    </form>}
-                </div>
+        <div className='group-content-title'>
+            <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+            {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+            <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
+                <ArrowRightSvg className={`${group.style} no-background`} />
+            </button>
+            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
+            {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+            </form>}
+        </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='group-category' direction="horizontal">
@@ -105,7 +105,10 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                                     return <div ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}>
-                                        <DynamicCmp board={board} category={category}
+                                        <DynamicCmp isDecending={isDecending}
+                                            setIsDecending={setIsDecending}
+                                            category={category}
+                                            clearSort={clearSort}
                                         />
                                     </div>
                                 }}
@@ -129,23 +132,21 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
 
 
-const DynamicCmp = ({ category, board }) => {
+const DynamicCmp = ({ category, isDecending, setIsDecending, clearSort }) => {
+
+    const dispatch = useDispatch()
     let text
 
+    const isSortable = ['status', 'priority'].includes(category)
 
-    const onSortStatus = () => {
-        // const statusOpts = board.cmpsOrder
-
-        // board.groups.forEach(group => {
-        //     const res = []
-        //     statusOpts.forEach(currStatus => {
-        //         group.tasks.forEach(task => {
-        //             if (task.status === currStatus) res.push(task)
-        //         })
-        //     })
-        //     group.tasks = res
-        //     console.log(res);
-        // })
+    const onSort = (sortBy) => {
+        setIsDecending(!isDecending)
+        
+        const sort = {
+            by: sortBy,
+            isDecending
+        }
+        dispatch(setSort(sort))
     }
 
     switch (category) {
@@ -179,10 +180,10 @@ const DynamicCmp = ({ category, board }) => {
     }
 
     return <li className="flex justify-center same-width group-content-header-category">
-        {category === "status" &&
+        {isSortable &&
             <div className="sort-container">
-                <button onClick={onSortStatus} className='btn btn-sort'> <SortArrows />
-                    <span className="clear-sort">clear</span>
+                <button onClick={() => onSort(category)} className='btn btn-sort'> <SortArrows />
+                    <span onClick={clearSort} className="clear-sort">clear</span>
                 </button>
             </div>}
         <h4>{text}</h4>

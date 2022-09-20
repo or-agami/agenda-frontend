@@ -11,7 +11,7 @@ export const TaskPriorityMenu = ({task,groupId,boardId}) => {
 
 
 return <section className="task-priority-menu modal">
-    <button className='btn-priority critical' onClick={()=>onUpdatePriority('Critical ⚠')}>Critical⚠</button>
+    <button className='btn-priority critical' onClick={()=>onUpdatePriority('Critical')}>Critical ⚠</button>
     <button className='btn-priority medium' onClick={()=>onUpdatePriority('Medium')}>Medium</button>
     <button className='btn-priority high' onClick={()=>onUpdatePriority('High')}>High</button>
     <button className='btn-priority low' onClick={()=>onUpdatePriority('Low')}>Low</button>

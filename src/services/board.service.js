@@ -331,7 +331,7 @@ const gBoards = [
             "id": "6GcnqY",
             "title": "Nav bar",
             "status": "Working on it",
-            "priority": "Critical ⚠",
+            "priority": "Critical",
             "memberIds": [
               "632476e04e46cdabedb1b1e2",
               "632476e04e46cdabedb1b1e0",
@@ -392,7 +392,7 @@ const gBoards = [
             "id": "CGRT4E",
             "title": "CRUD",
             "status": "Done",
-            "priority": "Critical ⚠",
+            "priority": "Critical",
             "memberIds": [
               "632476e04e46cdabedb1b1e0",
               "632476e04e46cdabedb1b1e1"
@@ -594,6 +594,9 @@ const gBoards = [
   }
 ]
 
+const statusOpts = ['done', 'working on it', 'stuck', 'need help', 'waiting for qa', 'pending', '']
+const priorityOpts = ['low', 'medium', 'high', 'critical', '']
+
 const STORAGE_KEY = 'boardDB'
 //?- Prod:
 // const BASE_URL = 'board/'
@@ -626,6 +629,27 @@ function getById(boardId, sortBy, filterBy) {
           if (sortBy.by === 'title') {
             group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title))
           }
+
+          if (sortBy.by === 'status') {
+              const res = []
+              statusOpts.forEach(currStatus => {
+                  group.tasks.forEach(task => {
+                      if (task.status.toLowerCase() === currStatus) res.push(task)
+                  })
+              })
+              group.tasks = res
+          }
+
+          if (sortBy.by === 'priority') {
+              const res = []
+              priorityOpts.forEach(currPriority => {
+                  group.tasks.forEach(task => {
+                      if (task.priority.toLowerCase() === currPriority) res.push(task)
+                  })
+              })
+              group.tasks = res
+          }
+        
           if (sortBy.isDecending) {
             group.tasks = group.tasks.reverse()
           }

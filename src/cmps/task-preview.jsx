@@ -133,6 +133,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
         case 'priority':
             headerTxt = task[category]
             className += `priority `
+            if (task[category] === 'Critical') {
+                headerTxt += " ⚠"
+            }
             cb = onSetTaskPriorityMenuOpen
 
             break;
@@ -156,6 +159,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     }
 
     if (isCategoryInc && category !== 'lastUpdated') className += makeClass(task[category])
+
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
