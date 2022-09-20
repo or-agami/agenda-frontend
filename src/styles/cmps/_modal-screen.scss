@@ -1,6 +1,6 @@
 .modal-screen {
-    position: absolute;
-    // position: fixed;
+    // position: absolute;
+    position: fixed;
     z-index: 15;
     top: 0;
     left: 0;
@@ -13,4 +13,8 @@
 
 .modal {
     z-index: 20;
+}
+
+.dim {
+    background-color: rgba(71, 61, 139, 0.2);
 }

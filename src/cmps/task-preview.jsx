@@ -15,11 +15,12 @@ import { Link, Route, useNavigate } from 'react-router-dom'
 import { DatePicker, Space } from "antd";
 import { BiImageAdd } from 'react-icons/bi'
 
+import { TaskDetailPersonMenu } from './task-detail-person-menu'
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen, isTaskMenuOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId,isTaskDetailPersonMenuOpen, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
@@ -101,7 +102,8 @@ export const TaskPreview = ({ task, group, board }) => {
             </div>
         </div>
         {board.cmpsOrder && board.cmpsOrder.map(category => <DynamicCmp key={category} board={board} category={category} task={task} groupId={group.id} />)}
-        <li></li>
+        {(isTaskDetailPersonMenuOpen && itemId === task.id) && <TaskDetailPersonMenu task={task} groupId={group.id} board={board} />}
+        <li><div></div></li>
     </ul>
 }
 
@@ -139,7 +141,8 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     }
 
     const GetMemberImgFromId = (board, memberId) => {
-        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
+        const imgUrl = (memberId !== 'Guest') ?
+            board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 

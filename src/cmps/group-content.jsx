@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../hooks/useForm'
 import { openModal, setSort, updateBoard, updateGroup } from '../store/board/board.action'
 import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
-import { ModalScreen } from './modal-screen'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 

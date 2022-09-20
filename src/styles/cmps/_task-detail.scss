@@ -4,10 +4,54 @@
     position: fixed;
     right: 0;
     background-color: var(--clr-item-bg);
-    z-index: 50;
+    z-index: 11;
     box-shadow: var(--box-shadow-medium);
+    // display: flex;
+    // flex-direction: column;
+
+    .btn-svg-x {
+        margin-left: 20px;
+        margin-top: 25px;
+    }
 
     svg * {
         fill: var(--clr-icon-svg);
+    }
+
+    .task-detail-header {
+        margin-top: 15px;
+        margin-left: 20px;
+
+        .task-detail-header-top {
+            display: flex;
+            justify-content: space-between;
+
+            .btn-add-developer {
+                width: 16px;
+                height: 16px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                font-size: 1.0625rem;
+                color: #fff;
+                background-color: var(--clr-btn-highlight);
+            }
+
+            img {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        .task-detail-header-top .task-detail-member-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 20px);
+            width: 105px;
+            justify-content: center;
+            align-items: center;
+        }
+
     }
 }

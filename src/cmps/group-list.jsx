@@ -2,7 +2,6 @@ import { GroupPreview } from "./group-preview"
 import { ReactComponent as PlusIcon } from '../assets/icons/plus-icon.svg'
 import { useDispatch } from "react-redux"
 import { addGroup, updateBoard } from "../store/board/board.action"
-import { ModalScreen } from "./modal-screen"
 import { useEffect, useState } from "react"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useRef } from "react"
@@ -54,7 +53,6 @@ export const GroupList = ({ board }) => {
       <Droppable droppableId='group' >
         {(droppableProvided) => {
           return <section ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-list">
-            <ModalScreen />
             {groups.map((group, idx) =>
               <Draggable key={idx} draggableId={group.id + idx} index={idx}>
                 {(provided) => {

@@ -14,7 +14,6 @@ import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
-import { ModalScreen } from './modal-screen'
 
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
@@ -28,7 +27,6 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 
     if (!boards || boards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
-        <ModalScreen />
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
