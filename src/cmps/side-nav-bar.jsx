@@ -17,15 +17,34 @@ import { useForm } from '../hooks/useForm'
 
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
+   
+   
+    const onSearch = () => {
+        setNewBoards(boards.filter(board => board.title.toLowerCase().includes(searchBoardBy.term.toLowerCase())))
+    }
 
-    const dispatch = useDispatch()
+    const searchBoard = (ev) => {
+        if (ev) ev.preventDefault()
+        onSearch()
+        setIsSearch(false)
+        setSearchBoardBy({ term: "" })
+    }
+
+    const [searchBoardBy, handleChange, setSearchBoardBy] = useForm({ term: "" }, onSearch)
     const [isAddBoard, setIsAddBoard] = useState(false)
+    const [isSearch, setIsSearch] = useState(false)
+    const [newBoards, setNewBoards] = useState(boards)
 
     const toggleSideNav = () => {
         setIsOpen(!isOpen)
     }
 
-    if (!boards || boards.length < 1) return
+    const onSearchBoardClick = () => {
+        setIsSearch(true)
+    }
+
+    console.log(newBoards);
+    if (!newBoards || newBoards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
@@ -47,19 +66,21 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
                 <FilterIcon />
                 Filter
             </div>
-            <div className="side-nav side-nav-search">
+            <div onClick={onSearchBoardClick} className="side-nav side-nav-search">
                 <SearchIcon />
-                Search
+                {!isSearch && "Search"}
+                {isSearch && <form onBlur={searchBoard} onSubmit={searchBoard}>
+                    <input value={searchBoardBy.term} autoFocus name="term" onChange={handleChange} type="text" /></form>}
             </div>
         </div>
         <hr />
-        {boards &&
+        {newBoards &&
             <div className="nav-board-list">
-                {boards.map(board =>
+                {newBoards.map(board =>
                     <NavBoardPreview setCurrBoard={setCurrBoard}
                         board={board}
                         key={board._id}
-                        boards={boards} />)}
+                        boards={newBoards} />)}
             </div>}
         {isAddBoard &&
             <AddBoardModal setIsAddBoard={setIsAddBoard}
@@ -82,7 +103,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
     const openBoardSettings = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()
-        dispatch(openModal('isBoardOptsOpen',board._id))
+        dispatch(openModal('isBoardOptsOpen', board._id))
     }
 
     const onRemoveBoard = (ev, boardId) => {
