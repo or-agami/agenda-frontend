@@ -16,10 +16,8 @@ const initialState = {
         isColorMenuOpen: false,
         isBoardOptsOpen:false,
         isUserMenuOpen:false,
-        isTaskDetailOpen:false,
-    }
-
-
+    },
+    task:null,
 }
 
 export function boardReducer(state = initialState, action) {
@@ -71,6 +69,8 @@ export function boardReducer(state = initialState, action) {
             return { ...state, modals: initialState.modals }
         case 'OPEN_MODAL':
             return { ...state, modals: { ...state.modals, [action.stateName]: true, isScreenOpen: true, itemId: action.itemId } }
+        case 'SET_TASK':
+            return {...state,task:action.task}
         default:
             return state
     }

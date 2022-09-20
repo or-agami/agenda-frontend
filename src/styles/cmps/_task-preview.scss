@@ -217,7 +217,7 @@
                 width: 65px;
                 justify-content: center;
                 align-items: center;
-
+                border-left: 1px solid var(--clr-disabled);
                 &:hover .btn-start-conversation {
                     svg * {
                         fill: var(--clr-btn-highlight);

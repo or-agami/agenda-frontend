@@ -15,7 +15,7 @@ export const GroupMenu = ({ group, boardId }) => {
         dispatch(openModal('isColorMenuOpen',group.id))
     }
     if (isColorMenuOpen) return <ColorMenu group={group} boardId={boardId} />
-    return <section className="group-menu">
+    return <section className="group-menu modal">
         <div className="group-color-icon-container" onClick={openColorMenu}>
             <div className={`group-color-icon ${group.style}`}></div>
             <button>Change group color</button>
