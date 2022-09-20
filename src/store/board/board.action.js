@@ -177,3 +177,9 @@ export function openModal(stateName, itemId) {
         dispatch({ type: 'OPEN_MODAL', stateName, itemId })
     }
 }
+
+export function loadTask(taskId) {
+    return (dispatch) => {
+        // taskService.getById()
+    }
+}

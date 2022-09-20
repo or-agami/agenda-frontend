@@ -34,7 +34,7 @@ export const Board = () => {
   return (
     <div className="board-app">
       <Routes>
-        <Route path="/workspace/board/:boardId/:taskId" element={TaskDetail}></Route>
+        <Route path="/details" element={<TaskDetail/>}></Route>
       </Routes>
       {isLoading ?
         <Loader /> :

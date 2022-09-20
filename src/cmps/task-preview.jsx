@@ -42,11 +42,6 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
-    // const openTaskDetail = () => { 
-    //     dispatch(openModal('isTaskDetailOpen',task.id))
-
-    // }
-
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
         {(isTaskMenuOpen && itemId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
@@ -67,11 +62,9 @@ export const TaskPreview = ({ task, group, board }) => {
                     </form>}
                 </li>
                 <li className="task-preview-start-conversation">
-                    <button to={`/workspace/board/${board._id}/${task.id}`} className="btn btn-svg btn-start-conversation">
+                    <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
                         <StartConversationSvg />
-                    </button>
-
-                    {(isTaskDetailOpen && itemId === task.id) && <TaskDetail />}
+                    </Link>
                 </li>
             </div>
         </div>

@@ -20,8 +20,6 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
 
-
-
     const onSetIsGroupMenuOpen = () => {
         dispatch(openModal('isGroupMenuOpen', group.id))
     }
@@ -72,7 +70,6 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     return <section className="group-content">
                  <div className='group-content-title'>
                     <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-                    {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
                     <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                         <ArrowRightSvg className={`${group.style} no-background`} />
                     </button>
@@ -121,8 +118,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
             <TaskList
                 group={group}
                 board={board}
-            />
+                />
         </div>
+        {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
     </section>
 }
 
@@ -131,18 +129,18 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
 const DynamicCmp = ({ category, board }) => {
     let text
-
-
+    
+    
     const onSortStatus = () => {
         // const statusOpts = board.cmpsOrder
-
+        
         // board.groups.forEach(group => {
-        //     const res = []
-        //     statusOpts.forEach(currStatus => {
-        //         group.tasks.forEach(task => {
-        //             if (task.status === currStatus) res.push(task)
-        //         })
-        //     })
+            //     const res = []
+            //     statusOpts.forEach(currStatus => {
+                //         group.tasks.forEach(task => {
+                    //             if (task.status === currStatus) res.push(task)
+                    //         })
+                    //     })
         //     group.tasks = res
         //     console.log(res);
         // })

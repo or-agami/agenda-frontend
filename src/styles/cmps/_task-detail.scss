@@ -1,13 +1,13 @@
 .task-detail {
-    // width: 700px;
-    width: 100vw;
-    height: 100vh;
-    // position: absolute;
-    // font-size: 14px;
-    // height: fit-content;
+    width: 700px;
+    height: 100%;
+    position: fixed;
+    right: 0;
     background-color: var(--clr-item-bg);
-    // padding: 10px;
-    // box-shadow: var(--box-shadow-small);
-    // border-radius: 8px;
     z-index: 50;
+    box-shadow: var(--box-shadow-medium);
+
+    svg * {
+        fill: var(--clr-icon-svg);
+    }
 }
