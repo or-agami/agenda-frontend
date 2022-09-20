@@ -13,11 +13,12 @@ import { TaskPersonMenu } from './task-person-menu'
 import { TaskDetail } from './task-detail'
 import { Link, Route, useNavigate } from 'react-router-dom'
 import { Fragment } from 'react'
+import { TaskDetailPersonMenu } from './task-detail-person-menu'
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId,isTaskDetailPersonMenuOpen, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
@@ -70,7 +71,8 @@ export const TaskPreview = ({ task, group, board }) => {
             </div>
         </div>
         {board.cmpsOrder && board.cmpsOrder.map(category => <DynamicCmp key={category} board={board} category={category} task={task} groupId={group.id} />)}
-        <li></li>
+        {(isTaskDetailPersonMenuOpen && itemId === task.id) && <TaskDetailPersonMenu task={task} groupId={group.id} board={board} />}
+        <li><div></div></li>
     </ul>
 }
 

@@ -4,6 +4,7 @@
     padding: 0;
     margin-right: 1px;
     border-bottom: 1px solid var(--clr-disabled);
+    width: 100%;
 
     .developer-container {
         display: grid;
@@ -31,11 +32,11 @@
     }
 
     &>li:last-child {
-        // margin-left: calc(50% - 80vw);
-        width: 70px;
-        // border-right: none;
-        // border-right: transparent;
-
+        display: flex;
+        width: 100%;
+        div {
+            flex: 1;
+        }
     }
 
     .task-preview-priority {
@@ -314,3 +315,4 @@
     }
 
 }
+
