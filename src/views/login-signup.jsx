@@ -48,6 +48,8 @@ const Signup = (props) => {
     const { username } = signupFields
     const isMailValid = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(username)
     if (!validMail) return setIsMailValid(isMailValid)
+    const user = signupFields
+    user.imgUrl = 'profile-img-guest'
     dispatch(signup(signupFields))
     navigate('/workspace/home')
     // console.log('reg.test(username):', reg.test(username))

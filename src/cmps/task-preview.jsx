@@ -15,7 +15,7 @@ import { TaskDetail } from './task-detail'
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId,isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
@@ -40,8 +40,8 @@ export const TaskPreview = ({ task, group, board }) => {
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
 
-    const openTaskDetail = () => { 
-        dispatch(openModal('isTaskDetailOpen',task.id))
+    const openTaskDetail = () => {
+        dispatch(openModal('isTaskDetailOpen', task.id))
     }
 
     // TODO: task detail continue 
@@ -51,7 +51,7 @@ export const TaskPreview = ({ task, group, board }) => {
         {(isTaskMenuOpen && itemId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
         <li className={`task-preview-group-color ${group.style}`}>
         </li>
-        <li className='task-preview-checkbox'>
+        <li className='flex justify-center task-preview-checkbox'>
             <input className='task-check-input' type="checkbox" />
         </li>
         <div className='item-container'>
@@ -86,12 +86,13 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     const dispatch = useDispatch()
     const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isCategoryInc = ['priority', 'status', 'lastUpdated'].includes(category)
-    let className = `same-width task-preview-`
+    let className = `flex justify-center same-width task-preview-`
     let headerTxt
     let cb = () => { }
 
     const getFormattedDateTime = (date) => {
         if (!date) return
+        moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
         return moment(date).fromNow()
     }
 
@@ -146,7 +147,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
         case 'lastUpdated':
             headerTxt = getFormattedDateTime(task[category]?.date)
             className += `last-updated `
-            
+
 
             break;
 
@@ -167,23 +168,23 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />
         }
         <li className={className} onClick={cb}>
-            {category === 'member' && 
-            <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
-            </button>}
-            {category === 'member' && 
-            <div className='developer-container'>
-                {task.memberIds ?
-                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
-                 :
-                 <NoPersonSvg className="svg-no-person" />}
-            </div>}
-            {/* {category === 'lastUpdated' && 
-            <div className='last-updated'>
-                {task.last ?
-                 task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
-                 :
-                 <NoPersonSvg className="svg-no-person" />}
-            </div>} */}
+            {category === 'member' &&
+                <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+                </button>}
+            {category === 'member' &&
+                <div className='developer-container'>
+                    {task.memberIds ?
+                        task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                        :
+                        <NoPersonSvg className="svg-no-person" />}
+                </div>}
+            {category === 'lastUpdated' &&
+                <div className='last-updated'>
+                    {task.lastUpdated && task.lastUpdated.byUserId ?
+                        GetMemberImgFromId(board, task.lastUpdated.byUserId)
+                        :
+                        <NoPersonSvg className="svg-no-person" />}
+                </div>}
             {isCategoryInc && <>
                 <span className='fold'></span>
                 <h4>{headerTxt}</h4>

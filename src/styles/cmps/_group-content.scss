@@ -13,8 +13,6 @@
     font-weight: 400;
 
 
-    .group-content-tasks {}
-
     li {
         display: flex;
         align-items: center;
@@ -22,10 +20,6 @@
         * {
             font-weight: 400;
         }
-    }
-
-    li:not(:nth-child(2)) {
-        justify-content: center;
     }
 
     li:nth-child(n+3):not(:last-child) {

@@ -19,6 +19,17 @@
         }
     }
 
+    .last-updated {
+        line-height: 18px;
+
+        .profile-img-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+
+        }
+    }
+
     &>li:last-child {
         margin-left: calc(50% - 50vw);
         width: 100vw;
@@ -90,6 +101,20 @@
 
 
 
+    }
+
+    .task-preview-last-updated {
+        font-family: roboto-light;
+        font-size: 13px;
+        // gap: 4px;
+        justify-content: flex-start;
+
+        .last-updated {
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .task-preview-item input {
