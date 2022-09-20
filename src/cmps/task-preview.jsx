@@ -3,7 +3,7 @@ import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { TaskMenu } from './task-menu'
-import { useState } from 'react'
+import { useState, useRef, Fragment } from 'react'
 import { useForm } from '../hooks/useForm'
 import { openModal, updateTask } from '../store/board/board.action'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,12 +12,14 @@ import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
 import { TaskDetail } from './task-detail'
 import { Link, Route, useNavigate } from 'react-router-dom'
-import { Fragment } from 'react'
+import { DatePicker, Space } from "antd";
+import { BiImageAdd } from 'react-icons/bi'
+
 
 
 export const TaskPreview = ({ task, group, board }) => {
 
-    const { itemId, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen, isTaskMenuOpen } = useSelector(state => state.boardModule.modals)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedTask, handleChange, setTask] = useForm(task)
@@ -28,20 +30,49 @@ export const TaskPreview = ({ task, group, board }) => {
         dispatch(openModal('isTaskMenuOpen', task.id))
     }
 
-    const getFormattedDateTime = (date) => {
-        if (!date) return
-        return moment(date).fromNow()
-    }
+    // const getFormattedDateTime = (date) => {
+    //     if (!date) return
+    //     return moment(date).fromNow()
+    // }
 
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
         if (task.title !== editedTask.title) {
             // Todo: Prevent guests from editing tasks
-            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser._id || 'Guest' }
+            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
             dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
         }
         setIsEditTitle(prevState => prevState = !isEditTitle)
     }
+
+    const onSetTaskStatusMenuOpen = () => {
+        dispatch(openModal('isTaskStatusMenuOpen', task.id))
+    }
+
+    const onSetTaskPriorityMenuOpen = () => {
+        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
+    }
+
+    const onSetTaskPersonMenuOpen = () => {
+        dispatch(openModal('isTaskPersonMenuOpen', task.id))
+    }
+
+    const GetMemberImgFromId = (board, memberId) => {
+        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
+        return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+    }
+
+    const getFormattedDateTime = (date) => {
+        if (!date) return
+        moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
+        return moment(date).fromNow()
+    }
+
+    const makeClass = (status) => {
+        if (!status) return
+        return status.split(' ').join('')
+    }
+
 
     return <ul key={task.id} className="clean-list task-preview">
         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
@@ -77,12 +108,14 @@ export const TaskPreview = ({ task, group, board }) => {
 
 
 
-
 const DynamicCmp = ({ board, task, category, groupId }) => {
 
+
+    const { RangePicker } = DatePicker
+
     const dispatch = useDispatch()
-    const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isCategoryInc = ['priority', 'status', 'lastUpdated', 'timeline'].includes(category)
+    const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    const isCategoryInc = ['priority', 'status', 'lastUpdated', 'timeline', 'attachments'].includes(category)
     let className = `flex justify-center same-width task-preview-`
     let headerTxt, cmp
     let cb = () => { }
@@ -139,12 +172,17 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
             break;
         case 'attachments':
+            // cmp = <AddFile task={task} />
+            // className += 'attachments'
+
 
 
             break;
         case 'timeline':
             cmp = <Timeline />
             className += 'timeline '
+            // cmp = <RangePicker />
+
 
             break;
         case 'lastUpdated':
@@ -158,8 +196,7 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             break;
     }
 
-    if (isCategoryInc && category !== 'lastUpdated') className += makeClass(task[category])
-
+    if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments') className += makeClass(task[category])
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
@@ -173,15 +210,17 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
         }
         <li className={className} onClick={cb}>
             {category === 'member' &&
-                <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
-                </button>}
-            {category === 'member' &&
-                <div className='developer-container'>
-                    {task.memberIds ?
-                        task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
-                        :
-                        <NoPersonSvg className="svg-no-person" />}
-                </div>}
+                <Fragment>
+                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+                    </button>
+                    <div className='developer-container'>
+                        {task.memberIds ?
+                            task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                            :
+                            <NoPersonSvg className="svg-no-person" />}
+                    </div>
+                </Fragment>}
+
             {category === 'lastUpdated' &&
                 <div className='flex align-center last-updated'>
                     {task.lastUpdated && task.lastUpdated.byUserId &&
@@ -210,7 +249,7 @@ const Timeline = () => {
     }
 
     const { startDate, dueDate } = timeline
-    
+
     const getTimeProgress = () => {
         const timeRatio = (Date.now() - startDate) / (dueDate - startDate)
         const timeProgress = (timeRatio * 100).toFixed()
@@ -220,7 +259,7 @@ const Timeline = () => {
     return (
         // <div className={`flex timeline-wrapper ${(startDate && dueDate) ? dueDate - startDate : ''}`}>
         <div className="flex justify-center timeline-wrapper">
-            <div className="time-progress-bar" style={{width: `${getTimeProgress()}%`}}></div>
+            <div className="time-progress-bar" style={{ width: `${getTimeProgress()}%` }}></div>
             {startDate &&
                 <span>{getFormattedDateTime(startDate)}</span>}
             {startDate && dueDate &&
@@ -231,3 +270,29 @@ const Timeline = () => {
         </div>
     )
 }
+
+// const AddFile = ({ task }) => {
+    
+//     const fileRef = useRef()
+
+//     const [isFile , setIsFile] = useState(false)
+
+//     const importImg = (ev, property) => {
+//         const reader = new FileReader()
+//         reader.readAsDataURL(ev.target.files[0])
+//         setIsFile(true)
+//         reader.addEventListener("load", () => {
+//             console.log(reader.result);
+//             console.log(fileRef);
+//             fileRef.current.src = reader.result
+//         })
+//     }
+
+//     return <div>
+//         {isFile ? <img className='file-img' ref={fileRef} />
+//             : <button className='btn add-file-btn'>
+//                 <input className="import-img-input" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
+//                 <BiImageAdd />
+//             </button>}
+//     </div>
+// }

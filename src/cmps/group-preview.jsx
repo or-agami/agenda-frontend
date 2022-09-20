@@ -2,14 +2,16 @@ import { GroupHeader } from "./group-header"
 import { GroupContent } from "./group-content"
 import { useState } from "react"
 import { useEffect } from "react"
+import { Draggable } from 'react-beautiful-dnd'
 
 
-export const GroupPreview = ({ group, board, idx, isGroupDragging}) => {
-    
+export const GroupPreview = ({ group, board, isGroupDragging}) => {
+
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
-    
+
     useEffect(() => {
         if (isGroupDragging) setIsHeaderOpen(false)
+
     }, [isGroupDragging])
 
     return <section className="group-preview">
@@ -17,16 +19,12 @@ export const GroupPreview = ({ group, board, idx, isGroupDragging}) => {
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
-            boardId={board._id}
-            idx={idx}
-        />}
+            boardId={board._id}/>}
+
         {isHeaderOpen && <GroupContent
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
-            board={board}
-            idx={idx}
-        />}
+            board={board}/>}
     </section>
 }
-

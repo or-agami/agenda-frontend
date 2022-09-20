@@ -6,8 +6,6 @@ export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen
     const onUpdateStatus = (status) => {
         const updatedTask = { ...task, status }
         dispatch(closeModals())
-        // setIsScreenOpen(prevState => prevState=false)
-        // setIsTaskStatusMenuOpen(prevState => prevState=false)
         dispatch(updateTask({ task: updatedTask, groupId, boardId }))
     }
 

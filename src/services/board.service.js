@@ -160,8 +160,8 @@ const gBoards = [
       "member",
       "status",
       "priority",
+      "timeline",
       "attachments",
-      "timeline"
     ]
   },
   {
@@ -298,8 +298,8 @@ const gBoards = [
       "member",
       "status",
       "priority",
+      "timeline",
       "attachments",
-      "timeline"
     ]
   },
   {
@@ -588,14 +588,14 @@ const gBoards = [
       "priority",
       "status",
       "lastUpdated",
+      "timeline",
       "attachments",
-      "timeline"
     ]
   }
 ]
 
 const statusOpts = ['done', 'working on it', 'stuck', 'need help', 'waiting for qa', 'pending', '']
-const priorityOpts = ['low', 'medium', 'high', 'critical', '']
+const priorityOpts = [ '' ,'low', 'medium', 'high', 'critical',]
 
 const STORAGE_KEY = 'boardDB'
 //?- Prod:
@@ -644,7 +644,8 @@ function getById(boardId, sortBy, filterBy) {
               const res = []
               priorityOpts.forEach(currPriority => {
                   group.tasks.forEach(task => {
-                      if (task.priority.toLowerCase() === currPriority) res.push(task)
+                    if (!task.priority) task.priority = ''
+                    if (task.priority.toLowerCase() === currPriority) res.push(task)
                   })
               })
               group.tasks = res

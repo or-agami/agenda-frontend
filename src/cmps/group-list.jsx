@@ -32,6 +32,10 @@ export const GroupList = ({ board }) => {
     setIsGroupDragging(false)
   }
 
+  const onDragStart = () => {
+    // setIsGroupDragging(true)
+  }
+
   useEffect(() => {
     if (groups !== board.groups) {
       board.groups = groups
@@ -46,15 +50,13 @@ export const GroupList = ({ board }) => {
   }, [board.groups])
 
   return <div ref={containerRef}>
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-       
-      <Droppable droppableId='group'>
+    <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
+      <Droppable droppableId='group' >
         {(droppableProvided) => {
-
           return <section ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-list">
             <ModalScreen />
             {groups.map((group, idx) =>
-              <Draggable key={idx} draggableId={group.id + idx} index={idx} >
+              <Draggable key={idx} draggableId={group.id + idx} index={idx}>
                 {(provided) => {
                   return <div ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -64,17 +66,16 @@ export const GroupList = ({ board }) => {
                       idx={idx}
                       group={group}
                       board={board}
-                      isGroupDragging={isGroupDragging}
-                    />
+                      isGroupDragging={isGroupDragging} />
                   </div>
                 }}
-              </Draggable >
+              </Draggable>
             )}
+
             {droppableProvided.placeholder}
             <button className="btn btn-svg add-group-btn" onClick={onAddGroup}><PlusIcon /> Add new group</button>
           </section >
-        }
-        }
+        }}
       </Droppable >
     </DragDropContext >
   </div>
