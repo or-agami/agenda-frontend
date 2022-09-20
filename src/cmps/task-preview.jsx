@@ -31,11 +31,6 @@ export const TaskPreview = ({ task, group, board }) => {
         dispatch(openModal('isTaskMenuOpen', task.id))
     }
 
-    // const getFormattedDateTime = (date) => {
-    //     if (!date) return
-    //     return moment(date).fromNow()
-    // }
-
     const updateTitle = (ev) => {
         if (ev) ev.preventDefault()
         if (task.title !== editedTask.title) {
@@ -44,34 +39,6 @@ export const TaskPreview = ({ task, group, board }) => {
             dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
         }
         setIsEditTitle(prevState => prevState = !isEditTitle)
-    }
-
-    const onSetTaskStatusMenuOpen = () => {
-        dispatch(openModal('isTaskStatusMenuOpen', task.id))
-    }
-
-    const onSetTaskPriorityMenuOpen = () => {
-        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
-    }
-
-    const onSetTaskPersonMenuOpen = () => {
-        dispatch(openModal('isTaskPersonMenuOpen', task.id))
-    }
-
-    const GetMemberImgFromId = (board, memberId) => {
-        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
-        return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
-    }
-
-    const getFormattedDateTime = (date) => {
-        if (!date) return
-        moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
-        return moment(date).fromNow()
-    }
-
-    const makeClass = (status) => {
-        if (!status) return
-        return status.split(' ').join('')
     }
 
 
