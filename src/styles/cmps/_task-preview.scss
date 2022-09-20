@@ -23,8 +23,8 @@
         line-height: 18px;
 
         .profile-img-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
 
         }
@@ -106,13 +106,13 @@
     }
 
     .task-preview-last-updated {
+        padding: 0 4px;
         font-family: roboto-light;
         font-size: 13px;
-        // gap: 4px;
+        gap: 4px;
         justify-content: flex-start;
 
         .last-updated {
-            align-self: flex-start;
             display: flex;
             align-items: center;
             justify-content: center;
