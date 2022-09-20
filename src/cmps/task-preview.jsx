@@ -37,7 +37,7 @@ export const TaskPreview = ({ task, group, board }) => {
         if (ev) ev.preventDefault()
         if (task.title !== editedTask.title) {
             // Todo: Prevent guests from editing tasks
-            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser._id || 'Guest' }
+            editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
             dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }))
         }
         setIsEditTitle(prevState => prevState = !isEditTitle)
@@ -106,7 +106,8 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
     }
 
     const GetMemberImgFromId = (board, memberId) => {
-        const imgUrl = board.members.find(member => member._id === memberId).imgUrl
+        const imgUrl = (memberId !== 'Guest') ?
+            board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
@@ -210,7 +211,7 @@ const Timeline = () => {
     }
 
     const { startDate, dueDate } = timeline
-    
+
     const getTimeProgress = () => {
         const timeRatio = (Date.now() - startDate) / (dueDate - startDate)
         const timeProgress = (timeRatio * 100).toFixed()
@@ -220,7 +221,7 @@ const Timeline = () => {
     return (
         // <div className={`flex timeline-wrapper ${(startDate && dueDate) ? dueDate - startDate : ''}`}>
         <div className="flex justify-center timeline-wrapper">
-            <div className="time-progress-bar" style={{width: `${getTimeProgress()}%`}}></div>
+            <div className="time-progress-bar" style={{ width: `${getTimeProgress()}%` }}></div>
             {startDate &&
                 <span>{getFormattedDateTime(startDate)}</span>}
             {startDate && dueDate &&
