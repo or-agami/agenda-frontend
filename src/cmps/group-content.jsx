@@ -65,6 +65,11 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
         dispatch(updateBoard(board))
     }
 
+    const onDragStart = () => {
+
+
+    }
+
     return <section className="group-content">
         <div className='group-content-title'>
             <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
@@ -78,7 +83,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
             </form>}
         </div>
 
-        <DragDropContext onDragEnd={handleOnDragEnd}>
+        <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='group-category' direction="horizontal">
                 {(droppableProvided) => {
                     return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-content-header">
@@ -97,11 +102,12 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         </li>
                         {categories.map((category, idx) =>
                             <Draggable key={category} draggableId={category} index={idx} >
-                                {(provided) => {
+                                {(provided, snapshot) => {
                                     return <div ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}>
-                                        <DynamicCmp category={category} />
+                                        <DynamicCmp category={category}
+                                        />
                                     </div>
                                 }}
                             </Draggable>
@@ -124,7 +130,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
 
 
-const DynamicCmp = ({ category }) => {
+const DynamicCmp = ({ category, onSortBy, clearSort }) => {
     let text
 
     switch (category) {
@@ -158,6 +164,11 @@ const DynamicCmp = ({ category }) => {
     }
 
     return <li className="group-content-header-category same-width">
+        {category === 'status' && <div className="sort-container">
+            <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
+                <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
+            </button>
+        </div>}
         <h4>{text}</h4>
     </li>
 }
