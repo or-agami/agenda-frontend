@@ -119,6 +119,33 @@
         }
     }
 
+    .task-preview-timeline {
+        padding: 0 14px;
+        // font-family: roboto-light;
+        color: white;
+        font-size: 13px;
+        gap: 4px;
+
+        .timeline-wrapper {
+            background-color: black;
+            position: relative;
+            width: 100%;
+            border-radius: 2em;
+            overflow: hidden;
+
+            .time-progress-bar {
+                position: absolute;
+                left: 0;
+                height: 100%;
+                background-color: purple;
+            }
+
+            span {
+                z-index: 5;
+            }
+        }
+    }
+
     .task-preview-item input {
         border: none;
         outline: 1px solid rgb(69, 149, 253);
@@ -190,6 +217,7 @@
                 width: 65px;
                 justify-content: center;
                 align-items: center;
+
                 &:hover .btn-start-conversation {
                     svg * {
                         fill: var(--clr-btn-highlight);

@@ -12,7 +12,7 @@
     --clr-help: #ffcb00;
     --clr-done: #00c875;
     --clr-workingOnIt: #fdab3d;
-    --clr-empty:#c4c4c4;
+    --clr-empty: #c4c4c4;
 
     //status colors
     --status-clr1: #116846;
@@ -56,6 +56,10 @@
     --clr-icon-svg: #5a5a5a;
     --clr-logo-txt: #333333;
     --clr-home-btn: #5a5ad5;
+
+    // timeline progress bar
+    --clr-progress-bar: #a25ddc;
+
     //dont use this -> dynamic variable
     --clr-disabled: #e2e2e2;
     ////////////////////
@@ -63,7 +67,7 @@
     --task-text-color: #323338;
 
     // btns
-    
+
     --clr-btn-bg-highlight-hover: #0060b9;
     --clr-btn-bg-hover: #dcdfec;
     --clr-btn-highlight: #0073ea;
@@ -73,7 +77,7 @@
     --box-shadow-small: 0px 4px 8px rgba(0, 0, 0, 0.2);
     --box-shadow-medium: 0px 6px 20px rgba(0, 0, 0, 0.2);
     --box-shadow-large: 0px 15px 50px rgba(0, 0, 0, 0.3);
-    
+
     --box-shadow-high: 0px 10px 15px rgba(0, 0, 0, 0.1);
     --box-shadow-header: 0px 10px 15px rgba(57, 125, 251, 0.123);
 

@@ -12,6 +12,7 @@ import { TaskPriorityMenu } from './task-priority-menu'
 import { TaskPersonMenu } from './task-person-menu'
 import { TaskDetail } from './task-detail'
 import { Link, Route, useNavigate } from 'react-router-dom'
+import { Fragment } from 'react'
 
 
 export const TaskPreview = ({ task, group, board }) => {
@@ -88,9 +89,9 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
     const dispatch = useDispatch()
     const { itemId, isTaskMenuOpen, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isCategoryInc = ['priority', 'status', 'lastUpdated'].includes(category)
+    const isCategoryInc = ['priority', 'status', 'lastUpdated', 'timeline'].includes(category)
     let className = `flex justify-center same-width task-preview-`
-    let headerTxt
+    let headerTxt, cmp
     let cb = () => { }
 
     const getFormattedDateTime = (date) => {
@@ -128,12 +129,14 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
             break;
 
         case 'status':
+            cmp = <span className='fold'></span>
             headerTxt = task[category]
             className += `status `
             cb = onSetTaskStatusMenuOpen
 
             break;
         case 'priority':
+            cmp = <span className='fold'></span>
             headerTxt = task[category]
             className += `priority `
             cb = onSetTaskPriorityMenuOpen
@@ -144,12 +147,13 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
 
             break;
         case 'timeline':
-
+            cmp = <Timeline />
+            className += 'timeline '
 
             break;
         case 'lastUpdated':
-            headerTxt = getFormattedDateTime(task[category]?.date)
             className += `last-updated `
+            headerTxt = getFormattedDateTime(task[category]?.date)
 
 
             break;
@@ -187,9 +191,46 @@ const DynamicCmp = ({ board, task, category, groupId }) => {
                         GetMemberImgFromId(board, task.lastUpdated.byUserId)}
                 </div>}
             {isCategoryInc && <>
-                <span className='fold'></span>
                 <h4>{headerTxt}</h4>
+                {cmp}
             </>}
         </li>
     </>
+}
+
+// const Timeline = ({ timeline }) => {
+const Timeline = () => {
+
+    const getFormattedDateTime = (date) => {
+        if (!date) return
+        // moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
+        return moment(date).format("MMM D")
+    }
+
+    const timeline = {
+        startDate: Date.parse('18 Sep 2022 00:12:00 GMT'),
+        dueDate: Date.parse('25 Sep 2022 00:12:00 GMT')
+    }
+
+    const { startDate, dueDate } = timeline
+    
+    const getTimeProgress = () => {
+        const timeRatio = (Date.now() - startDate) / (dueDate - startDate)
+        const timeProgress = (timeRatio * 100).toFixed()
+        return (timeProgress < 0) ? 0 : (timeProgress < 100) ? timeProgress : 100
+    }
+
+    return (
+        // <div className={`flex timeline-wrapper ${(startDate && dueDate) ? dueDate - startDate : ''}`}>
+        <div className="flex justify-center timeline-wrapper">
+            <div className="time-progress-bar" style={{width: `${getTimeProgress()}%`}}></div>
+            {startDate &&
+                <span>{getFormattedDateTime(startDate)}</span>}
+            {startDate && dueDate &&
+                <span> - </span>
+            }
+            {dueDate &&
+                <span>{getFormattedDateTime(dueDate)}</span>}
+        </div>
+    )
 }
