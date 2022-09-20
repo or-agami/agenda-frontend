@@ -11,7 +11,6 @@ import { ModalScreen } from './modal-screen'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 
-
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx }) => {
 
     const [isEditTitle, setIsEditTitle] = useState(false)
@@ -65,29 +64,34 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
         dispatch(updateBoard(board))
     }
 
-    return <section className="group-content">
-        <div className='group-content-title'>
-            <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-            {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
-            <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                <ArrowRightSvg className={`${group.style} no-background`} />
-            </button>
-            {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
-            {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-            </form>}
-        </div>
+    const onDragStart = () => {
 
-        <DragDropContext onDragEnd={handleOnDragEnd}>
+
+    }
+
+    return <section className="group-content">
+                 <div className='group-content-title'>
+                    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+                    {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+                    <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
+                        <ArrowRightSvg className={`${group.style} no-background`} />
+                    </button>
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}</h4>}
+                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+                    </form>}
+                </div>
+
+        <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
             <Droppable droppableId='group-category' direction="horizontal">
                 {(droppableProvided) => {
                     return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-content-header">
                         <li className={`group-content-header-color ${group.style}`}>
                         </li>
-                        <li className='group-content-header-checkbox'>
+                        <li className='flex justify-center group-content-header-checkbox'>
                             <input type="checkbox" />
                         </li>
-                        <li className="group-head-row group-content-header-item">
+                        <li className="flex justify-center group-head-row group-content-header-item">
                             <div className="sort-container">
                                 <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
                                     <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
@@ -97,11 +101,12 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         </li>
                         {categories.map((category, idx) =>
                             <Draggable key={category} draggableId={category} index={idx} >
-                                {(provided) => {
+                                {(provided, snapshot) => {
                                     return <div ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}>
-                                        <DynamicCmp category={category} />
+                                        <DynamicCmp board={board} category={category}
+                                        />
                                     </div>
                                 }}
                             </Draggable>
@@ -124,8 +129,24 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
 
 
 
-const DynamicCmp = ({ category }) => {
+const DynamicCmp = ({ category, board }) => {
     let text
+
+
+    const onSortStatus = () => {
+        // const statusOpts = board.cmpsOrder
+
+        // board.groups.forEach(group => {
+        //     const res = []
+        //     statusOpts.forEach(currStatus => {
+        //         group.tasks.forEach(task => {
+        //             if (task.status === currStatus) res.push(task)
+        //         })
+        //     })
+        //     group.tasks = res
+        //     console.log(res);
+        // })
+    }
 
     switch (category) {
         case 'member':
@@ -157,7 +178,13 @@ const DynamicCmp = ({ category }) => {
             break;
     }
 
-    return <li className="group-content-header-category same-width">
+    return <li className="flex justify-center same-width group-content-header-category">
+        {category === "status" &&
+            <div className="sort-container">
+                <button onClick={onSortStatus} className='btn btn-sort'> <SortArrows />
+                    <span className="clear-sort">clear</span>
+                </button>
+            </div>}
         <h4>{text}</h4>
     </li>
 }
