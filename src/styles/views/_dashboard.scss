@@ -7,6 +7,13 @@
         width: calc(100vw - var(--board-grid-column))
     }
 
+    .chart {
+        min-width: 200px;
+        min-height: 100px;
+        max-height: 300px;
+        max-width: 600px;
+    }
+
     .dashboard-main-container {
         position: relative;
         min-height: calc(100vh - 181px);
@@ -17,16 +24,12 @@
         justify-content: start;
         padding-inline-start: 35px;
         background-color: var(--clr-bg);
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
 
-        .doughnut-chart {
-            background-color: var(--clr-item-bg);
-            width: fit-content;
-            // height: fit-content;
-            max-height: 400px;
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #9ec6ffb3;
-            border-radius: 0.5em;
+        >*{
+            flex: 1;
         }
 
         .chart-title {
@@ -35,21 +38,18 @@
             margin-bottom: 5px;
         }
 
-        .bar-chart {
+        .table-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             background-color: var(--clr-item-bg);
-            max-width: 700px;
-            max-height: 400px;
             margin-top: 30px;
+            max-width: 800px;
             padding: 20px;
             border: 1px solid #9ec6ffb3;
             border-radius: 0.5em;
             display: flex;
-            flex-direction: column;
 
-            .chart {
-                width: 700px;
-                min-width: 300px;
-            }
         }
     }
 }

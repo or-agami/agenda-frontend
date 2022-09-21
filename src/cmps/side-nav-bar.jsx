@@ -15,6 +15,7 @@ import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
 import { GrClose } from 'react-icons/gr'
+import { PopUpModal } from './pop-up-modal'
 
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
@@ -35,6 +36,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
     const [isAddBoard, setIsAddBoard] = useState(false)
     const [isSearch, setIsSearch] = useState(false)
     const [newBoards, setNewBoards] = useState(boards)
+    const [menuModalIsOpen, setMenuModalIsOpen] = useState()
 
     const toggleSideNav = () => {
         setIsOpen(!isOpen)
@@ -52,9 +54,13 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
+        {menuModalIsOpen && <PopUpModal setMenuModalIsOpen={setMenuModalIsOpen} />}
         <div className="side-board-opts">
-            <p className="board-name">Workspace</p>
-            <BoardMenu />
+            <button className="btn btn-svg"
+                onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
+                <p className="board-name">Workspace</p>
+                <BoardMenu />
+            </button>
         </div>
         <div className="side-board-workspace-name">
             <div className="board-preview-icon">A</div>
