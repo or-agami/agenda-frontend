@@ -12,6 +12,7 @@ import { GrClose } from 'react-icons/gr'
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
+import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
@@ -121,10 +122,22 @@ const Post = ({ board, byMember, txt, createdAt }) => {
         });
         return moment(date).fromNow(true)
     }
-    const animateLike =() => {
+    const animateLike =(ev) => {
+        console.log(ev)
         likeRef.current.classList.add('wobble-ver-left')
-        // Confetti()
-        setTimeout(()=>{likeRef.current.classList.remove('wobble-ver-left')},1300)
+        confetti({
+            particleCount: 150,
+            spread: 60,
+            origin: {
+                x: ev.screenX/window.screen.width,
+                y: ev.screenY/window.screen.height,
+            }
+            
+          });
+        setTimeout(()=>{
+            likeRef.current.classList.remove('wobble-ver-left')
+
+        },1300)
     }
     return <section className='post'>
         <div className="post-header">
@@ -140,7 +153,7 @@ const Post = ({ board, byMember, txt, createdAt }) => {
         <p className="comment-txt">{txt}</p>
         <div className="reply-like-container">
             <div className="like-container">
-                <button onClick={()=>animateLike()} className="btn-svg btn-like"><Like ref={likeRef}/>Like</button>
+                <button onClick={(ev)=>animateLike(ev)} className="btn-svg btn-like"><Like ref={likeRef}/>Like</button>
             </div>
             <div className="reply-container">
                 <button className="btn btn-svg btn-reply"><Reply />Reply</button>
