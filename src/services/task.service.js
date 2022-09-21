@@ -56,6 +56,7 @@ async function save({ title, groupId, boardId }) {
   return groupService.update({ group, boardId })
 }
 
+ // In Progress: add user activity to the task 
 // function addActivity(task, activity) {
 //   const newActivity = {
 //     id: utilService.makeId(),
