@@ -1,5 +1,5 @@
 import moment from "moment/moment"
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { openModal } from "../store/board/board.action"
@@ -7,9 +7,10 @@ import { TaskPersonMenu } from "./task-person-menu"
 import { TaskPriorityMenu } from "./task-priority-menu"
 import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
+import { DatePicker } from "./date-picker"
 
 
-export const DynamicTaskCmp = ({ board, task, category, groupId }) => {
+export const DynamicTaskCmp = ({ board, task, category, group }) => {
     const dispatch = useDispatch()
     const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'timeline', 'attachments'].includes(category)
@@ -77,7 +78,7 @@ export const DynamicTaskCmp = ({ board, task, category, groupId }) => {
 
             break;
         case 'timeline':
-            cmp = <Timeline />
+            cmp = <Timeline task={task} group={group} boardId={board._id} />
             className += 'timeline '
             // cmp = <RangePicker />
 
@@ -94,17 +95,17 @@ export const DynamicTaskCmp = ({ board, task, category, groupId }) => {
             break;
     }
 
-    if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments') className += makeClass(task[category])
+    if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments' && category !== 'timeline') className += makeClass(task[category])
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskPersonMenu task={task} groupId={groupId} board={board} />
+            <TaskPersonMenu task={task} groupId={group.id} board={board} />
         }
         {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskStatusMenu task={task} groupId={groupId} boardId={board._id} />
+            <TaskStatusMenu task={task} groupId={group.id} boardId={board._id} />
         }
         {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskPriorityMenu task={task} groupId={groupId} boardId={board._id} />
+            <TaskPriorityMenu task={task} groupId={group.id} boardId={board._id} />
         }
         <li className={className} onClick={cb}>
             {category === 'member' &&
@@ -132,9 +133,16 @@ export const DynamicTaskCmp = ({ board, task, category, groupId }) => {
     </>
 }
 
+const Timeline = ({task,group,boardId}) => {
 
-
-const Timeline = () => {
+    const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
+    const [taskTimeline, setTaskTimeline] = useState([
+        {
+            startDate: new Date(task.timeline?.startDate || Date.now()),
+            endDate: new Date(task.timeline?.endDate || Date.now()),
+            key: 'selection'
+        }
+    ])
 
     const getFormattedDateTime = (date) => {
         if (!date) return
@@ -142,37 +150,50 @@ const Timeline = () => {
         return moment(date).format("MMM D")
     }
 
-    const timeline = {
-        startDate: Date.parse('18 Sep 2022 00:12:00 GMT'),
-        dueDate: Date.parse('25 Sep 2022 00:12:00 GMT')
-    }
 
-    const { startDate, dueDate } = timeline
-
-    const getTimeProgress = () => {
-        const timeRatio = (Date.now() - startDate) / (dueDate - startDate)
+    const getTimeProgress = ({startDate, endDate}) => {
+        console.log('startDate, endDate:', startDate, endDate)
+        if (!startDate || !endDate) return ''
+        const timeRatio = (Date.now() - startDate) / (endDate - startDate)
         const timeProgress = (timeRatio * 100).toFixed()
         return (timeProgress < 0) ? 0 : (timeProgress < 100) ? timeProgress : 100
     }
 
+    const handleDateChange = (dateRange) => {
+        setTaskTimeline([dateRange])
+        task.timeline = {startDate: Date.parse(dateRange.startDate), endDate: Date.parse(dateRange.endDate)}
+        console.log('startDate: from DynamicTask', task.timeline.startDate)
+        console.log('endDate: from DynamicTask', task.timeline.endDate)
+    }
+
     return (
-        // <div className={`flex timeline-wrapper ${(startDate && dueDate) ? dueDate - startDate : ''}`}>
-        <div className="flex justify-center timeline-wrapper">
-            <div className="time-progress-bar" style={{ width: `${getTimeProgress()}%` }}></div>
-            {startDate &&
-                <span>{getFormattedDateTime(startDate)}</span>}
-            {startDate && dueDate &&
-                <span> - </span>
+        <Fragment>
+            {datePickerIsOpen && 
+            <DatePicker 
+            setDatePickerIsOpen={setDatePickerIsOpen} 
+            taskTimeline={taskTimeline}
+            handleDateChange={handleDateChange}
+            task={task} group={group} boardId={board.id} 
+            />
             }
-            {dueDate &&
-                <span>{getFormattedDateTime(dueDate)}</span>}
-        </div>
+            <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>
+                {task.timeline &&
+                <Fragment>
+                {task.timeline?.endDate && <div className="background-time-progress-bar"></div>}
+                {task.timeline?.startDate && <>
+                    <div className={"time-progress-bar " + group.style} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>
+                    <span>{getFormattedDateTime(task.timeline.startDate)}</span>
+                </>}
+                {task.timeline?.startDate && task.timeline?.endDate &&
+                    <span> - </span>}
+                {task.timeline?.endDate &&
+                    <span>{getFormattedDateTime(task.timeline.endDate)}</span>}
+                    </Fragment>
+                }
+            </div>
+        </Fragment>
     )
 }
-
-
-// const Timeline = ({ timeline }) => {
-
 
 // const AddFile = ({ task }) => {
     

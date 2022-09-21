@@ -1,50 +1,37 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import addWeeks from "date-fns/addWeeks";
-import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DateRangePicker from "@mui/lab/DateRangePicker";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-const mode = window.innerWidth < 780 ? 1 : 2;
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#FF385C",
-        },
-        secondary: {
-            main: "#222",
-        },
-    },
-});
-export function DatePicker({ order, setOrder }) {
-    const dispatch = useDispatch();
-    function getWeeksAfter(date, amount) {
-        return date ? addWeeks(date, amount) : undefined;
+import { useEffect, useState } from 'react'
+import { DateRange } from 'react-date-range'
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { useDispatch } from 'react-redux';
+import { updateTask } from '../store/board/board.action';
+
+export const DatePicker = ({ setDatePickerIsOpen, taskTimeline, handleDateChange, task, groupId, boardId }) => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setTimeout(() => {
+      document.body.addEventListener('click', closeDatePicker)
+    }, 100)
+    return () => {
+      document.body.removeEventListener('click', closeDatePicker)
+      dispatch(updateTask({ task, groupId, boardId }))
     }
-    return (
-        <ThemeProvider theme={theme}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateRangePicker
-                    disablePast
-                    className='date-picker-checkout'
-                    calendars={mode}
-                    // value={[order.checkIn, order.checkOut]}
-                    value={['01/01/1999','02/01/1999']}
-                    // maxDate={getWeeksAfter(order.checkIn, 8)}
-                    onChange={(newValue) => {
-                        console.log('hello')
-                    }}
-                    startText='Check-in'
-                    endText='Check-out'
-                    renderInput={(startProps, endProps) => (
-                        <React.Fragment>
-                            <TextField className={"start-date"} {...startProps} />
-                            <TextField className={"end-date"} {...endProps} />
-                        </React.Fragment>
-                    )}
-                />
-            </LocalizationProvider>
-        </ThemeProvider>
-    );
+  },[])
+
+  const closeDatePicker = () => {
+    setDatePickerIsOpen(false)
+  }
+
+  return (
+    <div className="date-picker" onClick={(ev) => ev.stopPropagation()}>
+      <DateRange
+        editableDateInputs={true}
+        // onChange={item => setTaskTimeline([item.selection])}
+        onChange={item => handleDateChange(item.selection)}
+        moveRangeOnFirstSelection={false}
+        ranges={taskTimeline}
+      />
+    </div>
+  )
 }
