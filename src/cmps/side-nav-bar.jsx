@@ -44,7 +44,10 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         setIsSearch(true)
     }
 
-    // if (!newBoards || newBoards.length < 1) return
+    useEffect(() => {
+        setNewBoards(boards)
+    }, [boards])
+
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
@@ -83,7 +86,8 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
                     <NavBoardPreview setCurrBoard={setCurrBoard}
                         board={board}
                         key={board._id}
-                        boards={newBoards} />)}
+                        boards={newBoards}
+                        setNewBoards={setNewBoards} />)}
             </div>}
         {isAddBoard &&
             <AddBoardModal setIsAddBoard={setIsAddBoard}
@@ -94,7 +98,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 
 
 
-const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
+const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
 
     const dispatch = useDispatch()
     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
