@@ -64,6 +64,8 @@ export const TaskDetail = () => {
 const TaskDetailUpdates = ({task,board}) => {
     if(!task.comments) return
     return <section className='task-detail-updates'>
+        <div className='chat-box'>
+        </div>
         {task.comments.map(comment=>
         <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt}/>
         )}
