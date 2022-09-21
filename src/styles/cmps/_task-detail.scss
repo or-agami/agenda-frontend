@@ -79,7 +79,7 @@
     }
 
     .task-detail-updates {
-        
+
         .chat-box-closed {
             width: 655px;
             height: 40px;
@@ -99,6 +99,10 @@
             
         }
         .chat-box-open {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 20px;
             .chat-box{
                 width: 655px;
                 height: 145px;
@@ -110,8 +114,31 @@
                 margin-top: 20px;
                 margin-right: 20px;
                 padding: 20px;
+                font-size: 16px;
+                color: var(--clr-txt);
+            }
+
+            .update-comment-btn {
+                color: white;
+                background-color: var(--clr-btn-highlight);
+                border-radius: 4px;
+                font-size: 16;
+                font-weight: 400;
+                width: 60px;
+                height: 35px;
+                padding-left: 8px;
+                padding-right: 8px;
+                padding-bottom: 4px;
+                padding-top: 4px;
+                margin-right: 20px;
+
+                &:hover {
+                    background-color: var(--clr-btn-bg-highlight-hover);
+                }
             }
         }
+
+
 
         .post {
             display: flex;

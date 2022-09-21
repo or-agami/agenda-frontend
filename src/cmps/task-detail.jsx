@@ -170,6 +170,6 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
 
     return <section className="chat-box-open">
         <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
-        <button className="submit-comment-btn" onClick={() => PostComment()}>Submit</button>
+        <button className="update-comment-btn" onClick={() => PostComment()}>Update</button>
     </section>
 }
