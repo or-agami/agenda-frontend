@@ -1,5 +1,6 @@
 import { groupService } from "./group.service";
 import { httpService } from "./http.service"
+import { userService } from "./user.service";
 import { utilService } from "./util.service";
 
 export const taskService = {
@@ -37,9 +38,11 @@ async function remove({ taskId, groupId, boardId }) {
   return groupService.update({ group, boardId })
 }
 
-async function update({ task, groupId, boardId }) {
+async function update({ task, groupId, boardId }, activity) {
+
+  // In Progress: add user activity to the task 
+  // task = addActivity(task, activity)
   const group = await groupService.getById({ groupId, boardId })
-  // Todo: add user activity to the task
   group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
   return groupService.update({ group, boardId })
 }
@@ -52,3 +55,18 @@ async function save({ title, groupId, boardId }) {
   group.tasks.push(task)
   return groupService.update({ group, boardId })
 }
+
+ // In Progress: add user activity to the task 
+// function addActivity(task, activity) {
+//   const newActivity = {
+//     id: utilService.makeId(),
+//     type: activity.type,
+//     createdAt: Date.now,
+//     byMember: userService.getLoggedinUser()
+//   }
+
+//   if (!task.activities) task.activities = [newActivity]
+//   else task.activities.unshift(newActivity)
+
+//   return task
+// }

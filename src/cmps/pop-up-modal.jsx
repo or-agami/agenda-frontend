@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
+import { DatePicker } from './date-picker'
 
 export const PopUpModal = ({ setMenuModalIsOpen }) => {
 
@@ -16,8 +17,8 @@ export const PopUpModal = ({ setMenuModalIsOpen }) => {
     }
   })
   return (
-    <section className="task-menu modal">
-      <button onClick={(ev) => ev.stopPropagation()} className='btn btn-svg btn-trash-task'><Trash /> Hello</button>
+    <section className="task-menu modal" onClick={(ev) => ev.stopPropagation()}>
+      <button onClick={() => console.log('hello from modal')} className='btn btn-svg btn-trash-task'><Trash /> Hello</button>
     </section>
   )
 }

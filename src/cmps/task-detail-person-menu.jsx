@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { closeModals, updateTask } from "../store/board/board.action"
 import { GrClose } from 'react-icons/gr'
+import userEvent from "@testing-library/user-event"
 
 export const TaskDetailPersonMenu = ({task, groupId, board}) => {
     const dispatch = useDispatch()
@@ -11,13 +12,14 @@ export const TaskDetailPersonMenu = ({task, groupId, board}) => {
                 dispatch(closeModals())
                 return
             }
-            updatedTask = { ...task, memberIds: [...task.memberIds, member._id] }
+            updatedTask = { ...task, memberIds: [...task.memberIds, member._id]}
         }
         else {
-            updatedTask = { ...task, memberIds: [member._id] }
+            updatedTask = { ...task, memberIds: [member._id]}
         }
         dispatch(closeModals())
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
+        const activity = {type:"Added a member"}
+        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }, activity))
         return 
     }
 
