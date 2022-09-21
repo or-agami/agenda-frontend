@@ -146,7 +146,6 @@ const Login = (props) => {
 
   useEffect(() => {
     unsubscribeRef.current = eventBusService.on('username-verify', (isVerified) => {
-      console.log('username-verify:', isVerified)
       setUserNameVerified(isVerified)
     })
     return () => { unsubscribeRef.current() }
@@ -167,7 +166,6 @@ const Login = (props) => {
     if (isUsernameVerified === 'VERIFIED') {
       dispatch(login(loginFields))
     }
-    console.log('loginFields:', loginFields)
   }
 
   return (

@@ -2,7 +2,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { loadTask, openModal } from "../store/board/board.action"
+import { loadTask, openModal, updateTask } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
@@ -10,6 +10,8 @@ import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
 import moment from "moment"
+import { utilService } from "../services/util.service"
+import { useRef } from "react"
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
@@ -46,7 +48,7 @@ export const TaskDetail = () => {
                 <h3>{task.title}</h3>
                 <div className='task-detail-member-container'>
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
-                    {task.memberIds &&task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
+                    {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
             <div className='task-detail-header-bottom'>
@@ -55,18 +57,19 @@ export const TaskDetail = () => {
                 <button onClick={() => setWhichRenders('isActivity')}><span>Activity Log</span></button>
             </div>
         </div>
-            {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} board={board} />}
-            {whichRenders === 'isFiles' && <TaskDetailFiles />}
-            {whichRenders === 'isActivity' && <TaskDetailActivity />}
+        {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
+        {whichRenders === 'isFiles' && <TaskDetailFiles />}
+        {whichRenders === 'isActivity' && <TaskDetailActivity />}
     </section>
 }
 
 
-const TaskDetailUpdates = ({ task, board }) => {
+const TaskDetailUpdates = ({ task, groupId , board }) => {
+    const [isChatOpen, setIsChatOpen] = useState(false)
     return <section className='task-detail-updates'>
-        <div className='chat-box'>
-        </div>
-        {task.comments&&task.comments.map(comment =>
+        {!isChatOpen && <button className='chat-box-closed' onClick={() => setIsChatOpen(true)}><span>Write an update...</span></button>}
+        {isChatOpen && <ChatBox setIsChatOpen={setIsChatOpen} task={task} groupId={groupId} board={board}/>}
+        {task.comments && task.comments.map(comment =>
             <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
         )}
     </section>
@@ -74,7 +77,6 @@ const TaskDetailUpdates = ({ task, board }) => {
 
 const TaskDetailFiles = () => {
     return <section className='task-detail-files'>
-
     </section>
 }
 
@@ -146,3 +148,27 @@ const GetMemberImgFromId = (board, memberId) => {
     return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
 
+const ChatBox = ({ setIsChatOpen ,task,groupId,board}) => {
+    const dispatch = useDispatch()
+    const textAreaRef = useRef()
+    const [newText,setNewText] = useState('')
+    const loggedinUser = useSelector(state=>state.userModule.loggedinUser)
+    const PostComment = () => {
+        const comment = {id:utilService.makeId(),txt:newText, createdAt:Date.now(),byMember:{_id:loggedinUser._id ,fullname:loggedinUser.fullname, imgUrl:loggedinUser.imgUrl}}
+        if(!task.comments){
+            task.comments = [comment]
+        }
+        else {
+            task.comments.shift(comment)
+        }
+        setIsChatOpen(false)
+        textAreaRef.current.value = ''
+        dispatch(updateTask({task,groupId,boardId:board._id}))
+
+    }
+
+    return <section className="chat-box-open">
+        <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value? setIsChatOpen(false): ''} onChange={(ev)=>setNewText(ev.target.value)}></textarea>
+        <button className="submit-comment-btn" onClick={()=>PostComment()}>Submit</button>
+    </section>
+}
