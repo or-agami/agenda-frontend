@@ -133,7 +133,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     </>
 }
 
-const Timeline = ({task,group,boardId}) => {
+const Timeline = ({task,group,board}) => {
 
     const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
     const [taskTimeline, setTaskTimeline] = useState([
