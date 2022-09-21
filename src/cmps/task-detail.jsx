@@ -28,7 +28,7 @@ export const TaskDetail = () => {
     const boardId = params.boardId
 
     useEffect(() => {
-        dispatch(loadTask({ taskId, groupId, boardId }))
+        dispatch(loadTask(taskId ))
     }, [])
 
     const closeTaskDetail = () => {
@@ -64,11 +64,11 @@ export const TaskDetail = () => {
 }
 
 
-const TaskDetailUpdates = ({ task, groupId , board }) => {
+const TaskDetailUpdates = ({ task, groupId, board }) => {
     const [isChatOpen, setIsChatOpen] = useState(false)
     return <section className='task-detail-updates'>
         {!isChatOpen && <button className='chat-box-closed' onClick={() => setIsChatOpen(true)}><span>Write an update...</span></button>}
-        {isChatOpen && <ChatBox setIsChatOpen={setIsChatOpen} task={task} groupId={groupId} board={board}/>}
+        {isChatOpen && <ChatBox setIsChatOpen={setIsChatOpen} task={task} groupId={groupId} board={board} />}
         {task.comments && task.comments.map(comment =>
             <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
         )}
@@ -124,7 +124,7 @@ const Post = ({ board, byMember, txt, createdAt }) => {
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
-                {GetMemberImgFromId(board, byMember._id)}
+            <img className='profile-img-icon' src={require(`../assets/img/${byMember.imgUrl}.png`)} alt="" />
                 <p className="fullname">{byMember.fullname}</p>
             </div>
             <div className="time-menu-container">
@@ -148,27 +148,28 @@ const GetMemberImgFromId = (board, memberId) => {
     return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
 
-const ChatBox = ({ setIsChatOpen ,task,groupId,board}) => {
+const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
     const dispatch = useDispatch()
     const textAreaRef = useRef()
-    const [newText,setNewText] = useState('')
-    const loggedinUser = useSelector(state=>state.userModule.loggedinUser)
+    const [newText, setNewText] = useState('')
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const PostComment = () => {
-        const comment = {id:utilService.makeId(),txt:newText, createdAt:Date.now(),byMember:{_id:loggedinUser._id ,fullname:loggedinUser.fullname, imgUrl:loggedinUser.imgUrl}}
-        if(!task.comments){
+        const comment = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
+        if (!task.comments) {
             task.comments = [comment]
         }
         else {
-            task.comments.shift(comment)
+            task.comments.unshift(comment)
         }
         setIsChatOpen(false)
         textAreaRef.current.value = ''
-        dispatch(updateTask({task,groupId,boardId:board._id}))
+        console.log('task:', task)
+        dispatch(updateTask({ task, groupId, boardId: board._id }))
 
     }
 
     return <section className="chat-box-open">
-        <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value? setIsChatOpen(false): ''} onChange={(ev)=>setNewText(ev.target.value)}></textarea>
-        <button className="submit-comment-btn" onClick={()=>PostComment()}>Submit</button>
+        <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
+        <button className="submit-comment-btn" onClick={() => PostComment()}>Submit</button>
     </section>
 }
