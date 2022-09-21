@@ -31,7 +31,7 @@ export const NavBar = () => {
   const itemId = useSelector(state => state.boardModule.modals.itemId)
   const params = useParams()
   const [isOpen, setIsOpen] = useState(false)
-  const [currBoard, setCurrBoard] = useState()
+  const [currBoard, setCurrBoard] = useState(board)
 
   useEffect(() => {
     if (!boards || boards.length <= 0) {
