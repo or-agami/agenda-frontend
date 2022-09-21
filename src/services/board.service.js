@@ -1,13 +1,13 @@
 // import { store } from "../store/store";
 import { storageService } from "./async-storage.service";
-// import { httpService } from "./http.service"
+import { httpService } from "./http.service"
 import { utilService } from "./util.service";
 
 export const boardService = {
   query,
   getById,
   save,
-  update,
+  // update,
   remove,
 }
 //?- Dev:
@@ -595,35 +595,83 @@ const gBoards = [
 ]
 
 const statusOpts = ['done', 'working on it', 'stuck', 'need help', 'waiting for qa', 'pending', '']
-const priorityOpts = [ '' ,'low', 'medium', 'high', 'critical',]
+const priorityOpts = ['', 'low', 'medium', 'high', 'critical',]
 
 const STORAGE_KEY = 'boardDB'
 //?- Prod:
-// const BASE_URL = 'board/'
+const BASE_URL = 'board/'
 
 async function query(filterBy) {
   //?- Dev:
-  let boards = await storageService.query(STORAGE_KEY)
-  if (!boards || boards.length === 0) {
-    console.log('boards.length:', boards.length)
-    boards = gBoards
-    storageService.postMany(STORAGE_KEY, boards)
-  }
-  return boards
+  // let boards = await storageService.query(STORAGE_KEY)
+  // if (!boards || boards.length === 0) {
+  //   console.log('boards.length:', boards.length)
+  //   boards = gBoards
+  //   storageService.postMany(STORAGE_KEY, boards)
+  // }
+  // return boards
 
   //?- Prod:
-  // if (filterBy) return httpService.get(BASE_URL, filterBy)
-  // else return httpService.get(BASE_URL)
+  if (filterBy) return httpService.get(BASE_URL, filterBy)
+  else return httpService.get(BASE_URL)
 }
 
 function getById(boardId, sortBy, filterBy) {
   //?- Dev:
-  return storageService.get(STORAGE_KEY, boardId)
+  // return storageService.get(STORAGE_KEY, boardId)
+  //   .then((board) => {
+  //     if (!board) {
+  //       board = gBoards.find(board => board._id === boardId)
+  //     }
+  //     // Todo: merge sort with filter !!
+  //     if (sortBy) {
+  //       board.groups.forEach(group => {
+  //         if (sortBy.by === 'title') {
+  //           group.tasks.sort((taskA, taskB) => taskA.title.localeCompare(taskB.title))
+  //         }
+
+  //         if (sortBy.by === 'status') {
+  //           const res = []
+  //           statusOpts.forEach(currStatus => {
+  //             group.tasks.forEach(task => {
+  //               if (task.status.toLowerCase() === currStatus) res.push(task)
+  //             })
+  //           })
+  //           group.tasks = res
+  //         }
+
+  //         if (sortBy.by === 'priority') {
+  //           const res = []
+  //           priorityOpts.forEach(currPriority => {
+  //             group.tasks.forEach(task => {
+  //               if (!task.priority) task.priority = ''
+  //               if (task.priority.toLowerCase() === currPriority) res.push(task)
+  //             })
+  //           })
+  //           group.tasks = res
+  //         }
+
+  //         if (sortBy.isDecending) {
+  //           group.tasks = group.tasks.reverse()
+  //         }
+  //       })
+
+
+  //     }
+
+  //     if (filterBy) {
+  //       board.groups.map((group) =>
+  //         group.tasks = group.tasks.filter((task) =>
+  //           (filterBy.term) ? task.title.toLowerCase().includes(filterBy.term.toLowerCase()) : true
+  //         )
+  //       )
+  //     }
+  //     return board
+  // })
+  //?- Prod:
+  return httpService.get(BASE_URL + boardId)
     .then((board) => {
-      if (!board) {
-        board = gBoards.find(board => board._id === boardId)
-      }
-      // Todo: merge sort with filter !!
+      // Todo: filter and sort on Backend !!
       if (sortBy) {
         board.groups.forEach(group => {
           if (sortBy.by === 'title') {
@@ -631,26 +679,26 @@ function getById(boardId, sortBy, filterBy) {
           }
 
           if (sortBy.by === 'status') {
-              const res = []
-              statusOpts.forEach(currStatus => {
-                  group.tasks.forEach(task => {
-                      if (task.status.toLowerCase() === currStatus) res.push(task)
-                  })
+            const res = []
+            statusOpts.forEach(currStatus => {
+              group.tasks.forEach(task => {
+                if (task.status.toLowerCase() === currStatus) res.push(task)
               })
-              group.tasks = res
+            })
+            group.tasks = res
           }
 
           if (sortBy.by === 'priority') {
-              const res = []
-              priorityOpts.forEach(currPriority => {
-                  group.tasks.forEach(task => {
-                    if (!task.priority) task.priority = ''
-                    if (task.priority.toLowerCase() === currPriority) res.push(task)
-                  })
+            const res = []
+            priorityOpts.forEach(currPriority => {
+              group.tasks.forEach(task => {
+                if (!task.priority) task.priority = ''
+                if (task.priority.toLowerCase() === currPriority) res.push(task)
               })
-              group.tasks = res
+            })
+            group.tasks = res
           }
-        
+
           if (sortBy.isDecending) {
             group.tasks = group.tasks.reverse()
           }
@@ -668,31 +716,30 @@ function getById(boardId, sortBy, filterBy) {
       }
       return board
     })
-  //?- Prod:
-  // return httpService.get(BASE_URL + boardId)
 }
 
 function remove(boardId) {
   //?- Dev:
-  return storageService.remove(STORAGE_KEY, boardId)
+  // return storageService.remove(STORAGE_KEY, boardId)
   //?- Prod:
-  // return httpService.delete(BASE_URL + boardId)
+  return httpService.delete(BASE_URL + boardId)
 }
 
-function update(board) {
-  //?- Dev:
-  if (board._id) return storageService.put(STORAGE_KEY, board)
-  //?- Prod:
-  // if (board._id) return httpService.put(BASE_URL + board._id, board)
-  // else return httpService.post(BASE_URL, board)
-}
+// function update(board) {
+//   //?- Dev:
+//   if (board._id) return storageService.put(STORAGE_KEY, board)
+//   //?- Prod:
+//   if (board._id) return httpService.put(BASE_URL + board._id, board)
+//   else return httpService.post(BASE_URL, board)
+// }
 
 function save(board) {
   //?- Dev:
   // Todo: board.createBy
-  board.groups = [{ id: utilService.makeId(), title: 'Group 1', tasks: [] }]
-  return storageService.post(STORAGE_KEY, board)
+  // if (board._id) return storageService.put(STORAGE_KEY, board)
+  // else board.groups = [{ id: utilService.makeId(), title: 'Group 1', tasks: [] }]
+  // return storageService.post(STORAGE_KEY, board)
   //?- Prod:
-  // if (board._id) return httpService.put(BASE_URL + board._id, board)
-  // else return httpService.post(BASE_URL, board)
+  if (board._id) return httpService.put(BASE_URL + board._id, board)
+  else return httpService.post(BASE_URL, board)
 }

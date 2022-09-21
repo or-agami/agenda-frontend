@@ -27,7 +27,7 @@ async function remove({ groupId, boardId }) {
   const board = await boardService.getById(boardId)
   // Todo: add user activity
   board.groups = board.groups.filter(g => g.id !== groupId)
-  return boardService.update(board)
+  return boardService.save(board)
   //?- Prod:
   // return httpService.delete(BASE_URL + boardId)
 }
@@ -36,12 +36,12 @@ async function update({ group, boardId }) {
   const board = await boardService.getById(boardId)
   // Todo: add user activity
   board.groups = board.groups.map(g => (g.id !== group.id) ? g : group)
-  return boardService.update(board)
+  return boardService.save(board)
 }
 
 async function save(boardId) {
   const board = await boardService.getById(boardId)
   // Todo: add user activity
   board.groups.push({ id: utilService.makeId(), title: 'New Group', tasks: [] })
-  return boardService.update(board)
+  return boardService.save(board)
 }

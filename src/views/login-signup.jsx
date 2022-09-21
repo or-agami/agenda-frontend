@@ -52,7 +52,6 @@ const Signup = (props) => {
     user.imgUrl = 'profile-img-guest'
     dispatch(signup(signupFields))
     navigate('/workspace/home')
-    // console.log('reg.test(username):', reg.test(username))
   }
 
   const { username, fullname, password } = signupFields

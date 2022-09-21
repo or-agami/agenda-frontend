@@ -80,7 +80,7 @@ export function addBoard(board) {
 
 export function updateBoard(board) {
     return (dispatch, getState) => {
-        boardService.update(board)
+        boardService.save(board)
             .then(updatedBoard => {
                 dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
             })

@@ -15,7 +15,6 @@ export const Board = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { board, boards, isLoading, sortBy, filterBy } = useSelector(state => state.boardModule)
- 
 
   useEffect(() => {
     if (isLoading) return
