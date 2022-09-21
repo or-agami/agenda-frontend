@@ -1,5 +1,4 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
-import { GrClose } from 'react-icons/gr'
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
@@ -9,6 +8,7 @@ import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
+import { GrClose } from 'react-icons/gr'
 import moment from "moment"
 
 export const TaskDetail = () => {

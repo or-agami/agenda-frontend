@@ -1,7 +1,7 @@
 .board-header {
   display: flex;
   flex-direction: column;
-  padding: 20px 10px 10px 20px;
+  padding: 20px 10px 30px 20px;
   position: fixed;
   width: calc(100vw - var(--board-grid-column) - 35px);
   background-color: var(--clr-item-bg);
@@ -14,9 +14,35 @@
 
     h1 {
       font-size: 25px;
-      margin-bottom: 3px;
+      margin-bottom: 20px;
       font-family: roboto;
       color: var(--clr-logo-txt);
+    }
+
+    .header-main {
+      padding-bottom: 10px;
+
+      .board-header-nav-link {
+        text-decoration: none;
+        color: var(--clr-txt);
+        padding: 5px 10px;
+        border-right: 1px solid var(--clr-disabled);
+
+        &:hover {
+          background-color: var(--clr-btn-bg-hover);
+          border-radius: 0.15em;
+          border: none;
+        }
+
+        &.active {
+          border-bottom: 2px  solid var(--clr-btn-highlight);
+        }
+
+      }
+    }
+
+    .board-header-nav-link:last-child {
+      border: none;
     }
 
     .rename-form {
@@ -36,7 +62,8 @@
     }
 
     .btns-container {
-      align-items: center;
+      align-items: flex-end;
+      padding-bottom: 5px;
       gap: 12px;
     }
   }
@@ -104,7 +131,7 @@
       border-radius: 6px;
       padding: 0 8px;
       border: 1px solid var(--clr-btn-highlight);
-      
+
       &.active {
         background-color: #cce5ff;
       }

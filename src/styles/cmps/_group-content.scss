@@ -12,6 +12,7 @@
     font-weight: 400;
     margin-right: 0;
     width: 98%;
+    background-color: var(--clr-item-bg);
 
     li {
         display: flex;
@@ -111,7 +112,7 @@
         position: sticky;
         top: 184.5px;
         background-color: var(--clr-item-bg);
-        z-index: 1;
+        z-index: 2;
         border: 1px solid var(--clr-disabled);
         border-left: none;
         border-start-start-radius: 8px;

@@ -225,4 +225,19 @@
         }
     }
 
+    .side-nav-search {
+        position: relative;
+        .btn-side-nav-search-close {
+            position: absolute;
+            right: 3px;
+            width: 15px;
+            height: 15px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            svg {
+                margin: 0;
+            }
+        }
+    }
 }
