@@ -5,6 +5,7 @@ import { Board } from './views/board'
 import { LoginSignup } from './views/login-signup'
 import { UserWork } from './views/user-work'
 import { Inbox } from './views/inbox'
+import { Dashboard } from './views/dashboard'
 
 
 export default [
@@ -19,6 +20,10 @@ export default [
             {
                 path: '/home',
                 component: <AppHome />,
+            },
+            {
+                path: '/board/dashboard/:boardId',
+                component: <Dashboard />,
             },
             {
                 path: '/board/:boardId/*',

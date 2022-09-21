@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
 import { closeModals, loadBoard, loadBoards, openModal } from '../store/board/board.action';
 import { UserMenu } from './user-menu';
+import { Dashboard } from '../views/dashboard';
 
 
 export const NavBar = () => {
@@ -53,7 +54,7 @@ export const NavBar = () => {
   }, [isOpen, params])
 
   const openUserMenu = () => {
-    dispatch(openModal('isUserMenuOpen',loggedinUser._id))
+    dispatch(openModal('isUserMenuOpen', loggedinUser._id))
   }
 
   if (!currBoard) return <Loader />
@@ -93,6 +94,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
+        <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
         <Route path="/board/:boardId/*" element={<Board />} />
         <Route path="/inbox" element={<Inbox />} />
       </Routes>

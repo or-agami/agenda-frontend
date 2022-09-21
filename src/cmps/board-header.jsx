@@ -12,13 +12,26 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateBoard } from '../store/board/board.action'
 import { useFilter } from '../hooks/useFilter'
+import { NavLink, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
 
+  const params = useParams()
   const dispatch = useDispatch()
   const [isRenaming, setIsRenaming] = useState(false)
   const [renameTitle, handleChange] = useForm({ title: board.title })
+  const [isDashboard, setIsDashboard] = useState(false)
+
+  useEffect(() => {
+    if (params['*'] === `board/dashboard/${board._id}`) {
+      setIsDashboard(true)
+    } else {
+      setIsDashboard(false)
+    }
+
+  }, [params])
 
   const changeBoardTitle = () => {
     setIsRenaming(!isRenaming)
@@ -34,10 +47,14 @@ export const BoardHeader = ({ board }) => {
   return (
     <section className="board-header">
       <div className="flex board-info">
-        {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
-          <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
-        </form>
-          : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
+        <div className='header-main'>
+          {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
+            <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
+          </form>
+            : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
+          <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link">Main Table</NavLink>
+          <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
+        </div>
         <div className="flex btns-container">
           <button className="btn btn-svg invite">
             <InviteSvg />
@@ -48,9 +65,9 @@ export const BoardHeader = ({ board }) => {
           </button>
         </div>
       </div>
-      <div className="flex board-nav">
+      {!isDashboard && <div className="flex board-nav">
         <BoardControls />
-      </div>
+      </div>}
     </section>
   )
 }
@@ -144,9 +161,9 @@ const SearchFilter = ({ isSearchOpen, setIsSearchOpen }) => {
       </div>
       {filterBy?.term &&
         <button className="btn btn-svg btn-clear-search"
-        onClick={onClearSearch} >
-        <AiFillCloseCircle />
-      </button>}
+          onClick={onClearSearch} >
+          <AiFillCloseCircle />
+        </button>}
     </div>
   )
 }

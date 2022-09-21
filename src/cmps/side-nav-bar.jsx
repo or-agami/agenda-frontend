@@ -14,18 +14,19 @@ import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { useForm } from '../hooks/useForm'
+import { GrClose } from 'react-icons/gr'
 
 
 export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
-   
-   
+
+
     const onSearch = () => {
         setNewBoards(boards.filter(board => board.title.toLowerCase().includes(searchBoardBy.term.toLowerCase())))
     }
 
-    const searchBoard = (ev) => {
-        if (ev) ev.preventDefault()
-        onSearch()
+    const cancelSearch = (ev) => {
+        ev.preventDefault()
+        ev.stopPropagation()
         setIsSearch(false)
         setSearchBoardBy({ term: "" })
     }
@@ -43,8 +44,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         setIsSearch(true)
     }
 
-    console.log(newBoards);
-    if (!newBoards || newBoards.length < 1) return
+    // if (!newBoards || newBoards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
@@ -69,8 +69,11 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
             <div onClick={onSearchBoardClick} className="side-nav side-nav-search">
                 <SearchIcon />
                 {!isSearch && "Search"}
-                {isSearch && <form onBlur={searchBoard} onSubmit={searchBoard}>
-                    <input value={searchBoardBy.term} autoFocus name="term" onChange={handleChange} type="text" /></form>}
+                {isSearch && <form>
+                    <input value={searchBoardBy.term} autoFocus name="term" onChange={handleChange} type="text" />
+                    <button onClick={cancelSearch}
+                        className='btn-side-nav-search-close'><GrClose className='svg icon-svg' />
+                    </button></form>}
             </div>
         </div>
         <hr />
