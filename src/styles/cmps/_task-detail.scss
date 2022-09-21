@@ -6,8 +6,7 @@
     background-color: var(--clr-item-bg);
     z-index: 11;
     box-shadow: var(--box-shadow-medium);
-    // display: flex;
-    // flex-direction: column;
+    overflow-y: scroll;
 
     .btn-svg-x {
         margin-left: 20px;
