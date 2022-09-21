@@ -6,6 +6,8 @@ import { useSelector } from "react-redux"
 import { loadTask, openModal } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
+import { ReactComponent as Clock } from '../assets/icons/clock.svg'
+import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import moment from "moment"
 
@@ -44,30 +46,28 @@ export const TaskDetail = () => {
                 <h3>{task.title}</h3>
                 <div className='task-detail-member-container'>
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
-                    {task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
+                    {task.memberIds &&task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
             <div className='task-detail-header-bottom'>
-                <button onClick={() => setWhichRenders('isUpdates')}>Updates</button>
-                <button onClick={() => setWhichRenders('isFiles')}>Files</button>
-                <button onClick={() => setWhichRenders('isActivity')}>Activity Log</button>
+                <button onClick={() => setWhichRenders('isUpdates')}><span>Updates</span></button>
+                <button onClick={() => setWhichRenders('isFiles')}><span>Files</span></button>
+                <button onClick={() => setWhichRenders('isActivity')}><span>Activity Log</span></button>
             </div>
-            {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} board={board}/>}
+        </div>
+            {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} board={board} />}
             {whichRenders === 'isFiles' && <TaskDetailFiles />}
             {whichRenders === 'isActivity' && <TaskDetailActivity />}
-        </div>
-
     </section>
 }
 
 
-const TaskDetailUpdates = ({task,board}) => {
-    if(!task.comments) return
+const TaskDetailUpdates = ({ task, board }) => {
     return <section className='task-detail-updates'>
         <div className='chat-box'>
         </div>
-        {task.comments.map(comment=>
-        <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt}/>
+        {task.comments&&task.comments.map(comment =>
+            <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
         )}
     </section>
 }
@@ -104,18 +104,41 @@ const TaskDetailActivity = () => {
 const Post = ({ board, byMember, txt, createdAt }) => {
     const getFormattedDateTime = (date) => {
         if (!date) return
-        return moment(date).fromNow()
+        moment.updateLocale('en', {
+            relativeTime: {
+                s: 'now',
+                ss: '%ds',
+                mm: "%dm",
+                hh: "%dh",
+                dd: "%dd",
+                ww: "%dw",
+                MM: "%dm",
+                yy: "%dy"
+            }
+        });
+        return moment(date).fromNow(true)
+
     }
     return <section className='post'>
-        <div>
+        <div className="post-header">
             <div className='img-container'>
                 {GetMemberImgFromId(board, byMember._id)}
+                <p className="fullname">{byMember.fullname}</p>
             </div>
-            <p>{getFormattedDateTime(createdAt)}</p>
+            <div className="time-menu-container">
+                <p><Clock />{getFormattedDateTime(createdAt)}</p>
+                <button className="btn btn-svg btn-menu"><Menu /></button>
+            </div>
         </div>
-        <p>{txt}</p>
-        <button><Like/>Like</button>
-        <button><Reply/>Reply</button>
+        <p className="comment-txt">{txt}</p>
+        <div className="reply-like-container">
+            <div className="like-container">
+                <button className="btn-svg btn-like"><Like />Like</button>
+            </div>
+            <div className="reply-container">
+                <button className="btn btn-svg btn-reply"><Reply />Reply</button>
+            </div>
+        </div>
     </section>
 }
 const GetMemberImgFromId = (board, memberId) => {

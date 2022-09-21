@@ -43,7 +43,6 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         setIsSearch(true)
     }
 
-    console.log(newBoards);
     if (!newBoards || newBoards.length < 1) return
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
