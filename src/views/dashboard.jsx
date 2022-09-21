@@ -49,10 +49,11 @@ export const Dashboard = () => {
         getTaskStatusCount()
     }, [])
 
-    const getTaskStatusCount = (status) => {
+    const getTaskStatusCount = () => {
         const data = statusOpts.map(status => board?.groups.map(group => group.tasks.map(task => {
             if (task.status === status)
-            return task.status})))
+                return task.status
+        })))
         console.log(data);
     }
 
@@ -60,6 +61,7 @@ export const Dashboard = () => {
         labels: statusOpts,
         datasets: [
             {
+                label: 'Status',
                 data: [5, 8, 7, 3, 5, 10, 1],
                 backgroundColor: [
                     "#0dd4ff",
@@ -71,20 +73,26 @@ export const Dashboard = () => {
                     "#e6d800",
                     "#00bfa0",
                 ],
-                borderColor: [
-                    "#00bfa0",
+                borderWidth: 1,
+            },
+            {
+                label: 'Priority',
+                data: [5, 8, 7, 3, 5, 10, 1],
+                backgroundColor: [
+                    "#0dd4ff",
                     "#b3d4ff",
+                    "#e60049",
+                    "#9b19f5",
                     "#dc0ab4",
                     "#ffa300",
-                    "#9b19f5",
                     "#e6d800",
-                    "#0dd4ff",
-                    "#e60049"
+                    "#00bfa0",
                 ],
                 borderWidth: 1,
             },
         ],
     }
+
 
 
     if (!board) return <Loader />
