@@ -140,6 +140,10 @@
 
 
         .post {
+            .wobble-ver-left {
+                        animation: wobble-ver-left 1.3s both;
+            }
+
             display: flex;
             flex-direction: column;
             width: 655px;
@@ -267,3 +271,33 @@
         }
     }
 }
+
+@keyframes wobble-ver-left {
+    0%,
+    100% {
+    //   -webkit-transform: translateY(0) rotate(0);
+              transform: translateY(0) rotate(0);
+    //   -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+    }
+    15% {
+    //   -webkit-transform: translateY(-30px) rotate(-6deg);
+              transform: translateY(0px) rotate(-10deg);
+    }
+    30% {
+    //   -webkit-transform: translateY(15px) rotate(6deg);
+              transform: translateY(0px) rotate(10deg);
+    }
+    45% {
+    //   -webkit-transform: translateY(-15px) rotate(-3.6deg);
+              transform: translateY(0px) rotate(-6deg);
+    }
+    60% {
+    //   -webkit-transform: translateY(9px) rotate(2.4deg);
+              transform: translateY(0px) rotate(5deg);
+    }
+    75% {
+    //   -webkit-transform: translateY(-6px) rotate(-1.2deg);
+              transform: translateY(0px) rotate(-4deg);
+    }
+  }
