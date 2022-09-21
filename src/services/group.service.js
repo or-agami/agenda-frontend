@@ -1,5 +1,4 @@
 import { boardService } from "./board.service";
-// import { httpService } from "./http.service"
 import { utilService } from "./util.service";
 
 export const groupService = {
@@ -9,27 +8,16 @@ export const groupService = {
   remove,
 }
 
-//?- Dev:
-const STORAGE_KEY = 'boardDB'
-//?- Prod:
-// const BASE_URL = 'board/'
-
 async function getById({ groupId, boardId }) {
-  //?- Dev:
   const board = await boardService.getById(boardId)
   return board.groups.find(g => g.id === groupId)
-  //?- Prod:
-  // return httpService.get(BASE_URL + boardId)
 }
 
 async function remove({ groupId, boardId }) {
-  //?- Dev:
   const board = await boardService.getById(boardId)
   // Todo: add user activity
   board.groups = board.groups.filter(g => g.id !== groupId)
   return boardService.save(board)
-  //?- Prod:
-  // return httpService.delete(BASE_URL + boardId)
 }
 
 async function update({ group, boardId }) {
