@@ -105,10 +105,10 @@ export function addTask(task) {
     }
 }
 
-export function updateTask(task) {
+export function updateTask(task, activity) {
     return async (dispatch, getState) => {
         try {
-            const savedBoard = await taskService.update(task)
+            const savedBoard = await taskService.update(task, activity)
             dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
             showErrorMsg('Failed to update task')
