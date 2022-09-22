@@ -197,6 +197,12 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
     const likeRef = useRef()
     const dispatch = useDispatch()
 
+
+    const getIsCommentLiked = () => {
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
+        return (idxLiked !== -1 && idxLiked !== undefined)       
+    }
+
     const animateLike = (ev) => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
         console.log('idxLiked:', idxLiked)
@@ -231,6 +237,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
+
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
@@ -251,7 +258,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         </div>
         <div className="reply-like-container">
             <div className="like-container">
-                <button onClick={(ev) => animateLike(ev)} className="btn-svg btn-like"><Like ref={likeRef} />Like</button>
+                <button onClick={(ev) => animateLike(ev)} className={`btn-svg btn-like ${getIsCommentLiked() ? 'liked' : ''}`}><Like ref={likeRef} />Like</button>
             </div>
             <div className="reply-container">
                 <button className="btn btn-svg btn-reply"><Reply />Reply</button>

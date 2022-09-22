@@ -135,6 +135,11 @@
             width: 105px;
             justify-content: center;
             align-items: center;
+
+            .btn-add-developer {
+                position: relative;
+                left: 10px;
+            }
         }
 
         .task-detail-header-bottom {
@@ -333,11 +338,21 @@
                 justify-content: center;
                 border-radius: 8px;
 
+
+                &.liked {
+                    color: var(--clr-btn-highlight);
+
+                    svg * {
+                        fill: var(--clr-btn-highlight);
+
+                    }
+                }
+
                 svg {
                     margin-right: 10px;
                 }
 
-                &:hover {
+                &:hover:not(.liked) {
                     background-color: var(--clr-btn-bg-hover);
 
                     svg * {
