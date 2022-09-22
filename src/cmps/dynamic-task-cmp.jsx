@@ -152,7 +152,6 @@ const Timeline = ({task,group,board}) => {
 
 
     const getTimeProgress = ({startDate, endDate}) => {
-        console.log('startDate, endDate:', startDate, endDate)
         if (!startDate || !endDate) return ''
         const timeRatio = (Date.now() - startDate) / (endDate - startDate)
         const timeProgress = (timeRatio * 100).toFixed()
@@ -162,8 +161,6 @@ const Timeline = ({task,group,board}) => {
     const handleDateChange = (dateRange) => {
         setTaskTimeline([dateRange])
         task.timeline = {startDate: Date.parse(dateRange.startDate), endDate: Date.parse(dateRange.endDate)}
-        console.log('startDate: from DynamicTask', task.timeline.startDate)
-        console.log('endDate: from DynamicTask', task.timeline.endDate)
     }
 
     return (
