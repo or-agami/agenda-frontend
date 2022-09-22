@@ -8,6 +8,7 @@ import { TaskPriorityMenu } from "./task-priority-menu"
 import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { DatePicker } from "./date-picker"
+import { FaPlusCircle } from "react-icons/fa"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
@@ -78,7 +79,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
             break;
         case 'timeline':
-            cmp = <Timeline task={task} group={group} boardId={board._id} />
+            cmp = <Timeline task={task} group={group} board={board} />
             className += 'timeline '
             // cmp = <RangePicker />
 
@@ -110,7 +111,8 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
         <li className={className} onClick={cb}>
             {category === 'member' &&
                 <Fragment>
-                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
+                        <FaPlusCircle/>
                     </button>
                     <div className='developer-container'>
                         {task.memberIds ?
@@ -152,7 +154,6 @@ const Timeline = ({task,group,board}) => {
 
 
     const getTimeProgress = ({startDate, endDate}) => {
-        console.log('startDate, endDate:', startDate, endDate)
         if (!startDate || !endDate) return ''
         const timeRatio = (Date.now() - startDate) / (endDate - startDate)
         const timeProgress = (timeRatio * 100).toFixed()
@@ -162,10 +163,7 @@ const Timeline = ({task,group,board}) => {
     const handleDateChange = (dateRange) => {
         setTaskTimeline([dateRange])
         task.timeline = {startDate: Date.parse(dateRange.startDate), endDate: Date.parse(dateRange.endDate)}
-        console.log('startDate: from DynamicTask', task.timeline.startDate)
-        console.log('endDate: from DynamicTask', task.timeline.endDate)
     }
-
     return (
         <Fragment>
             {datePickerIsOpen && 
@@ -173,7 +171,7 @@ const Timeline = ({task,group,board}) => {
             setDatePickerIsOpen={setDatePickerIsOpen} 
             taskTimeline={taskTimeline}
             handleDateChange={handleDateChange}
-            task={task} group={group} boardId={board.id} 
+            task={task} groupId={group.id} boardId={board._id} 
             />
             }
             <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>

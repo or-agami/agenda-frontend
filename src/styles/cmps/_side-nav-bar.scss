@@ -48,7 +48,7 @@
         }
 
         .board-preview-icon {
-            background-color: var(--status-clr22);
+            background-color: var(--status-clr11);
             color: var(--clr-item-bg);
             padding: 3px 8px;
             border-radius: 0.4em;
@@ -74,7 +74,7 @@
         &:hover {
             background-color: var(--clr-btn-highlight);
             width: 30px;
-            
+
             svg * {
                 fill: var(--clr-item-bg);
             }
@@ -96,6 +96,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        .btn {
+            width: 100%;
+            justify-content: space-between;
+        }
 
         svg {
             cursor: pointer;
@@ -228,6 +233,7 @@
 
     .side-nav-search {
         position: relative;
+
         .btn-side-nav-search-close {
             position: absolute;
             right: 3px;

@@ -9,6 +9,7 @@ import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
+import { FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
@@ -48,7 +49,9 @@ export const TaskDetail = () => {
             <div className='task-detail-header-top'>
                 <h3>{task.title}</h3>
                 <div className='task-detail-member-container'>
-                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
+                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
+                        <FaPlusCircle />
+                    </button>
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
@@ -60,7 +63,7 @@ export const TaskDetail = () => {
         </div>
         {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
         {whichRenders === 'isFiles' && <TaskDetailFiles />}
-        {whichRenders === 'isActivity' && <TaskDetailActivity />}
+        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} />}
     </section>
 }
 
@@ -81,9 +84,19 @@ const TaskDetailFiles = () => {
     </section>
 }
 
-const TaskDetailActivity = () => {
+const TaskDetailActivity = ({ task }) => {
     return <section className='task-detail-activity'>
+        <h1>Activity Log</h1>
+        {console.log(task)}
+        {task.activities?.map(activity => {
+            return <div key={activity.id} className="activity-container">
+                <span className="activity-type">{activity.type}</span>
+                <span className="activity-by"><img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} />
+                    {activity.byMember.fullname}</span>
+                <span className="activity-time">{activity.createdAt}</span>
 
+            </div>
+        })}
     </section>
 }
 

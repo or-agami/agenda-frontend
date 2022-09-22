@@ -49,7 +49,7 @@ const ColorMenu = ({ group, boardId}) => {
         <div className='clr14' onClick={() => changeGroupColor('clr15')}></div>
         <div className='clr15' onClick={() => changeGroupColor('clr16')}></div>
         <div className='clr17' onClick={() => changeGroupColor('clr17')}></div>
-        <div className='clr18' onClick={() => changeGroupColor('clr18')}></div>
+        {/* <div className='clr18' onClick={() => changeGroupColor('clr18')}></div>
         <div className='clr19' onClick={() => changeGroupColor('clr19')}></div>
         <div className='clr20' onClick={() => changeGroupColor('clr20')}></div>
         <div className='clr21' onClick={() => changeGroupColor('clr21')}></div>
@@ -58,6 +58,6 @@ const ColorMenu = ({ group, boardId}) => {
         <div className='clr24' onClick={() => changeGroupColor('clr24')}></div>
         <div className='clr25' onClick={() => changeGroupColor('clr25')}></div>
         <div className='clr26' onClick={() => changeGroupColor('clr26')}></div>
-        <div className='clr27' onClick={() => changeGroupColor('clr27')}></div>
+        <div className='clr27' onClick={() => changeGroupColor('clr27')}></div> */}
     </section>
 }

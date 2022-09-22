@@ -17,14 +17,14 @@
     .dashboard-main-container {
         position: relative;
         min-height: calc(100vh - 181px);
-        top: 180px;
+        top: 150px;
         display: flex;
         flex-wrap: wrap;
         gap: 50px;
         justify-content: start;
         padding-inline-start: 35px;
         background-color: var(--clr-bg);
-        padding: 20px;
+        padding: 50px;
         align-items: center;
         justify-content: center;
 
@@ -43,7 +43,6 @@
             flex-direction: column;
             align-items: center;
             background-color: var(--clr-item-bg);
-            margin-top: 30px;
             max-width: 800px;
             padding: 20px;
             border: 1px solid #9ec6ffb3;

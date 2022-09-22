@@ -5,9 +5,14 @@ import { groupService } from "../../services/group.service"
 import { taskService } from "../../services/task.service"
 
 
+export function setLoader() {
+    return (dispatch, getState) => {
+        dispatch({ type: 'SET_LOADING', isLoading: true })
+    }
+}
+
 export function loadBoards() {
     return async (dispatch, getState) => {
-        dispatch({ type: 'SET_LOADING', isLoading: true })
         try {
             const boards = await boardService.query()
             dispatch({ type: 'SET_BOARDS', boards })
@@ -48,7 +53,6 @@ export function setSort(sortBy) {
 
 export function loadBoard(boardId, sortBy, filterBy) {
     return async (dispatch, getState) => {
-        if (!sortBy && !filterBy) dispatch({ type: 'SET_LOADING', isLoading: true })
         try {
             const board = await boardService.getById(boardId, sortBy, filterBy)
             dispatch({ type: 'SET_BOARD', board })
@@ -62,16 +66,14 @@ export function loadBoard(boardId, sortBy, filterBy) {
 
 export function addBoard(board) {
     return (dispatch, getState) => {
-
         dispatch({ type: 'SET_LOADING', isLoading: true })
-
         boardService.save(board)
-        .then(savedBoard => {
-            dispatch({ type: 'ADD_BOARD', board: savedBoard })
-        })
-        .catch(err => {
-            showErrorMsg('Failed to add board try again')
-        })
+            .then(savedBoard => {
+                dispatch({ type: 'ADD_BOARD', board: savedBoard })
+            })
+            .catch(err => {
+                showErrorMsg('Failed to add board try again')
+            })
             .finally(() => {
                 dispatch({ type: 'SET_LOADING', isLoading: false })
             })
@@ -108,7 +110,6 @@ export function addTask(task) {
 export function updateTask(task, activity) {
     return async (dispatch, getState) => {
         try {
-            console.log(activity);
             const savedBoard = await taskService.update(task, activity)
             dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
@@ -182,11 +183,11 @@ export function openModal(stateName, itemId) {
 export function loadTask(task) {
     return (dispatch) => {
         taskService.getById(task)
-        .then(task=>{
-            dispatch({type:'SET_TASK',task})
-        })
-        .catch(err=>{
-            showErrorMsg('Failed to load task')
-        })
+            .then(task => {
+                dispatch({ type: 'SET_TASK', task })
+            })
+            .catch(err => {
+                showErrorMsg('Failed to load task')
+            })
     }
 }

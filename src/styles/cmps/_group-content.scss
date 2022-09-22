@@ -115,6 +115,7 @@
         z-index: 2;
         border: 1px solid var(--clr-disabled);
         border-left: none;
+        border-right: none;
         border-start-start-radius: 8px;
         min-height: 35px;
         margin: 0;
@@ -122,13 +123,12 @@
         display: flex;
         list-style-type: none;
 
-        &:hover {
+        // &:hover {
 
-            .btn-sort {
-                display: flex;
-            }
-
-        }
+        //     .btn-sort {
+        //         display: flex;
+        //     }
+        // }
 
     }
 
@@ -164,8 +164,6 @@
     .group-content-header-color {
         border-start-start-radius: 8px;
         min-width: 6px;
-        border-right: 1px solid var(--clr-disabled);
-
     }
 
     .group-content-header-checkbox {
@@ -174,6 +172,11 @@
         min-width: 35px;
         height: 35px;
         border-right: 1px solid var(--clr-disabled);
+
+        input {
+            width: 15px;
+            height: 15px;
+        }
     }
 
     .group-content-header-item {

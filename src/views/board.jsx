@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react"
 import { BoardHeader } from "../cmps/board-header"
 import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route, useNavigate, useParams } from 'react-router-dom'
-import { loadBoard, loadBoards } from "../store/board/board.action"
+import { loadBoard, loadBoards, setLoader } from "../store/board/board.action"
 import { Loader } from "../cmps/loader"
 import { GroupList } from "../cmps/group-list"
 import { TaskDetail } from "../cmps/task-detail"
@@ -19,10 +19,11 @@ export const Board = () => {
   useEffect(() => {
     if (isLoading) return
     const boardId = params.boardId
-    if ((!board || board._id !== boardId)) {
+    if ((board && board._id !== boardId)) {
+      dispatch(setLoader())
       dispatch(loadBoard(boardId))
     }
-  }, [params])
+  }, [params, board])
 
   useEffect(() => {
     if (board) {
@@ -41,7 +42,7 @@ export const Board = () => {
         board &&
         <Fragment>
           <BoardHeader board={board} />
-         <BoardDetails board={board} />
+          <BoardDetails board={board} />
         </Fragment>
       }
     </div>
@@ -51,7 +52,8 @@ export const Board = () => {
 const BoardDetails = ({ board }) => {
   return (
     <div className="board-details">
-      <GroupList board={board} />
+      {board &&
+        <GroupList board={board} />}
     </div>
   )
 }
