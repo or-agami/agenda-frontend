@@ -29,7 +29,8 @@ export const TaskPersonMenu = ({ task, groupId, board, setIsTaskPersonMenuOpen, 
             if (task.memberIds.includes(member._id)) {
                 updatedTask = { ...task, memberIds: task.memberIds.filter(memberId => memberId !== member._id) }
                 dispatch(closeModals())
-                dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
+                const activity = {type: "Removed a member"}
+                dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }, activity))
             }
         }
 
