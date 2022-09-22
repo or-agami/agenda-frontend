@@ -71,7 +71,7 @@ const TaskDetailUpdates = ({ task, groupId, board }) => {
         {!isChatOpen && <button className='chat-box-closed' onClick={() => setIsChatOpen(true)}><span>Write an update...</span></button>}
         {isChatOpen && <ChatBox setIsChatOpen={setIsChatOpen} task={task} groupId={groupId} board={board} />}
         {task.comments && task.comments.map(comment =>
-            <Post key={comment.id} board={board} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
+            <Post key={comment.id} board={board} task={task} groupId={groupId} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
         )}
     </section>
 }
@@ -104,8 +104,9 @@ const TaskDetailActivity = () => {
 //           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
 //         }
 
-const Post = ({ board, byMember, txt, createdAt }) => {
+const Post = ({ board,task,groupId, byMember, txt, createdAt }) => {
     const likeRef = useRef()
+    const dispatch = useDispatch()
     const getFormattedDateTime = (date) => {
         if (!date) return
         moment.updateLocale('en', {
@@ -123,14 +124,13 @@ const Post = ({ board, byMember, txt, createdAt }) => {
         return moment(date).fromNow(true)
     }
     const animateLike =(ev) => {
-        console.log(ev)
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
             spread: 60,
             origin: {
-                x: ev.screenX/window.screen.width,
-                y: ev.screenY/window.screen.height,
+                x: ev.pageX/window.innerWidth,
+                y: ev.pageY/window.innerHeight,
             }
             
           });
@@ -138,6 +138,10 @@ const Post = ({ board, byMember, txt, createdAt }) => {
             likeRef.current.classList.remove('wobble-ver-left')
 
         },1300)
+        if(!task.likes) {
+            // let updatedTask 
+            // dispatch(updateTask({task:[...task,likes:[byMember]}))
+        }
     }
     return <section className='post'>
         <div className="post-header">
@@ -167,22 +171,27 @@ const GetMemberImgFromId = (board, memberId) => {
 }
 
 const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
+    
     const dispatch = useDispatch()
     const textAreaRef = useRef()
     const [newText, setNewText] = useState('')
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
     const PostComment = () => {
+        let updatedTask
         const comment = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
         if (!task.comments) {
+            updatedTask = {...task,comments:[comment]}
             task.comments = [comment]
         }
         else {
+            updatedTask = {...task,comments:[comment,...task.comments]}
             task.comments.unshift(comment)
         }
         setIsChatOpen(false)
         textAreaRef.current.value = ''
+        dispatch(updateTask({ task:updatedTask, groupId, boardId: board._id }))
         console.log('task:', task)
-        dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
     return <section className="chat-box-open">
