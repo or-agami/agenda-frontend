@@ -155,23 +155,6 @@ const TaskDetailActivity = ({ task }) => {
     </section>
 }
 
-// {
-//     "id": "c104",
-//     "title": "Help me",
-//     "status": "in-progress",
-//     "priority": "low",
-//     "description": "description",
-//     "comments": [
-//       {
-//         "id": "ZdPnm",
-//         "txt": "also @yaronb please CR this",
-//         "createdAt": 1590999817436,
-//         "byMember": {
-//           "_id": "u101",
-//           "fullname": "Tal Tarablus",
-//           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-//         }
-
 const getFormattedDateTime = (date) => {
     if (!date) return
     moment.updateLocale('en', {
@@ -191,7 +174,6 @@ const getFormattedDateTime = (date) => {
 
 
 const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
-    console.log('comment:', comment)
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
@@ -200,18 +182,17 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 
     const getIsCommentLiked = () => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
-        return (idxLiked !== -1 && idxLiked !== undefined)       
+        return (idxLiked !== -1 && idxLiked !== undefined)
     }
 
     const animateLike = (ev) => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
-        console.log('idxLiked:', idxLiked)
         if (idxLiked !== -1 && idxLiked !== undefined) {
             comment.likes?.splice(idxLiked, 1)
             dispatch(updateTask({ task, groupId, boardId: board._id }))
             return
-
         }
+        
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
@@ -220,19 +201,17 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 x: ev.pageX / window.innerWidth,
                 y: ev.pageY / window.innerHeight,
             }
-        });
+        })
+
         setTimeout(() => {
             likeRef.current.classList.remove('wobble-ver-left')
-
         }, 1300)
 
         let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
-        if (!comment.likes) {
-            comment.likes = [like]
-        }
-        else {
-            comment.likes.unshift(like)
-        }
+        
+        if (!comment.likes) comment.likes = [like]
+        else comment.likes.unshift(like)
+
         task.comments.splice(commentIdx, 1, comment)
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
