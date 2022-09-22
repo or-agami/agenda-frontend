@@ -9,11 +9,14 @@ import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { DatePicker } from "./date-picker"
 import { FaPlusCircle } from "react-icons/fa"
+import { PopUpModal } from "./pop-up-modal"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
+    // const [isMenuModalOpen,setMenuModalIsOpen] = useState(false)
+    const [modalName,setModalName] = useState(null)
     const dispatch = useDispatch()
-    const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
+    // const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
     let className = `flex justify-center task-preview-`
     let headerTxt, cmp
@@ -26,11 +29,19 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     }
 
     const onSetTaskStatusMenuOpen = () => {
-        dispatch(openModal('isTaskStatusMenuOpen', task.id))
+        // dispatch(openModal('isTaskStatusMenuOpen', task.id))
+        setTimeout(() => {
+            setModalName('TASK_STATUS_MENU')
+        }, 100);
+        // setMenuModalIsOpen(true)
     }
 
     const onSetTaskPriorityMenuOpen = () => {
-        dispatch(openModal('isTaskPriorityMenuOpen', task.id))
+        // dispatch(openModal('isTaskPriorityMenuOpen', task.id))
+        setTimeout(() => {
+            setModalName('TASK_PRIORITY_MENU')
+        }, 100);
+        // setMenuModalIsOpen(true)
     }
 
     const onSetTaskPersonMenuOpen = () => {
@@ -97,16 +108,13 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     }
 
     if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments') className += makeClass(task[category])
-
+console.log('modalName from dynamic component:', modalName)
     return <>
-        {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskPersonMenu task={task} groupId={group.id} board={board} />
-        }
-        {(isTaskStatusMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskStatusMenu task={task} groupId={group.id} boardId={board._id} />
-        }
-        {(isTaskPriorityMenuOpen && itemId === task.id && isScreenOpen) &&
-            <TaskPriorityMenu task={task} groupId={group.id} boardId={board._id} />
+        {/* {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
+            <PopUpModal setMenuModalIsOpen={setMenuModalIsOpen} modalName={'TASK_MENU'} task={task} group={group} board={board}  />
+        } */}
+        {modalName &&
+            <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />
         }
         <li className={className} onClick={cb}>
             {category === 'member' &&

@@ -216,6 +216,10 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
+    const replyToComment = (ev) => {
+
+    }
+
 
     return <section className='post'>
         <div className="post-header">
@@ -231,7 +235,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
             <div className="img-container">
-                {comment.likes && comment.likes.map(like => <img key={loggedinUser._id} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
+                {comment.likes && comment.likes.map((like, idx) => <img key={idx} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
             </div>
             <p>{comment.likes?.length > 0 ? 'Likes' : ''}</p>
         </div>
@@ -240,7 +244,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 <button onClick={(ev) => animateLike(ev)} className={`btn-svg btn-like ${getIsCommentLiked() ? 'liked' : ''}`}><Like ref={likeRef} />Like</button>
             </div>
             <div className="reply-container">
-                <button className="btn btn-svg btn-reply"><Reply />Reply</button>
+                <button onClick={(ev) => replyToComment(ev)} className="btn btn-svg btn-reply"><Reply />Reply</button>
             </div>
         </div>
     </section>
@@ -277,10 +281,4 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
         <button className="update-comment-btn" onClick={() => PostComment()}>Update</button>
     </section>
-}
-
-
-const getComment = (task, commentId) => {
-    if (!task.comments) return
-    return task.comments.find(comment => comment.id === commentId)
 }

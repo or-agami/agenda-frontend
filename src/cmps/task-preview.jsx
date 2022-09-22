@@ -8,9 +8,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { TaskDetailPersonMenu } from './task-detail-person-menu'
 import { DynamicTaskCmp } from './dynamic-task-cmp'
+import { PopUpModal } from './pop-up-modal'
 
 
 export const TaskPreview = ({ task, group, board }) => {
+  // const [isMenuModalOpen,setMenuModalIsOpen] = useState(false)
+  // const [currModalName,setCurrModalName] = useState(null)
+  // const isMenuModalOpen = useSelector(state=>state.boardModule.isMenuModalOpen)
+  const [modalName,setModalName] = useState(null)
 
   const { itemId, isTaskDetailPersonMenuOpen, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
@@ -19,7 +24,10 @@ export const TaskPreview = ({ task, group, board }) => {
   const dispatch = useDispatch()
 
   const onSetIsTaskMenuOpen = () => {
-    dispatch(openModal('isTaskMenuOpen', task.id))
+    // console.log('open')
+    // dispatch(openModal('TASK_MENU'))
+    
+
   }
 
   const updateTitle = (ev) => {
@@ -34,10 +42,10 @@ export const TaskPreview = ({ task, group, board }) => {
     setIsEditTitle(prevState => prevState = !isEditTitle)
   }
 
-
+console.log('modalName from task preview:', modalName)
   return <ul key={task.id} className="clean-list task-preview">
-    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-    {(isTaskMenuOpen && itemId === task.id && isScreenOpen) && <TaskMenu taskId={task.id} group={group} boardId={board._id} />}
+    <button className='btn btn-svg btn-task-menu' onClick={() => setModalName('TASK_MENU')}><BoardMenu /></button>
+    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
     <li className={`task-preview-group-color ${group.style}`}>
     </li>
     <li className='flex justify-center task-preview-checkbox'>
