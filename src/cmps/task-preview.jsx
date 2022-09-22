@@ -35,7 +35,8 @@ export const TaskPreview = ({ task, group, board }) => {
     if (task.title !== editedTask.title) {
       // Todo: Prevent guests from editing tasks
       editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-      const activity = {type: "Changed task title"}
+      const activity = {type: "title", data: editedTask.title}
+      task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
       dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }, activity))
     }
     setIsEditTitle(prevState => prevState = !isEditTitle)

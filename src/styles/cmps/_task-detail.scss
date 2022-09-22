@@ -24,14 +24,71 @@
 
         }
 
-        .activity-type {
-            flex-grow: 1;
+        .activity-time {
+            margin-inline-end: 20px;
         }
 
         .activity-by {
-            width: 200px;
+            flex: 1;
             display: flex;
             align-items: center;
+        }
+
+        .activity-status {
+            padding: 10px 15px;
+
+            &.clr {
+                color: white;
+            }
+
+            &.Workingonit {
+                background-color: var(--clr-workingOnIt);
+            }
+
+            &.Stuck {
+                background-color: var(--clr-stuck);
+            }
+
+            &.Done {
+                background-color: var(--clr-done);
+            }
+
+            &.WaitingforQA {
+                background-color: var(--clr-waiting);
+            }
+
+            &.Needhelp {
+                background-color: var(--clr-help);
+            }
+
+            &.Pending {
+                background-color: var(--clr-pending);
+            }
+
+            &.Critical {
+                background-color: var(--clr-critical);
+            }
+
+            &.Medium {
+                background-color: var(--clr-medium);
+            }
+
+            &.High {
+                background-color: var(--clr-high);
+            }
+
+            &.Low {
+                background-color: var(--clr-low);
+            }
+
+        }
+
+        .activity-type {
+            flex: 1;
+        }
+
+        svg {
+            flex: 1
         }
     }
 
