@@ -71,7 +71,7 @@ const TaskDetailUpdates = ({ task, groupId, board }) => {
         {!isChatOpen && <button className='chat-box-closed' onClick={() => setIsChatOpen(true)}><span>Write an update...</span></button>}
         {isChatOpen && <ChatBox setIsChatOpen={setIsChatOpen} task={task} groupId={groupId} board={board} />}
         {task.comments && task.comments.map(comment =>
-            <Post key={comment.id} board={board} task={task} groupId={groupId} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
+            <Post key={comment.id} comment={comment} board={board} task={task} groupId={groupId} byMember={comment.byMember} txt={comment.txt} createdAt={comment.createdAt} />
         )}
     </section>
 }
@@ -104,7 +104,10 @@ const TaskDetailActivity = () => {
 //           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
 //         }
 
-const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
+const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
+    console.log('comment:', comment)
+    const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
     const dispatch = useDispatch()
     const getFormattedDateTime = (date) => {
@@ -124,6 +127,14 @@ const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
         return moment(date).fromNow(true)
     }
     const animateLike = (ev) => {
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
+        console.log('idxLiked:', idxLiked)
+        if (idxLiked !== -1 && idxLiked !== undefined) {
+            comment.likes?.splice(idxLiked, 1)
+            dispatch(updateTask({ task, groupId, boardId: board._id }))
+            return
+
+        }
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
@@ -132,26 +143,23 @@ const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
                 x: ev.pageX / window.innerWidth,
                 y: ev.pageY / window.innerHeight,
             }
-
         });
         setTimeout(() => {
             likeRef.current.classList.remove('wobble-ver-left')
 
         }, 1300)
-        let like = {fullname:byMember.fullname,imgUrl:byMember.imgUrl}
-        let updatedTask
-        if (!task.likes) {
-            updatedTask = { ...task, likes: [like] }
-            task.likes = [like]
+
+        let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
+        if (!comment.likes) {
+            comment.likes = [like]
         }
         else {
-            updatedTask = { ...task, likes: [like, ...task.likes] }
-            task.likes.unshift(like)
+            comment.likes.unshift(like)
         }
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
-        console.log('task:', task)
+        task.comments.splice(commentIdx, 1, comment)
+        dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
-    
+
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
@@ -164,6 +172,12 @@ const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
             </div>
         </div>
         <p className="comment-txt">{txt}</p>
+        <div className="likes-container">
+            <div className="img-container">
+                {comment.likes && comment.likes.map(like => <img key={loggedinUser._id} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
+            </div>
+            <p>{comment.likes?.length>0 ? 'Likes':''}</p>
+        </div>
         <div className="reply-like-container">
             <div className="like-container">
                 <button onClick={(ev) => animateLike(ev)} className="btn-svg btn-like"><Like ref={likeRef} />Like</button>
@@ -200,11 +214,16 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         setIsChatOpen(false)
         textAreaRef.current.value = ''
         dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
-        console.log('task:', task)
     }
 
     return <section className="chat-box-open">
         <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
         <button className="update-comment-btn" onClick={() => PostComment()}>Update</button>
     </section>
+}
+
+
+const getComment = (task, commentId) => {
+    if (!task.comments) return
+    return task.comments.find(comment => comment.id === commentId)
 }

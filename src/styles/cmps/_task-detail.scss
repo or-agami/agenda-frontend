@@ -140,19 +140,39 @@
 
 
         .post {
-            .wobble-ver-left {
-                        animation: wobble-ver-left 1.3s both;
-            }
-
             display: flex;
             flex-direction: column;
             width: 655px;
-            height: 205px;
+            min-height: 205px;
             border-radius: 8px;
             border: 1px solid var(--clr-btn-bg-hover);
             margin-top: 20px;
             margin-bottom: 20px;
             margin-left: 20px;
+            .likes-container {
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                
+                .img-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, 20px);
+                    width: 70px;
+                    justify-content: center;
+                    align-items: center;
+                }
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+                p {
+                    padding-left: 5px;
+                }
+            }
+            .wobble-ver-left {
+                animation: wobble-ver-left 1.3s both;
+            }
+
 
             .comment-txt {
                 height: 100%;
@@ -302,69 +322,3 @@
     }
   }
 
-//   @keyframes bang {
-//     from {
-//       transform: translate3d(0,0,0);
-//       opacity: 1;
-//     }
-//   }
-//   .hoverme {
-//     width: 240px;
-//     margin:150px auto 0;
-//     text-align: center;
-//     padding: 10px 0;
-//     cursor: pointer;
-//     position: relative;
-//     span {
-//       color: #333;
-//       font-size: .9em;
-//     }
-//     i {
-//       position: absolute;
-//       display: block;
-//       left: 50%;
-//       top: 0;
-//       width: 3px;
-//       height: 5px;
-//       background: red;
-//       opacity: 0;
-//     }
-//     &:hover {
-//       @for $i from 1 through 50 {
-//         i:nth-of-type(#{$i}) {
-//           transform: translate3d(random(190) - 100 + px,random(50) - 100 + px,0) rotate(random(360) + deg);
-//           background: hsla(random(360),100%,50%,1);
-//           animation: bang 700ms ease-out forwards;
-//           opacity: 0;
-//         }
-//       }
-//     }
-//   }
-
-// [class|="confetti"] {
-//     position: absolute;
-//   }
-  
-//   $colors: (#d13447, #ffbf00, #263672);
-  
-//   @for $i from 0 through 150 {
-//     $w: random(8);
-//     $l: random(100);
-//     .confetti-#{$i} {
-//       width: #{$w}px;
-//       height: #{$w*0.4}px;
-//       background-color: nth($colors, random(3));
-//       top: -10%;
-//       left: unquote($l+"%");
-//       opacity: random() + 0.5;
-//       transform: rotate(#{random()*360}deg);
-//       animation: drop-#{$i} unquote(4+random()+"s") unquote(random()+"s") infinite;
-//     }
-  
-//     @keyframes drop-#{$i} {
-//       100% {
-//         top: 110%;
-//         left: unquote($l+random(15)+"%");
-//       }
-//     }
-//   }
