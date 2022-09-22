@@ -1,12 +1,17 @@
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { closeModals, updateTask } from '../store/board/board.action'
 
-export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen ,setIsScreenOpen}) => {
+export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen, setIsScreenOpen }) => {
+
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
     const dispatch = useDispatch()
     const onUpdateStatus = (status) => {
         const updatedTask = { ...task, status }
         dispatch(closeModals())
-        const activity = {type: "Changed status"}
+        const activity = { type: "status", data: status }
+        updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
         dispatch(updateTask({ task: updatedTask, groupId, boardId }, activity))
     }
 

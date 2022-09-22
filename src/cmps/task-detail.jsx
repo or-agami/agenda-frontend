@@ -9,7 +9,7 @@ import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
-import { FaPlusCircle } from "react-icons/fa"
+import { FaArrowRight, FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
@@ -85,16 +85,71 @@ const TaskDetailFiles = () => {
 }
 
 const TaskDetailActivity = ({ task }) => {
+
+    const makeClass = (status) => {
+        if (!status) return
+        return status.split(' ').join('')
+    }
+
     return <section className='task-detail-activity'>
         <h1>Activity Log</h1>
-        {console.log(task)}
         {task.activities?.map(activity => {
-            return <div key={activity.id} className="activity-container">
-                <span className="activity-type">{activity.type}</span>
-                <span className="activity-by"><img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} />
-                    {activity.byMember.fullname}</span>
-                <span className="activity-time">{activity.createdAt}</span>
+            let title
+            let info
+            console.log(activity);
+            switch (activity.type) {
+                case 'add member':
+                    title = 'Added'
+                    info = <span className="activity-status">
+                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} />
+                        {activity.data.fullname}
+                    </span>
 
+                    break;
+                case 'remove member':
+                    title = 'Removed'
+                    info = <span className="activity-status">
+                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} />
+                        {activity.data.fullname}
+                    </span>
+
+                    break;
+                case 'status':
+                    title = 'Changed Status'
+                    info = <span className={"activity-status clr " + makeClass(activity.data)}>
+                        {activity.data}
+                    </span>
+
+
+                    break;
+                case 'priority':
+                    title = 'Changed Priority'
+                    info = <span className={"activity-status clr " + makeClass(activity.data)}>
+                        {activity.data}
+                    </span>
+
+                    break;
+                case 'title':
+                    title = 'Changed Title'
+                    info = <span className="activity-status">
+                        {activity.data}
+                    </span>
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            return <div key={activity.id} className="activity-container">
+                <span className="activity-time"><Clock /> {getFormattedDateTime(activity.createdAt)}</span>
+                <span className="activity-by">
+                    <img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} />
+                    {activity.byMember.fullname}
+                </span>
+                <span className="activity-type">{title}</span>
+                <FaArrowRight className="svg arrow-right-activity" />
+                {info}
             </div>
         })}
     </section>
@@ -117,28 +172,31 @@ const TaskDetailActivity = ({ task }) => {
 //           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
 //         }
 
+const getFormattedDateTime = (date) => {
+    if (!date) return
+    moment.updateLocale('en', {
+        relativeTime: {
+            s: 'now',
+            ss: '%ds',
+            mm: "%dm",
+            hh: "%dh",
+            dd: "%dd",
+            ww: "%dw",
+            MM: "%dm",
+            yy: "%dy"
+        }
+    });
+    return moment(date).fromNow(true)
+}
+
+
 const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
     console.log('comment:', comment)
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
     const dispatch = useDispatch()
-    const getFormattedDateTime = (date) => {
-        if (!date) return
-        moment.updateLocale('en', {
-            relativeTime: {
-                s: 'now',
-                ss: '%ds',
-                mm: "%dm",
-                hh: "%dh",
-                dd: "%dd",
-                ww: "%dw",
-                MM: "%dm",
-                yy: "%dy"
-            }
-        });
-        return moment(date).fromNow(true)
-    }
+
     const animateLike = (ev) => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
         console.log('idxLiked:', idxLiked)
@@ -189,7 +247,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             <div className="img-container">
                 {comment.likes && comment.likes.map(like => <img key={loggedinUser._id} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
             </div>
-            <p>{comment.likes?.length>0 ? 'Likes':''}</p>
+            <p>{comment.likes?.length > 0 ? 'Likes' : ''}</p>
         </div>
         <div className="reply-like-container">
             <div className="like-container">

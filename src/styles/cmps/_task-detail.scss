@@ -24,14 +24,71 @@
 
         }
 
-        .activity-type {
-            flex-grow: 1;
+        .activity-time {
+            margin-inline-end: 20px;
         }
 
         .activity-by {
-            width: 200px;
+            flex: 1;
             display: flex;
             align-items: center;
+        }
+
+        .activity-status {
+            padding: 10px 15px;
+
+            &.clr {
+                color: white;
+            }
+
+            &.Workingonit {
+                background-color: var(--clr-workingOnIt);
+            }
+
+            &.Stuck {
+                background-color: var(--clr-stuck);
+            }
+
+            &.Done {
+                background-color: var(--clr-done);
+            }
+
+            &.WaitingforQA {
+                background-color: var(--clr-waiting);
+            }
+
+            &.Needhelp {
+                background-color: var(--clr-help);
+            }
+
+            &.Pending {
+                background-color: var(--clr-pending);
+            }
+
+            &.Critical {
+                background-color: var(--clr-critical);
+            }
+
+            &.Medium {
+                background-color: var(--clr-medium);
+            }
+
+            &.High {
+                background-color: var(--clr-high);
+            }
+
+            &.Low {
+                background-color: var(--clr-low);
+            }
+
+        }
+
+        .activity-type {
+            flex: 1;
+        }
+
+        svg {
+            flex: 1
         }
     }
 
@@ -59,7 +116,7 @@
                 svg {
                     width: 16px;
                     height: 16px;
-    
+
                     * {
                         fill: var(--clr-btn-highlight);
                     }
@@ -179,11 +236,12 @@
             margin-top: 20px;
             margin-bottom: 20px;
             margin-left: 20px;
+
             .likes-container {
                 display: flex;
                 align-items: center;
                 padding-left: 20px;
-                
+
                 .img-container {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, 20px);
@@ -191,14 +249,17 @@
                     justify-content: center;
                     align-items: center;
                 }
+
                 img {
                     width: 30px;
                     height: 30px;
                 }
+
                 p {
                     padding-left: 5px;
                 }
             }
+
             .wobble-ver-left {
                 animation: wobble-ver-left 1.3s both;
             }
@@ -358,4 +419,3 @@
         transform: translateY(0px) rotate(-4deg);
     }
 }
-

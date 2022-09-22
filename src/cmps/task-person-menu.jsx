@@ -1,8 +1,10 @@
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { closeModals, updateTask } from "../store/board/board.action"
 
 export const TaskPersonMenu = ({ task, groupId, board, setIsTaskPersonMenuOpen, setIsScreenOpen }) => {
     const dispatch = useDispatch()
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
 
     const addMemberToTask = (member) => {
         let updatedTask
@@ -17,8 +19,8 @@ export const TaskPersonMenu = ({ task, groupId, board, setIsTaskPersonMenuOpen, 
             updatedTask = { ...task, memberIds: [member._id] }
         }
         dispatch(closeModals())
-        const activity = {type:"Added a member"}
-        console.log('here dispatch', activity);
+        const activity = {type:"add member", data: member}
+        updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
         dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }, activity))
         return
     }
@@ -29,7 +31,8 @@ export const TaskPersonMenu = ({ task, groupId, board, setIsTaskPersonMenuOpen, 
             if (task.memberIds.includes(member._id)) {
                 updatedTask = { ...task, memberIds: task.memberIds.filter(memberId => memberId !== member._id) }
                 dispatch(closeModals())
-                const activity = {type: "Removed a member"}
+                const activity = {type: "remove member", data: member}
+                updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
                 dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }, activity))
             }
         }
