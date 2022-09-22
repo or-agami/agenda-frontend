@@ -139,6 +139,12 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         });
         return moment(date).fromNow(true)
     }
+
+    const getIsCommentLiked = () => {
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
+        return (idxLiked !== -1 && idxLiked !== undefined)       
+    }
+
     const animateLike = (ev) => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
         console.log('idxLiked:', idxLiked)
@@ -173,6 +179,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
+
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
@@ -189,11 +196,11 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             <div className="img-container">
                 {comment.likes && comment.likes.map(like => <img key={loggedinUser._id} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
             </div>
-            <p>{comment.likes?.length>0 ? 'Likes':''}</p>
+            <p>{comment.likes?.length > 0 ? 'Likes' : ''}</p>
         </div>
         <div className="reply-like-container">
             <div className="like-container">
-                <button onClick={(ev) => animateLike(ev)} className="btn-svg btn-like"><Like ref={likeRef} />Like</button>
+                <button onClick={(ev) => animateLike(ev)} className={`btn-svg btn-like ${getIsCommentLiked() ? 'liked' : ''}`}><Like ref={likeRef} />Like</button>
             </div>
             <div className="reply-container">
                 <button className="btn btn-svg btn-reply"><Reply />Reply</button>

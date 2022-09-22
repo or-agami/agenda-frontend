@@ -59,7 +59,7 @@
                 svg {
                     width: 16px;
                     height: 16px;
-    
+
                     * {
                         fill: var(--clr-btn-highlight);
                     }
@@ -179,11 +179,12 @@
             margin-top: 20px;
             margin-bottom: 20px;
             margin-left: 20px;
+
             .likes-container {
                 display: flex;
                 align-items: center;
                 padding-left: 20px;
-                
+
                 .img-container {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, 20px);
@@ -191,14 +192,17 @@
                     justify-content: center;
                     align-items: center;
                 }
+
                 img {
                     width: 30px;
                     height: 30px;
                 }
+
                 p {
                     padding-left: 5px;
                 }
             }
+
             .wobble-ver-left {
                 animation: wobble-ver-left 1.3s both;
             }
@@ -272,11 +276,21 @@
                 justify-content: center;
                 border-radius: 8px;
 
+
+                &.liked {
+                    color: var(--clr-btn-highlight);
+
+                    svg * {
+                        fill: var(--clr-btn-highlight);
+
+                    }
+                }
+
                 svg {
                     margin-right: 10px;
                 }
 
-                &:hover {
+                &:hover:not(.liked) {
                     background-color: var(--clr-btn-bg-hover);
 
                     svg * {
@@ -358,4 +372,3 @@
         transform: translateY(0px) rotate(-4deg);
     }
 }
-
