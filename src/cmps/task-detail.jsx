@@ -60,7 +60,7 @@ export const TaskDetail = () => {
         </div>
         {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
         {whichRenders === 'isFiles' && <TaskDetailFiles />}
-        {whichRenders === 'isActivity' && <TaskDetailActivity />}
+        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} />}
     </section>
 }
 
@@ -81,9 +81,19 @@ const TaskDetailFiles = () => {
     </section>
 }
 
-const TaskDetailActivity = () => {
+const TaskDetailActivity = ({ task }) => {
     return <section className='task-detail-activity'>
+        <h1>Activity Log</h1>
+        {console.log(task)}
+        {task.activities?.map(activity => {
+            return <div key={activity.id} className="activity-container">
+                <span className="activity-type">{activity.type}</span>
+                <span className="activity-by"><img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} />
+                    {activity.byMember.fullname}</span>
+                <span className="activity-time">{activity.createdAt}</span>
 
+            </div>
+        })}
     </section>
 }
 
@@ -138,7 +148,7 @@ const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
             likeRef.current.classList.remove('wobble-ver-left')
 
         }, 1300)
-        let like = {fullname:byMember.fullname,imgUrl:byMember.imgUrl}
+        let like = { fullname: byMember.fullname, imgUrl: byMember.imgUrl }
         let updatedTask
         if (!task.likes) {
             updatedTask = { ...task, likes: [like] }
@@ -151,7 +161,7 @@ const Post = ({ board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
         console.log('task:', task)
     }
-    
+
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
