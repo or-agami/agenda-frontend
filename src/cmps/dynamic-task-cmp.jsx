@@ -170,7 +170,7 @@ const Timeline = ({task,group,board}) => {
             setDatePickerIsOpen={setDatePickerIsOpen} 
             taskTimeline={taskTimeline}
             handleDateChange={handleDateChange}
-            task={task} group={group} boardId={board._id} 
+            task={task} groupId={group.id} boardId={board._id} 
             />
             }
             <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>
