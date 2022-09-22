@@ -17,7 +17,6 @@ export const TaskPreview = ({ task, group, board }) => {
   const [isEditTitle, setIsEditTitle] = useState(false)
   const [editedTask, handleChange, setTask] = useForm(task)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const onSetIsTaskMenuOpen = () => {
     dispatch(openModal('isTaskMenuOpen', task.id))

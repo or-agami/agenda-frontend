@@ -14,11 +14,11 @@ const initialState = {
         isTaskPriorityMenuOpen: false,
         isTaskPersonMenuOpen: false,
         isColorMenuOpen: false,
-        isBoardOptsOpen:false,
-        isUserMenuOpen:false,
-        isTaskDetailPersonMenuOpen:false,
+        isBoardOptsOpen: false,
+        isUserMenuOpen: false,
+        isTaskDetailPersonMenuOpen: false,
     },
-    task:null,
+    task: null,
 }
 
 export function boardReducer(state = initialState, action) {
@@ -33,11 +33,11 @@ export function boardReducer(state = initialState, action) {
 
 
         case 'SET_BOARDS':
-            return { ...state, boards: action.boards, boardsLength: action.boards.length }
+            return { ...state, boards: action.boards }
 
         case 'ADD_BOARD':
             boards = [...state.boards, action.board]
-            return { ...state, boards, boardsLength: boards.length }
+            return { ...state, boards }
 
         case 'UPDATE_BOARD':
             boards = state.boards.map((board) => {
@@ -51,7 +51,7 @@ export function boardReducer(state = initialState, action) {
 
         case 'REMOVE_BOARD':
             boards = state.boards.filter(board => board._id !== action.boardId)
-            return { ...state, boards, boardsLength: boards.length }
+            return { ...state, boards }
 
         case 'SET_FILTER':
             return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
@@ -63,15 +63,14 @@ export function boardReducer(state = initialState, action) {
 
 
         case 'SET_BOARD':
-            boardIdx = initialState.boards.findIndex(board => board._id === action.board._id)
-            return { ...state, board: { ...action.board, idx: boardIdx }, boardsLength: initialState.boardsLength, neighborsId: action.neighborsId }
+            return { ...state, board: action.board }
 
         case 'CLOSE_MODALS':
             return { ...state, modals: initialState.modals }
         case 'OPEN_MODAL':
             return { ...state, modals: { ...state.modals, [action.stateName]: true, isScreenOpen: true, itemId: action.itemId } }
         case 'SET_TASK':
-            return {...state,task:action.task}
+            return { ...state, task: action.task }
         default:
             return state
     }

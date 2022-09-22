@@ -17,7 +17,7 @@ import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-col
 import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
-import { closeModals, loadBoard, loadBoards, openModal } from '../store/board/board.action';
+import { closeModals, loadBoard, loadBoards, openModal, setLoader } from '../store/board/board.action';
 import { UserMenu } from './user-menu';
 import { Dashboard } from '../views/dashboard';
 
@@ -34,11 +34,19 @@ export const NavBar = () => {
   const [currBoard, setCurrBoard] = useState(board)
 
   useEffect(() => {
+    if (board && !currBoard) setCurrBoard(board)
     if (!boards || boards.length <= 0) {
+      dispatch(setLoader())
       dispatch(loadBoards())
     }
     if (boards.length > 0 && !board) {
-      dispatch(loadBoard(boards[0]._id))
+      if (!params.boardId) {
+        dispatch(loadBoard(boards[0]._id))
+      }
+      else {
+        dispatch(setLoader())
+        dispatch(loadBoard(params.boardId))
+      }
       setCurrBoard(boards[0])
     }
   }, [boards, board])
