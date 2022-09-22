@@ -58,7 +58,6 @@ async function save({ title, groupId, boardId }) {
 
  // In Progress: add user activity to the task 
 function addActivity(task, activity) {
-
   const user = userService.getLoggedinUser()
   delete user.assignments
   delete user.userName

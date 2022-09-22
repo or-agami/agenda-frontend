@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
 import { ReactComponent as Arrow } from '../assets/icons/down-arrow.svg'
 import { useState } from "react"
-import { Link, NavLink, useParams } from "react-router-dom"
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { closeModals, loadBoards, openModal, removeBoard, updateBoard } from '../store/board/board.action'
@@ -104,8 +104,9 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 
 
 
-const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
+const NavBoardPreview = ({ board, setCurrBoard, boards}) => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
     const itemId = useSelector(state => state.boardModule.modals.itemId)
@@ -125,6 +126,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
         dispatch(closeModals())
         dispatch(removeBoard(boardId))
         setCurrBoard(boards[0])
+        navigate('/workspace/board/' + boards[0]._id)
     }
 
     const onEditBoard = (ev) => {

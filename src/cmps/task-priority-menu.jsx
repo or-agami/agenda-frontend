@@ -6,7 +6,8 @@ export const TaskPriorityMenu = ({task,groupId,boardId}) => {
     const onUpdatePriority = (priority) => {
         const updatedTask = {...task,priority}
         dispatch(closeModals())
-        dispatch(updateTask({task:updatedTask,groupId,boardId}))
+        const activity = {type: "Changed priority"}
+        dispatch(updateTask({task:updatedTask,groupId,boardId}, activity))
     }
 
 

@@ -6,7 +6,8 @@ export const TaskStatusMenu = ({ task, groupId, boardId, setIsTaskStatusMenuOpen
     const onUpdateStatus = (status) => {
         const updatedTask = { ...task, status }
         dispatch(closeModals())
-        dispatch(updateTask({ task: updatedTask, groupId, boardId }))
+        const activity = {type: "Changed status"}
+        dispatch(updateTask({ task: updatedTask, groupId, boardId }, activity))
     }
 
     return <section className="task-status-menu modal">
