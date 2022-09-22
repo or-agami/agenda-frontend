@@ -78,7 +78,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
             break;
         case 'timeline':
-            cmp = <Timeline task={task} group={group} boardId={board._id} />
+            cmp = <Timeline task={task} group={group} board={board} />
             className += 'timeline '
             // cmp = <RangePicker />
 
@@ -173,7 +173,7 @@ const Timeline = ({task,group,board}) => {
             setDatePickerIsOpen={setDatePickerIsOpen} 
             taskTimeline={taskTimeline}
             handleDateChange={handleDateChange}
-            task={task} group={group} boardId={board.id} 
+            task={task} group={group} boardId={board._id} 
             />
             }
             <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>
