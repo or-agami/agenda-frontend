@@ -140,26 +140,32 @@ const DynamicCmp = ({ category, isDecending, setIsDecending, clearSort }) => {
         }
         dispatch(setSort(sort))
     }
+    let className = 'flex justify-center group-content-header-category'
 
     switch (category) {
         case 'member':
             text = `Developer`
+            className += ' same-width'
             break;
 
         case 'status':
             text = `Status`
+            className += ' same-width'
 
             break;
         case 'priority':
             text = `Priority`
+            className += ' same-width'
 
             break;
         case 'lastUpdated':
             text = `Last updated`
+            className += ' same-width'
 
             break;
         case 'attachments':
             text = `Files`
+            className += ' same-width'
 
             break;
         case 'timeline':
@@ -171,7 +177,7 @@ const DynamicCmp = ({ category, isDecending, setIsDecending, clearSort }) => {
             break;
     }
 
-    return <li className="flex justify-center same-width group-content-header-category">
+    return <li className={className}>
         {isSortable &&
             <div className="sort-container">
                 <button onClick={() => onSort(category)} className='btn btn-sort'> <SortArrows />

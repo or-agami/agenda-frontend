@@ -14,8 +14,8 @@ import { FaPlusCircle } from "react-icons/fa"
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
     const dispatch = useDispatch()
     const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
-    const isCategoryInc = ['priority', 'status', 'lastUpdated', 'timeline', 'attachments'].includes(category)
-    let className = `flex justify-center same-width task-preview-`
+    const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
+    let className = `flex justify-center task-preview-`
     let headerTxt, cmp
     let cb = () => { }
 
@@ -51,20 +51,20 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     switch (category) {
 
         case 'member':
-            className += `developer `
+            className += `developer same-width `
             break;
 
         case 'status':
             cmp = <span className='fold'></span>
             headerTxt = task[category]
-            className += `status `
+            className += `status same-width `
             cb = onSetTaskStatusMenuOpen
 
             break;
         case 'priority':
             cmp = <span className='fold'></span>
             headerTxt = task[category]
-            className += `priority `
+            className += `priority same-width `
             if (task[category] === 'Critical') {
                 headerTxt += " ⚠"
             }
@@ -73,7 +73,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
             break;
         case 'attachments':
             // cmp = <AddFile task={task} />
-            // className += 'attachments'
+            className += 'attachments same-width '
 
 
 
@@ -96,7 +96,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
             break;
     }
 
-    if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments' && category !== 'timeline') className += makeClass(task[category])
+    if (isCategoryInc && category !== 'lastUpdated' && category !== 'attachments') className += makeClass(task[category])
 
     return <>
         {(isTaskPersonMenuOpen && itemId === task.id && isScreenOpen) &&
@@ -127,6 +127,8 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                     {task.lastUpdated && task.lastUpdated.byUserId &&
                         GetMemberImgFromId(board, task.lastUpdated.byUserId)}
                 </div>}
+            {category === 'timeline' &&
+                    <Timeline task={task} group={group} board={board} />}
             {isCategoryInc && <>
                 <h4>{headerTxt}</h4>
                 {cmp}
@@ -177,9 +179,9 @@ const Timeline = ({task,group,board}) => {
             <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>
                 {task.timeline &&
                 <Fragment>
-                {task.timeline?.endDate && <div className="background-time-progress-bar"></div>}
+                {task.timeline?.endDate && <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress(task.timeline)}%` }}></div>}
                 {task.timeline?.startDate && <>
-                    <div className={"time-progress-bar " + group.style} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>
+                    <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>
                     <span>{getFormattedDateTime(task.timeline.startDate)}</span>
                 </>}
                 {task.timeline?.startDate && task.timeline?.endDate &&
@@ -192,29 +194,3 @@ const Timeline = ({task,group,board}) => {
         </Fragment>
     )
 }
-
-// const AddFile = ({ task }) => {
-    
-//     const fileRef = useRef()
-
-//     const [isFile , setIsFile] = useState(false)
-
-//     const importImg = (ev, property) => {
-//         const reader = new FileReader()
-//         reader.readAsDataURL(ev.target.files[0])
-//         setIsFile(true)
-//         reader.addEventListener("load", () => {
-//             console.log(reader.result);
-//             console.log(fileRef);
-//             fileRef.current.src = reader.result
-//         })
-//     }
-
-//     return <div>
-//         {isFile ? <img className='file-img' ref={fileRef} />
-//             : <button className='btn add-file-btn'>
-//                 <input className="import-img-input" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
-//                 <BiImageAdd />
-//             </button>}
-//     </div>
-// }

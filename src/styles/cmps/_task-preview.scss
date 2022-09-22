@@ -124,29 +124,30 @@
     }
 
     .task-preview-timeline {
-        padding: 0 14px;
-        font-family: roboto-light;
+        padding: 0 8px;
+        font-family: roboto;
+        font-size: 13px;
+        line-height: 22px;
+        font-weight: 400;
         color: white;
-        font-size: 12px;
         gap: 4px;
-
+        min-width: 160px;
+        
         .timeline-wrapper {
-            // background-color: black;
             position: relative;
             width: 100%;
             height: 65%;
             gap: 4px;
             border-radius: 2em;
             overflow: hidden;
-
+            
             .background-time-progress-bar {
                 position: absolute;
-                width: 100%;
-                left: 0;
+                right: 0;
                 height: 100%;
                 background-color: black;
             }
-
+            
             .time-progress-bar {
                 position: absolute;
                 left: 0;
@@ -158,7 +159,7 @@
             }
 
             span {
-                z-index: 5;
+                z-index: 1;
             }
         }
     }
