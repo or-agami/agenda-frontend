@@ -86,7 +86,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
             break;
         case 'lastUpdated':
-            className += `last-updated `
+            className += `last-updated same-width `
             headerTxt = getFormattedDateTime(task[category]?.date)
 
 
