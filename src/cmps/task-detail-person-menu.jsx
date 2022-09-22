@@ -18,8 +18,7 @@ export const TaskDetailPersonMenu = ({task, groupId, board}) => {
             updatedTask = { ...task, memberIds: [member._id]}
         }
         dispatch(closeModals())
-        const activity = {type:"Added a member"}
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }, activity))
+        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id}))
         return 
     }
 
