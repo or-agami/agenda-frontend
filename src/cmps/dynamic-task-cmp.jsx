@@ -162,7 +162,6 @@ const Timeline = ({task,group,board}) => {
         setTaskTimeline([dateRange])
         task.timeline = {startDate: Date.parse(dateRange.startDate), endDate: Date.parse(dateRange.endDate)}
     }
-console.log('group.style:', group.style)
     return (
         <Fragment>
             {datePickerIsOpen && 
