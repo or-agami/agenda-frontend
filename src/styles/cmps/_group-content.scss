@@ -115,6 +115,7 @@
         z-index: 2;
         border: 1px solid var(--clr-disabled);
         border-left: none;
+        border-right: none;
         border-start-start-radius: 8px;
         min-height: 35px;
         margin: 0;
@@ -175,7 +176,7 @@
         height: 35px;
         border-right: 1px solid var(--clr-disabled);
 
-        .input {
+        input {
             width: 15px;
             height: 15px;
         }
