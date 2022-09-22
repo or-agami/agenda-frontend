@@ -36,7 +36,7 @@ export function boardReducer(state = initialState, action) {
             return { ...state, boards: action.boards, boardsLength: action.boards.length }
 
         case 'ADD_BOARD':
-            boards = [action.board, ...state.boards]
+            boards = [...state.boards, action.board]
             return { ...state, boards, boardsLength: boards.length }
 
         case 'UPDATE_BOARD':
