@@ -9,6 +9,7 @@ import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
 import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
+import { FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
@@ -48,7 +49,9 @@ export const TaskDetail = () => {
             <div className='task-detail-header-top'>
                 <h3>{task.title}</h3>
                 <div className='task-detail-member-container'>
-                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+</button>
+                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
+                        <FaPlusCircle />
+                    </button>
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>

@@ -34,6 +34,7 @@
     &>li:last-child {
         display: flex;
         width: 100%;
+
         div {
             flex: 1;
         }
@@ -136,7 +137,7 @@
             gap: 4px;
             border-radius: 2em;
             overflow: hidden;
-            
+
             .background-time-progress-bar {
                 position: absolute;
                 width: 100%;
@@ -149,6 +150,7 @@
                 position: absolute;
                 left: 0;
                 height: 100%;
+
                 &.undefined {
                     background-color: #5a5a5a;
                 }
@@ -175,9 +177,10 @@
                 display: flex;
             }
         }
-        
+
         .add-file-btn {
             display: none;
+
             svg {
                 width: 20px;
                 height: 20px;
@@ -215,20 +218,18 @@
         }
 
         .btn-add-developer {
-            width: 15px;
-            height: 15px;
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 1.0625rem;
-            color: #fff;
-            background-color: var(--clr-btn-highlight);
             opacity: 0;
             position: absolute;
             left: 10px;
 
+            svg {
+                width: 16px;
+                height: 16px;
+
+                * {
+                    fill: var(--clr-btn-highlight);
+                }
+            }
         }
     }
 
@@ -247,6 +248,7 @@
                 justify-content: center;
                 align-items: center;
                 border-left: 1px solid var(--clr-disabled);
+
                 &:hover .btn-start-conversation {
                     svg * {
                         fill: var(--clr-btn-highlight);
@@ -350,4 +352,3 @@
     }
 
 }
-

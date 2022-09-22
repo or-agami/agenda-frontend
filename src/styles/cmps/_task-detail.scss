@@ -56,16 +56,14 @@
             margin-bottom: 10px;
 
             .btn-add-developer {
-                width: 16px;
-                height: 16px;
-                text-align: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                font-size: 1.0625rem;
-                color: #fff;
-                background-color: var(--clr-btn-highlight);
+                svg {
+                    width: 16px;
+                    height: 16px;
+    
+                    * {
+                        fill: var(--clr-btn-highlight);
+                    }
+                }
             }
 
             img {

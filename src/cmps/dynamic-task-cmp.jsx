@@ -8,6 +8,7 @@ import { TaskPriorityMenu } from "./task-priority-menu"
 import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { DatePicker } from "./date-picker"
+import { FaPlusCircle } from "react-icons/fa"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
@@ -110,7 +111,8 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
         <li className={className} onClick={cb}>
             {category === 'member' &&
                 <Fragment>
-                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>+
+                    <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
+                        <FaPlusCircle/>
                     </button>
                     <div className='developer-container'>
                         {task.memberIds ?
