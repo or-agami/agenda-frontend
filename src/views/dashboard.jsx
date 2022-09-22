@@ -85,12 +85,23 @@ export const Dashboard = () => {
         ],
     }
 
+    const statusLabels = () => {
+        const statuses = [...statusOpts]
+        statuses.splice(statuses.length - 1, 1, 'no status')
+        return statuses
+    }
+
+    const priorityLabels = () => {
+        const priorities = [...priorityOpts]
+        priorities.splice(priorities.length - 1, 1, 'no priority')
+        return priorities
+    }
   
     const statusData = {
-        labels: statusOpts,
+        labels: statusLabels(),
         datasets: [
             {
-                label: 'Status',
+                label: 'Status Count',
                 data: statusCounter,
                 backgroundColor: [
                     "#00c875",
@@ -108,10 +119,10 @@ export const Dashboard = () => {
     }
 
     const priorityData = {
-        labels: priorityOpts,
+        labels: priorityLabels(),
         datasets: [
             {
-                label: 'Priority',
+                label: 'Priority Count',
                 data: priorityCounter,
                 backgroundColor: [
                     "#333333",

@@ -39,9 +39,9 @@ async function remove({ taskId, groupId, boardId }) {
 }
 
 async function update({ task, groupId, boardId }, activity) {
-
-  // In Progress: add user activity to the task 
-  // task = addActivity(task, activity)
+  // In Progress: add user activity to the task
+  console.log('activity', activity);
+  if (activity) task = addActivity(task, activity)
   const group = await groupService.getById({ groupId, boardId })
   group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
   return groupService.update({ group, boardId })
@@ -57,16 +57,22 @@ async function save({ title, groupId, boardId }) {
 }
 
  // In Progress: add user activity to the task 
-// function addActivity(task, activity) {
-//   const newActivity = {
-//     id: utilService.makeId(),
-//     type: activity.type,
-//     createdAt: Date.now,
-//     byMember: userService.getLoggedinUser()
-//   }
+function addActivity(task, activity) {
 
-//   if (!task.activities) task.activities = [newActivity]
-//   else task.activities.unshift(newActivity)
+  const user = userService.getLoggedinUser()
+  delete user.assignments
+  delete user.userName
 
-//   return task
-// }
+  const newActivity = {
+    id: utilService.makeId(),
+    type: activity.type,
+    createdAt: Date.now(),
+    byMember: user,
+  }
+
+
+  if (!task.activities) task.activities = [newActivity]
+  else task.activities.unshift(newActivity)
+
+  return task
+}
