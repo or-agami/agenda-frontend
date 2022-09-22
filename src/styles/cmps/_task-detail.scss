@@ -78,6 +78,11 @@
             width: 105px;
             justify-content: center;
             align-items: center;
+
+            .btn-add-developer {
+                position: relative;
+                left: 10px;
+            }
         }
 
         .task-detail-header-bottom {
