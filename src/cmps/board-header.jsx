@@ -14,7 +14,7 @@ import { updateBoard } from '../store/board/board.action'
 import { useFilter } from '../hooks/useFilter'
 import { NavLink, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-import {ReactComponent as HomeIcon} from '../assets/icons/home-icon.svg'
+import { ReactComponent as HomeIcon } from '../assets/icons/home-icon.svg'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
@@ -53,8 +53,10 @@ export const BoardHeader = ({ board }) => {
             <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
           </form>
             : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
-          <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
-          <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
+          <div className="board-header-nav-container">
+            <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
+            <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
+          </div>
         </div>
         <div className="flex btns-container">
           <button className="btn btn-svg invite">
