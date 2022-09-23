@@ -14,6 +14,7 @@ import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
 import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
+import { TaskTimeline } from "./task-timeline"
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
@@ -63,7 +64,7 @@ export const TaskDetail = () => {
         </div>
         {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
         {whichRenders === 'isFiles' && <TaskDetailFiles />}
-        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} />}
+        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} group={{ id: groupId, style: "clr13" }} board={board} />}
     </section>
 }
 
@@ -84,7 +85,7 @@ const TaskDetailFiles = () => {
     </section>
 }
 
-const TaskDetailActivity = ({ task }) => {
+const TaskDetailActivity = ({ task, group, board }) => {
 
     const makeClass = (status) => {
         if (!status) return
@@ -132,6 +133,14 @@ const TaskDetailActivity = ({ task }) => {
                     title = 'Changed Title'
                     info = <span className="activity-status">
                         {activity.data}
+                    </span>
+
+                    break;
+                case 'timeline':
+                    console.log(activity);
+                    title = 'Changed Timeline'
+                    info = <span className="task-preview-timeline">
+                        <TaskTimeline task={{...task, timeline:activity.data}} group={group} board={board} isReadOnly={true} />
                     </span>
 
                     break;
@@ -191,7 +200,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             dispatch(updateTask({ task, groupId, boardId: board._id }))
             return
         }
-        
+
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
@@ -207,7 +216,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         }, 1300)
 
         let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
-        
+
         if (!comment.likes) comment.likes = [like]
         else comment.likes.unshift(like)
 

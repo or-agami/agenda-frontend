@@ -1,15 +1,14 @@
 import moment from "moment/moment"
 import { Fragment, useState } from "react"
-import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { openModal } from "../store/board/board.action"
 import { TaskPersonMenu } from "./task-person-menu"
 import { TaskPriorityMenu } from "./task-priority-menu"
 import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
-import { DatePicker } from "./date-picker"
 import { FaPlusCircle } from "react-icons/fa"
 import { PopUpModal } from "./pop-up-modal"
+import { TaskTimeline } from "./task-timeline"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
@@ -90,9 +89,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
             break;
         case 'timeline':
-            cmp = <Timeline task={task} group={group} board={board} />
             className += 'timeline '
-            // cmp = <RangePicker />
 
 
             break;
@@ -136,69 +133,11 @@ console.log('modalName from dynamic component:', modalName)
                         GetMemberImgFromId(board, task.lastUpdated.byUserId)}
                 </div>}
             {category === 'timeline' &&
-                    <Timeline task={task} group={group} board={board} />}
+                    <TaskTimeline task={task} group={group} board={board} />}
             {isCategoryInc && <>
                 <h4>{headerTxt}</h4>
                 {cmp}
             </>}
         </li>
     </>
-}
-
-const Timeline = ({task,group,board}) => {
-
-    const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
-    const [taskTimeline, setTaskTimeline] = useState([
-        {
-            startDate: new Date(task.timeline?.startDate || Date.now()),
-            endDate: new Date(task.timeline?.endDate || Date.now()),
-            key: 'selection'
-        }
-    ])
-
-    const getFormattedDateTime = (date) => {
-        if (!date) return
-        // moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
-        return moment(date).format("MMM D")
-    }
-
-
-    const getTimeProgress = ({startDate, endDate}) => {
-        if (!startDate || !endDate) return ''
-        const timeRatio = (Date.now() - startDate) / (endDate - startDate)
-        const timeProgress = (timeRatio * 100).toFixed()
-        return (timeProgress < 0) ? 0 : (timeProgress < 100) ? timeProgress : 100
-    }
-
-    const handleDateChange = (dateRange) => {
-        setTaskTimeline([dateRange])
-        task.timeline = {startDate: Date.parse(dateRange.startDate), endDate: Date.parse(dateRange.endDate)}
-    }
-    return (
-        <Fragment>
-            {datePickerIsOpen && 
-            <DatePicker 
-            setDatePickerIsOpen={setDatePickerIsOpen} 
-            taskTimeline={taskTimeline}
-            handleDateChange={handleDateChange}
-            task={task} groupId={group.id} boardId={board._id} 
-            />
-            }
-            <div className="flex justify-center timeline-wrapper" onClick={() => setDatePickerIsOpen(!datePickerIsOpen)}>
-                {task.timeline &&
-                <Fragment>
-                {task.timeline?.endDate && <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress(task.timeline)}%` }}></div>}
-                {task.timeline?.startDate && <>
-                    <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>
-                    <span>{getFormattedDateTime(task.timeline.startDate)}</span>
-                </>}
-                {task.timeline?.startDate && task.timeline?.endDate &&
-                    <span> - </span>}
-                {task.timeline?.endDate &&
-                    <span>{getFormattedDateTime(task.timeline.endDate)}</span>}
-                    </Fragment>
-                }
-            </div>
-        </Fragment>
-    )
 }

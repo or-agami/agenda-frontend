@@ -16,20 +16,16 @@
         padding: 10px;
 
         .activity-container {
-            display: flex;
-            align-items: center;
             padding: 10px 0px;
             border-bottom: 1px solid var(--clr-disabled);
             font-size: 15px;
-
-        }
-
-        .arrow-right-activity {
-            margin-inline-end: 50px;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            grid-template-columns: 100px 200px 150px 50px 1fr;
         }
 
         .activity-time {
-            width: 100px;
             display: flex;
             align-items: center;
         }
@@ -37,15 +33,16 @@
         .activity-by {
             display: flex;
             align-items: center;
-            margin-inline-end: 50px;
         }
 
         .activity-status {
-            padding: 10px 15px;
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .activity-status {
+            
 
             &.clr {
                 color: white;
@@ -93,9 +90,6 @@
 
         }
 
-        .activity-type {
-            min-width: 200px;
-        }
     }
 
     .btn-svg-x {

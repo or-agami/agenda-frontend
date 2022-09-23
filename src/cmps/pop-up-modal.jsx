@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
 import { removeTask, updateTask } from '../store/board/board.action'
-import { DatePicker } from './date-picker'
 
 export const PopUpModal = ({ modalName,setModalName, task, group, board }) => {
   const dispatch = useDispatch()
