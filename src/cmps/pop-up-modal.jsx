@@ -6,7 +6,7 @@ import { removeBoard, removeGroup, removeTask, updateGroup, updateTask } from '.
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 
-export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,setCurrBoard ,setIsRenaming,isRenaming}) => {
+export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
   const dispatch = useDispatch()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const closeModal = () => {
@@ -24,7 +24,8 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,
 
   const onUpdateStatus = (status) => {
     const updatedTask = { ...task, status }
-    const activity = { type: "Changed status" }
+    const activity = { type: "status", data: status }
+    updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
     dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
   }
 
@@ -35,7 +36,8 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,
 
   const onUpdatePriority = (priority) => {
     const updatedTask = { ...task, priority }
-    const activity = { type: "Changed priority" }
+    const activity = { type: "priority", data: priority }
+    updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
     dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
   }
 
@@ -105,27 +107,27 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,
     setTimeout(() => {
       setModalName(null)
     }, 100);
-    dispatch(updateGroup({ group: updatedGroup, boardId:board._id }))
-}
+    dispatch(updateGroup({ group: updatedGroup, boardId: board._id }))
+  }
 
-const onRemoveBoard = (ev, boardId) => {
-  ev.preventDefault()
-  ev.stopPropagation()
-  setTimeout(() => {
-    setModalName(null)
-  }, 100);
-  dispatch(removeBoard(boardId))
-  setCurrBoard(boards[0])
-}
+  const onRemoveBoard = (ev, boardId) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    dispatch(removeBoard(boardId))
+    setCurrBoard(boards[0])
+  }
 
-const onEditBoard = (ev) => {
-  ev.preventDefault()
-  ev.stopPropagation()
-  setTimeout(() => {
-    setModalName(null)
-  }, 100);
-  setIsRenaming(!isRenaming)
-}
+  const onEditBoard = (ev) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    setIsRenaming(!isRenaming)
+  }
 
   switch (modalName) {
     case 'TASK_MENU':
@@ -180,8 +182,8 @@ const onEditBoard = (ev) => {
         </div>
         <button onClick={onRemoveGroup} className='btn btn-svg btn-trash-task'><Trash /> Delete</button>
       </section>
-      case 'COLOR_MENU':
-        return <section className='color-menu modal' onClick={(ev) => ev.stopPropagation()}>
+    case 'COLOR_MENU':
+      return <section className='color-menu modal' onClick={(ev) => ev.stopPropagation()}>
         <div className='clr1' onClick={() => changeGroupColor('clr1')}></div>
         <div className='clr2' onClick={() => changeGroupColor('clr2')}></div>
         <div className='clr3' onClick={() => changeGroupColor('clr3')}></div>
@@ -198,18 +200,18 @@ const onEditBoard = (ev) => {
         <div className='clr14' onClick={() => changeGroupColor('clr15')}></div>
         <div className='clr15' onClick={() => changeGroupColor('clr16')}></div>
         <div className='clr17' onClick={() => changeGroupColor('clr17')}></div>
-    </section>
+      </section>
     case 'SIDE_NAV_MENU':
-      return <div className='board-opts-modal modal'onClick={(ev) => ev.stopPropagation()}>
-                    <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
-                        <PencilIcon />
-                        <span>Rename Board</span>
-                    </div>
-                    <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
-                        <TrashIcon />
-                        <span>Remove Board</span>
-                    </div>
-                </div>
+      return <div className='board-opts-modal modal' onClick={(ev) => ev.stopPropagation()}>
+        <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
+          <PencilIcon />
+          <span>Rename Board</span>
+        </div>
+        <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
+          <TrashIcon />
+          <span>Remove Board</span>
+        </div>
+      </div>
     default: return console.error('cannot open modal!')
   }
 }

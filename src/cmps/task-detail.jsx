@@ -86,17 +86,17 @@ const TaskDetailFiles = () => {
 }
 
 const TaskDetailActivity = ({ task, group, board }) => {
-
     const makeClass = (status) => {
         if (!status) return
         return status.split(' ').join('')
     }
-
+    
     return <section className='task-detail-activity'>
 
         {task.activities?.map(activity => {
             let title
             let info
+            console.log('activity:', activity)
             switch (activity.type) {
                 case 'add member':
                     title = 'Added'
@@ -120,7 +120,6 @@ const TaskDetailActivity = ({ task, group, board }) => {
                         {activity.data}
                     </span>
 
-
                     break;
                 case 'priority':
                     title = 'Changed Priority'
@@ -137,7 +136,6 @@ const TaskDetailActivity = ({ task, group, board }) => {
 
                     break;
                 case 'timeline':
-                    console.log(activity);
                     title = 'Changed Timeline'
                     info = <span className="task-preview-timeline">
                         <TaskTimeline task={{...task, timeline:activity.data}} group={group} board={board} isReadOnly={true} />
