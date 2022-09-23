@@ -5,7 +5,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
 import { ReactComponent as Arrow } from '../assets/icons/down-arrow.svg'
 import { useState } from "react"
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom"
+import { Link, NavLink, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { closeModals, loadBoards, openModal, removeBoard, updateBoard } from '../store/board/board.action'
@@ -104,41 +104,24 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 
 
 
-const NavBoardPreview = ({ board, setCurrBoard, boards}) => {
-
-    const navigate = useNavigate()
+const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
+    const [modalName,setModalName] = useState(null)
     const dispatch = useDispatch()
-    const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
-    const itemId = useSelector(state => state.boardModule.modals.itemId)
-    const isBoardOptsOpen = useSelector(state => state.boardModule.modals.isBoardOptsOpen)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
 
     const openBoardSettings = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()
-        dispatch(openModal('isBoardOptsOpen', board._id))
-    }
+        setTimeout(() => {
+            setModalName('SIDE_NAV_MENU')
+          }, 100);
 
-    const onRemoveBoard = (ev, boardId) => {
-        ev.preventDefault()
-        ev.stopPropagation()
-        dispatch(closeModals())
-        dispatch(removeBoard(boardId))
-        setCurrBoard(boards[0])
-        navigate('/workspace/board/' + boards[0]._id)
-    }
-
-    const onEditBoard = (ev) => {
-        ev.preventDefault()
-        ev.stopPropagation()
-        dispatch(closeModals())
-        setIsRenaming(!isRenaming)
     }
 
     const onRenameBoard = (ev) => {
         ev.preventDefault()
-        dispatch(closeModals())
+        setModalName(null)
         board = { ...board, ...renameBoard }
         setIsRenaming(!isRenaming)
         dispatch(updateBoard(board))
@@ -153,17 +136,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards}) => {
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-            {(isBoardOptsOpen && itemId === board._id && isScreenOpen) &&
-                <div className='board-opts-modal modal'>
-                    <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
-                        <PencilIcon />
-                        <span>Rename Board</span>
-                    </div>
-                    <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
-                        <TrashIcon />
-                        <span>Remove Board</span>
-                    </div>
-                </div>}
+            {modalName && <PopUpModal setCurrBoard={setCurrBoard} setModalName={setModalName} modalName={modalName} board={board} boards={boards} setIsRenaming={setIsRenaming} isRenaming={isRenaming}/>}
         </NavLink>
     )
 }

@@ -2,36 +2,37 @@ import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-ic
 import { TaskList } from './task-list'
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { useState } from 'react'
-import { GroupMenu } from './group-menu'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { useForm } from '../hooks/useForm'
-import { openModal, setSort, updateBoard, updateGroup } from '../store/board/board.action'
+import { setSort, updateBoard, updateGroup } from '../store/board/board.action'
 import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { PopUpModal } from './pop-up-modal'
 
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board}) => {
-
+    const [modalName,setModalName] = useState(null)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setIsDecending] = useState(false)
-    const { isScreenOpen, isGroupMenuOpen, itemId } = useSelector(state => state.boardModule.modals)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
 
     const onSetIsGroupMenuOpen = () => {
-        dispatch(openModal('isGroupMenuOpen', group.id))
+        setTimeout(() => {
+            setModalName('GROUP_MENU')
+        }, 100);
     }
 
     const onSetIsHeaderOpen = ({ target }) => {
         target.classList.toggle('open')
-        setIsHeaderOpen(prevState => prevState = !isHeaderOpen)
+        setIsHeaderOpen(!isHeaderOpen)
     }
 
     const updateGroupName = (ev) => {
         if (ev) ev.preventDefault()
         dispatch(updateGroup({ group: editedGroup, boardId: board._id }))
-        setIsEditTitle(prevState => prevState = !isEditTitle)
+        setIsEditTitle(!isEditTitle)
     }
 
     const onSortBy = (sortBy) => {
@@ -117,7 +118,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board}) => 
                 board={board}
             />
         </div>
-        {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
     </section>
 }
 

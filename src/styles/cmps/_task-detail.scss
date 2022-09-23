@@ -16,27 +16,31 @@
         padding: 10px;
 
         .activity-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 10px 0px;
             border-bottom: 1px solid var(--clr-disabled);
-
+            font-size: 15px;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            grid-template-columns: 100px 200px 150px 50px 1fr;
         }
 
         .activity-time {
-            margin-inline-end: 20px;
+            display: flex;
+            align-items: center;
         }
 
         .activity-by {
-            flex: 1;
             display: flex;
             align-items: center;
         }
 
         .activity-status {
-            padding: 10px 15px;
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-block: 8px;
+            
             &.clr {
                 color: white;
             }
@@ -83,13 +87,6 @@
 
         }
 
-        .activity-type {
-            flex: 1;
-        }
-
-        svg {
-            flex: 1
-        }
     }
 
     .btn-svg-x {

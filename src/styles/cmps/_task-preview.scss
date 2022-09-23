@@ -107,59 +107,18 @@
 
 
     }
-
+   
     .task-preview-last-updated {
-        padding: 0 4px;
+        padding: 0 5px;
         font-family: roboto-light;
         font-size: 13px;
-        gap: 4px;
-        padding: 5px 8px;
+        gap: 5px;
+        justify-content: flex-start;
 
         .last-updated {
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-    }
-
-    .task-preview-timeline {
-        padding: 0 8px;
-        font-family: roboto;
-        font-size: 13px;
-        line-height: 22px;
-        font-weight: 400;
-        color: white;
-        gap: 4px;
-        min-width: 160px;
-        
-        .timeline-wrapper {
-            position: relative;
-            width: 100%;
-            height: 65%;
-            gap: 4px;
-            border-radius: 2em;
-            overflow: hidden;
-            
-            .background-time-progress-bar {
-                position: absolute;
-                right: 0;
-                height: 100%;
-                background-color: black;
-            }
-            
-            .time-progress-bar {
-                position: absolute;
-                left: 0;
-                height: 100%;
-
-                &.undefined {
-                    background-color: #5a5a5a;
-                }
-            }
-
-            span {
-                z-index: 1;
-            }
         }
     }
 

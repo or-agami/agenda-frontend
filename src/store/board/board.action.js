@@ -177,18 +177,6 @@ export function removeGroup(group) {
     }
 }
 
-export function closeModals() {
-    return (dispatch) => {
-        dispatch({ type: 'CLOSE_MODAL' })
-    }
-}
-
-export function openModal(modalName) {
-    return (dispatch) => {
-        dispatch({ type: 'OPEN_MODAL', modalName })
-    }
-}
-
 export function loadTask(task) {
     return (dispatch) => {
         taskService.getById(task)
@@ -200,3 +188,26 @@ export function loadTask(task) {
             })
     }
 }
+
+export function addComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+
+export function removeComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+

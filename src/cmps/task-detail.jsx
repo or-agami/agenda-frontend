@@ -2,32 +2,32 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { loadTask, openModal, updateTask } from "../store/board/board.action"
+import { addComment, loadTask, updateTask } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
-import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
 import { FaArrowRight, FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
 import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
+import { TaskTimeline } from "./task-timeline"
+import { PopUpModal } from "./pop-up-modal"
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const task = useSelector(state => state.boardModule.task)
     const board = useSelector(state => state.boardModule.board)
-    const itemId = useSelector(state => state.boardModule.modals.itemId)
-    const isTaskDetailPersonMenuOpen = useSelector(state => state.boardModule.modals.isTaskDetailPersonMenuOpen)
     const [whichRenders, setWhichRenders] = useState('isUpdates')
     const params = useParams()
     const [searchParams] = useSearchParams()
     const groupId = searchParams.get('groupId')
     const taskId = searchParams.get('taskId')
     const boardId = params.boardId
+    const [modalName,setModalName] = useState(null)
 
     useEffect(() => {
         dispatch(loadTask(taskId))
@@ -39,7 +39,9 @@ export const TaskDetail = () => {
 
 
     const onSetTaskPersonMenuOpen = () => {
-        dispatch(openModal('isTaskDetailPersonMenuOpen', taskId))
+        setTimeout(() => {
+            setModalName('TASK_DETAIL_PERSON_MENU')
+          }, 100);
     }
 
     if (!task) return
@@ -52,6 +54,7 @@ export const TaskDetail = () => {
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
                         <FaPlusCircle />
                     </button>
+                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} />}
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
@@ -63,7 +66,7 @@ export const TaskDetail = () => {
         </div>
         {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
         {whichRenders === 'isFiles' && <TaskDetailFiles />}
-        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} />}
+        {whichRenders === 'isActivity' && <TaskDetailActivity task={task} group={{ id: groupId, style: "clr13" }} board={board} />}
     </section>
 }
 
@@ -84,19 +87,18 @@ const TaskDetailFiles = () => {
     </section>
 }
 
-const TaskDetailActivity = ({ task }) => {
-
+const TaskDetailActivity = ({ task, group, board }) => {
     const makeClass = (status) => {
         if (!status) return
         return status.split(' ').join('')
     }
-
+    
     return <section className='task-detail-activity'>
-        <h1>Activity Log</h1>
+
         {task.activities?.map(activity => {
             let title
             let info
-            console.log(activity);
+            console.log('activity:', activity)
             switch (activity.type) {
                 case 'add member':
                     title = 'Added'
@@ -120,7 +122,6 @@ const TaskDetailActivity = ({ task }) => {
                         {activity.data}
                     </span>
 
-
                     break;
                 case 'priority':
                     title = 'Changed Priority'
@@ -133,6 +134,13 @@ const TaskDetailActivity = ({ task }) => {
                     title = 'Changed Title'
                     info = <span className="activity-status">
                         {activity.data}
+                    </span>
+
+                    break;
+                case 'timeline':
+                    title = 'Changed Timeline'
+                    info = <span className="task-preview-timeline">
+                        <TaskTimeline task={{...task, timeline:activity.data}} group={group} board={board} isReadOnly={true} />
                     </span>
 
                     break;
@@ -174,10 +182,11 @@ const getFormattedDateTime = (date) => {
 
 
 const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
+    const dispatch = useDispatch()
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
-    const dispatch = useDispatch()
+    const [modalName,setModalName] = useState(null)
 
 
     const getIsCommentLiked = () => {
@@ -192,7 +201,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             dispatch(updateTask({ task, groupId, boardId: board._id }))
             return
         }
-        
+
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
@@ -208,12 +217,18 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         }, 1300)
 
         let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
-        
+
         if (!comment.likes) comment.likes = [like]
         else comment.likes.unshift(like)
 
         task.comments.splice(commentIdx, 1, comment)
         dispatch(updateTask({ task, groupId, boardId: board._id }))
+    }
+
+    const openPostMenu =()=> {
+        setTimeout(() => {
+            setModalName('TASK_DETAIL_POST_MENU')
+          }, 100);
     }
 
     const replyToComment = (ev) => {
@@ -229,8 +244,9 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             </div>
             <div className="time-menu-container">
                 <p><Clock />{getFormattedDateTime(createdAt)}</p>
-                <button className="btn btn-svg btn-menu"><Menu /></button>
+                <button onClick={()=>openPostMenu()} className="btn btn-svg btn-menu"><Menu /></button>
             </div>
+                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} comment={comment}/>}
         </div>
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
@@ -249,7 +265,9 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         </div>
     </section>
 }
+
 const GetMemberImgFromId = (board, memberId) => {
+    if(!board) return
     const imgUrl = board.members.find(member => member._id === memberId).imgUrl
     return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
@@ -274,7 +292,7 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         }
         setIsChatOpen(false)
         textAreaRef.current.value = ''
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
+        dispatch(addComment({ task: updatedTask, groupId, boardId: board._id }))
     }
 
     return <section className="chat-box-open">

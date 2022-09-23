@@ -17,21 +17,19 @@ import { ReactComponent as AgendaLogoSvg } from '../assets/icons/agenda-logo-col
 import { SideNavBar } from './side-nav-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from './loader';
-import { closeModals, loadBoard, loadBoards, openModal, setLoader } from '../store/board/board.action';
-import { UserMenu } from './user-menu';
+import { loadBoard, loadBoards, setLoader } from '../store/board/board.action';
 import { Dashboard } from '../views/dashboard';
+import { PopUpModal } from './pop-up-modal';
 
 
 export const NavBar = () => {
 
   const dispatch = useDispatch()
-  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const { board, boards } = useSelector(state => state.boardModule)
-  const isUserMenuOpen = useSelector(state => state.boardModule.modals.isUserMenuOpen)
-  const itemId = useSelector(state => state.boardModule.modals.itemId)
   const params = useParams()
   const [isOpen, setIsOpen] = useState(false)
   const [currBoard, setCurrBoard] = useState(board)
+  const [modalName, setModalName] = useState(null)
 
   useEffect(() => {
     if (board && !currBoard) setCurrBoard(board)
@@ -62,7 +60,9 @@ export const NavBar = () => {
   }, [isOpen, params])
 
   const openUserMenu = () => {
-    dispatch(openModal('isUserMenuOpen', loggedinUser._id))
+    setTimeout(() => {
+      setModalName('USER_MENU')
+    }, 100);
   }
 
   if (!currBoard) return <Loader />
@@ -95,7 +95,7 @@ export const NavBar = () => {
         <button className="btn btn-svg btn-help"><HelpSvg /></button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
-        {(isUserMenuOpen && loggedinUser._id === itemId) && <UserMenu />}
+        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} />}
         <button className="btn btn-svg btn-user" onClick={() => openUserMenu()}>O</button>
 
 
