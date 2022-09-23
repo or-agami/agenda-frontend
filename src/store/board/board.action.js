@@ -170,15 +170,16 @@ export function removeGroup(group) {
 
 export function closeModals() {
     return (dispatch) => {
-        dispatch({ type: 'CLOSE_MODALS' })
+        dispatch({ type: 'CLOSE_MODAL' })
     }
 }
 
-export function openModal(stateName, itemId) {
+export function openModal(modalName) {
     return (dispatch) => {
-        dispatch({ type: 'OPEN_MODAL', stateName, itemId })
+        dispatch({ type: 'OPEN_MODAL', modalName})
     }
 }
+
 
 export function loadTask(task) {
     return (dispatch) => {

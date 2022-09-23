@@ -154,23 +154,6 @@ const TaskDetailActivity = ({ task }) => {
     </section>
 }
 
-// {
-//     "id": "c104",
-//     "title": "Help me",
-//     "status": "in-progress",
-//     "priority": "low",
-//     "description": "description",
-//     "comments": [
-//       {
-//         "id": "ZdPnm",
-//         "txt": "also @yaronb please CR this",
-//         "createdAt": 1590999817436,
-//         "byMember": {
-//           "_id": "u101",
-//           "fullname": "Tal Tarablus",
-//           "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-//         }
-
 const getFormattedDateTime = (date) => {
     if (!date) return
     moment.updateLocale('en', {
@@ -198,7 +181,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 
     const getIsCommentLiked = () => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
-        return (idxLiked !== -1 && idxLiked !== undefined)       
+        return (idxLiked !== -1 && idxLiked !== undefined)
     }
 
     const animateLike = (ev) => {
@@ -207,8 +190,8 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             comment.likes?.splice(idxLiked, 1)
             dispatch(updateTask({ task, groupId, boardId: board._id }))
             return
-
         }
+        
         likeRef.current.classList.add('wobble-ver-left')
         confetti({
             particleCount: 150,
@@ -217,21 +200,23 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 x: ev.pageX / window.innerWidth,
                 y: ev.pageY / window.innerHeight,
             }
-        });
+        })
+
         setTimeout(() => {
             likeRef.current.classList.remove('wobble-ver-left')
-
         }, 1300)
 
         let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
-        if (!comment.likes) {
-            comment.likes = [like]
-        }
-        else {
-            comment.likes.unshift(like)
-        }
+        
+        if (!comment.likes) comment.likes = [like]
+        else comment.likes.unshift(like)
+
         task.comments.splice(commentIdx, 1, comment)
         dispatch(updateTask({ task, groupId, boardId: board._id }))
+    }
+
+    const replyToComment = (ev) => {
+
     }
 
 
@@ -249,7 +234,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
             <div className="img-container">
-                {comment.likes && comment.likes.map(like => <img key={loggedinUser._id} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
+                {comment.likes && comment.likes.map((like, idx) => <img key={idx} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
             </div>
             <p>{comment.likes?.length > 0 ? 'Likes' : ''}</p>
         </div>
@@ -258,7 +243,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 <button onClick={(ev) => animateLike(ev)} className={`btn-svg btn-like ${getIsCommentLiked() ? 'liked' : ''}`}><Like ref={likeRef} />Like</button>
             </div>
             <div className="reply-container">
-                <button className="btn btn-svg btn-reply"><Reply />Reply</button>
+                <button onClick={(ev) => replyToComment(ev)} className="btn btn-svg btn-reply"><Reply />Reply</button>
             </div>
         </div>
     </section>
@@ -295,10 +280,4 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
         <button className="update-comment-btn" onClick={() => PostComment()}>Update</button>
     </section>
-}
-
-
-const getComment = (task, commentId) => {
-    if (!task.comments) return
-    return task.comments.find(comment => comment.id === commentId)
 }

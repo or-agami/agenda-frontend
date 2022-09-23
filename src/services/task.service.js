@@ -1,7 +1,9 @@
 import { groupService } from "./group.service";
 import { httpService } from "./http.service"
+import { socketService } from "./socket.service";
 import { userService } from "./user.service";
 import { utilService } from "./util.service";
+import { SOCKET_EMIT_SET_TASK_ID_TOPIC } from "./socket.service";
 
 export const taskService = {
   query,
@@ -28,7 +30,7 @@ async function getById(taskId) {
   // const task = group.tasks.find((t) => t.id === taskId)
   // return task
   //?- Prod:
-  console.log(taskId)
+  socketService.emit(SOCKET_EMIT_SET_TASK_ID_TOPIC, taskId)
   return httpService.get(BASE_URL + taskId)
 }
 
@@ -68,7 +70,6 @@ function addActivity(task, activity) {
     byMember: user,
     data: activity.data
   }
-
 
   if (!task.activities) task.activities = [newActivity]
   else task.activities.unshift(newActivity)

@@ -175,88 +175,45 @@ const URL_AUTH = 'auth/'
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
-
-async function getUsers() {
-    //?- Dev:
-    // let users = await storageService.query(STORAGE_KEY)
-    // if (!users || users.length === 0) {
-    //     users = gUsers
-    //     storageService.postMany(STORAGE_KEY, users)
-    // }
-    // return users
-
-    //?- Prod:
-    return httpService.get(URL_USER)
-}
-
-async function getById(userId) {
-    //?- Dev:
-    // const user = gUsers.find(user => user.id === userId)
-    // saveLocalUser(user)
-    // return user
-
-    //?- Prod:
-    return httpService.get(URL_USER + userId)
-}
-
-async function verifyUsername(username) {
-    //?-Dev:
-    let users = await storageService.query(STORAGE_KEY)
-    if (!users || users.length === 0) {
-        users = gUsers
-        storageService.postMany(STORAGE_KEY, users)
-    }
-    const isVerified = users.some((user) => user.username === username)
-    if (!isVerified) throw new Error('NOT_FOUND')
-    //?-Prod
-}
-
 async function login(creds) {
-    //?- Dev:
-    // let users = await storageService.query(STORAGE_KEY)
-    // console.log('users:', users)
-    // if (!users || users.length === 0) {
-    //     users = gUsers
-    //     storageService.postMany(STORAGE_KEY, users)
-    // }
-    // const user = users.find(user =>
-    //     (user.username === creds.username) &&
-    //     (user.password === creds.password)
-    // )
-    // if (!user) throw 'Wrong username or password'
-    // saveLocalUser(user)
-    // return user
-
-    //?- Prod:
     const user = await httpService.post(URL_AUTH + 'login', creds)
     if (user) {
-        // socketService.login(user._id)
-        saveLocalUser(user)
-        return user
+        socketService.login(user._id)
+        return saveLocalUser(user)
     }
+}
+async function logout() {
+    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+    socketService.logout()
+    return await httpService.post(URL_AUTH + 'logout')
 }
 
 async function signup(creds) {
-    //?- Dev:
-    // const user = await storageService.post(STORAGE_KEY, creds)
-    // gUsers.push(user)
-    // login(user)
-    // return user
-
-    //?- Prod:
     const user = await httpService.post(URL_AUTH + 'signup', creds)
     socketService.login(user._id)
     return saveLocalUser(user)
 }
 
-async function logout() {
-    //?- Dev:
-    // sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+async function getUsers() {
+    return httpService.get(URL_USER)
+}
 
-    //?- Prod:
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-    socketService.logout()
-    return await httpService.post(URL_AUTH + 'logout')
+async function getById(userId) {
+    return httpService.get(URL_USER + userId)
+}
+
+async function verifyUsername(username) {
+    //?-Dev:
+    // let users = await storageService.query(STORAGE_KEY)
+    // if (!users || users.length === 0) {
+    //     users = gUsers
+    //     storageService.postMany(STORAGE_KEY, users)
+    // }
+    // const isVerified = users.some((user) => user.username === username)
+    // if (!isVerified) throw new Error('NOT_FOUND')
+    //?-Prod
+    const isVerified = await httpService.get(URL_AUTH + 'verifyUsername', {username})
+    if (!isVerified) throw new Error('NOT_FOUND')
 }
 
 function remove(userId) {

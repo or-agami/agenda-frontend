@@ -344,6 +344,10 @@
                 justify-content: center;
                 border-radius: 8px;
 
+                &:hover {
+                    background-color: var(--clr-btn-bg-hover);
+                }
+
 
                 &.liked {
                     color: var(--clr-btn-highlight);
