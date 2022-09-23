@@ -1,9 +1,14 @@
 import io from 'socket.io-client'
 import { userService } from './user.service'
 
-export const SOCKET_EVENT_ADD_MSG = 'chat-update-add-msg'
-export const SOCKET_EMIT_SEND_MSG = 'chat-update-send-msg'
-export const SOCKET_EMIT_SET_TASK_ID_TOPIC = 'chat-update-set-topic'
+export const SOCKET_EVENT_ADD_COMMENT = 'task-add-comment'
+export const SOCKET_EMIT_SEND_COMMENT = 'task-send-comment'
+export const SOCKET_EVENT_ADD_ACTIVITY = 'task-add-comment'
+export const SOCKET_EMIT_SEND_ACTIVITY = 'task-send-comment'
+export const SOCKET_EMIT_SET_TASK_ID_CHANNEL = 'task-set-channel'
+export const SOCKET_EVENT_ADD_BOARD_CHANGES = 'board-add-changes'
+export const SOCKET_EMIT_SEND_BOARD_CHANGES = 'board-send-changes'
+export const SOCKET_EMIT_SET_BOARD_ID_CHANNEL = 'board-set-channel'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'

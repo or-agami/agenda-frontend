@@ -5,6 +5,15 @@ import { groupService } from "../../services/group.service"
 import { taskService } from "../../services/task.service"
 
 
+export function getActionAddTaskComment(comment) {
+    // Todo: add action func to add comment 
+    return { type: 'ADD_COMMENT', comment}
+}
+
+export function getActionAddTaskActivity(activity) {
+    return { type: 'ADD_ACTIVITY', activity}
+}
+
 export function setLoader() {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
@@ -176,10 +185,9 @@ export function closeModals() {
 
 export function openModal(modalName) {
     return (dispatch) => {
-        dispatch({ type: 'OPEN_MODAL', modalName})
+        dispatch({ type: 'OPEN_MODAL', modalName })
     }
 }
-
 
 export function loadTask(task) {
     return (dispatch) => {
