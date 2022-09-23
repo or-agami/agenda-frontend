@@ -231,8 +231,6 @@ const closeTaskDetailPersonMenu = () => {
           <span>Remove Board</span>
         </div>
       </div>
-<<<<<<< HEAD
-=======
 
     case 'USER_MENU':
       return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
@@ -251,7 +249,6 @@ const closeTaskDetailPersonMenu = () => {
         })}
 
       </section>
->>>>>>> 729622d862481371b02006f934e3b9e83420f01e
     default: return console.error('cannot open modal!')
   }
 }
