@@ -92,11 +92,10 @@ const TaskDetailActivity = ({ task }) => {
     }
 
     return <section className='task-detail-activity'>
-        <h1>Activity Log</h1>
+
         {task.activities?.map(activity => {
             let title
             let info
-            console.log(activity);
             switch (activity.type) {
                 case 'add member':
                     title = 'Added'
