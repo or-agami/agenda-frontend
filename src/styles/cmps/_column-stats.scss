@@ -1,0 +1,46 @@
+.column-stats {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    // border-bottom:  1px solid var(--clr-disabled);
+    border-end-start-radius: 8px;
+    height: 35px;
+    border: 0;
+    
+
+    .empty-stat {
+        width: 138px;
+    }
+
+    .empty-start {
+        width: 398px;
+    }
+
+    .empty-member-stat {
+        border-left: 1px solid var(--clr-disabled);
+        width: 138px;
+    }
+    
+    .status-stat {
+        width: 138px;
+        border-left: 1px solid var(--clr-disabled);
+    }
+    
+    .priority-stat {
+        width: 138px;
+        // border-left: 1px solid var(--clr-disabled);
+        // border-right: none;
+        
+    }
+    .empty-last-updated-stat {
+        // border-left: 1px solid var(--clr-disabled);
+        width: 138px;
+    }
+    .files-stat {
+        width: 138px;
+    }
+    .timeline-stat {
+        min-width: 160px;
+    }
+
+}
