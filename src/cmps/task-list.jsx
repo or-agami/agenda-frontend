@@ -51,7 +51,7 @@ export const TaskList = ({ group, board }) => {
                         ))}
                         {droppableProvided.placeholder}
                         <TaskAdd group={group} boardId={board._id} />
-                        <ColumnStats/>
+                        <ColumnStats group={group} board={board}/>
                     </div>
                 }}
             </Droppable>
