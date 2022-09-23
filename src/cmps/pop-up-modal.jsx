@@ -10,7 +10,7 @@ import { GrClose } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
 
-export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
+export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
@@ -142,11 +142,17 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     navigate('/')
   }
 
-const closeTaskDetailPersonMenu = () => {
-  setTimeout(() => {
-    setModalName(null)
-  }, 100);
-}
+  const closeTaskDetailPersonMenu = () => {
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+  }
+
+  const onRemovePost = () => {
+    let updatedComments = task.comments.filter(currComment => currComment.id !== comment.id)
+    task.comments = updatedComments
+    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }))
+  }
 
   switch (modalName) {
     case 'TASK_MENU':
@@ -247,7 +253,10 @@ const closeTaskDetailPersonMenu = () => {
             <h4>{member.fullname}</h4>
           </div>
         })}
-
+      </section>
+    case 'TASK_DETAIL_POST_MENU':
+      return <section className='task-detail-post-menu' onClick={(ev) => ev.stopPropagation()}>
+        <button onClick={()=>onRemovePost()} className='btn btn-svg btn-trash-post'><Trash /> Delete update for everyone</button>
       </section>
     default: return console.error('cannot open modal!')
   }
