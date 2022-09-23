@@ -18,16 +18,18 @@ import { ReactComponent as HomeIcon } from '../assets/icons/home-icon.svg'
 import { ReactComponent as StarIcon } from '../assets/icons/star.svg'
 import { ReactComponent as StarClrIcon } from '../assets/icons/star-clr.svg'
 import { useSelector } from 'react-redux'
+import { updateUser } from '../store/user/user.action'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
 
   const params = useParams()
   const dispatch = useDispatch()
-  const loggedInUser = useSelector(state => state.userModule.loggedInUser)
+  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const [isRenaming, setIsRenaming] = useState(false)
   const [renameTitle, handleChange] = useForm({ title: board.title })
   const [isDashboard, setIsDashboard] = useState(false)
+  const [user , setUser] = useState(loggedinUser)
 
   useEffect(() => {
     if (params['*'] === `board/dashboard/${board._id}`) {
@@ -42,10 +44,21 @@ export const BoardHeader = ({ board }) => {
     setIsRenaming(!isRenaming)
   }
 
+  useEffect(() => {
+    if (!user) setUser(loggedinUser)
+  }, [loggedinUser])
+
   const addBoardToFav = () => {
-    const favorites = loggedInUser?.favBoards ? [board._id] : [...loggedInUser.favBoards, board._id]
-    loggedInUser.favBoards = favorites
-    // dispatch()
+    if (loggedinUser?.favBoards?.includes(board._id)) {
+      const favorites = loggedinUser.favBoards.filter(boardId => boardId !== board._id)
+      loggedinUser.favBoards = favorites
+    }
+    else {
+      if (loggedinUser?.favBoards) loggedinUser.favBoards = [...loggedinUser.favBoards, board._id]
+      else loggedinUser.favBoards = [board._id]
+    }
+    setUser({...loggedinUser})
+    dispatch(updateUser(loggedinUser))
   }
 
   const onRenameBoard = (ev) => {
@@ -64,8 +77,9 @@ export const BoardHeader = ({ board }) => {
               <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
             </form>
               : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
-            {board.isStarred ? <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />
-              : <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />}
+            {user?.favBoards?.includes(board._id) ?
+              <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />
+              : <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />}
           </div>
           <div className="board-header-nav-container">
             <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>

@@ -10,7 +10,7 @@ export function userReducer(state = initialState, action) {
     switch (action.type) {
 
         case 'SET_USER':
-            return { ...state, loggedinUser: action.loggedinUser }
+            return { ...state, loggedinUser: action.user }
 
         case 'SET_PROFILE_PAGE':
             return { ...state, profilePage: action.profilePage }

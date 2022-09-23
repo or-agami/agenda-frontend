@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateGroup } from '../store/board/board.action'
+import { ColumnStats } from './column-stats'
 
 
 export const TaskList = ({ group, board }) => {
@@ -50,6 +51,7 @@ export const TaskList = ({ group, board }) => {
                         ))}
                         {droppableProvided.placeholder}
                         <TaskAdd group={group} boardId={board._id} />
+                        <ColumnStats/>
                     </div>
                 }}
             </Droppable>
