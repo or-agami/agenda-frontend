@@ -7,7 +7,6 @@ import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
-import { TaskDetailPersonMenu } from "./task-detail-person-menu"
 import { GrClose } from 'react-icons/gr'
 import { FaArrowRight, FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
