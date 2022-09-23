@@ -5,6 +5,15 @@ import { groupService } from "../../services/group.service"
 import { taskService } from "../../services/task.service"
 
 
+export function getActionAddTaskComment(comment) {
+    // Todo: add action func to add comment 
+    return { type: 'ADD_COMMENT', comment}
+}
+
+export function getActionAddTaskActivity(activity) {
+    return { type: 'ADD_ACTIVITY', activity}
+}
+
 export function setLoader() {
     return (dispatch, getState) => {
         dispatch({ type: 'SET_LOADING', isLoading: true })
@@ -179,3 +188,26 @@ export function loadTask(task) {
             })
     }
 }
+
+export function addComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+
+export function removeComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+

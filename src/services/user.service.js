@@ -203,15 +203,6 @@ async function getById(userId) {
 }
 
 async function verifyUsername(username) {
-    //?-Dev:
-    // let users = await storageService.query(STORAGE_KEY)
-    // if (!users || users.length === 0) {
-    //     users = gUsers
-    //     storageService.postMany(STORAGE_KEY, users)
-    // }
-    // const isVerified = users.some((user) => user.username === username)
-    // if (!isVerified) throw new Error('NOT_FOUND')
-    //?-Prod
     const isVerified = await httpService.get(URL_AUTH + 'verifyUsername', {username})
     if (!isVerified) throw new Error('NOT_FOUND')
 }
@@ -246,4 +237,3 @@ function saveLocalUser(user) {
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
-

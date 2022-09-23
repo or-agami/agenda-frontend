@@ -2,7 +2,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { loadTask, openModal, updateTask } from "../store/board/board.action"
+import { addComment, loadTask, updateTask } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
@@ -182,10 +182,11 @@ const getFormattedDateTime = (date) => {
 
 
 const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
+    const dispatch = useDispatch()
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
-    const dispatch = useDispatch()
+    const [modalName,setModalName] = useState(null)
 
 
     const getIsCommentLiked = () => {
@@ -224,6 +225,12 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
+    const openPostMenu =()=> {
+        setTimeout(() => {
+            setModalName('TASK_DETAIL_POST_MENU')
+          }, 100);
+    }
+
     const replyToComment = (ev) => {
 
     }
@@ -237,8 +244,9 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             </div>
             <div className="time-menu-container">
                 <p><Clock />{getFormattedDateTime(createdAt)}</p>
-                <button className="btn btn-svg btn-menu"><Menu /></button>
+                <button onClick={()=>openPostMenu()} className="btn btn-svg btn-menu"><Menu /></button>
             </div>
+                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} comment={comment}/>}
         </div>
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
@@ -257,7 +265,9 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         </div>
     </section>
 }
+
 const GetMemberImgFromId = (board, memberId) => {
+    if(!board) return
     const imgUrl = board.members.find(member => member._id === memberId).imgUrl
     return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
@@ -282,7 +292,7 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         }
         setIsChatOpen(false)
         textAreaRef.current.value = ''
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
+        dispatch(addComment({ task: updatedTask, groupId, boardId: board._id }))
     }
 
     return <section className="chat-box-open">
