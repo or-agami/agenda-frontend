@@ -17,25 +17,35 @@
 
         .activity-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             padding: 10px 0px;
             border-bottom: 1px solid var(--clr-disabled);
+            font-size: 15px;
 
+        }
+
+        .arrow-right-activity {
+            margin-inline-end: 50px;
         }
 
         .activity-time {
-            margin-inline-end: 20px;
-        }
-
-        .activity-by {
-            flex: 1;
+            width: 100px;
             display: flex;
             align-items: center;
         }
 
+        .activity-by {
+            display: flex;
+            align-items: center;
+            margin-inline-end: 50px;
+        }
+
         .activity-status {
             padding: 10px 15px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             &.clr {
                 color: white;
@@ -84,11 +94,7 @@
         }
 
         .activity-type {
-            flex: 1;
-        }
-
-        svg {
-            flex: 1
+            min-width: 200px;
         }
     }
 

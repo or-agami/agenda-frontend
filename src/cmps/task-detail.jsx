@@ -92,11 +92,10 @@ const TaskDetailActivity = ({ task }) => {
     }
 
     return <section className='task-detail-activity'>
-        <h1>Activity Log</h1>
+
         {task.activities?.map(activity => {
             let title
             let info
-            console.log(activity);
             switch (activity.type) {
                 case 'add member':
                     title = 'Added'
@@ -191,7 +190,6 @@ const getFormattedDateTime = (date) => {
 
 
 const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
-    console.log('comment:', comment)
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
@@ -205,7 +203,6 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 
     const animateLike = (ev) => {
         const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
-        console.log('idxLiked:', idxLiked)
         if (idxLiked !== -1 && idxLiked !== undefined) {
             comment.likes?.splice(idxLiked, 1)
             dispatch(updateTask({ task, groupId, boardId: board._id }))

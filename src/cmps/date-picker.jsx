@@ -17,7 +17,7 @@ export const DatePicker = ({ setDatePickerIsOpen, taskTimeline, handleDateChange
     }, 100)
     return () => {
       document.body.removeEventListener('click', closeDatePicker)
-      const activity = {type: "Changed the timeline"}
+      const activity = {type: "timeline"}
       task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
       dispatch(updateTask({ task, groupId, boardId }, activity))
     }
