@@ -28,7 +28,7 @@ export const TaskDetail = () => {
     const taskId = searchParams.get('taskId')
     const boardId = params.boardId
     const [modalName,setModalName] = useState(null)
-
+    
     useEffect(() => {
         dispatch(loadTask(taskId))
     }, [])

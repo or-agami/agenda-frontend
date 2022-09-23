@@ -8,24 +8,24 @@ import { store } from "../store/store";
 import { getActionAddTaskActivity, getActionAddTaskComment } from "../store/board/board.action";
 
 /* ?- WebSocket */;
-(() => {
-  socketService.on(SOCKET_EMIT_SEND_COMMENT, (comment) => {
-    console.log('GOT comment from socket', comment)
-    store.dispatch(getActionAddTaskComment(comment))
-  })
-  socketService.on(SOCKET_EVENT_ADD_COMMENT, (comment) => {
-    console.log('GOT comment from socket', comment)
-    store.dispatch(getActionAddTaskComment(comment))
-  })
-  socketService.on(SOCKET_EMIT_SEND_ACTIVITY, (activity) => {
-    console.log('GOT activity from socket', activity)
-    store.dispatch(getActionAddTaskActivity(activity))
-  })
-  socketService.on(SOCKET_EVENT_ADD_ACTIVITY, (activity) => {
-    console.log('GOT activity from socket', activity)
-    store.dispatch(getActionAddTaskActivity(activity))
-  })
-})()
+// (() => {
+//   socketService.on(SOCKET_EMIT_SEND_COMMENT, (comment) => {
+//     console.log('GOT comment from socket', comment)
+//     store.dispatch(getActionAddTaskComment(comment))
+//   })
+//   socketService.on(SOCKET_EVENT_ADD_COMMENT, (comment) => {
+//     console.log('GOT comment from socket', comment)
+//     store.dispatch(getActionAddTaskComment(comment))
+//   })
+//   socketService.on(SOCKET_EMIT_SEND_ACTIVITY, (activity) => {
+//     console.log('GOT activity from socket', activity)
+//     store.dispatch(getActionAddTaskActivity(activity))
+//   })
+//   socketService.on(SOCKET_EVENT_ADD_ACTIVITY, (activity) => {
+//     console.log('GOT activity from socket', activity)
+//     store.dispatch(getActionAddTaskActivity(activity))
+//   })
+// })()
 
 
 export const taskService = {
@@ -47,7 +47,7 @@ async function query(filterBy) {
 }
 
 async function getById(taskId) {
-  socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, taskId)
+  // socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, taskId)
   return httpService.get(BASE_URL + taskId)
 }
 
@@ -72,7 +72,7 @@ async function save({ title, groupId, boardId }) {
   return groupService.update({ group, boardId })
 }
 
-// In Progress: add user activity to the task 
+// Done: add user activity to the task 
 function addActivity(task, activity) {
   const user = userService.getLoggedinUser()
   delete user.assignments
@@ -85,7 +85,8 @@ function addActivity(task, activity) {
     byMember: user,
     data: activity.data
   }
-// Todo: EMIT new activity here
+  // In Progress: EMIT new activity here
+  // socketService.emit(SOCKET_EMIT_SEND_ACTIVITY, newActivity)
   if (!task.activities) task.activities = [newActivity]
   else task.activities.unshift(newActivity)
 
