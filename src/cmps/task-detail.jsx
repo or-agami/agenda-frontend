@@ -27,7 +27,7 @@ export const TaskDetail = () => {
     const groupId = searchParams.get('groupId')
     const taskId = searchParams.get('taskId')
     const boardId = params.boardId
-    const [modalName,setModalName] = useState(null)
+    const [modalName, setModalName] = useState(null)
 
     useEffect(() => {
         dispatch(loadTask(taskId))
@@ -41,7 +41,7 @@ export const TaskDetail = () => {
     const onSetTaskPersonMenuOpen = () => {
         setTimeout(() => {
             setModalName('TASK_DETAIL_PERSON_MENU')
-          }, 100);
+        }, 100);
     }
 
     if (!task) return
@@ -54,7 +54,7 @@ export const TaskDetail = () => {
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
                         <FaPlusCircle />
                     </button>
-                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} />}
+                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{ id: groupId }} board={board} />}
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
@@ -92,7 +92,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
         if (!status) return
         return status.split(' ').join('')
     }
-    
+
     return <section className='task-detail-activity'>
 
         {task.activities?.map(activity => {
@@ -140,7 +140,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
                 case 'timeline':
                     title = 'Changed Timeline'
                     info = <span className="task-preview-timeline">
-                        <TaskTimeline task={{...task, timeline:activity.data}} group={group} board={board} isReadOnly={true} />
+                        <TaskTimeline task={{ ...task, timeline: activity.data }} group={group} board={board} isReadOnly={true} />
                     </span>
 
                     break;
@@ -186,7 +186,8 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
     const commentIdx = task.comments.findIndex(currComment => currComment.id === comment.id)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const likeRef = useRef()
-    const [modalName,setModalName] = useState(null)
+    const [modalName, setModalName] = useState(null)
+    const [isReplyOpen, setIsReplyOpen] = useState(false)
 
 
     const getIsCommentLiked = () => {
@@ -225,14 +226,16 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
-    const openPostMenu =()=> {
+    const openPostMenu = () => {
         setTimeout(() => {
             setModalName('TASK_DETAIL_POST_MENU')
-          }, 100);
+        }, 100);
     }
 
-    const replyToComment = (ev) => {
-
+    const onReplyToComment = () => {
+        comment.isReplyOpen = true
+        task.comments[commentIdx] = comment
+        dispatch(updateTask({ task, groupId, boardId: board._id }))
     }
 
 
@@ -244,9 +247,9 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             </div>
             <div className="time-menu-container">
                 <p><Clock />{getFormattedDateTime(createdAt)}</p>
-                <button onClick={()=>openPostMenu()} className="btn btn-svg btn-menu"><Menu /></button>
+                <button onClick={() => openPostMenu()} className="btn btn-svg btn-menu"><Menu /></button>
             </div>
-                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} comment={comment}/>}
+            {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{ id: groupId }} board={board} comment={comment} />}
         </div>
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
@@ -260,14 +263,15 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 <button onClick={(ev) => animateLike(ev)} className={`btn-svg btn-like ${getIsCommentLiked() ? 'liked' : ''}`}><Like ref={likeRef} />Like</button>
             </div>
             <div className="reply-container">
-                <button onClick={(ev) => replyToComment(ev)} className="btn btn-svg btn-reply"><Reply />Reply</button>
+                <button onClick={() => onReplyToComment()} className="btn btn-svg btn-reply"><Reply />Reply</button>
             </div>
         </div>
+        {comment.isReplyOpen && <CommentReply comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />}
     </section>
 }
 
 const GetMemberImgFromId = (board, memberId) => {
-    if(!board) return
+    if (!board) return
     const imgUrl = board.members.find(member => member._id === memberId).imgUrl
     return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
@@ -279,7 +283,7 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
     const [newText, setNewText] = useState('')
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
 
-    const PostComment = () => {
+    const postComment = () => {
         let updatedTask
         const comment = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
         if (!task.comments) {
@@ -297,6 +301,48 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
 
     return <section className="chat-box-open">
         <textarea autoFocus className="chat-box" ref={textAreaRef} onBlur={(ev) => !ev.target.value ? setIsChatOpen(false) : ''} onChange={(ev) => setNewText(ev.target.value)}></textarea>
-        <button className="update-comment-btn" onClick={() => PostComment()}>Update</button>
+        <button className="update-comment-btn" onClick={() => postComment()}>Update</button>
     </section>
 }
+
+const ReplyBox = ({ comment, commentIdx, task, groupId, board }) => {
+    const dispatch = useDispatch()
+    const textAreaRef = useRef()
+    const [newText, setNewText] = useState('')
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
+    const postReply = () => {
+        const reply = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
+        if (!comment.replies) {
+            comment.replies = [reply]
+            task.comments.splice(commentIdx, 1, comment)
+        }
+        else {
+            comment.replies.unshift(reply)
+            task.comments.splice(commentIdx, 1, comment)
+        }
+        textAreaRef.current.value = ''
+        dispatch(addComment({ task, groupId, boardId: board._id }))
+    }
+
+    return <section className="reply-box">
+        <textarea autoFocus className="reply-textarea" ref={textAreaRef} onChange={(ev) => setNewText(ev.target.value)}></textarea>
+        <button className="update-reply-btn" onClick={() => postReply()}>Reply</button>
+    </section>
+}
+
+const CommentReply = ({ comment, task, commentIdx, groupId, board }) => {
+    return <section className="comment-replies">
+        {comment.replies && comment.replies.map(reply => <div className="comment-reply" key={reply.id}>
+            <img className='profile-img-icon' src={require(`../assets/img/${reply.byMember.imgUrl}.png`)} alt="" />
+            
+            <div className="member-info-reply-container">
+                <p className="member-fullname">{reply.byMember.fullname}</p>
+                <p className="member-reply">{reply.txt}</p>
+            </div>
+        </div>)}
+        <ReplyBox comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />
+    </section>
+}
+
+
