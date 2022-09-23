@@ -325,7 +325,7 @@ const ReplyBox = ({ comment, commentIdx, task, groupId, board }) => {
     }
 
     return <section className="reply-box">
-        <textarea autoFocus className="reply-textarea" ref={textAreaRef} onChange={(ev) => setNewText(ev.target.value)}></textarea>
+        <textarea className="reply-textarea" ref={textAreaRef} onChange={(ev) => setNewText(ev.target.value)}></textarea>
         <button className="update-reply-btn" onClick={() => postReply()}>Reply</button>
     </section>
 }
@@ -334,7 +334,7 @@ const CommentReply = ({ comment, task, commentIdx, groupId, board }) => {
     return <section className="comment-replies">
         {comment.replies && comment.replies.map(reply => <div className="comment-reply" key={reply.id}>
             <img className='profile-img-icon' src={require(`../assets/img/${reply.byMember.imgUrl}.png`)} alt="" />
-            
+
             <div className="member-info-reply-container">
                 <p className="member-fullname">{reply.byMember.fullname}</p>
                 <p className="member-reply">{reply.txt}</p>
