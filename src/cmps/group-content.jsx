@@ -8,10 +8,11 @@ import { useForm } from '../hooks/useForm'
 import { openModal, setSort, updateBoard, updateGroup } from '../store/board/board.action'
 import { ReactComponent as SortArrows } from '../assets/icons/double-arrow-sort.svg'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { PopUpModal } from './pop-up-modal'
 
 
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board}) => {
-
+    const [modalName,setModalName] = useState(null)
     const [isEditTitle, setIsEditTitle] = useState(false)
     const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setIsDecending] = useState(false)
@@ -20,7 +21,10 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board}) => 
     const [categories, setCategories] = useState(board.cmpsOrder)
 
     const onSetIsGroupMenuOpen = () => {
-        dispatch(openModal('isGroupMenuOpen', group.id))
+        // dispatch(openModal('isGroupMenuOpen', group.id))
+        setTimeout(() => {
+            setModalName('GROUP_MENU')
+        }, 100);
     }
 
     const onSetIsHeaderOpen = ({ target }) => {
@@ -117,7 +121,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board}) => 
                 board={board}
             />
         </div>
-        {(isGroupMenuOpen && itemId === group.id && isScreenOpen) && <GroupMenu group={group} boardId={board._id} />}
+        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
     </section>
 }
 
