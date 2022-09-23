@@ -67,6 +67,7 @@ export function boardReducer(state = initialState, action) {
             task = state.task
             if (!task.activities) task.activities = [action.activity]
             else task.activities.unshift(action.activity)
+            // console.log('task:', task)
             return { ...state, task: { ...task } }
 
         case 'ADD_TASK_COMMENT':
