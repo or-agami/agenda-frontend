@@ -10,7 +10,7 @@ import { GrClose } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
 
-export const PopUpModal = ({ modalName, setModalName, task, group,groupId, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
+export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
@@ -63,7 +63,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group,groupId, board
     }, 100);
     const activity = { type: "add member", data: member }
     updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-    dispatch(updateTask({ task: updatedTask, groupId: group.id || groupId, boardId: board._id }, activity))
+    dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
     return
   }
 

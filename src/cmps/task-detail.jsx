@@ -54,7 +54,7 @@ export const TaskDetail = () => {
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
                         <FaPlusCircle />
                     </button>
-                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} groupId={groupId} board={board} />}
+                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={{id:groupId}} board={board} />}
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>
