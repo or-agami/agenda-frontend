@@ -2,7 +2,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { loadTask, updateTask } from "../store/board/board.action"
+import { addComment, loadTask, updateTask } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
@@ -292,7 +292,7 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
         }
         setIsChatOpen(false)
         textAreaRef.current.value = ''
-        dispatch(updateTask({ task: updatedTask, groupId, boardId: board._id }))
+        dispatch(addComment({ task: updatedTask, groupId, boardId: board._id }))
     }
 
     return <section className="chat-box-open">

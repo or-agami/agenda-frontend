@@ -179,3 +179,26 @@ export function loadTask(task) {
             })
     }
 }
+
+export function addComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+
+export function removeComment(task,activity) {
+    return async (dispatch,getState) => {
+        try {
+            const savedBoard = await taskService.update(task,activity)
+            dispatch({type:'UPDATE_BOARD',board:savedBoard})
+        } catch (err) {
+            showErrorMsg('Failed to add comment')
+        }
+    }
+}
+

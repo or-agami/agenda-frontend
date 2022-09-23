@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
-import { removeBoard, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
+import { removeBoard, removeComment, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
@@ -151,7 +151,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   const onRemovePost = () => {
     let updatedComments = task.comments.filter(currComment => currComment.id !== comment.id)
     task.comments = updatedComments
-    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }))
+    dispatch(removeComment({ task, groupId: group.id, boardId: board._id }))
   }
 
   switch (modalName) {
