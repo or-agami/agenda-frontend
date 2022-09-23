@@ -11,7 +11,7 @@ export function getActionAddTaskComment(comment) {
 }
 
 export function getActionAddTaskActivity(activity) {
-    return { type: 'ADD_ACTIVITY', activity }
+    return { type: 'ADD_TASK_ACTIVITY', activity }
 }
 
 export function setLoader() {
@@ -148,7 +148,7 @@ export function addGroup(boardId) {
 export function updateGroup(group) { // 👈 group is obj prop: { group, boardId }
     return async (dispatch, getState) => {
         try {
-            const updatedBoard = groupService.update(group)
+            const updatedBoard = await groupService.update(group)
             dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to update group')
