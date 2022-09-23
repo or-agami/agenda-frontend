@@ -46,7 +46,7 @@ export function signup(creds) {
 export function updateUser(creds) {
     return async (dispatch) => {
         try {
-            const savedUser = await userService.save(creds)
+            const savedUser = await userService.update(creds)
             dispatch({ type: 'UPDATE_USER', user: savedUser })
             showSuccessMsg('user updated')
         } catch (err) {

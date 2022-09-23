@@ -59,6 +59,7 @@ export function boardReducer(state = initialState, action) {
 
         case 'SET_BOARD':
             return { ...state, board: action.board }
+            
         case 'SET_TASK':
             return { ...state, task: action.task }
 

@@ -222,11 +222,10 @@ async function update(user) {
     // Todo: update user info
 
     //?- Prod:
-    // await storageService.put('user', user)
-    // user = await httpService.put(`user/${user._id}`, user)
+    user = await httpService.put(`user/${user._id}`, user)
     // Handle case in which admin updates other user's details
-    // if (getLoggedinUser()._id === user._id) saveLocalUser(user)
-    // return user
+    if (getLoggedinUser()._id === user._id) saveLocalUser(user)
+    return user
 }
 
 function saveLocalUser(user) {
