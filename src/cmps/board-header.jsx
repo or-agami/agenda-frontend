@@ -15,12 +15,16 @@ import { useFilter } from '../hooks/useFilter'
 import { NavLink, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { ReactComponent as HomeIcon } from '../assets/icons/home-icon.svg'
+import { ReactComponent as StarIcon } from '../assets/icons/star.svg'
+import { ReactComponent as StarClrIcon } from '../assets/icons/star-clr.svg'
+import { useSelector } from 'react-redux'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
 
   const params = useParams()
   const dispatch = useDispatch()
+  const loggedInUser = useSelector(state => state.userModule.loggedInUser)
   const [isRenaming, setIsRenaming] = useState(false)
   const [renameTitle, handleChange] = useForm({ title: board.title })
   const [isDashboard, setIsDashboard] = useState(false)
@@ -38,6 +42,12 @@ export const BoardHeader = ({ board }) => {
     setIsRenaming(!isRenaming)
   }
 
+  const addBoardToFav = () => {
+    const favorites = loggedInUser?.favBoards ? [board._id] : [...loggedInUser.favBoards, board._id]
+    loggedInUser.favBoards = favorites
+    // dispatch()
+  }
+
   const onRenameBoard = (ev) => {
     ev.preventDefault()
     board = { ...board, ...renameTitle }
@@ -49,10 +59,14 @@ export const BoardHeader = ({ board }) => {
     <section className="board-header">
       <div className="flex board-info">
         <div className='header-main'>
-          {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
-            <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
-          </form>
-            : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
+          <div className='board-header-title'>
+            {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
+              <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
+            </form>
+              : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
+            {board.isStarred ? <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />
+              : <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />}
+          </div>
           <div className="board-header-nav-container">
             <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
             <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>

@@ -11,8 +11,6 @@ export const GroupList = ({ board }) => {
 
   const dispatch = useDispatch()
   const [groups, setGroups] = useState(board.groups)
-  const [isGroupDragging, setIsGroupDragging] = useState(false)
-  const [isMouseDown, setIsMouseDown] = useState(false)
 
   const containerRef = useRef()
 
@@ -20,19 +18,15 @@ export const GroupList = ({ board }) => {
     dispatch(addGroup(board._id))
   }
 
+
   const handleOnDragEnd = (ev) => {
     const updatedGroups = [...groups]
     const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
     updatedGroups.splice(ev.destination.index, 0, draggedItem)
-
+   
     setGroups(updatedGroups)
     board.groups = updatedGroups
     dispatch(updateBoard(board))
-    setIsGroupDragging(false)
-  }
-
-  const onDragStart = () => {
-    // setIsGroupDragging(true)
   }
 
   useEffect(() => {
@@ -49,29 +43,19 @@ export const GroupList = ({ board }) => {
   }, [board.groups])
 
   return <div ref={containerRef}>
-    <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={onDragStart}>
-      <Droppable droppableId='group' >
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId='group'>
         {(droppableProvided) => {
           return <section ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-list">
             {groups.map((group, idx) =>
-              <Draggable key={idx} draggableId={group.id + idx} index={idx}>
-                {(provided) => {
-                  return <div ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}>
-                    <GroupPreview
-                      key={idx}
-                      idx={idx}
-                      group={group}
-                      board={board}
-                      isGroupDragging={isGroupDragging} />
-                  </div>
-                }}
-              </Draggable>
+              <GroupPreview
+                key={idx}
+                idx={idx}
+                group={group}
+                board={board}/>
             )}
-
-            {droppableProvided.placeholder}
             <button className="btn btn-svg add-group-btn" onClick={onAddGroup}><PlusIcon /> Add new group</button>
+            {droppableProvided.placeholder}
           </section >
         }}
       </Droppable >

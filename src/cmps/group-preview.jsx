@@ -5,26 +5,30 @@ import { useEffect } from "react"
 import { Draggable } from 'react-beautiful-dnd'
 
 
-export const GroupPreview = ({ group, board, isGroupDragging}) => {
+export const GroupPreview = ({ group, board, idx }) => {
 
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
 
-    useEffect(() => {
-        if (isGroupDragging) setIsHeaderOpen(false)
-
-    }, [isGroupDragging])
-
     return <section className="group-preview">
-        {!isHeaderOpen && <GroupHeader
-            group={group}
-            setIsHeaderOpen={setIsHeaderOpen}
-            isHeaderOpen={isHeaderOpen}
-            boardId={board._id}/>}
+        {!isHeaderOpen && <Draggable key={idx} draggableId={group.id + idx} index={idx}>
+            {(provided) => {
+                return <div ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}>
+                    <GroupHeader group={group}
+                        setIsHeaderOpen={setIsHeaderOpen}
+                        isHeaderOpen={isHeaderOpen}
+                        boardId={board._id} />
+                </div>
+            }}
+        </Draggable>
+        }
 
         {isHeaderOpen && <GroupContent
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}
             isHeaderOpen={isHeaderOpen}
-            board={board}/>}
+            board={board}
+            idx={idx} />}
     </section>
 }

@@ -15,7 +15,6 @@
     h1 {
       font-size: 24px;
       line-height: 32px;
-      margin-bottom: 20px;
       font-family: 'roboto';
       letter-spacing: -1px;
       color: var(--clr-logo-txt);
@@ -27,6 +26,29 @@
 
     .header-main {
       padding-bottom: 5px;
+
+      .board-header-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 15px;
+       
+
+        .svg-star {
+          cursor: pointer;
+          width: 31.5px;
+          border-radius: 0.3em;
+          padding: 8px;
+
+          &.starred {
+            fill: gold;
+          }
+
+          &:hover {
+            background-color: var(--clr-btn-bg-hover);
+          }
+        }
+      }
 
       .board-header-nav-link {
         text-decoration: none;
@@ -72,7 +94,7 @@
         font-size: 18px;
         border-radius: 0.3em;
         width: fit-content;
-        margin-bottom: 20px;
+
 
         &:focus {
           outline: none;

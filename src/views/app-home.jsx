@@ -71,15 +71,15 @@ const Recent = () => {
     return <section className='app-home-recent'>
         <div className='app-home-recent-header'>
             <ArrowRightSvg onClick={(ev) => onRecentOpen(ev)} />
-            <h1>Recent</h1>
+            <h1>Favorites</h1>
         </div>
         <div className='app-home-recent-content'>
-            {isRecentOpen && <RecentContent />}
+            {isRecentOpen && <FavoriteContent />}
         </div>
     </section>
 }
 
-const RecentContent = () => {
+const FavoriteContent  = () => {
     return <div className='app-home-recent-content-container'>
 
     </div>
