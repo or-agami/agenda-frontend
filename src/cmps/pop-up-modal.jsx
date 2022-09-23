@@ -5,9 +5,14 @@ import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
 import { removeBoard, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
+import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
+import { GrClose } from 'react-icons/gr'
+import { useNavigate } from 'react-router-dom'
+import { logout } from '../store/user/user.action'
 
 export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const closeModal = () => {
     setTimeout(() => {
@@ -129,6 +134,20 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     setIsRenaming(!isRenaming)
   }
 
+  const onLogout = () => {
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    dispatch(logout())
+    navigate('/')
+  }
+
+const closeTaskDetailPersonMenu = () => {
+  setTimeout(() => {
+    setModalName(null)
+  }, 100);
+}
+
   switch (modalName) {
     case 'TASK_MENU':
       return <section className="task-menu modal" onClick={(ev) => ev.stopPropagation()}>
@@ -212,6 +231,27 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
           <span>Remove Board</span>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+    case 'USER_MENU':
+      return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
+        <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button>
+      </section>
+    case 'TASK_DETAIL_PERSON_MENU':
+      return <section className='task-detail-person-menu' onClick={(ev) => ev.stopPropagation()}>
+        <button className="btn btn-svg btn-svg-x" onClick={() => closeTaskDetailPersonMenu()}><GrClose /></button>
+        {getAvailableMembers().map(member => {
+          return <div key={member._id} className="member-container-available">
+            <div className="available-img-container">
+              <img src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
+            </div>
+            <h4>{member.fullname}</h4>
+          </div>
+        })}
+
+      </section>
+>>>>>>> 729622d862481371b02006f934e3b9e83420f01e
     default: return console.error('cannot open modal!')
   }
 }

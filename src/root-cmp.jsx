@@ -3,12 +3,10 @@ import { UserMsg } from './cmps/user-msg';
 import { NavBar } from './cmps/nav-bar';
 import routes from './routes';
 import './styles/main.scss';
-import { ModalScreen } from './cmps/modal-screen';
 function RootCmp() {
   return (
     
       <div className="main-app">
-        <ModalScreen/>
         <UserMsg />
         <Routes>
           {routes.map(route => {
