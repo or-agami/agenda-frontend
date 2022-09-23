@@ -168,19 +168,6 @@ export function removeGroup(group) {
     }
 }
 
-export function closeModals() {
-    return (dispatch) => {
-        dispatch({ type: 'CLOSE_MODAL' })
-    }
-}
-
-export function openModal(modalName) {
-    return (dispatch) => {
-        dispatch({ type: 'OPEN_MODAL', modalName})
-    }
-}
-
-
 export function loadTask(task) {
     return (dispatch) => {
         taskService.getById(task)

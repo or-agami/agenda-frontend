@@ -107,34 +107,17 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
 const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
     const [modalName,setModalName] = useState(null)
     const dispatch = useDispatch()
-    const isScreenOpen = useSelector(state => state.boardModule.modals.isScreenOpen)
-    const itemId = useSelector(state => state.boardModule.modals.itemId)
-    // const isBoardOptsOpen = useSelector(state => state.boardModule.modals.isBoardOptsOpen)
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
 
     const openBoardSettings = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()
-        // dispatch(openModal('isBoardOptsOpen', board._id))
-        setModalName('SIDE_NAV_MENU')
+        setTimeout(() => {
+            setModalName('SIDE_NAV_MENU')
+          }, 100);
 
     }
-
-    // const onRemoveBoard = (ev, boardId) => {
-    //     ev.preventDefault()
-    //     ev.stopPropagation()
-    //     dispatch(closeModals())
-    //     dispatch(removeBoard(boardId))
-    //     setCurrBoard(boards[0])
-    // }
-
-    // const onEditBoard = (ev) => {
-    //     ev.preventDefault()
-    //     ev.stopPropagation()
-    //     dispatch(closeModals())
-    //     setIsRenaming(!isRenaming)
-    // }
 
     const onRenameBoard = (ev) => {
         ev.preventDefault()

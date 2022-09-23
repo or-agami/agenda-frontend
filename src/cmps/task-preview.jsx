@@ -1,12 +1,10 @@
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
-import { TaskMenu } from './task-menu'
 import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
-import { openModal, updateTask } from '../store/board/board.action'
+import { updateTask } from '../store/board/board.action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { TaskDetailPersonMenu } from './task-detail-person-menu'
+import { Link } from 'react-router-dom'
 import { DynamicTaskCmp } from './dynamic-task-cmp'
 import { PopUpModal } from './pop-up-modal'
 
@@ -14,7 +12,6 @@ import { PopUpModal } from './pop-up-modal'
 export const TaskPreview = ({ task, group, board }) => {
   const [modalName,setModalName] = useState(null)
 
-  const { itemId, isTaskDetailPersonMenuOpen, isTaskDetailOpen, isTaskMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const [isEditTitle, setIsEditTitle] = useState(false)
   const [editedTask, handleChange, setTask] = useForm(task)
@@ -65,7 +62,6 @@ export const TaskPreview = ({ task, group, board }) => {
       </div>
     </div>
     {board.cmpsOrder && board.cmpsOrder.map(category => <DynamicTaskCmp key={category} board={board} category={category} task={task} group={group} />)}
-    {(isTaskDetailPersonMenuOpen && itemId === task.id) && <TaskDetailPersonMenu task={task} groupId={group.id} board={board} />}
     <li><div></div></li>
   </ul>
 }

@@ -1,10 +1,5 @@
 import moment from "moment/moment"
 import { Fragment, useState } from "react"
-import { useDispatch } from "react-redux"
-import { openModal } from "../store/board/board.action"
-import { TaskPersonMenu } from "./task-person-menu"
-import { TaskPriorityMenu } from "./task-priority-menu"
-import { TaskStatusMenu } from "./task-status-menu"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { FaPlusCircle } from "react-icons/fa"
 import { PopUpModal } from "./pop-up-modal"
@@ -12,10 +7,7 @@ import { TaskTimeline } from "./task-timeline"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
-    // const [isMenuModalOpen,setMenuModalIsOpen] = useState(false)
     const [modalName,setModalName] = useState(null)
-    const dispatch = useDispatch()
-    // const { itemId, isTaskStatusMenuOpen, isTaskPriorityMenuOpen, isTaskPersonMenuOpen, isScreenOpen } = useSelector(state => state.boardModule.modals)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
     let className = `flex justify-center task-preview-`
     let headerTxt, cmp

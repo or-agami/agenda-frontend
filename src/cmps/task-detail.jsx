@@ -15,20 +15,20 @@ import { utilService } from "../services/util.service"
 import { useRef } from "react"
 import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
 import { TaskTimeline } from "./task-timeline"
+import { PopUpModal } from "./pop-up-modal"
 
 export const TaskDetail = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const task = useSelector(state => state.boardModule.task)
     const board = useSelector(state => state.boardModule.board)
-    const itemId = useSelector(state => state.boardModule.modals.itemId)
-    const isTaskDetailPersonMenuOpen = useSelector(state => state.boardModule.modals.isTaskDetailPersonMenuOpen)
     const [whichRenders, setWhichRenders] = useState('isUpdates')
     const params = useParams()
     const [searchParams] = useSearchParams()
     const groupId = searchParams.get('groupId')
     const taskId = searchParams.get('taskId')
     const boardId = params.boardId
+    const [modalName,setModalName] = useState(null)
 
     useEffect(() => {
         dispatch(loadTask(taskId))
@@ -40,7 +40,9 @@ export const TaskDetail = () => {
 
 
     const onSetTaskPersonMenuOpen = () => {
-        dispatch(openModal('isTaskDetailPersonMenuOpen', taskId))
+        setTimeout(() => {
+            setModalName('TASK_DETAIL_PERSON_MENU')
+          }, 100);
     }
 
     if (!task) return
@@ -53,6 +55,7 @@ export const TaskDetail = () => {
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
                         <FaPlusCircle />
                     </button>
+                    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} groupId={groupId} board={board} />}
                     {task.memberIds && task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))}
                 </div>
             </div>

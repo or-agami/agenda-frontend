@@ -5,21 +5,6 @@ const initialState = {
     board: null,
     filterBy: null,
     sortBy: null,
-    modals: {
-        itemId: null,
-        isScreenOpen: false,
-        isGroupMenuOpen: false,
-        isTaskMenuOpen: false,
-        isTaskStatusMenuOpen: false,
-        isTaskPriorityMenuOpen: false,
-        isTaskPersonMenuOpen: false,
-        isColorMenuOpen: false,
-        isBoardOptsOpen: false,
-        isUserMenuOpen: false,
-        isTaskDetailPersonMenuOpen: false,
-    },
-    modalName:null,
-    isMenuModalOpen:false,
     task: null,
 }
 
@@ -66,12 +51,6 @@ export function boardReducer(state = initialState, action) {
 
         case 'SET_BOARD':
             return { ...state, board: action.board }
-
-        case 'CLOSE_MODAL':
-            return { ...state,  isMenuModalOpen:false,modalName:null}
-        case 'OPEN_MODAL':
-            // console.log(action.currModal)
-            return { ...state, isMenuModalOpen: true, modalName:action.modalName }
         case 'SET_TASK':
             return { ...state, task: action.task }
         default:

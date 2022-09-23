@@ -5,9 +5,14 @@ import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
 import { removeBoard, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
+import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
+import { GrClose } from 'react-icons/gr'
+import { useNavigate } from 'react-router-dom'
+import { logout } from '../store/user/user.action'
 
-export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,setCurrBoard ,setIsRenaming,isRenaming}) => {
+export const PopUpModal = ({ modalName, setModalName, task, group,groupId, board, boards, setCurrBoard, setIsRenaming, isRenaming }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const closeModal = () => {
     setTimeout(() => {
@@ -58,7 +63,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,
     }, 100);
     const activity = { type: "add member", data: member }
     updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-    dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
+    dispatch(updateTask({ task: updatedTask, groupId: group.id || groupId, boardId: board._id }, activity))
     return
   }
 
@@ -105,26 +110,40 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board,boards,
     setTimeout(() => {
       setModalName(null)
     }, 100);
-    dispatch(updateGroup({ group: updatedGroup, boardId:board._id }))
-}
+    dispatch(updateGroup({ group: updatedGroup, boardId: board._id }))
+  }
 
-const onRemoveBoard = (ev, boardId) => {
-  ev.preventDefault()
-  ev.stopPropagation()
+  const onRemoveBoard = (ev, boardId) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    dispatch(removeBoard(boardId))
+    setCurrBoard(boards[0])
+  }
+
+  const onEditBoard = (ev) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    setIsRenaming(!isRenaming)
+  }
+
+  const onLogout = () => {
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
+    dispatch(logout())
+    navigate('/')
+  }
+
+const closeTaskDetailPersonMenu = () => {
   setTimeout(() => {
     setModalName(null)
   }, 100);
-  dispatch(removeBoard(boardId))
-  setCurrBoard(boards[0])
-}
-
-const onEditBoard = (ev) => {
-  ev.preventDefault()
-  ev.stopPropagation()
-  setTimeout(() => {
-    setModalName(null)
-  }, 100);
-  setIsRenaming(!isRenaming)
 }
 
   switch (modalName) {
@@ -180,8 +199,8 @@ const onEditBoard = (ev) => {
         </div>
         <button onClick={onRemoveGroup} className='btn btn-svg btn-trash-task'><Trash /> Delete</button>
       </section>
-      case 'COLOR_MENU':
-        return <section className='color-menu modal' onClick={(ev) => ev.stopPropagation()}>
+    case 'COLOR_MENU':
+      return <section className='color-menu modal' onClick={(ev) => ev.stopPropagation()}>
         <div className='clr1' onClick={() => changeGroupColor('clr1')}></div>
         <div className='clr2' onClick={() => changeGroupColor('clr2')}></div>
         <div className='clr3' onClick={() => changeGroupColor('clr3')}></div>
@@ -198,18 +217,36 @@ const onEditBoard = (ev) => {
         <div className='clr14' onClick={() => changeGroupColor('clr15')}></div>
         <div className='clr15' onClick={() => changeGroupColor('clr16')}></div>
         <div className='clr17' onClick={() => changeGroupColor('clr17')}></div>
-    </section>
+      </section>
     case 'SIDE_NAV_MENU':
-      return <div className='board-opts-modal modal'onClick={(ev) => ev.stopPropagation()}>
-                    <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
-                        <PencilIcon />
-                        <span>Rename Board</span>
-                    </div>
-                    <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
-                        <TrashIcon />
-                        <span>Remove Board</span>
-                    </div>
-                </div>
+      return <div className='board-opts-modal modal' onClick={(ev) => ev.stopPropagation()}>
+        <div onClick={(ev) => onEditBoard(ev)} className="nav-board-menu-opt">
+          <PencilIcon />
+          <span>Rename Board</span>
+        </div>
+        <div onClick={(ev) => onRemoveBoard(ev, board._id)} className="nav-board-menu-opt">
+          <TrashIcon />
+          <span>Remove Board</span>
+        </div>
+      </div>
+
+    case 'USER_MENU':
+      return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
+        <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button>
+      </section>
+    case 'TASK_DETAIL_PERSON_MENU':
+      return <section className='task-detail-person-menu' onClick={(ev) => ev.stopPropagation()}>
+        <button className="btn btn-svg btn-svg-x" onClick={() => closeTaskDetailPersonMenu()}><GrClose /></button>
+        {getAvailableMembers().map(member => {
+          return <div key={member._id} className="member-container-available">
+            <div className="available-img-container">
+              <img src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
+            </div>
+            <h4>{member.fullname}</h4>
+          </div>
+        })}
+
+      </section>
     default: return console.error('cannot open modal!')
   }
 }
