@@ -223,6 +223,7 @@ async function update(user) {
 
     //?- Prod:
     user = await httpService.put(`user/${user._id}`, user)
+    console.log('user:', user)
     // Handle case in which admin updates other user's details
     if (getLoggedinUser()._id === user._id) saveLocalUser(user)
     return user
