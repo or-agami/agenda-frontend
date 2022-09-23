@@ -59,7 +59,7 @@ export function boardReducer(state = initialState, action) {
 
         case 'SET_BOARD':
             return { ...state, board: action.board }
-            
+
         case 'SET_TASK':
             return { ...state, task: action.task }
 
@@ -67,11 +67,11 @@ export function boardReducer(state = initialState, action) {
             task = state.task
             if (!task.activities) task.activities = [action.activity]
             else task.activities.unshift(action.activity)
+            // console.log('task:', task)
             return { ...state, task: { ...task } }
 
         case 'ADD_TASK_COMMENT':
             // Todo: add task comment
-            return // deleteMe
             return { ...state, task: action.task }
 
         default:

@@ -5,13 +5,17 @@ import { groupService } from "../../services/group.service"
 import { taskService } from "../../services/task.service"
 
 
+export function getActionUpdateBoard(board) {
+    return { type: 'UPDATE_BOARD', board }
+}
+
 export function getActionAddTaskComment(comment) {
     // Todo: add action func to add comment 
     return { type: 'ADD_COMMENT', comment }
 }
 
 export function getActionAddTaskActivity(activity) {
-    return { type: 'ADD_ACTIVITY', activity }
+    return { type: 'ADD_TASK_ACTIVITY', activity }
 }
 
 export function setLoader() {
@@ -91,7 +95,7 @@ export function updateBoard(board) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await boardService.save(board)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to update board')
         } finally {
@@ -104,7 +108,7 @@ export function addTask(task) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await taskService.save(task)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to add task')
         }
@@ -115,7 +119,7 @@ export function updateTask(task, activity) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await taskService.update(task, activity)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to update task')
         }
@@ -126,7 +130,7 @@ export function removeTask(task) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await taskService.remove(task)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
             showSuccessMsg('Task removed succesfully')
         } catch (err) {
             showErrorMsg('Failed to remove task')
@@ -138,7 +142,7 @@ export function addGroup(boardId) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await groupService.save(boardId)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to add group')
         }
@@ -148,8 +152,8 @@ export function addGroup(boardId) {
 export function updateGroup(group) { // 👈 group is obj prop: { group, boardId }
     return async (dispatch, getState) => {
         try {
-            const updatedBoard = groupService.update(group)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            const updatedBoard = await groupService.update(group)
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
             showErrorMsg('Failed to update group')
         }
@@ -160,7 +164,7 @@ export function removeGroup(group) {
     return async (dispatch, getState) => {
         try {
             const updatedBoard = await groupService.remove(group)
-            dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
             showSuccessMsg('Group removed successfully')
         } catch (err) {
             showErrorMsg('Failed to remove group')

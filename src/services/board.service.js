@@ -1,21 +1,21 @@
+import { getActionUpdateBoard } from "../store/board/board.action";
 import { store } from "../store/store";
 // import { storageService } from "./async-storage.service";
 import { httpService } from "./http.service"
-import { socketService } from "./socket.service";
-import { SOCKET_EMIT_SEND_MSG, SOCKET_EMIT_SET_BOARD_ID_CHANNEL, SOCKET_EVENT_ADD_MSG } from "./socket.service";
+import { socketService, SOCKET_EMIT_SET_BOARD_ID_CHANNEL, SOCKET_EMIT_SEND_BOARD_CHANGES, SOCKET_EVENT_ADD_BOARD_CHANGES } from "./socket.service";
 import { utilService } from "./util.service";
 
 /* ?- WebSocket */;
-// (() => {
-//   socketService.on(SOCKET_EMIT_SEND_MSG, (msg) => {
-//     console.log('GOT msg from socket', msg)
-//     store.dispatch(getActionAddMsg(msg))
-//   })
-//   socketService.on(SOCKET_EVENT_ADD_MSG, (msg) => {
-//     console.log('GOT msg from socket', msg)
-//     store.dispatch(getActionAddMsg(msg))
-//   })
-// })()
+(() => {
+  socketService.on(SOCKET_EMIT_SEND_BOARD_CHANGES, (board) => {
+    // console.log('GOT board from socket', board)
+    store.dispatch(getActionUpdateBoard(board))
+  })
+  socketService.on(SOCKET_EVENT_ADD_BOARD_CHANGES, (board) => {
+    // console.log('GOT board from socket', board)
+    store.dispatch(getActionUpdateBoard(board))
+  })
+})()
 
 export const boardService = {
   query,
@@ -28,7 +28,7 @@ export const boardService = {
 const statusOpts = ['done', 'working on it', 'stuck', 'need help', 'waiting for qa', 'pending', '']
 const priorityOpts = ['', 'low', 'medium', 'high', 'critical',]
 
-const STORAGE_KEY = 'boardDB'
+// const STORAGE_KEY = 'boardDB'
 //?- Prod:
 const BASE_URL = 'board/'
 
@@ -74,7 +74,7 @@ function getById(boardId, sortBy, filterBy) {
       }
 
       if (filterBy) {
-        console.log('filterBy:', filterBy)
+        // console.log('filterBy:', filterBy)
         board.groups.map((group) =>
           group.tasks = group.tasks.filter((task) =>
             (filterBy.term && filterBy.term !== '') ?
@@ -92,6 +92,10 @@ function remove(boardId) {
 
 function save(board) {
   // Todo: board.createBy
-  if (board._id) return httpService.put(BASE_URL + board._id, board)
+  if (board._id) {
+    // console.log('updating board:', board)
+    socketService.emit(SOCKET_EMIT_SEND_BOARD_CHANGES, board)
+    return httpService.put(BASE_URL + board._id, board)
+  }
   else return httpService.post(BASE_URL, board)
 }
