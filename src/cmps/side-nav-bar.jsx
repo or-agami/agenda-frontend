@@ -64,14 +64,14 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isF
                     onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
                     <div className="favorites">
                         <StarClrIcon className="svg svg-star" />
-                        <h3 className="board-name"> Favorites</h3>
+                        <h3> Favorites</h3>
                     </div>
                     <BoardMenu />
                 </button>
             </div>
                         <hr/>
             <div className="nav-board-list">
-                {loggedinUser.favBoards.map(board => {
+                {loggedinUser?.favBoards?.map(board => {
                     return <NavFavoritesPreview key={board} boardId={board} setCurrBoard={setCurrBoard} boards={newBoards} />
                 })}
             </div>
@@ -156,7 +156,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
         <input autoFocus type="text" name='title' value={renameBoard.title} onChange={handleChange} />
     </form>
     return (
-        <NavLink to={`/workspace/board/${board._id}`} className="nav-board-preview">
+        <NavLink onClick={() => setCurrBoard(board)} to={`/workspace/board/${board._id}`} className="nav-board-preview">
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
@@ -174,8 +174,12 @@ const NavFavoritesPreview = ({ boardId, setCurrBoard, boards }) => {
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
 
+    useEffect(() => {
+        if (!board) return
+        setCurrBoard(board)
+    },[])
+    
     if (!board) return
-
     const openBoardSettings = (ev) => {
         ev.preventDefault()
         ev.stopPropagation()

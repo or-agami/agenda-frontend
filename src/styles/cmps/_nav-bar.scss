@@ -28,6 +28,10 @@
     justify-content: center;
     align-items: center;
 
+    &.active.set {
+      background-color: #545970;
+    }
+
     a {
       width: 36px;
       height: 36px;
@@ -36,9 +40,10 @@
       justify-content: center;
       align-items: center;
 
-      .selected-indication{
+      .selected-indication {
         right: -6px;
       }
+
       &.active.set {
         background-color: #545970;
 
@@ -67,7 +72,7 @@
       }
     }
 
-    &:not(.btn-home, .btn-board,.btn-logout, .last-child) {
+    &:not(.btn-home, .btn-board, .btn-logout, .last-child) {
       svg * {
         fill: white;
       }
@@ -86,7 +91,7 @@
         height: 36px;
         fill: #8f8fff;
       }
-      
+
       &:hover {
         svg * {
           fill: white;

@@ -98,6 +98,7 @@
         justify-content: space-between;
 
         .favorites {
+            color: var(--clr-logo-txt);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -120,7 +121,7 @@
         }
        
         .svg-star {
-            width: 20px;
+            width: 17px;
             margin-inline-end: 7px;
         }
     }

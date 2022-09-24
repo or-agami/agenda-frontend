@@ -85,7 +85,7 @@ const Favorites = ({boards ,loggedinUser }) => {
 
 const FavoriteContent = ({boards , loggedinUser }) => {
     if (!loggedinUser) return
-    const favBoards = boards.filter(board => loggedinUser.favBoards.includes(board._id))
+    const favBoards = boards.filter(board => loggedinUser.favBoards?.includes(board._id))
     return <div className='app-home-recent-content-container'>
         <BoardList boards={favBoards} isStarred={true} />
     </div>

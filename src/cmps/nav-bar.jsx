@@ -100,10 +100,10 @@ export const NavBar = () => {
           </NavLink>
         </button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
-        <button onClick={showFavorites} className="btn btn-svg btn-favorites">
-          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${isFavorites ? 'set' : ''}`}><FavoritesSvg />
-            <div className="selected-indication"></div>
-          </NavLink>
+        <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`}>
+          <FavoritesSvg />
+          <div className="selected-indication"></div>
+
         </button>
         <button className="btn btn-svg btn-invite"><InviteSvg /></button>
         <button className="btn btn-svg btn-search"><SearchSvg /></button>
