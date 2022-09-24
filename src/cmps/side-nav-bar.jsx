@@ -69,7 +69,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isF
                     <BoardMenu />
                 </button>
             </div>
-                        <hr/>
+            <hr />
             <div className="nav-board-list">
                 {loggedinUser?.favBoards?.map(board => {
                     return <NavFavoritesPreview key={board} boardId={board} setCurrBoard={setCurrBoard} boards={newBoards} />
@@ -79,11 +79,7 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isF
             :
             <Fragment>
                 <div className="side-board-opts">
-                    <button className="btn btn-svg"
-                        onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
-                        <p className="board-name">Workspace</p>
-                        <BoardMenu />
-                    </button>
+                    <p className="board-name">Workspace</p>
                 </div>
                 <div className="side-board-workspace-name">
                     <div className="board-preview-icon">A</div>
@@ -93,10 +89,6 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isF
                     <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
                         <PlusIcon />
                         Add
-                    </div>
-                    <div className="side-nav side-nav-filter">
-                        <FilterIcon />
-                        Filter
                     </div>
                     <div onClick={onSearchBoardClick} className="side-nav side-nav-search">
                         <SearchIcon />
@@ -177,8 +169,8 @@ const NavFavoritesPreview = ({ boardId, setCurrBoard, boards }) => {
     useEffect(() => {
         if (!board) return
         setCurrBoard(board)
-    },[])
-    
+    }, [])
+
     if (!board) return
     const openBoardSettings = (ev) => {
         ev.preventDefault()

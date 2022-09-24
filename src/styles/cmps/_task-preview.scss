@@ -19,6 +19,14 @@
         filter: opacity(.7);
     }
 
+    .sticky-container {
+        position: sticky;
+        display: flex;
+        left: 135px;
+        z-index: 1;
+        background-color:white;
+    }
+
     .developer-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, 20px);
@@ -246,7 +254,7 @@
                         margin: 0;
                         height: 0;
                         width: 0;
-                        position:absolute;
+                        position: absolute;
                         color: #fff;
                         right: 16px;
                         bottom: 4px;
