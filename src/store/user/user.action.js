@@ -43,7 +43,7 @@ export function updateUser(creds) {
     return async (dispatch) => {
         try {
             const savedUser = await userService.update(creds)
-            dispatch({ type: 'SET_USER', user: savedUser })
+            dispatch({ type: 'SET_USER', loggedinUser: savedUser })
             showSuccessMsg('user updated')
         } catch (err) {
             showErrorMsg('Failed to update user')

@@ -25,6 +25,7 @@ export const AppHome = () => {
 // Header
 const Header = () => {
     const loggedinUser = useSelector(store => store.userModule.loggedinUser)
+    console.log('loggedinUser:', loggedinUser)
     return (
         <header className="app-home-header">
             <div className='header-container'>
