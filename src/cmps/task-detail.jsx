@@ -12,7 +12,7 @@ import { FaArrowRight, FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
-import confetti from "https://cdn.skypack.dev/canvas-confetti@1";
+import confetti from 'canvas-confetti'
 import { TaskTimeline } from "./task-timeline"
 import { PopUpModal } from "./pop-up-modal"
 
