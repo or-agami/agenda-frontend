@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import { UserMsg } from './cmps/user-msg';
-import { NavBar } from './cmps/nav-bar';
 import routes from './routes';
 import './styles/main.scss';
 function RootCmp() {

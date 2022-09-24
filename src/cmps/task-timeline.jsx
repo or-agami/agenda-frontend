@@ -98,7 +98,6 @@ export const DatePicker = ({ setDatePickerIsOpen, taskTimeline, handleDateChange
     <div className="date-picker" onClick={(ev) => ev.stopPropagation()}>
       <DateRange
         editableDateInputs={true}
-        // onChange={item => setTaskTimeline([item.selection])}
         onChange={item => handleDateChange(item.selection)}
         moveRangeOnFirstSelection={false}
         ranges={taskTimeline}

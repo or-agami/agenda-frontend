@@ -102,7 +102,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
                 case 'add member':
                     title = 'Added'
                     info = <span className="activity-status">
-                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} />
+                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} alt='profile img' />
                         {activity.data.fullname}
                     </span>
 
@@ -110,7 +110,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
                 case 'remove member':
                     title = 'Removed'
                     info = <span className="activity-status">
-                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} />
+                        <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} alt='profile img' />
                         {activity.data.fullname}
                     </span>
 
@@ -151,7 +151,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
             return <div key={activity.id} className="activity-container">
                 <span className="activity-time"><Clock /> {getFormattedDateTime(activity.createdAt)}</span>
                 <span className="activity-by">
-                    <img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} />
+                    <img className='profile-img-icon' src={require(`../assets/img/${activity.byMember.imgUrl}.png`)} alt='profile img' />
                     {activity.byMember.fullname}
                 </span>
                 <span className="activity-type">{title}</span>
@@ -241,7 +241,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
     return <section className='post'>
         <div className="post-header">
             <div className='img-container'>
-                <img className='profile-img-icon' src={require(`../assets/img/${byMember.imgUrl}.png`)} alt="" />
+                <img className='profile-img-icon' src={require(`../assets/img/${byMember.imgUrl}.png`)} alt='profile img' />
                 <p className="fullname">{byMember.fullname}</p>
             </div>
             <div className="time-menu-container">
@@ -253,7 +253,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
         <p className="comment-txt">{txt}</p>
         <div className="likes-container">
             <div className="img-container">
-                {comment.likes && comment.likes.map((like, idx) => <img key={idx} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt="" />)}
+                {comment.likes && comment.likes.map((like, idx) => <img key={idx} className='profile-img-icon' src={require(`../assets/img/${like.imgUrl}.png`)} alt='profile img' />)}
             </div>
             <p>{comment.likes?.length > 0 ? 'Likes' : ''}</p>
         </div>

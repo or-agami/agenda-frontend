@@ -16,7 +16,7 @@ export const Home = () => {
         <section className="home">
                 <Header />
             <div className="home-bg-div">
-                <img className='bg-img' src={bgImg} />
+                <img className='bg-img' src={bgImg} alt='stars' />
                 <div className="home-hero main-layout">
                     <h2>A platform for company
                         <br />tasks managment
