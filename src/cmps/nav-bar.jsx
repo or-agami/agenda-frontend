@@ -20,6 +20,7 @@ import { Loader } from './loader';
 import { loadBoard, loadBoards, setLoader } from '../store/board/board.action';
 import { Dashboard } from '../views/dashboard';
 import { PopUpModal } from './pop-up-modal';
+import { Kanban } from '../views/kanban';
 
 
 export const NavBar = () => {
@@ -119,6 +120,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
+        <Route path="/board/kanban/:boardId" element={<Kanban />} />
         <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
         <Route path="/board/:boardId/*" element={<Board />} />
         <Route path="/inbox" element={<Inbox />} />

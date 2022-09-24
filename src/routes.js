@@ -6,7 +6,7 @@ import { LoginSignup } from './views/login-signup'
 import { UserWork } from './views/user-work'
 import { Inbox } from './views/inbox'
 import { Dashboard } from './views/dashboard'
-
+import { Kanban } from './views/kanban'
 
 export default [
     {
@@ -20,6 +20,10 @@ export default [
             {
                 path: '/home',
                 component: <AppHome />,
+            },
+            {
+                path: '/board/kanban/:boardId',
+                component: <Kanban />,
             },
             {
                 path: '/board/dashboard/:boardId',

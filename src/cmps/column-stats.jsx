@@ -53,7 +53,6 @@ const PriorityStat = ({group}) => {
             counter[priority] = (counter[priority] || 0) + 1
 
         })
-        console.log('counter:', counter)
         let forInCounter = 0
         for (const priority in counter) {
             forInCounter++
