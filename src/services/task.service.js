@@ -1,31 +1,21 @@
 import { groupService } from "./group.service";
 import { httpService } from "./http.service"
-import { socketService, SOCKET_EMIT_SEND_ACTIVITY, SOCKET_EVENT_ADD_ACTIVITY } from "./socket.service";
+import { socketService, SOCKET_EMIT_SEND_TASK_CHANGES,  SOCKET_EVENT_ADD_TASK_CHANGES } from "./socket.service";
 import { userService } from "./user.service";
 import { utilService } from "./util.service";
-import { SOCKET_EMIT_SET_TASK_ID_CHANNEL, SOCKET_EMIT_SEND_COMMENT, SOCKET_EVENT_ADD_COMMENT } from "./socket.service";
+import { SOCKET_EMIT_SET_TASK_ID_CHANNEL } from "./socket.service";
 import { store } from "../store/store";
-import { getActionAddTaskActivity, getActionAddTaskComment } from "../store/board/board.action";
+import { getActionUpdateTask } from "../store/board/board.action";
 
 /* ?- WebSocket */;
-// (() => {
-//   socketService.on(SOCKET_EMIT_SEND_COMMENT, (comment) => {
-//     console.log('GOT comment from socket', comment)
-//     store.dispatch(getActionAddTaskComment(comment))
-//   })
-//   socketService.on(SOCKET_EVENT_ADD_COMMENT, (comment) => {
-//     console.log('GOT comment from socket', comment)
-//     store.dispatch(getActionAddTaskComment(comment))
-//   })
-//   socketService.on(SOCKET_EMIT_SEND_ACTIVITY, (activity) => {
-//     console.log('GOT activity from socket', activity)
-//     store.dispatch(getActionAddTaskActivity(activity))
-//   })
-//   socketService.on(SOCKET_EVENT_ADD_ACTIVITY, (activity) => {
-//     console.log('GOT activity from socket', activity)
-//     store.dispatch(getActionAddTaskActivity(activity))
-//   })
-// })()
+(() => {
+  socketService.on(SOCKET_EMIT_SEND_TASK_CHANGES, (task) => {
+    store.dispatch(getActionUpdateTask(task))
+  })
+  socketService.on(SOCKET_EVENT_ADD_TASK_CHANGES, (task) => {
+    store.dispatch(getActionUpdateTask(task))
+  })
+})()
 
 
 export const taskService = {
@@ -47,7 +37,7 @@ async function query(filterBy) {
 }
 
 async function getById(taskId) {
-  // socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, taskId)
+  socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, taskId)
   return httpService.get(BASE_URL + taskId)
 }
 
@@ -58,7 +48,9 @@ async function remove({ taskId, groupId, boardId }) {
 }
 
 async function update({ task, groupId, boardId }, activity) {
-  if (activity) task = addActivity(task, activity)
+  if (activity) task = await addActivity(task, activity)
+  socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, task.id)
+  socketService.emit(SOCKET_EMIT_SEND_TASK_CHANGES, task)
   const group = await groupService.getById({ groupId, boardId })
   group.tasks = group.tasks.map((t) => (t.id !== task.id) ? t : task)
   return groupService.update({ group, boardId })
@@ -66,13 +58,11 @@ async function update({ task, groupId, boardId }, activity) {
 
 async function save({ title, groupId, boardId }) {
   const group = await groupService.getById({ groupId, boardId })
-  // Todo: add user activity to the task
   const task = { id: utilService.makeId(), title }
   group.tasks.push(task)
   return groupService.update({ group, boardId })
 }
 
-// Done: add user activity to the task 
 function addActivity(task, activity) {
   const user = userService.getLoggedinUser()
   delete user.assignments
@@ -85,11 +75,9 @@ function addActivity(task, activity) {
     byMember: user,
     data: activity.data
   }
-  // In Progress: EMIT new activity here
-  // socketService.emit(SOCKET_EMIT_SEND_ACTIVITY, newActivity)
   if (!task.activities) task.activities = [newActivity]
   else task.activities.unshift(newActivity)
 
 
-  return task
+  return Promise.resolve(task)
 }

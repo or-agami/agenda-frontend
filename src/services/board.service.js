@@ -8,11 +8,9 @@ import { utilService } from "./util.service";
 /* ?- WebSocket */;
 (() => {
   socketService.on(SOCKET_EMIT_SEND_BOARD_CHANGES, (board) => {
-    // console.log('GOT board from socket', board)
     store.dispatch(getActionUpdateBoard(board))
   })
   socketService.on(SOCKET_EVENT_ADD_BOARD_CHANGES, (board) => {
-    // console.log('GOT board from socket', board)
     store.dispatch(getActionUpdateBoard(board))
   })
 })()
@@ -74,7 +72,6 @@ function getById(boardId, sortBy, filterBy) {
       }
 
       if (filterBy) {
-        // console.log('filterBy:', filterBy)
         board.groups.map((group) =>
           group.tasks = group.tasks.filter((task) =>
             (filterBy.term && filterBy.term !== '') ?
@@ -93,7 +90,6 @@ function remove(boardId) {
 function save(board) {
   // Todo: board.createBy
   if (board._id) {
-    // console.log('updating board:', board)
     socketService.emit(SOCKET_EMIT_SEND_BOARD_CHANGES, board)
     return httpService.put(BASE_URL + board._id, board)
   }

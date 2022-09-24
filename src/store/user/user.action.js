@@ -6,7 +6,6 @@ export function checkUsername(username) {
     return async (dispatch) => {
         try {
             await userService.verifyUsername(username)
-            // console.log('verified from userAction');
             isUsernameVerified('VERIFIED')
         } catch (err) {
             isUsernameVerified('NOT_FOUND')
@@ -15,7 +14,6 @@ export function checkUsername(username) {
 }
 
 export function login(creds) {
-    // console.log('creds:', creds)
     return async (dispatch) => {
         try {
             const loggedinUser = await userService.login(creds)
@@ -33,8 +31,6 @@ export function signup(creds) {
         try {
             const savedUser = await userService.signup(creds)
             dispatch({ type: 'SET_USER', loggedinUser: creds })
-            // history.push('/toy')
-            // window.location.reload(false)
             showSuccessMsg('User added')
         } catch (err) {
             console.error('Oops:', err)
@@ -63,19 +59,6 @@ export function logout() {
         } catch (err) {
             console.error('Oops:', err)
             showErrorMsg('Cannot logout')
-        }
-    }
-}
-
-export function addActivity(activity) {
-    // console.log('activity from userAction:', activity)
-    return async (dispatch) => {
-        try {
-            await userService.addActivity(activity)
-            dispatch({ type: 'SET_ACTIVITY', activity })
-        } catch (err) {
-            console.error('Oops:', err)
-            showErrorMsg('Cannot add activity')
         }
     }
 }

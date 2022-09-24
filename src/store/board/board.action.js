@@ -9,14 +9,19 @@ export function getActionUpdateBoard(board) {
     return { type: 'UPDATE_BOARD', board }
 }
 
-export function getActionAddTaskComment(comment) {
+export function getActionUpdateTask(task) {
     // Todo: add action func to add comment 
-    return { type: 'ADD_COMMENT', comment }
+    return { type: 'UPDATE_TASK', task }
 }
 
-export function getActionAddTaskActivity(activity) {
-    return { type: 'ADD_TASK_ACTIVITY', activity }
-}
+// export function getActionAddTaskComment(comment) {
+//     // Todo: add action func to add comment 
+//     return { type: 'ADD_COMMENT', comment }
+// }
+
+// export function getActionAddTaskActivity(activity) {
+//     return { type: 'ADD_TASK_ACTIVITY', activity }
+// }
 
 export function setLoader() {
     return (dispatch, getState) => {
@@ -187,7 +192,7 @@ export function addComment(task, activity) {
     return async (dispatch, getState) => {
         try {
             const savedBoard = await taskService.update(task, activity)
-            dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
             showErrorMsg('Failed to add comment')
         }
@@ -198,7 +203,7 @@ export function removeComment(task, activity) {
     return async (dispatch, getState) => {
         try {
             const savedBoard = await taskService.update(task, activity)
-            dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
+            // dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
             showErrorMsg('Failed to add comment')
         }

@@ -98,7 +98,6 @@ const TaskDetailActivity = ({ task, group, board }) => {
         {task.activities?.map(activity => {
             let title
             let info
-            console.log('activity:', activity)
             switch (activity.type) {
                 case 'add member':
                     title = 'Added'
