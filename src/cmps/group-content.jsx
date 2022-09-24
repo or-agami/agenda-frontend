@@ -13,7 +13,7 @@ import { PopUpModal } from './pop-up-modal'
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx }) => {
     const [modalName, setModalName] = useState(null)
     const [isEditTitle, setIsEditTitle] = useState(false)
-    const [editedGroup, handleChange, setGroup] = useForm(group)
+    const [editedGroup, handleChange] = useForm(group)
     const [isDecending, setIsDecending] = useState(false)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)

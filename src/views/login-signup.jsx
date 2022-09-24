@@ -2,7 +2,7 @@ import { Logo } from '../cmps/logo'
 import { checkUsername, login, signup } from '../store/user/user.action'
 import { useDispatch, useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { Navigate, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import { ReactComponent as RightArrowSvg } from '../assets/icons/right-arrow.svg'
 import { eventBusService } from '../services/event-bus.service'
@@ -12,7 +12,6 @@ import { MdDoNotDisturbAlt } from 'react-icons/md'
 export const LoginSignup = () => {
 
   const params = useParams()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedinUser = useSelector(store => store.userModule.loggedinUser)
 
@@ -31,11 +30,11 @@ export const LoginSignup = () => {
   )
 }
 
-const Signup = (props) => {
+const Signup = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [signupFields, handleSignupChange, setSignupFields] = useForm({
+  const [signupFields, handleSignupChange] = useForm({
     fullname: '',
     username: '',
     password: '',
@@ -107,7 +106,7 @@ const Signup = (props) => {
                   <span className="separator-line"></span>
                 </div>
                 <button className="btn btn-login-google">
-                  <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="" />
+                  <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="google" />
                   <span>Continue with Google</span>
                 </button>
                 <div className="suggest-signup">
@@ -119,7 +118,7 @@ const Signup = (props) => {
         </div>
         <div className="side-img-wrapper">
           <div className="img-container">
-            <img className="img" src="https://dapulse-res.cloudinary.com/image/upload/monday_platform/signup/soft-welcome.png" />
+            <img className="img" src="https://dapulse-res.cloudinary.com/image/upload/monday_platform/signup/soft-welcome.png" alt="welcome" />
           </div>
           <div className="side-text-wrapper side-text">
             Trusted by <b>152,000+</b> customers worldwide
@@ -130,14 +129,14 @@ const Signup = (props) => {
   )
 }
 
-const Login = (props) => {
+const Login = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [isUsernameVerified, setUserNameVerified] = useState(false)
 
-  const [loginFields, handleLoginChange, setLoginFields] = useForm({
+  const [loginFields, handleLoginChange] = useForm({
     username: '',
     password: '',
   })

@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export function userReducer(state = initialState, action) {
-    var loggedinUser, activities
     switch (action.type) {
 
         case 'SET_USER':

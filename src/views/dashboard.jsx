@@ -4,7 +4,6 @@ import { Loader } from "../cmps/loader"
 import { Doughnut, Bar, Line } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, LineElement, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement } from "chart.js"
 import { useEffect, useState } from "react"
-import { httpService } from "../services/http.service"
 import { taskService } from "../services/task.service"
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LineElement, LinearScale, BarElement, Title, PointElement)
