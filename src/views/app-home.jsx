@@ -1,13 +1,10 @@
-import { Loader } from '../cmps/loader'
 import { ReactComponent as AppHeaderSvg } from '../assets/icons/app-header-background.svg'
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import fistBumpGif from '../assets/img/fist-bump.gif'
 import { useState } from 'react'
 import { BoardList } from '../cmps/board-list'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { SideNavBar } from '../cmps/side-nav-bar'
-import { updateUser } from '../store/user/user.action'
+import {  useSelector } from 'react-redux'
+
 
 
 export const AppHome = () => {
