@@ -12,22 +12,23 @@ import { updateUser } from '../store/user/user.action'
 
 export const AppHome = () => {
 
+    const { boards } = useSelector(state => state.boardModule)
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
 
-    // console.log('loggedinUser:', loggedinUser)
     return (
         <section className="app-home main-layout-app-home">
             <Header loggedinUser={loggedinUser} />
             <section className='main-panel-container'>
                 <Inbox />
-                <Favorites loggedinUser={loggedinUser} />
-                <MyBoards />
+                <Favorites boards={boards} loggedinUser={loggedinUser} />
+                <MyBoards boards={boards} />
             </section>
         </section>
     )
 }
+
 // Header
-const Header = ({loggedinUser}) => {
+const Header = ({ loggedinUser }) => {
     return (
         <header className="app-home-header">
             <div className='header-container'>
@@ -38,6 +39,7 @@ const Header = ({loggedinUser}) => {
         </header>
     )
 }
+
 //Inbox
 const Inbox = () => {
     const [isInboxOpen, setIsInboxOpen] = useState(true)
@@ -64,8 +66,10 @@ const InboxContent = () => {
         <p>Your inbox is empty, We'll let you know when we get news</p>
     </div>
 }
+
 // Favorites
-const Favorites = () => {
+const Favorites = ({boards ,loggedinUser }) => {
+
     const [isFavoritesOpen, setIsFavoritesOpen] = useState(true)
     const onFavoritesOpen = ({ target }) => {
         target.classList.toggle('open')
@@ -77,20 +81,21 @@ const Favorites = () => {
             <h1>Favorites</h1>
         </div>
         <div className='app-home-recent-content'>
-            {isFavoritesOpen && <FavoriteContent />}
+            {isFavoritesOpen && <FavoriteContent boards={boards} loggedinUser={loggedinUser} />}
         </div>
     </section>
 }
 
-const FavoriteContent  = () => {
+const FavoriteContent = ({boards , loggedinUser }) => {
+    if (!loggedinUser) return
+    const favBoards = boards.filter(board => loggedinUser.favBoards.includes(board._id))
     return <div className='app-home-recent-content-container'>
-
+        <BoardList boards={favBoards} isStarred={true} />
     </div>
 }
-// MyBoards
-const MyBoards = () => {
 
-    const { boards } = useSelector(state => state.boardModule)
+// MyBoards
+const MyBoards = ({boards}) => {
 
     const [isMyboardsOpen, setIsMyboardsOpen] = useState(true)
     const onMyboardsOpen = ({ target }) => {
