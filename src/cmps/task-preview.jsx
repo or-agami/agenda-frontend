@@ -1,10 +1,11 @@
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
+import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
 import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
 import { updateTask } from '../store/board/board.action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { DynamicTaskCmp } from './dynamic-task-cmp'
 import { PopUpModal } from './pop-up-modal'
 
@@ -16,6 +17,7 @@ export const TaskPreview = ({ task, group, board }) => {
   const [isEditTitle, setIsEditTitle] = useState(false)
   const [editedTask, handleChange, setTask] = useForm(task)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onSetIsTaskMenuOpen = () => {
     setTimeout(() => {
@@ -35,6 +37,12 @@ export const TaskPreview = ({ task, group, board }) => {
     setIsEditTitle(prevState => prevState = !isEditTitle)
   }
 
+  const onSetEditTitle=(ev)=>{
+    ev.preventDefault()
+    ev.stopPropagation()
+    setIsEditTitle(!isEditTitle)
+  }
+
   return <ul key={task.id} className="clean-list task-preview">
     <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
     {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
@@ -43,20 +51,21 @@ export const TaskPreview = ({ task, group, board }) => {
     <li className='flex justify-center task-preview-checkbox'>
       <input className='task-check-input' type="checkbox" />
     </li>
-    <div className='item-container'>
+    <div className='item-container'onClick={()=>navigate(`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`)} >
       <li className='item-preview-sub-task-expansion'>
 
       </li>
       <div className='item-container-right'>
         <li className="task-preview-item">
-          {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)}>{task.title}</h4>}
+          {!isEditTitle && <h4 onClick={(ev) => onSetEditTitle(ev)}>{task.title}</h4>}
           {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)} onBlur={updateTitle}>
-            <input type="text" autoFocus value={editedTask.title} name="title" onChange={handleChange} />
+            <input type="text" autoFocus value={editedTask.title} name="title" onChange={handleChange} onClick={(ev)=>ev.stopPropagation()}/>
           </form>}
         </li>
-        <li className="task-preview-start-conversation">
+        <li className="task-preview-start-conversation" title='Add to conversation'>
           <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
-            <StartConversationSvg />
+            {!task.comments&&<StartConversationSvg />}
+            {task.comments && <div className='with-comments-container'><StartConversationEmptySvg/><span>{task.comments.length}</span></div>}
           </Link>
         </li>
       </div>

@@ -10,7 +10,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 import { useForm } from '../hooks/useForm'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { updateBoard } from '../store/board/board.action'
+import { addTask, updateBoard } from '../store/board/board.action'
 import { useFilter } from '../hooks/useFilter'
 import { NavLink, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -58,7 +58,7 @@ export const BoardHeader = ({ board }) => {
       if (loggedinUser?.favBoards) loggedinUser.favBoards = [...loggedinUser.favBoards, board._id]
       else loggedinUser.favBoards = [board._id]
     }
-    setUser({...loggedinUser})
+    setUser({ ...loggedinUser })
     dispatch(updateUser(loggedinUser))
   }
 
@@ -99,24 +99,30 @@ export const BoardHeader = ({ board }) => {
         </div>
       </div>
       {!isDashboard && <div className="flex board-nav">
-        <BoardControls />
+        <BoardControls board={board}/>
       </div>}
     </section>
   )
 }
 
-const BoardControls = () => {
-
+const BoardControls = ({board}) => {
+  const dispatch = useDispatch()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const onToggleSearch = () => {
     setIsSearchOpen(!isSearchOpen)
   }
 
+  const onAddTask = () => {
+    const boardId = board._id
+    const groupId = board.groups[0].id
+    dispatch(addTask({groupId,title:'New Task',boardId}))
+  }
+
   return (
     <div className="flex aline btns-container">
       <div className="btn btn-highlight btn-options">
-        <button className="btn btn-new-task">
+        <button className="btn btn-new-task" onClick={() => onAddTask()}>
           <span>New Task</span>
         </button>
         <button className="btn btn-drop-down">

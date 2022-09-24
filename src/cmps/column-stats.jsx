@@ -1,26 +1,31 @@
+
 export const ColumnStats = ({ group, board }) => {
     return <ul className="column-stats">
         <li className="empty-start"></li>
-        <li className="empty-member-stat"></li>
-        <li className="status-stat">
-            <StatusStat group={group}/>
-        </li>
-        <li className="priority-stat">
-            <PriorityStat group={group}/>
-        </li>
-        <li className="timeline-stat"></li>
-        <li className="files-stat"></li>
-        <li className="empty-last-updated-stat"></li>
+        {board.cmpsOrder?.map(cmp => {
+            return <li key={cmp} className={`${cmp}-stat`}>
+                {<GetCmpsFromSwitch cmp={cmp} group={group} />}
+            </li>
+        })}
         <li></li>
     </ul>
 }
-
+{/* <li className="empty-member-stat"></li>
+<li className="status-stat">
+    <StatusStat group={group}/>
+</li>
+<li className="priority-stat">
+    <PriorityStat group={group}/>
+</li>
+<li className="timeline-stat"></li>
+<li className="files-stat"></li>
+<li className="empty-last-updated-stat"></li> */}
 const makeClass = (status) => {
     if (!status) return
     return status.split(' ').join('')
 }
 
-const StatusStat = ({ group }) => {    
+const StatusStat = ({ group }) => {
     const getStatusProgressBar = () => {
         const statusProgressBar = []
         let counter = {}
@@ -33,19 +38,18 @@ const StatusStat = ({ group }) => {
             forInCounter++
             const counts = counter[status]
             statusProgressBar.push(
-                <div key={forInCounter} className={`status-progress ${makeClass(status)}`}
+                <div key={forInCounter} className={`status-progress ${status === 'undefined' ? 'none' : makeClass(status)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
-                    title={`${status}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
-
+                    title={`${status === 'undefined' ? 'none' : status}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
                 </div>
             )
         }
         return statusProgressBar
     }
-return <div className="status-progress-bar">{getStatusProgressBar()}</div>
-} 
+    return <div className="status-progress-bar">{getStatusProgressBar()}</div>
+}
 
-const PriorityStat = ({group}) => {
+const PriorityStat = ({ group }) => {
     const getPriorityProgressBar = () => {
         const priorityProgressBar = []
         let counter = {}
@@ -58,14 +62,36 @@ const PriorityStat = ({group}) => {
             forInCounter++
             const counts = counter[priority]
             priorityProgressBar.push(
-                <div key={forInCounter} className={`priority-progress ${makeClass(priority)}`}
+                <div key={forInCounter} className={`priority-progress ${priority === 'undefined' ? 'none' : makeClass(priority)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
-                    title={`${priority}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
+                    title={`${priority === 'undefined' ? 'none' : priority}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
 
                 </div>
             )
         }
         return priorityProgressBar
     }
-return <div className="priority-progress-bar">{getPriorityProgressBar()}</div>
+    return <div className="priority-progress-bar">{getPriorityProgressBar()}</div>
+}
+
+const GetCmpsFromSwitch = ({ cmp, group }) => {
+    switch (cmp) {
+        case 'status':
+            return <StatusStat group={group} />
+        case 'priority':
+            return <PriorityStat group={group} />
+        case 'timeline':
+            return <TimelineStat group={group}/>
+        default:
+            break;
+    }
+}
+const TimelineStat = ({ group }) => {
+    const getTimelineProgressBar = () => {
+        const timelineProgressBar = []
+        let max = 0, min = 0;
+        group.tasks?.forEach(({timeline}) => console.log('timeline:', timeline))
+    }
+    getTimelineProgressBar()
+    // console.log('group.tasks[0].timeline?.startDate:', group.tasks[0]?.timeline)
 }

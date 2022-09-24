@@ -16,6 +16,7 @@
 @import './views/board';
 @import './views/login-signup';
 @import './views/dashboard';
+@import './views/my-work';
 @import './views/kanban';
 
 
@@ -42,10 +43,10 @@
 @import './cmps/task-status-menu';
 @import './cmps/task-priority-menu';
 @import './cmps/task-person-menu';
-@import './cmps/modal-screen';
 @import './cmps/user-menu';
 @import './cmps/task-detail';
 @import './cmps/task-detail-person-menu';
 @import './cmps/date-picker';
 @import './cmps/task-detail-post-menu';
 @import './cmps/column-stats';
+@import './cmps/title-tooltip';

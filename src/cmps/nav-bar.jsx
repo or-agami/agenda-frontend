@@ -21,6 +21,7 @@ import { loadBoard, loadBoards, setLoader } from '../store/board/board.action';
 import { Dashboard } from '../views/dashboard';
 import { PopUpModal } from './pop-up-modal';
 import { Kanban } from '../views/kanban';
+import { MyWork } from '../views/my-work';
 
 
 export const NavBar = () => {
@@ -103,7 +104,11 @@ export const NavBar = () => {
             <div className="selected-indication"></div>
           </NavLink>
         </button>
-        <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
+        <button className="btn btn-svg btn-my-work">
+          <NavLink to="/workspace/mywork"><MyWorkSvg />
+            <div className="selected-indication"></div>
+          </NavLink>
+          </button>
         <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`}>
           <FavoritesSvg />
           <div className="selected-indication"></div>
@@ -123,6 +128,7 @@ export const NavBar = () => {
         <Route path="/board/kanban/:boardId" element={<Kanban />} />
         <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
         <Route path="/board/:boardId/*" element={<Board />} />
+        <Route path="/mywork" element={<MyWork />} />
         <Route path="/inbox" element={<Inbox />} />
       </Routes>
     </Fragment>

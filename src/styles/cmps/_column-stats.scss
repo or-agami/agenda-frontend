@@ -12,7 +12,7 @@
         box-shadow: inset 0px 16px 33px -27px rgba(0, 0, 0, 0.08);
     }
     
-    .empty-member-stat {
+    .member-stat {
         border-left: 1px solid var(--clr-disabled);
         min-width: 138px;
         border-bottom: 1px solid var(--clr-disabled);
@@ -67,13 +67,13 @@
         }
 
     }
-
-    .empty-last-updated-stat {
+    
+    .lastUpdated-stat {
         border-bottom: 1px solid var(--clr-disabled);
         min-width: 138px;
     }
 
-    .files-stat {
+    .attachments-stat {
         min-width: 138px;
         border-bottom: 1px solid var(--clr-disabled);
     }
@@ -129,5 +129,8 @@
 
     .Low {
         background-color: var(--clr-low);
+    }
+    .undefined {
+        background-color: var(--clr-empty);
     }
 }

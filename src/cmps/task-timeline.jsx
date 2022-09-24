@@ -55,8 +55,8 @@ export const TaskTimeline = ({ task, group, board, isReadOnly }) => {
           <Fragment>
             {task.timeline?.endDate && <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress(task.timeline)}%` }}></div>}
             {task.timeline?.startDate && <>
-              <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>
-              <span>{getFormattedDateTime(task.timeline.startDate)}</span>
+              <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%`}}></div>
+              <span >{getFormattedDateTime(task.timeline.startDate)}</span>
             </>}
             {task.timeline?.startDate && task.timeline?.endDate &&
               <span> - </span>}
