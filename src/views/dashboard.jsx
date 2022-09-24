@@ -26,7 +26,7 @@ export const Dashboard = () => {
         let priorityCounts = []
         let statusCounts = []
         const newTasks = await taskService.query({ boardId: board._id })
-        statusOpts.map((status, idx) => {
+        statusOpts.forEach((status, idx) => {
             statusCounts[idx] = 0
             newTasks.forEach(task => {
                 if (task.status) {
@@ -39,7 +39,7 @@ export const Dashboard = () => {
        
         setStatusCounter(statusCounts)
 
-        priorityOpts.map((priority, idx) => {
+        priorityOpts.forEach((priority, idx) => {
             priorityCounts[idx] = 0
             newTasks.forEach(task => {
                 if (task.priority) {
