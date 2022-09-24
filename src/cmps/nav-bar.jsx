@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom';
 import { AppHome } from '../views/app-home'
 import { Board } from '../views/board'
@@ -25,6 +25,7 @@ import { PopUpModal } from './pop-up-modal';
 export const NavBar = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { board, boards } = useSelector(state => state.boardModule)
   const params = useParams()
   const [isOpen, setIsOpen] = useState(false)
@@ -68,6 +69,8 @@ export const NavBar = () => {
 
   const showFavorites = () => {
     setIsFavorites(true)
+    if(params.boardId) return
+    navigate(`/workspace/board/${currBoard._id}`)
   }
 
 
@@ -82,7 +85,7 @@ export const NavBar = () => {
           setIsOpen={setIsOpen}
           isFavorites={isFavorites} />}
       <section className="nav-bar">
-        <button onClick={() => setIsFavorites(false)} className="btn btn-home">
+        <button title='Home' onClick={() => setIsFavorites(false)} className="btn btn-home">
           <NavLink onClick={() => setIsOpen(false)} to="/workspace/home" className="set" ><AgendaLogoSvg />
             <div className="selected-indication"></div>
           </NavLink>
@@ -103,7 +106,6 @@ export const NavBar = () => {
         <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`}>
           <FavoritesSvg />
           <div className="selected-indication"></div>
-
         </button>
         <button className="btn btn-svg btn-invite"><InviteSvg /></button>
         <button className="btn btn-svg btn-search"><SearchSvg /></button>
