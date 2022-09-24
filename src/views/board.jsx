@@ -31,7 +31,6 @@ export const Board = () => {
     }
   }, [sortBy, filterBy])
 
-
   return (
     <div className="board-app">
       <Routes>

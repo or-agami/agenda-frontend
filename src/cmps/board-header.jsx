@@ -31,6 +31,7 @@ export const BoardHeader = ({ board }) => {
   const [isDashboard, setIsDashboard] = useState(false)
   const [user , setUser] = useState(loggedinUser)
 
+
   useEffect(() => {
     if (params['*'] === `board/dashboard/${board._id}`) {
       setIsDashboard(true)
@@ -50,7 +51,7 @@ export const BoardHeader = ({ board }) => {
 
   const addBoardToFav = () => {
     if (loggedinUser?.favBoards?.includes(board._id)) {
-      const favorites = loggedinUser.favBoards.filter(boardId => boardId !== board._id)
+      const favorites = loggedinUser?.favBoards?.filter(boardId => boardId !== board._id)
       loggedinUser.favBoards = favorites
     }
     else {
