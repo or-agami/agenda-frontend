@@ -103,9 +103,6 @@
         &:hover {
             cursor: pointer;
         }
-
-
-
     }
    
     .task-preview-last-updated {
@@ -146,6 +143,12 @@
                 height: 20px;
             }
         }
+    }
+
+    .task-preview-item h4:hover{
+        outline: 1px solid var(--clr-disabled);
+        outline-offset: 2px;
+        border-radius: 3px;
     }
 
     .task-preview-item input {

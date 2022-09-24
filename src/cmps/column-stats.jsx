@@ -3,9 +3,11 @@ export const ColumnStats = ({ group, board }) => {
         <li className="empty-start"></li>
         <li className="empty-member-stat"></li>
         <li className="status-stat">
-            <StatusStat group={group} board={board} />
+            <StatusStat group={group}/>
         </li>
-        <li className="priority-stat"></li>
+        <li className="priority-stat">
+            <PriorityStat group={group}/>
+        </li>
         <li className="timeline-stat"></li>
         <li className="files-stat"></li>
         <li className="empty-last-updated-stat"></li>
@@ -13,14 +15,12 @@ export const ColumnStats = ({ group, board }) => {
     </ul>
 }
 
-const StatusStat = ({ group, board }) => {
+const makeClass = (status) => {
+    if (!status) return
+    return status.split(' ').join('')
+}
 
-    const makeClass = (status) => {
-        if (!status) return
-        return status.split(' ').join('')
-    }
-
-    
+const StatusStat = ({ group }) => {    
     const getStatusProgressBar = () => {
         const statusProgressBar = []
         let counter = {}
@@ -44,3 +44,29 @@ const StatusStat = ({ group, board }) => {
     }
 return <div className="status-progress-bar">{getStatusProgressBar()}</div>
 } 
+
+const PriorityStat = ({group}) => {
+    const getPriorityProgressBar = () => {
+        const priorityProgressBar = []
+        let counter = {}
+        group.tasks.forEach(({ priority }) => {
+            counter[priority] = (counter[priority] || 0) + 1
+
+        })
+        console.log('counter:', counter)
+        let forInCounter = 0
+        for (const priority in counter) {
+            forInCounter++
+            const counts = counter[priority]
+            priorityProgressBar.push(
+                <div key={forInCounter} className={`priority-progress ${makeClass(priority)}`}
+                    style={{ width: `${counts / group.tasks.length * 100}%` }}
+                    title={`${priority}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
+
+                </div>
+            )
+        }
+        return priorityProgressBar
+    }
+return <div className="priority-progress-bar">{getPriorityProgressBar()}</div>
+}
