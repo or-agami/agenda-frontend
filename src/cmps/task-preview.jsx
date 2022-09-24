@@ -11,7 +11,7 @@ import { PopUpModal } from './pop-up-modal'
 
 
 export const TaskPreview = ({ task, group, board }) => {
-  const [modalName,setModalName] = useState(null)
+  const [modalName, setModalName] = useState(null)
 
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const [isEditTitle, setIsEditTitle] = useState(false)
@@ -30,44 +30,46 @@ export const TaskPreview = ({ task, group, board }) => {
     if (task.title !== editedTask.title) {
       // Todo: Prevent guests from editing tasks
       editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-      const activity = {type: "title", data: editedTask.title}
+      const activity = { type: "title", data: editedTask.title }
       task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
       dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }, activity))
     }
     setIsEditTitle(prevState => prevState = !isEditTitle)
   }
 
-  const onSetEditTitle=(ev)=>{
+  const onSetEditTitle = (ev) => {
     ev.preventDefault()
     ev.stopPropagation()
     setIsEditTitle(!isEditTitle)
   }
 
   return <ul key={task.id} className="clean-list task-preview">
-    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
-    {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
-    <li className={`task-preview-group-color ${group.style}`}>
-    </li>
-    <li className='flex justify-center task-preview-checkbox'>
-      <input className='task-check-input' type="checkbox" />
-    </li>
-    <div className='item-container'onClick={()=>navigate(`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`)} >
-      <li className='item-preview-sub-task-expansion'>
-
+    <div className="sticky-container">
+      <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
+      {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
+      <li className={`task-preview-group-color ${group.style}`}>
       </li>
-      <div className='item-container-right'>
-        <li className="task-preview-item">
-          {!isEditTitle && <h4 onClick={(ev) => onSetEditTitle(ev)}>{task.title}</h4>}
-          {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)} onBlur={updateTitle}>
-            <input type="text" autoFocus value={editedTask.title} name="title" onChange={handleChange} onClick={(ev)=>ev.stopPropagation()}/>
-          </form>}
+      <li className='flex justify-center task-preview-checkbox'>
+        <input className='task-check-input' type="checkbox" />
+      </li>
+      <div className='item-container' onClick={() => navigate(`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`)} >
+        <li className='item-preview-sub-task-expansion'>
+
         </li>
-        <li className="task-preview-start-conversation" title='Add to conversation'>
-          <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
-            {!task.comments&&<StartConversationSvg />}
-            {task.comments && <div className='with-comments-container'><StartConversationEmptySvg/><span>{task.comments.length}</span></div>}
-          </Link>
-        </li>
+        <div className='item-container-right'>
+          <li className="task-preview-item">
+            {!isEditTitle && <h4 onClick={(ev) => onSetEditTitle(ev)}>{task.title}</h4>}
+            {isEditTitle && <form onSubmit={(ev) => updateTitle(ev)} onBlur={updateTitle}>
+              <input type="text" autoFocus value={editedTask.title} name="title" onChange={handleChange} onClick={(ev) => ev.stopPropagation()} />
+            </form>}
+          </li>
+          <li className="task-preview-start-conversation" title='Add to conversation'>
+            <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
+              {!task.comments && <StartConversationSvg />}
+              {task.comments && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
+            </Link>
+          </li>
+        </div>
       </div>
     </div>
     {board.cmpsOrder && board.cmpsOrder.map(category => <DynamicTaskCmp key={category} board={board} category={category} task={task} group={group} />)}

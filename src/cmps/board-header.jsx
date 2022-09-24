@@ -19,6 +19,8 @@ import { ReactComponent as StarIcon } from '../assets/icons/star.svg'
 import { ReactComponent as StarClrIcon } from '../assets/icons/star-clr.svg'
 import { useSelector } from 'react-redux'
 import { updateUser } from '../store/user/user.action'
+import { Fragment } from 'react'
+import { InviteMemberModal } from './board-invite-member-modal'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
@@ -30,6 +32,7 @@ export const BoardHeader = ({ board }) => {
   const [renameTitle, handleChange] = useForm({ title: board.title })
   const [isDashboard, setIsDashboard] = useState(false)
   const [user, setUser] = useState(loggedinUser)
+  const [isInviteMemberOpen, setIsInviteMemberOpen] = useState(false)
 
 
   useEffect(() => {
@@ -70,42 +73,46 @@ export const BoardHeader = ({ board }) => {
   }
 
   return (
-    <section className="board-header">
-      <div className="flex board-info">
-        <div className='header-main'>
-          <div className='board-header-title'>
-            {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
-              <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
-            </form>
-              : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
-            {user?.favBoards?.includes(board._id) ?
-              <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />
-              : <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />}
+    <Fragment>
+      {isInviteMemberOpen &&
+        <InviteMemberModal isInviteMemberOpen={isInviteMemberOpen} setIsInviteMemberOpen={setIsInviteMemberOpen} />}
+      <section className="board-header">
+        <div className="flex board-info">
+          <div className='header-main'>
+            <div className='board-header-title'>
+              {isRenaming ? <form className='rename-form' onSubmit={onRenameBoard} onBlur={onRenameBoard}>
+                <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
+              </form>
+                : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
+              {user?.favBoards?.includes(board._id) ?
+                <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />
+                : <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />}
+            </div>
+            <div className="board-header-nav-container">
+              <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
+              <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
+              <NavLink to={`/workspace/board/${board._id}/kanban`} className="board-header-nav-link">Kanban</NavLink>
+            </div>
           </div>
-          <div className="board-header-nav-container">
-            <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
-            <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
-            <NavLink to={`/workspace/board/${board._id}/kanban`} className="board-header-nav-link">Kanban</NavLink>
+          <div className="flex btns-container">
+            <button className="btn btn-svg invite">
+              <InviteSvg />
+              <span>Invite</span>
+            </button>
+            <button className="btn btn-svg invite">
+              <BoardMenuSvg />
+            </button>
           </div>
         </div>
-        <div className="flex btns-container">
-          <button className="btn btn-svg invite">
-            <InviteSvg />
-            <span>Invite</span>
-          </button>
-          <button className="btn btn-svg invite">
-            <BoardMenuSvg />
-          </button>
-        </div>
-      </div>
-      {!isDashboard && <div className="flex board-nav">
-        <BoardControls board={board}/>
-      </div>}
-    </section>
+        {!isDashboard && <div className="flex board-nav">
+          <BoardControls board={board} />
+        </div>}
+      </section>
+    </Fragment>
   )
 }
 
-const BoardControls = ({board}) => {
+const BoardControls = ({ board }) => {
   const dispatch = useDispatch()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
@@ -116,7 +123,7 @@ const BoardControls = ({board}) => {
   const onAddTask = () => {
     const boardId = board._id
     const groupId = board.groups[0].id
-    dispatch(addTask({groupId,title:'New Task',boardId}))
+    dispatch(addTask({ groupId, title: 'New Task', boardId }))
   }
 
   return (

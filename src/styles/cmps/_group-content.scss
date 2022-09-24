@@ -1,5 +1,5 @@
 .group-content {
-    
+
     position: relative;
     margin-left: 20px;
     display: flex;
@@ -123,13 +123,16 @@
         display: flex;
         list-style-type: none;
 
-        // &:hover {
-
-        //     .btn-sort {
-        //         display: flex;
-        //     }
-        // }
-
+        .sticky-container {
+            display: flex;
+            position: sticky;
+            left: 135px;
+            z-index: 1;
+            background-color: white;
+            .group-content-header-item {
+                border-inline-end: 1px solid var(--clr-disabled);
+            }
+        }
     }
 
 
@@ -142,7 +145,7 @@
         display: flex;
         list-style-type: none;
         position: relative;
-        
+
         &:hover {
 
             .btn-sort {
