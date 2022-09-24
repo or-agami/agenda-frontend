@@ -64,20 +64,20 @@ const InboxContent = () => {
         <p>Your inbox is empty, We'll let you know when we get news</p>
     </div>
 }
-// Recent
-const Recent = () => {
-    const [isRecentOpen, setIsRecentOpen] = useState(true)
-    const onRecentOpen = ({ target }) => {
+// Favorites
+const Favorites = () => {
+    const [isFavoritesOpen, setIsFavoritesOpen] = useState(true)
+    const onFavoritesOpen = ({ target }) => {
         target.classList.toggle('open')
-        setIsRecentOpen(!isRecentOpen)
+        setIsFavoritesOpen(!isFavoritesOpen)
     }
     return <section className='app-home-recent'>
         <div className='app-home-recent-header'>
-            <ArrowRightSvg onClick={(ev) => onRecentOpen(ev)} />
+            <ArrowRightSvg onClick={(ev) => onFavoritesOpen(ev)} />
             <h1>Favorites</h1>
         </div>
         <div className='app-home-recent-content'>
-            {isRecentOpen && <FavoriteContent />}
+            {isFavoritesOpen && <FavoriteContent />}
         </div>
     </section>
 }
