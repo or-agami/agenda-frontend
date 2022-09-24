@@ -1,9 +1,7 @@
 import { getActionUpdateBoard } from "../store/board/board.action";
 import { store } from "../store/store";
-// import { storageService } from "./async-storage.service";
 import { httpService } from "./http.service"
 import { socketService, SOCKET_EMIT_SET_BOARD_ID_CHANNEL, SOCKET_EMIT_SEND_BOARD_CHANGES, SOCKET_EVENT_ADD_BOARD_CHANGES } from "./socket.service";
-import { utilService } from "./util.service";
 
 /* ?- WebSocket */;
 (() => {

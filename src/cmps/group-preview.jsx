@@ -1,7 +1,6 @@
 import { GroupHeader } from "./group-header"
 import { GroupContent } from "./group-content"
 import { useState } from "react"
-import { useEffect } from "react"
 import { Draggable } from 'react-beautiful-dnd'
 
 

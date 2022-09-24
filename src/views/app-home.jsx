@@ -1,30 +1,31 @@
-import { Loader } from '../cmps/loader'
 import { ReactComponent as AppHeaderSvg } from '../assets/icons/app-header-background.svg'
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import fistBumpGif from '../assets/img/fist-bump.gif'
 import { useState } from 'react'
 import { BoardList } from '../cmps/board-list'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { SideNavBar } from '../cmps/side-nav-bar'
+import {  useSelector } from 'react-redux'
+
 
 
 export const AppHome = () => {
 
+    const { boards } = useSelector(state => state.boardModule)
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
     return (
         <section className="app-home main-layout-app-home">
-            <Header />
+            <Header loggedinUser={loggedinUser} />
             <section className='main-panel-container'>
                 <Inbox />
-                <Recent />
-                <MyBoards />
+                <Favorites boards={boards} loggedinUser={loggedinUser} />
+                <MyBoards boards={boards} />
             </section>
         </section>
     )
 }
+
 // Header
-const Header = () => {
-    const loggedinUser = useSelector(store => store.userModule.loggedinUser)
+const Header = ({ loggedinUser }) => {
     return (
         <header className="app-home-header">
             <div className='header-container'>
@@ -35,6 +36,7 @@ const Header = () => {
         </header>
     )
 }
+
 //Inbox
 const Inbox = () => {
     const [isInboxOpen, setIsInboxOpen] = useState(true)
@@ -61,33 +63,36 @@ const InboxContent = () => {
         <p>Your inbox is empty, We'll let you know when we get news</p>
     </div>
 }
-// Recent
-const Recent = () => {
-    const [isRecentOpen, setIsRecentOpen] = useState(true)
-    const onRecentOpen = ({ target }) => {
+
+// Favorites
+const Favorites = ({boards ,loggedinUser }) => {
+
+    const [isFavoritesOpen, setIsFavoritesOpen] = useState(true)
+    const onFavoritesOpen = ({ target }) => {
         target.classList.toggle('open')
-        setIsRecentOpen(!isRecentOpen)
+        setIsFavoritesOpen(!isFavoritesOpen)
     }
     return <section className='app-home-recent'>
         <div className='app-home-recent-header'>
-            <ArrowRightSvg onClick={(ev) => onRecentOpen(ev)} />
+            <ArrowRightSvg onClick={(ev) => onFavoritesOpen(ev)} />
             <h1>Favorites</h1>
         </div>
         <div className='app-home-recent-content'>
-            {isRecentOpen && <FavoriteContent />}
+            {isFavoritesOpen && <FavoriteContent boards={boards} loggedinUser={loggedinUser} />}
         </div>
     </section>
 }
 
-const FavoriteContent  = () => {
+const FavoriteContent = ({boards , loggedinUser }) => {
+    if (!loggedinUser) return
+    const favBoards = boards.filter(board => loggedinUser.favBoards?.includes(board._id))
     return <div className='app-home-recent-content-container'>
-
+        <BoardList boards={favBoards} isStarred={true} />
     </div>
 }
-// MyBoards
-const MyBoards = () => {
 
-    const { boards } = useSelector(state => state.boardModule)
+// MyBoards
+const MyBoards = ({boards}) => {
 
     const [isMyboardsOpen, setIsMyboardsOpen] = useState(true)
     const onMyboardsOpen = ({ target }) => {

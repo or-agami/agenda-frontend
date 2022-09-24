@@ -4,21 +4,21 @@ import { ReactComponent as FilterIcon } from '../assets/icons/filter.svg'
 import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg'
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
 import { ReactComponent as Arrow } from '../assets/icons/down-arrow.svg'
-import { useState } from "react"
-import { Link, NavLink, useParams } from "react-router-dom"
+import { Fragment, useState } from "react"
+import { NavLink } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { closeModals, loadBoards, openModal, removeBoard, updateBoard } from '../store/board/board.action'
+import { updateBoard } from '../store/board/board.action'
 import { AddBoardModal } from './board-add-modal'
 import { ReactComponent as MenuIcon } from '../assets/icons/board-menu.svg'
-import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
-import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
+import { ReactComponent as StarClrIcon } from '../assets/icons/star-clr.svg'
 import { useForm } from '../hooks/useForm'
 import { GrClose } from 'react-icons/gr'
 import { PopUpModal } from './pop-up-modal'
 
 
-export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) => {
+
+export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isFavorites }) => {
 
 
     const onSearch = () => {
@@ -38,6 +38,8 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
     const [newBoards, setNewBoards] = useState(boards)
     const [menuModalIsOpen, setMenuModalIsOpen] = useState()
 
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
     const toggleSideNav = () => {
         setIsOpen(!isOpen)
     }
@@ -50,62 +52,84 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard }) =
         setNewBoards(boards)
     }, [boards])
 
+
     return <section className={isOpen ? "side-nav-bar" : "side-nav-bar closed"}>
         <button onClick={toggleSideNav} className="btn btn-svg toggle-nav-bar">
             <Arrow />
         </button>
         {menuModalIsOpen && <PopUpModal setMenuModalIsOpen={setMenuModalIsOpen} />}
-        <div className="side-board-opts">
-            <button className="btn btn-svg"
-                onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
-                <p className="board-name">Workspace</p>
-                <BoardMenu />
-            </button>
-        </div>
-        <div className="side-board-workspace-name">
-            <div className="board-preview-icon">A</div>
-            <h5>agenda workspace</h5>
-        </div>
-        <div className="side-nav-details">
-            <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
-                <PlusIcon />
-                Add
+        {isFavorites ? <div className="favorite-boards">
+            <div className="side-board-opts">
+                <button className="btn btn-svg"
+                    onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
+                    <div className="favorites">
+                        <StarClrIcon className="svg svg-star" />
+                        <h3> Favorites</h3>
+                    </div>
+                    <BoardMenu />
+                </button>
             </div>
-            <div className="side-nav side-nav-filter">
-                <FilterIcon />
-                Filter
-            </div>
-            <div onClick={onSearchBoardClick} className="side-nav side-nav-search">
-                <SearchIcon />
-                {!isSearch && "Search"}
-                {isSearch && <form>
-                    <input value={searchBoardBy.term} autoFocus name="term" onChange={handleChange} type="text" />
-                    <button onClick={cancelSearch}
-                        className='btn-side-nav-search-close'><GrClose className='svg icon-svg' />
-                    </button></form>}
-            </div>
-        </div>
-        <hr />
-        {newBoards &&
+                        <hr/>
             <div className="nav-board-list">
-                {newBoards.map(board =>
-                    <NavBoardPreview setCurrBoard={setCurrBoard}
-                        board={board}
-                        key={board._id}
-                        boards={newBoards}
-                        setNewBoards={setNewBoards} />)}
-            </div>}
-        {isAddBoard &&
-            <AddBoardModal setIsAddBoard={setIsAddBoard}
-                isAddBoard={isAddBoard} />}
+                {loggedinUser?.favBoards?.map(board => {
+                    return <NavFavoritesPreview key={board} boardId={board} setCurrBoard={setCurrBoard} boards={newBoards} />
+                })}
+            </div>
+        </div>
+            :
+            <Fragment>
+                <div className="side-board-opts">
+                    <button className="btn btn-svg"
+                        onClick={() => setMenuModalIsOpen(!menuModalIsOpen)} >
+                        <p className="board-name">Workspace</p>
+                        <BoardMenu />
+                    </button>
+                </div>
+                <div className="side-board-workspace-name">
+                    <div className="board-preview-icon">A</div>
+                    <h5>agenda workspace</h5>
+                </div>
+                <div className="side-nav-details">
+                    <div onClick={() => setIsAddBoard(!isAddBoard)} className="side-nav side-nav-add">
+                        <PlusIcon />
+                        Add
+                    </div>
+                    <div className="side-nav side-nav-filter">
+                        <FilterIcon />
+                        Filter
+                    </div>
+                    <div onClick={onSearchBoardClick} className="side-nav side-nav-search">
+                        <SearchIcon />
+                        {!isSearch && "Search"}
+                        {isSearch && <form>
+                            <input value={searchBoardBy.term} autoFocus name="term" onChange={handleChange} type="text" />
+                            <button onClick={cancelSearch}
+                                className='btn-side-nav-search-close'><GrClose className='svg icon-svg' />
+                            </button></form>}
+                    </div>
+                </div>
+                <hr />
+                {newBoards &&
+                    <div className="nav-board-list">
+                        {newBoards.map(board =>
+                            <NavBoardPreview setCurrBoard={setCurrBoard}
+                                board={board}
+                                key={board._id}
+                                boards={newBoards}
+                                setNewBoards={setNewBoards} />)}
+                    </div>}
+                {isAddBoard &&
+                    <AddBoardModal setIsAddBoard={setIsAddBoard}
+                        isAddBoard={isAddBoard} />}
+            </Fragment>}
     </section>
 }
 
 
 
 
-const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
-    const [modalName,setModalName] = useState(null)
+const NavBoardPreview = ({ board, setCurrBoard, boards }) => {
+    const [modalName, setModalName] = useState(null)
     const dispatch = useDispatch()
     const [isRenaming, setIsRenaming] = useState(false)
     const [renameBoard, handleChange] = useForm({ title: board.title })
@@ -115,7 +139,53 @@ const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
         ev.stopPropagation()
         setTimeout(() => {
             setModalName('SIDE_NAV_MENU')
-          }, 100);
+        }, 100);
+
+    }
+
+    const onRenameBoard = (ev) => {
+        ev.preventDefault()
+        setModalName(null)
+        board = { ...board, ...renameBoard }
+        setIsRenaming(!isRenaming)
+        dispatch(updateBoard(board))
+    }
+
+    if (isRenaming) return <form className="rename-board" onSubmit={onRenameBoard} onBlur={onRenameBoard}>
+        <BoardIcon />
+        <input autoFocus type="text" name='title' value={renameBoard.title} onChange={handleChange} />
+    </form>
+    return (
+        <NavLink onClick={() => setCurrBoard(board)} to={`/workspace/board/${board._id}`} className="nav-board-preview">
+            <BoardIcon />
+            <p className="nav-board-title">{board.title}</p>
+            <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
+            {modalName && <PopUpModal setCurrBoard={setCurrBoard} setModalName={setModalName} modalName={modalName} board={board} boards={boards} setIsRenaming={setIsRenaming} isRenaming={isRenaming} />}
+        </NavLink>
+    )
+}
+
+const NavFavoritesPreview = ({ boardId, setCurrBoard, boards }) => {
+
+    const [board] = boards.filter(board => board._id === boardId)
+
+    const [modalName, setModalName] = useState(null)
+    const dispatch = useDispatch()
+    const [isRenaming, setIsRenaming] = useState(false)
+    const [renameBoard, handleChange] = useForm({ title: board.title })
+
+    useEffect(() => {
+        if (!board) return
+        setCurrBoard(board)
+    },[])
+    
+    if (!board) return
+    const openBoardSettings = (ev) => {
+        ev.preventDefault()
+        ev.stopPropagation()
+        setTimeout(() => {
+            setModalName('SIDE_NAV_MENU')
+        }, 100);
 
     }
 
@@ -136,7 +206,7 @@ const NavBoardPreview = ({ board, setCurrBoard, boards, setNewBoards }) => {
             <BoardIcon />
             <p className="nav-board-title">{board.title}</p>
             <button className='btn btn-svg'><MenuIcon onClick={openBoardSettings} /></button>
-            {modalName && <PopUpModal setCurrBoard={setCurrBoard} setModalName={setModalName} modalName={modalName} board={board} boards={boards} setIsRenaming={setIsRenaming} isRenaming={isRenaming}/>}
+            {modalName && <PopUpModal setCurrBoard={setCurrBoard} setModalName={setModalName} modalName={modalName} board={board} boards={boards} setIsRenaming={setIsRenaming} isRenaming={isRenaming} />}
         </NavLink>
     )
 }

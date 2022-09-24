@@ -4,7 +4,6 @@ import { Loader } from "../cmps/loader"
 import { Doughnut, Bar, Line } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, LineElement, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement } from "chart.js"
 import { useEffect, useState } from "react"
-import { httpService } from "../services/http.service"
 import { taskService } from "../services/task.service"
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LineElement, LinearScale, BarElement, Title, PointElement)
@@ -26,7 +25,7 @@ export const Dashboard = () => {
         let priorityCounts = []
         let statusCounts = []
         const newTasks = await taskService.query({ boardId: board._id })
-        statusOpts.map((status, idx) => {
+        statusOpts.forEach((status, idx) => {
             statusCounts[idx] = 0
             newTasks.forEach(task => {
                 if (task.status) {
@@ -39,7 +38,7 @@ export const Dashboard = () => {
        
         setStatusCounter(statusCounts)
 
-        priorityOpts.map((priority, idx) => {
+        priorityOpts.forEach((priority, idx) => {
             priorityCounts[idx] = 0
             newTasks.forEach(task => {
                 if (task.priority) {

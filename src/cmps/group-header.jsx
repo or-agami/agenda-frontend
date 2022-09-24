@@ -6,10 +6,10 @@ import { updateGroup } from '../store/board/board.action'
 
 
 
-export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen, boardId, idx }) => {
+export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen, boardId }) => {
     const dispatch = useDispatch()
     const [isEditTitle, setIsEditTitle] = useState(false)
-    const [editedGroup, handleChange, setGroup] = useForm(group)
+    const [editedGroup, handleChange] = useForm(group)
 
     const onSetIsHeaderOpen = ({ target }) => {
         target.classList.toggle('open')

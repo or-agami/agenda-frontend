@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export function boardReducer(state = initialState, action) {
-    var boards, filterBy, board, task
+    var boards, filterBy, task
     switch (action.type) {
         case 'INIT':
             state.init()
@@ -50,7 +50,7 @@ export function boardReducer(state = initialState, action) {
 
         case 'SET_FILTER':
             filterBy = action.filterBy
-            return (filterBy && (filterBy.term && filterBy.term !== '' || filterBy.status || filterBy.priority)) ?
+            return ((filterBy && ((filterBy.term && filterBy.term !== '') || filterBy.status || filterBy.priority))) ?
                 { ...state, filterBy: { ...state.filterBy, ...action.filterBy } } :
                 { ...state, filterBy: null }
 
@@ -59,9 +59,6 @@ export function boardReducer(state = initialState, action) {
                 { ...state, sortBy: { ...state.sortBy, ...action.sortBy } }
                 : { ...state, sortBy: null }
 
-
-        case 'SET_BOARD':
-            return { ...state, board: action.board }
 
         case 'SET_TASK':
             return { ...state, task: action.task }
