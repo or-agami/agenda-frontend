@@ -30,6 +30,7 @@ export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [currBoard, setCurrBoard] = useState(board)
   const [modalName, setModalName] = useState(null)
+  const [isFavorites, setIsFavorites] = useState(false)
 
   useEffect(() => {
     if (board && !currBoard) setCurrBoard(board)
@@ -65,20 +66,30 @@ export const NavBar = () => {
     }, 100);
   }
 
+  const showFavorites = () => {
+    setIsFavorites(true)
+  }
+
+
   if (!currBoard) return <Loader />
   return (
     <Fragment>
       {params['*'] !== 'home' &&
-        <SideNavBar setCurrBoard={setCurrBoard} boards={boards} board={currBoard} isOpen={isOpen} setIsOpen={setIsOpen} />}
+        <SideNavBar setCurrBoard={setCurrBoard}
+          boards={boards}
+          board={currBoard}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          isFavorites={isFavorites} />}
       <section className="nav-bar">
-        <button className="btn btn-home">
-          <NavLink onClick={() => setIsOpen(false)} to="/workspace/home"><AgendaLogoSvg />
+        <button onClick={() => setIsFavorites(false)} className="btn btn-home">
+          <NavLink onClick={() => setIsOpen(false)} to="/workspace/home" className="set" ><AgendaLogoSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
         <div className="divider-horizontal"></div>
-        <button className="btn btn-board">
-          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${params.boardId ? 'active' : ''}`}><BoardSvg />
+        <button onClick={() => setIsFavorites(false)} className="btn btn-board">
+          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${!isFavorites ? 'set' : ''}`}><BoardSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
@@ -89,7 +100,11 @@ export const NavBar = () => {
           </NavLink>
         </button>
         <button className="btn btn-svg btn-my-work"><MyWorkSvg /></button>
-        <button className="btn btn-svg btn-favorites"><FavoritesSvg /></button>
+        <button onClick={showFavorites} className="btn btn-svg btn-favorites">
+          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${isFavorites ? 'set' : ''}`}><FavoritesSvg />
+            <div className="selected-indication"></div>
+          </NavLink>
+        </button>
         <button className="btn btn-svg btn-invite"><InviteSvg /></button>
         <button className="btn btn-svg btn-search"><SearchSvg /></button>
         <button className="btn btn-svg btn-help"><HelpSvg /></button>

@@ -7,24 +7,27 @@ import { BoardList } from '../cmps/board-list'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { SideNavBar } from '../cmps/side-nav-bar'
+import { updateUser } from '../store/user/user.action'
 
 
 export const AppHome = () => {
 
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
+
+    // console.log('loggedinUser:', loggedinUser)
     return (
         <section className="app-home main-layout-app-home">
-            <Header />
+            <Header loggedinUser={loggedinUser} />
             <section className='main-panel-container'>
                 <Inbox />
-                <Recent />
+                <Favorites loggedinUser={loggedinUser} />
                 <MyBoards />
             </section>
         </section>
     )
 }
 // Header
-const Header = () => {
-    const loggedinUser = useSelector(store => store.userModule.loggedinUser)
+const Header = ({loggedinUser}) => {
     return (
         <header className="app-home-header">
             <div className='header-container'>
