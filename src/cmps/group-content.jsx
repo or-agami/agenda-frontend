@@ -73,7 +73,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                     <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                         <ArrowRightSvg className={`${group.style} no-background`} />
                     </button>
-                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`}>{group.title}<span className='tooltip'>Click to edit</span></h4>}
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`} title='Click to edit'>{group.title}<span className='tooltip'>Click to edit</span></h4>}
                     {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
                         <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
                     </form>}

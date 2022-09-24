@@ -1,9 +1,10 @@
+
 export const ColumnStats = ({ group, board }) => {
     return <ul className="column-stats">
         <li className="empty-start"></li>
         {board.cmpsOrder?.map(cmp => {
             return <li key={cmp} className={`${cmp}-stat`}>
-                {<GetCmpsFromSwitch cmp={cmp} group={group}/>}
+                {<GetCmpsFromSwitch cmp={cmp} group={group} />}
             </li>
         })}
         <li></li>
@@ -37,9 +38,9 @@ const StatusStat = ({ group }) => {
             forInCounter++
             const counts = counter[status]
             statusProgressBar.push(
-                <div key={forInCounter} className={`status-progress ${status==='undefined'? 'none':makeClass(status)}`}
+                <div key={forInCounter} className={`status-progress ${status === 'undefined' ? 'none' : makeClass(status)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
-                    title={`${status==='undefined'? 'none':status}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
+                    title={`${status === 'undefined' ? 'none' : status}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
                 </div>
             )
         }
@@ -61,9 +62,9 @@ const PriorityStat = ({ group }) => {
             forInCounter++
             const counts = counter[priority]
             priorityProgressBar.push(
-                <div key={forInCounter} className={`priority-progress ${priority==='undefined'? 'none':makeClass(priority)}`}
+                <div key={forInCounter} className={`priority-progress ${priority === 'undefined' ? 'none' : makeClass(priority)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
-                    title={`${priority==='undefined'? 'none': priority}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
+                    title={`${priority === 'undefined' ? 'none' : priority}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
 
                 </div>
             )
@@ -73,13 +74,24 @@ const PriorityStat = ({ group }) => {
     return <div className="priority-progress-bar">{getPriorityProgressBar()}</div>
 }
 
-const GetCmpsFromSwitch=({cmp,group})=>{
+const GetCmpsFromSwitch = ({ cmp, group }) => {
     switch (cmp) {
         case 'status':
-            return <StatusStat group={group}/>
+            return <StatusStat group={group} />
         case 'priority':
-        return <PriorityStat group={group}/>
+            return <PriorityStat group={group} />
+        case 'timeline':
+            return <TimelineStat group={group}/>
         default:
             break;
     }
+}
+const TimelineStat = ({ group }) => {
+    const getTimelineProgressBar = () => {
+        const timelineProgressBar = []
+        let max = 0, min = 0;
+        group.tasks?.forEach(({timeline}) => console.log('timeline:', timeline))
+    }
+    getTimelineProgressBar()
+    // console.log('group.tasks[0].timeline?.startDate:', group.tasks[0]?.timeline)
 }

@@ -1,5 +1,6 @@
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as StartConversationSvg } from '../assets/icons/start-conversation.svg'
+import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
 import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
 import { updateTask } from '../store/board/board.action'
@@ -63,7 +64,8 @@ export const TaskPreview = ({ task, group, board }) => {
         </li>
         <li className="task-preview-start-conversation" title='Add to conversation'>
           <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
-            <StartConversationSvg />
+            {!task.comments&&<StartConversationSvg />}
+            {task.comments && <div className='with-comments-container'><StartConversationEmptySvg/><span>{task.comments.length}</span></div>}
           </Link>
         </li>
       </div>
