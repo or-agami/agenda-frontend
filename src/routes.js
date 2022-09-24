@@ -17,32 +17,6 @@ export default [
     {
         path: '/workspace/*',
         component: <section className="agenda-app"><NavBar /></section>,
-        children: [
-            {
-                path: '/home',
-                component: <AppHome />,
-            },
-            {
-                path: '/board/kanban/:boardId',
-                component: <Kanban />,
-            },
-            {
-                path: '/board/dashboard/:boardId',
-                component: <Dashboard />,
-            },
-            {
-                path: '/board/:boardId/*',
-                component: <Board />,
-            },
-            {
-                path: '/mywork',
-                component: <MyWork />,
-            },
-            {
-                path: '/inbox',
-                component: <Inbox />,
-            }
-        ]
     },
     {
         path: '/auth/*',
@@ -57,9 +31,5 @@ export default [
         //         component: <Signup />
         //     },
         // ]
-    },
-    {
-        path: '/workspace/my-work',
-        component: <UserWork />,
     },
 ]

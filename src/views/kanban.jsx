@@ -5,11 +5,13 @@ import { ReactComponent as MenuIcon } from "../assets/icons/kanban-status.svg"
 import { TaskTimeline } from "../cmps/task-timeline"
 import { PopUpModal } from "../cmps/pop-up-modal"
 import { useState } from "react"
-import {ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
-import { Link } from "react-router-dom"
+import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
+import { Link, Route, Routes } from "react-router-dom"
+import { TaskDetail } from "../cmps/task-detail"
 
 
 export const Kanban = () => {
+
 
 
     const board = useSelector(state => state.boardModule.board)
@@ -22,6 +24,9 @@ export const Kanban = () => {
                 return <KanbanGroupPreview key={group.id} group={group} board={board} />
             })}
         </div>
+        <Routes>
+            <Route path="/details" element={<TaskDetail />}></Route>
+        </Routes>
     </section>
 }
 
@@ -66,7 +71,7 @@ const KanbanTaskPreview = ({ task, group, board }) => {
             board={board} />}
         <div className="kanban-task-item">
             <h6>{task.title}</h6>
-            <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
+            <Link to={`/workspace/board/${board._id}/kanban/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
                 {!task.comments && <StartConversation className="svg svg-chat" />}
                 {task.comments && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
             </Link>
@@ -80,6 +85,6 @@ const KanbanTaskPreview = ({ task, group, board }) => {
         <div className="kanban-task-item "><span className="item-category"><MenuIcon className="svg svg-menu" />
             Timeline</span> <span className="kanban-timeline task-preview-timeline"><TaskTimeline task={task} group={group} board={board} /></span>
         </div>
-    </section>
 
+    </section>
 }

@@ -85,7 +85,7 @@ export const BoardHeader = ({ board }) => {
           <div className="board-header-nav-container">
             <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
             <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
-            <NavLink to={`/workspace/board/kanban/${board._id}`} className="board-header-nav-link">Kanban</NavLink>
+            <NavLink to={`/workspace/board/${board._id}/kanban`} className="board-header-nav-link">Kanban</NavLink>
           </div>
         </div>
         <div className="flex btns-container">
