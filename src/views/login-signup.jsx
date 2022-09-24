@@ -153,7 +153,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (isUsernameVerified === 'LOGGEDIN_SUCCESSFULLY') {
-      navigate('/workspace/home')
+        navigate('/workspace/home')
     }
   })
 
