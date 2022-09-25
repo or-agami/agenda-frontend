@@ -15,8 +15,25 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
     const getFormattedDateTime = (date) => {
         if (!date) return
-        moment.updateLocale('en', { relativeTime: { s: 'few seconds' } })
-        return moment(date).fromNow()
+        moment.updateLocale('en', {
+            relativeTime : {
+                s  : 'just now',
+                ss : '%d seconds ago',
+                m:  'a minute ago',
+                mm: '%d minutes ago',
+                h:  'an hour ago',
+                hh: '%d hours ago',
+                d:  'a day ago',
+                dd: '%d days ago',
+                w:  'a week ago',
+                ww: '%d weeks ago',
+                M:  'a month ago',
+                MM: '%d months ago',
+                y:  'a year ago',
+                yy: '%d years ago'
+            }
+        })
+        return moment(date).fromNow(true)
     }
 
     const onSetTaskStatusMenuOpen = () => {
