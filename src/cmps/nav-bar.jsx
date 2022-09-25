@@ -120,7 +120,10 @@ export const NavBar = () => {
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
         {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} />}
         {loggedinUser ?
-          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>O</button> :
+          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>
+            <img className="profile-img-icon" src={require(`../assets/img/${loggedinUser.imgUrl}.png`)} alt="Profile img" />
+          </button> :
+          // <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>O</button> :
           <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={'guest'}>O</button>}
 
 
