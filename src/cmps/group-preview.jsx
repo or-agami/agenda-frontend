@@ -17,12 +17,11 @@ export const GroupPreview = ({ group, board, idx }) => {
                     <GroupHeader group={group}
                         setIsHeaderOpen={setIsHeaderOpen}
                         isHeaderOpen={isHeaderOpen}
-                        boardId={board._id} />
+                        board={board} />
                 </div>
             }}
         </Draggable>
         }
-
         {isHeaderOpen && <GroupContent
             group={group}
             setIsHeaderOpen={setIsHeaderOpen}

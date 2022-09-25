@@ -28,6 +28,8 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   })
 
   const onUpdateStatus = (status) => {
+    // if(status === 'undefined') status
+    console.log(status)
     const updatedTask = { ...task, status }
     const activity = { type: "status", data: status }
     updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
@@ -167,7 +169,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
         <button className='btn-status waiting-for-qa' onClick={() => onUpdateStatus('Waiting for QA')}>Waiting for QA</button>
         <button className='btn-status need-help' onClick={() => onUpdateStatus('Need help')}>Need help</button>
         <button className='btn-status pending' onClick={() => onUpdateStatus('Pending')}>Pending</button>
-        <button className='btn-status empty-status' onClick={() => onUpdateStatus('')}></button>
+        <button className='btn-status empty-status' onClick={() => onUpdateStatus()}></button>
       </section>
     case 'TASK_PRIORITY_MENU':
       return <section className="task-priority-menu modal" onClick={(ev) => ev.stopPropagation()}>
@@ -175,25 +177,21 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
         <button className='btn-priority medium' onClick={() => onUpdatePriority('Medium')}>Medium</button>
         <button className='btn-priority high' onClick={() => onUpdatePriority('High')}>High</button>
         <button className='btn-priority low' onClick={() => onUpdatePriority('Low')}>Low</button>
-        <button className='btn-priority empty-status' onClick={() => onUpdatePriority('')}></button>
+        <button className='btn-priority empty-status' onClick={() => onUpdatePriority()}></button>
       </section>
     case 'TASK_PERSON_MENU':
       return <section className="task-person-menu modal" onClick={(ev) => ev.stopPropagation()}>
         {getAvailableMembers().map(member => {
           return <div key={member._id} className="member-container-available">
-            <div className="available-img-container">
-              <img src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
-            </div>
+            <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
             <h4>{member.fullname}</h4>
-            <button className="btn-remove-person-from-task" onClick={() => removeMemberFromTask(member)}>x</button>
+            <button className="btn btn-svg btn-remove-person-from-task" onClick={() => removeMemberFromTask(member)}><GrClose /></button>
           </div>
         })}
         <h4 className="suggested people-title">Suggested People</h4>
         {getSuggestedMembers().map(member => {
           return <div key={member._id} className="member-container-suggested" onClick={() => addMemberToTask(member)}>
-            <div className="suggested-img-container">
-              <img src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
-            </div>
+            <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
             <h4>{member.fullname}</h4>
           </div>
         })}
@@ -248,7 +246,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
         {getAvailableMembers().map(member => {
           return <div key={member._id} className="member-container-available">
             <div className="available-img-container">
-              <img src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
+              <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
             </div>
             <h4>{member.fullname}</h4>
           </div>
@@ -256,7 +254,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       </section>
     case 'TASK_DETAIL_POST_MENU':
       return <section className='task-detail-post-menu' onClick={(ev) => ev.stopPropagation()}>
-        <button onClick={()=>onRemovePost()} className='btn btn-svg btn-trash-post'><Trash /> Delete update for everyone</button>
+        <button onClick={() => onRemovePost()} className='btn btn-svg btn-trash-post'><Trash /> Delete update for everyone</button>
       </section>
     default: return console.error('cannot open modal!')
   }

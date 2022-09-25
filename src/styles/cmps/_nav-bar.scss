@@ -28,12 +28,13 @@
     justify-content: center;
     align-items: center;
 
-    &[title]:hover::after {
+    &[title]:hover::before {
       content: attr(title);
+      padding: 10px;
+      border-radius: 6px;
       background-color: #569cfc;
       position: absolute;
-      top: -100%;
-      left: 0;
+      translate: 10% -120%;
     }
 
     &.active.set {

@@ -25,7 +25,7 @@ import { MyWork } from '../views/my-work';
 
 
 export const NavBar = () => {
-
+  const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { board, boards } = useSelector(state => state.boardModule)
@@ -71,7 +71,7 @@ export const NavBar = () => {
 
   const showFavorites = () => {
     setIsFavorites(true)
-    if(params.boardId) return
+    if (params.boardId) return
     navigate(`/workspace/board/${currBoard._id}`)
   }
 
@@ -87,39 +87,41 @@ export const NavBar = () => {
           setIsOpen={setIsOpen}
           isFavorites={isFavorites} />}
       <section className="nav-bar">
-        <button title='Home' onClick={() => setIsFavorites(false)} className="btn btn-home">
+        <button title='Home' onClick={() => setIsFavorites(false)} className="btn btn-home" >
           <NavLink onClick={() => setIsOpen(false)} to="/workspace/home" className="set" ><AgendaLogoSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
         <div className="divider-horizontal"></div>
-        <button onClick={() => setIsFavorites(false)} className="btn btn-board">
+        <button onClick={() => setIsFavorites(false)} className="btn btn-board" title='Work managment'>
           <NavLink to={`/workspace/board/${currBoard._id}`} className={`${!isFavorites ? 'set' : ''}`}><BoardSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
-        <button className="btn btn-svg btn-notification"><NotificationSvg /></button>
-        <button className="btn btn-svg btn-index">
+        <button className="btn btn-svg btn-notification" title='Notifications'><NotificationSvg /></button>
+        <button className="btn btn-svg btn-index" title='Inbox'>
           <NavLink to="/workspace/inbox"><InboxSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
-        <button className="btn btn-svg btn-my-work">
+        <button className="btn btn-svg btn-my-work" title='My work'>
           <NavLink to="/workspace/mywork"><MyWorkSvg />
             <div className="selected-indication"></div>
           </NavLink>
-          </button>
-        <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`}>
+        </button>
+        <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`} title='Favorites'>
           <FavoritesSvg />
           <div className="selected-indication"></div>
         </button>
-        <button className="btn btn-svg btn-invite"><InviteSvg /></button>
-        <button className="btn btn-svg btn-search"><SearchSvg /></button>
-        <button className="btn btn-svg btn-help"><HelpSvg /></button>
+        <button className="btn btn-svg btn-invite" title='Invite members'><InviteSvg /></button>
+        <button className="btn btn-svg btn-search" title='Search everything'><SearchSvg /></button>
+        <button className="btn btn-svg btn-help" title='Help'><HelpSvg /></button>
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
         {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} />}
-        <button className="btn btn-svg btn-user" onClick={() => openUserMenu()}>O</button>
+        {loggedinUser ?
+          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>O</button> :
+          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={'guest'}>O</button>}
 
 
       </section>

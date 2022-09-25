@@ -276,7 +276,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 const GetMemberImgFromId = (board, memberId) => {
     if (!board) return
     const imgUrl = board.members.find(member => member._id === memberId).imgUrl
-    return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+    return <img key={memberId} className='profile-img profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
 
 const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
