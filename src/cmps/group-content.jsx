@@ -67,7 +67,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
         {(provided) => {
             return <section className="group-content" ref={provided.innerRef}
                 {...provided.draggableProps}
-                >
+            >
                 <div className='group-content-title' {...provided.dragHandleProps}>
                     <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
                     <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
@@ -83,19 +83,21 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                     <Droppable droppableId='group-category' direction="horizontal">
                         {(droppableProvided) => {
                             return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-content-header">
-                                <li className={`group-content-header-color ${group.style}`}>
-                                </li>
-                                <li className='flex justify-center group-content-header-checkbox'>
-                                    <input type="checkbox" />
-                                </li>
-                                <li className="flex justify-center group-head-row group-content-header-item">
-                                    <div className="sort-container">
-                                        <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
-                                            <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
-                                        </button>
-                                    </div>
-                                    <h4>Item</h4>
-                                </li>
+                                <div className="sticky-container">
+                                    <li className={`group-content-header-color ${group.style}`}>
+                                    </li>
+                                    <li className='flex justify-center group-content-header-checkbox'>
+                                        <input type="checkbox" />
+                                    </li>
+                                    <li className="flex justify-center group-head-row group-content-header-item">
+                                        <div className="sort-container">
+                                            <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />
+                                                <span onClick={(ev) => clearSort(ev)} className="clear-sort">clear</span>
+                                            </button>
+                                        </div>
+                                        <h4>Item</h4>
+                                    </li>
+                                </div>
                                 {board.cmpsOrder.map((category, idx) =>
                                     <Draggable key={category} draggableId={category} index={idx} >
                                         {(provided, snapshot) => {
