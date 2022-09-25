@@ -1,3 +1,5 @@
+import moment from "moment"
+import { Fragment } from "react"
 
 export const ColumnStats = ({ group, board }) => {
     return <ul className="column-stats">
@@ -10,16 +12,7 @@ export const ColumnStats = ({ group, board }) => {
         <li></li>
     </ul>
 }
-{/* <li className="empty-member-stat"></li>
-<li className="status-stat">
-    <StatusStat group={group}/>
-</li>
-<li className="priority-stat">
-    <PriorityStat group={group}/>
-</li>
-<li className="timeline-stat"></li>
-<li className="files-stat"></li>
-<li className="empty-last-updated-stat"></li> */}
+
 const makeClass = (status) => {
     if (!status) return
     return status.split(' ').join('')
@@ -87,11 +80,34 @@ const GetCmpsFromSwitch = ({ cmp, group }) => {
     }
 }
 const TimelineStat = ({ group }) => {
+    let max = group.tasks[0]?.timeline?.endDate, min = group.tasks[0]?.timeline?.startDate;
     const getTimelineProgressBar = () => {
-        const timelineProgressBar = []
-        let max = 0, min = 0;
-        group.tasks?.forEach(({timeline}) => console.log('timeline:', timeline))
+        group.tasks?.forEach(({timeline}) => {
+            if(timeline?.startDate && timeline.startDate < min) min = timeline.startDate 
+            if(timeline?.endDate && timeline.endDate > max) max = timeline.endDate 
+        })
+        return  <Fragment>
+        <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress({startDate:min,endDate:max})}%` }}></div>
+        <>
+          <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress({startDate:min,endDate:max})}%`}}></div>
+          <span >{getFormattedDateTime(min)}</span>
+        </>
+          <span> - </span>
+          <span>{getFormattedDateTime(max)}</span>
+      </Fragment>
     }
-    getTimelineProgressBar()
-    // console.log('group.tasks[0].timeline?.startDate:', group.tasks[0]?.timeline)
+    if(min===undefined && max === undefined) return
+    return <div className="flex justify-center timeline-wrapper">{getTimelineProgressBar()}</div>
 }
+
+const getTimeProgress = ({ startDate, endDate }) => {
+    if (!startDate || !endDate) return ''
+    const timeRatio = (Date.now() - startDate) / (endDate - startDate)
+    const timeProgress = (timeRatio * 100).toFixed()
+    return (timeProgress < 0) ? 0 : (timeProgress < 100) ? timeProgress : 100
+  }
+
+  const getFormattedDateTime = (date) => {
+    if (!date) return
+    return moment(date).format("MMM D")
+  }

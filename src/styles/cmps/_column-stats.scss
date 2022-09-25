@@ -11,7 +11,7 @@
         min-width: 398px;
         box-shadow: inset 0px 16px 33px -27px rgba(0, 0, 0, 0.08);
     }
-    
+
     .member-stat {
         border-left: 1px solid var(--clr-disabled);
         min-width: 138px;
@@ -67,7 +67,58 @@
         }
 
     }
-    
+
+    .timeline-stat {
+        padding: 0 8px;
+        font-family: roboto;
+        font-size: 13px;
+        line-height: 22px;
+        font-weight: 400;
+        color: white;
+        gap: 4px;
+        min-width: 160px;
+
+        .clr13 {
+            background-color: var(--status-clr13);
+            color: var(--status-clr13);
+
+            * {
+                fill: var(--status-clr13);
+            }
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            width: 100%;
+            height: 65%;
+            gap: 4px;
+            border-radius: 2em;
+            overflow: hidden;
+
+            .background-time-progress-bar {
+                position: absolute;
+                right: 0;
+                height: 100%;
+                background-color: black;
+            }
+
+            .time-progress-bar {
+                position: absolute;
+                left: 0;
+                height: 100%;
+
+                &.undefined {
+                    background-color: #5a5a5a;
+                }
+            }
+
+            span {
+                z-index: 1;
+            }
+        }
+
+    }
+
     .lastUpdated-stat {
         border-bottom: 1px solid var(--clr-disabled);
         min-width: 138px;
@@ -87,7 +138,7 @@
         border-bottom: 1px solid var(--clr-disabled);
         display: flex;
         width: 100%;
-        
+
     }
 
 
@@ -130,6 +181,7 @@
     .Low {
         background-color: var(--clr-low);
     }
+
     .undefined {
         background-color: var(--clr-empty);
     }
