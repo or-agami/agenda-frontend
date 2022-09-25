@@ -127,8 +127,9 @@
     .task-preview-last-updated {
         padding: 0 7px;
         font-family: roboto-light;
+        letter-spacing: -0.3px;
         font-size: 13px;
-        gap: 14px;
+        gap: 12px;
         justify-content: flex-start;
 
         .last-updated {
