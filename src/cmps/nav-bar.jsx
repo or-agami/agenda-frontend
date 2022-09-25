@@ -71,7 +71,7 @@ export const NavBar = () => {
 
   const showFavorites = () => {
     setIsFavorites(true)
-    if(params.boardId) return
+    if (params.boardId) return
     navigate(`/workspace/board/${currBoard._id}`)
   }
 
@@ -108,7 +108,7 @@ export const NavBar = () => {
           <NavLink to="/workspace/mywork"><MyWorkSvg />
             <div className="selected-indication"></div>
           </NavLink>
-          </button>
+        </button>
         <button onClick={showFavorites} className={`btn btn-svg btn-favorites set ${isFavorites ? 'active' : ''}`} title='Favorites'>
           <FavoritesSvg />
           <div className="selected-indication"></div>
@@ -119,7 +119,9 @@ export const NavBar = () => {
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
         {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} />}
-        <button className="btn btn-svg btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>O</button>
+        {loggedinUser ?
+          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={loggedinUser.fullname}>O</button> :
+          <button className="btn btn-img btn-user" onClick={() => openUserMenu()} title={'guest'}>O</button>}
 
 
       </section>

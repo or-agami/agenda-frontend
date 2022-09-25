@@ -1,11 +1,13 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { userService } from "../services/user.service"
 import { addBoard } from "../store/board/board.action"
 
 export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
 
     const navigate = useNavigate()
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const board = useSelector(state => state.boardModule.board)
     const dispatch = useDispatch()
 
@@ -19,8 +21,11 @@ export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
     const onCreateBoard = (ev) => {
         ev.preventDefault()
         const title = ev.target[0].value
+        const { _id, fullname, imgUrl } = loggedinUser || { _id: '0000', fullname: 'guest', imgUrl: 'profile-img-guest' }
         const board = {
-            title
+            title,
+            createdBy: { _id, fullname, imgUrl },
+            members: [{ _id, fullname, imgUrl }]
         }
         dispatch(addBoard(board))
         setIsAddBoard(!isAddBoard)
