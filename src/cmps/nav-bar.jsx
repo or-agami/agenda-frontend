@@ -130,7 +130,7 @@ export const NavBar = () => {
       </section>
       <Routes>
         <Route path="/home" element={<AppHome />} />
-        <Route path="/board/:boardId/kanban/*" element={<Kanban />} />
+        <Route path="/board/kanban/:boardId/*" element={<Kanban />} />
         <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
         <Route path="/board/:boardId/*" element={<Board />} />
         <Route path="/mywork" element={<MyWork />} />

@@ -1,53 +1,132 @@
 import { useSelector } from "react-redux"
 import { BoardHeader } from "../cmps/board-header"
-import { ReactComponent as StartConversation } from "../assets/icons/start-conversation.svg"
-import { ReactComponent as MenuIcon } from "../assets/icons/kanban-status.svg"
 import { TaskTimeline } from "../cmps/task-timeline"
 import { PopUpModal } from "../cmps/pop-up-modal"
 import { useState } from "react"
-import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
 import { Link, Route, Routes } from "react-router-dom"
 import { TaskDetail } from "../cmps/task-detail"
+import { useDispatch } from "react-redux"
+import { addTask, updateBoard, updateGroup, updateTask } from "../store/board/board.action"
+import { useForm } from "../hooks/useForm"
+import { ReactComponent as StartConversation } from "../assets/icons/start-conversation.svg"
+import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
+import { ReactComponent as MenuIcon } from "../assets/icons/kanban-status.svg"
+import { ReactComponent as TimelineMenu } from "../assets/icons/timeline-menu.svg"
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
+import { useEffect } from "react"
 
 
 export const Kanban = () => {
 
-
-
+    const dispatch = useDispatch()
     const board = useSelector(state => state.boardModule.board)
+    const [groups, setGroups] = useState(board?.groups || null)
 
-    if (!board) return
+    useEffect(() => {
+        if (board && groups !== board?.groups) {
+            setGroups(board.groups)
+        }
+    }, [board])
+
+    const handleOnDragEnd = (ev) => {
+        console.log('groups:', groups)
+        const updatedGroups = [...groups]
+        const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
+        updatedGroups.splice(ev.destination.index, 0, draggedItem)
+
+        setGroups(updatedGroups)
+        board.groups = updatedGroups
+        dispatch(updateBoard(board))
+    }
+
+    console.log('board:', board)
+    if (!board || !groups) return
     return <section className="kanban">
         <BoardHeader board={board} />
-        <div className="kanban-container">
-            {board.groups.map(group => {
-                return <KanbanGroupPreview key={group.id} group={group} board={board} />
-            })}
-        </div>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId='groups' direction="horizontal">
+                {(droppableProvided) => {
+                    return <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="task-list">
+                        <div className="kanban-container">
+                            {groups.map((group, idx) => {
+                                return <KanbanGroupPreview key={group.id} group={group} board={board} idx={idx} />
+                            })}
+                            {droppableProvided.placeholder}
+                        </div>
+                    </div>
+                }}
+            </Droppable >
+        </DragDropContext >
         <Routes>
             <Route path="/details" element={<TaskDetail />}></Route>
         </Routes>
-    </section>
-}
-
-
-const KanbanGroupPreview = ({ group, board }) => {
-
-    return <section className={`kanban-group-preview ${group.style}`}>
-        <h3>{group.title} / {group.tasks.length}</h3>
-        <div className={`kanban-task-list`}>
-            {group.tasks.map(task => {
-                return <KanbanTaskPreview key={task.id} task={task} group={group} board={board} />
-            })}
-        </div>
-        <div className="kanban-group-add-item"> <span>+</span> Add Item</div>
-    </section>
+    </section >
 
 }
 
-const KanbanTaskPreview = ({ task, group, board }) => {
 
+const KanbanGroupPreview = ({ group, board, idx }) => {
+
+    const dispatch = useDispatch()
+    const [tasks, setTasks] = useState(group.tasks)
+
+    const handleOnDragEnd = (ev) => {
+        const updatedTasks = [...tasks]
+        const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
+        updatedTasks.splice(ev.destination.index, 0, draggedItem)
+        setTasks(updatedTasks)
+    }
+
+
+    useEffect(() => {
+        if (tasks !== group.tasks) {
+            group.tasks = tasks
+            dispatch(updateGroup({ group, boardId: board._id }))
+        }
+    }, [tasks])
+
+    const onAddTask = () => {
+        dispatch(addTask({ groupId: group.id, title: 'New Task', boardId: board._id }))
+    }
+
+    return <Draggable key={idx} draggableId={group.id + idx} index={idx}>
+        {(provided) => {
+            return <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId='tasks'>
+                    {(droppableProvided) => {
+                        return <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="task-list">
+                            <section className={`kanban-group-preview ${group.style}`} ref={provided.innerRef}
+                                {...provided.draggableProps}>
+                                <h3  {...provided.dragHandleProps}>{group.title} / {group.tasks.length}</h3>
+                                <div className={`kanban-task-list`} >
+                                    {tasks.map((task, idx) => {
+                                        return <Draggable key={task.id} draggableId={task.id} index={idx} >
+                                            {(provided) => {
+                                                return <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    <KanbanTaskPreview task={task} group={group} board={board} tasks={tasks} setTasks={setTasks} />
+                                                </div>
+                                            }}
+                                        </Draggable>
+                                    })}
+                                    {droppableProvided.placeholder}
+                                </div>
+                                <div onClick={onAddTask} className="kanban-group-add-item"> <span>+</span> Add Item</div>
+                            </section>
+                        </div>
+                    }}
+                </Droppable>
+            </DragDropContext>
+        }}
+    </Draggable>
+}
+
+const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
+
+    const dispatch = useDispatch()
     const [modalName, setModalName] = useState(null)
+    const [isRenaming, setIsRenaming] = useState(false)
+    const [renameTask, handleChange] = useForm({ title: task.title })
+
 
     const makeClass = (status) => {
         if (!status) return 'card empty'
@@ -56,12 +135,25 @@ const KanbanTaskPreview = ({ task, group, board }) => {
         return className
     }
 
+    useEffect(() => {
+        if (group.tasks !== tasks)
+            setTasks(group.tasks)
+    }, [group.tasks])
+
     const onModalOpen = (str) => {
         const name = `TASK_${str}_MENU`
         setTimeout(() => {
             setModalName(name)
         }, 100);
     }
+
+    const onRenameTask = (ev) => {
+        ev.preventDefault()
+        task = { ...task, ...renameTask }
+        setIsRenaming(false)
+        dispatch(updateTask({ task: task, groupId: group.id, boardId: board._id }))
+    }
+
 
     return <section className={`kanban-task-preview`}>
         {modalName && <PopUpModal modalName={modalName}
@@ -70,8 +162,11 @@ const KanbanTaskPreview = ({ task, group, board }) => {
             group={group}
             board={board} />}
         <div className="kanban-task-item">
-            <h6>{task.title}</h6>
-            <Link to={`/workspace/board/${board._id}/kanban/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
+            {isRenaming ? <form className="rename-task" onSubmit={onRenameTask} onBlur={onRenameTask}>
+                <input autoFocus type="text" name='title' value={renameTask.title} onChange={handleChange} />
+            </form>
+                : <h6 onClick={() => setIsRenaming(true)}>{task.title}</h6>}
+            <Link to={`/workspace/board/kanban/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
                 {!task.comments && <StartConversation className="svg svg-chat" />}
                 {task.comments && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
             </Link>
@@ -82,8 +177,8 @@ const KanbanTaskPreview = ({ task, group, board }) => {
         <div className="kanban-task-item priority"><span className="item-category"><MenuIcon className="svg svg-menu" />
             Priority</span> <span onClick={() => onModalOpen('PRIORITY')} className={makeClass(task.priority)}>{task.priority}</span>
         </div>
-        <div className="kanban-task-item "><span className="item-category"><MenuIcon className="svg svg-menu" />
-            Timeline</span> <span className="kanban-timeline task-preview-timeline"><TaskTimeline task={task} group={group} board={board} /></span>
+        <div className="kanban-task-item "><span className="item-category"><TimelineMenu className="svg svg-menu" />
+            Timeline</span> <span className="card kanban-timeline task-preview-timeline"><TaskTimeline task={task} group={group} board={board} /></span>
         </div>
 
     </section>

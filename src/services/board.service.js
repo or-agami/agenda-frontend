@@ -6,9 +6,11 @@ import { socketService, SOCKET_EMIT_SET_BOARD_ID_CHANNEL, SOCKET_EMIT_SEND_BOARD
 /* ?- WebSocket */;
 (() => {
   socketService.on(SOCKET_EMIT_SEND_BOARD_CHANGES, (board) => {
+    console.log('emeting Changes:', board)
     store.dispatch(getActionUpdateBoard(board))
   })
   socketService.on(SOCKET_EVENT_ADD_BOARD_CHANGES, (board) => {
+    console.log('adding Changes:', board)
     store.dispatch(getActionUpdateBoard(board))
   })
 })()

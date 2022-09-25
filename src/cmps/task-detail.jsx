@@ -16,7 +16,9 @@ import confetti from 'canvas-confetti'
 import { TaskTimeline } from "./task-timeline"
 import { PopUpModal } from "./pop-up-modal"
 
+
 export const TaskDetail = () => {
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const task = useSelector(state => state.boardModule.task)
@@ -34,7 +36,7 @@ export const TaskDetail = () => {
     }, [])
 
     const closeTaskDetail = () => {
-        navigate(`/workspace/board/${boardId}`)
+        navigate(-1)
     }
 
 
