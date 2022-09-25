@@ -14,6 +14,7 @@ export const TaskAdd = ({group,boardId}) => {
     }
 
     return <ul className="task-add">
+        <div className="sticky-container">
         <li className={`task-add-group-color ${group.style}`}>
         </li>
         <li className='task-add-checkbox'>
@@ -24,5 +25,6 @@ export const TaskAdd = ({group,boardId}) => {
             <input type="text" placeholder="+ Add item"/>
             </form>
         </li>
+        </div>
     </ul>
 }
