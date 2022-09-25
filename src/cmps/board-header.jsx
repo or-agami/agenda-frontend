@@ -20,7 +20,7 @@ import { ReactComponent as StarClrIcon } from '../assets/icons/star-clr.svg'
 import { useSelector } from 'react-redux'
 import { updateUser } from '../store/user/user.action'
 import { Fragment } from 'react'
-// import { InviteMemberModal } from './board-invite-member-modal'
+import { InviteMemberModal } from './board-invite-member-modal'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
@@ -32,7 +32,7 @@ export const BoardHeader = ({ board }) => {
   const [renameTitle, handleChange] = useForm({ title: board.title })
   const [isDashboard, setIsDashboard] = useState(false)
   const [user, setUser] = useState(loggedinUser)
-  // const [isInviteMemberOpen, setIsInviteMemberOpen] = useState(false)
+  const [isInviteMemberOpen, setIsInviteMemberOpen] = useState(false)
 
 
   useEffect(() => {
@@ -74,8 +74,8 @@ export const BoardHeader = ({ board }) => {
 
   return (
     <Fragment>
-      {/* {isInviteMemberOpen &&
-        <InviteMemberModal isInviteMemberOpen={isInviteMemberOpen} setIsInviteMemberOpen={setIsInviteMemberOpen} />} */}
+      {isInviteMemberOpen &&
+        <InviteMemberModal isInviteMemberOpen={isInviteMemberOpen} setIsInviteMemberOpen={setIsInviteMemberOpen} />}
       <section className="board-header">
         <div className="flex board-info">
           <div className='header-main'>
