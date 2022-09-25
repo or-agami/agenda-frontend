@@ -95,7 +95,7 @@ export const BoardHeader = ({ board }) => {
             </div>
           </div>
           <div className="flex btns-container">
-            <button className="btn btn-svg invite">
+            <button className="btn btn-svg invite" onClick={() => setIsInviteMemberOpen(true)}>
               <InviteSvg />
               <span>Invite</span>
             </button>
