@@ -4,6 +4,7 @@ import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.sv
 import { FaPlusCircle } from "react-icons/fa"
 import { PopUpModal } from "./pop-up-modal"
 import { TaskTimeline } from "./task-timeline"
+import fi from "date-fns/esm/locale/fi/index.js"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
@@ -44,7 +45,9 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     }
 
     const makeClass = (status) => {
-        if (!status) return
+        // console.log('status:', status)
+        if (!status) return 
+        // if(status === 'undefined') return ''
         return status.split(' ').join('')
     }
 
@@ -56,14 +59,14 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
         case 'status':
             cmp = <span className='fold'></span>
-            headerTxt = task[category]
+            headerTxt = (task[category] === undefined)? '' : task[category]
             className += `status same-width `
             cb = onSetTaskStatusMenuOpen
 
             break;
         case 'priority':
             cmp = <span className='fold'></span>
-            headerTxt = task[category]
+            headerTxt = (task[category] === undefined)? '' : task[category]
             className += `priority same-width `
             if (task[category] === 'Critical') {
                 headerTxt += " ⚠"
