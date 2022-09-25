@@ -22,8 +22,10 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
 
   useEffect(() => {
     document.body.addEventListener('click', closeModal)
+    document.body.classList.add('pop-up-modal-open')
     return () => {
       document.body.removeEventListener('click', closeModal)
+      document.body.classList.remove('pop-up-modal-open')
     }
   })
 
