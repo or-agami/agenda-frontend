@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux'
 import { updateUser } from '../store/user/user.action'
 import { Fragment } from 'react'
 import { InviteMemberModal } from './board-invite-member-modal'
+import { PopUpModal } from './pop-up-modal'
 
 export const BoardHeader = ({ board }) => {
   const { title } = board
@@ -112,12 +113,21 @@ export const BoardHeader = ({ board }) => {
   )
 }
 
+
+
 const BoardControls = ({ board }) => {
   const dispatch = useDispatch()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [modalName, setModalName] = useState(null)
 
   const onToggleSearch = () => {
     setIsSearchOpen(!isSearchOpen)
+  }
+
+  const openNewTaskMenu = () => {
+    setTimeout(() => {
+      setModalName('NEW_TASK_MENU')
+    }, 100);
   }
 
   const onAddTask = () => {
@@ -128,11 +138,12 @@ const BoardControls = ({ board }) => {
 
   return (
     <div className="flex aline btns-container">
+      {modalName && <PopUpModal board={board} modalName={modalName} setModalName={setModalName} />}
       <div className="btn btn-highlight btn-options">
         <button className="btn btn-new-task" onClick={() => onAddTask()}>
           <span>New Task</span>
         </button>
-        <button className="btn btn-drop-down">
+        <button onClick={openNewTaskMenu} className="btn btn-drop-down">
           <DownArrowSvg />
         </button>
       </div>
