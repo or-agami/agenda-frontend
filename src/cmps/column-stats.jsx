@@ -82,12 +82,13 @@ const GetCmpsFromSwitch = ({ cmp, group }) => {
     }
 }
 const TimelineStat = ({ group }) => {
-    let max = group.tasks[0]?.timeline?.endDate, min = group.tasks[0]?.timeline?.startDate;
+    let max =0, min = Infinity
     const getTimelineProgressBar = () => {
         group.tasks?.forEach(({timeline}) => {
-            if(timeline?.startDate && timeline.startDate < min) min = timeline.startDate 
-            if(timeline?.endDate && timeline.endDate > max) max = timeline.endDate 
+            if(timeline?.startDate < min) min = timeline.startDate
+            if(timeline?.endDate > max) max = timeline.endDate
         })
+        if(min===Infinity && max ===0) return 
         return  <Fragment>
         <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress({startDate:min,endDate:max})}%` }}></div>
         <>
@@ -98,7 +99,6 @@ const TimelineStat = ({ group }) => {
           <span>{getFormattedDateTime(max)}</span>
       </Fragment>
     }
-    if(min===undefined && max === undefined) return
     return <div className="flex justify-center timeline-wrapper">{getTimelineProgressBar()}</div>
 }
 

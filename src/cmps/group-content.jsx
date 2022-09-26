@@ -66,10 +66,11 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     return <Draggable key={idx} draggableId={group.id + idx} index={idx}>
         {(provided) => {
             return <section className="group-content" ref={provided.innerRef}
-                {...provided.draggableProps}
+            {...provided.draggableProps}
             >
                 <div className='group-content-title' {...provided.dragHandleProps}>
                     <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'open' : ''}`}>
+                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
                         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
                         <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                             <ArrowRightSvg className={`${group.style} no-background`} />
@@ -78,7 +79,6 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
                             <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
                         </form>}    
-                        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
                     </div>
                 </div>
 

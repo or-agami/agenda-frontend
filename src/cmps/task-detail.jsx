@@ -234,9 +234,10 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
     }
 
     const onReplyToComment = () => {
-        comment.isReplyOpen = true
-        task.comments[commentIdx] = comment
-        dispatch(updateTask({ task, groupId, boardId: board._id }))
+        // comment.isReplyOpen = true
+        // task.comments[commentIdx] = comment
+        // dispatch(updateTask({ task, groupId, boardId: board._id }))
+        setIsReplyOpen(true)
     }
 
 
@@ -267,7 +268,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 <button onClick={() => onReplyToComment()} className="btn btn-svg btn-reply"><Reply />Reply</button>
             </div>
         </div>
-        {comment.isReplyOpen && <CommentReply comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />}
+        {(isReplyOpen || comment?.replies?.length>0) && <CommentReply comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />}
     </section>
 }
 
