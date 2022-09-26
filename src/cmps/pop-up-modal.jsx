@@ -249,6 +249,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       </div>
 
     case 'USER_MENU':
+      if(!loggedinUser) return
       return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
         <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button>
       </section>
