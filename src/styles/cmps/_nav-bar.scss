@@ -28,14 +28,14 @@
     justify-content: center;
     align-items: center;
 
-    &[title]:hover::before {
-      content: attr(title);
-      padding: 10px;
-      border-radius: 6px;
-      background-color: #569cfc;
-      position: absolute;
-      translate: 10% -120%;
-    }
+    // &[title]:hover::before {
+    //   content: attr(title);
+    //   padding: 10px;
+    //   border-radius: 6px;
+    //   background-color: #569cfc;
+    //   position: absolute;
+    //   translate: 10% -120%;
+    // }
 
     &.active.set {
       background-color: #545970;

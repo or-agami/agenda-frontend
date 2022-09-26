@@ -44,7 +44,7 @@ export const TaskPreview = ({ task, group, board }) => {
   }
 
   return <ul key={task.id} className="clean-list task-preview">
-    <div className="sticky-container">
+    <div className={`sticky-container ${modalName === 'TASK_MENU' ? 'open' : ''}`}>
       <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsTaskMenuOpen()}><BoardMenu /></button>
       {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
       <li className={`task-preview-group-color ${group.style}`}>
