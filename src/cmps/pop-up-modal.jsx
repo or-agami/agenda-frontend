@@ -7,7 +7,9 @@ import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
 import { GrClose } from 'react-icons/gr'
-import { useNavigate } from 'react-router-dom'
+import { IoLogInOutline } from 'react-icons/io5'
+import { BiLogIn } from 'react-icons/bi'
+import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
 import { ReactComponent as NewGroupIcon } from '../assets/icons/new-group-icon.svg'
 
@@ -249,9 +251,12 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       </div>
 
     case 'USER_MENU':
-      if(!loggedinUser) return
       return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
-        <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button>
+        {loggedinUser ?
+        <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button> :
+        // <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><IoLogInOutline />Login</Link>
+        <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><BiLogIn />Login</Link>
+        }
       </section>
     case 'TASK_DETAIL_PERSON_MENU':
       return <section className='task-detail-person-menu' onClick={(ev) => ev.stopPropagation()}>

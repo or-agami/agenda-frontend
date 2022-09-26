@@ -125,7 +125,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                         <FaPlusCircle/>
                     </button>
                     <div className='developer-container'>
-                        {task.memberIds ?
+                        {(task.memberIds && task.memberIds.length > 0) ?
                             task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
                             :
                             <NoPersonSvg className="svg-no-person" />}

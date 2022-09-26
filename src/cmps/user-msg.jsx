@@ -26,7 +26,7 @@ export class UserMsg extends Component {
 
     render() {
         const { msg } = this.state
-        if (!msg) return <span></span>
+        if (!msg) return <></>
         const msgClass = msg.type || ''
         return (
             <section className={'user-msg ' + msgClass}>

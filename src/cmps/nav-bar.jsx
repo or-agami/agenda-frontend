@@ -99,11 +99,11 @@ export const NavBar = () => {
           </NavLink>
         </button>
         <button className="btn btn-svg btn-notification" title='Notifications'><NotificationSvg /></button>
-        <button className="btn btn-svg btn-index" title='Inbox'>
+        {/* <button className="btn btn-svg btn-index" title='Inbox'>
           <NavLink to="/workspace/inbox"><InboxSvg />
             <div className="selected-indication"></div>
           </NavLink>
-        </button>
+        </button> */}
         <button className="btn btn-svg btn-my-work" title='My work'>
           <NavLink to="/workspace/mywork"><MyWorkSvg />
             <div className="selected-indication"></div>
@@ -113,9 +113,9 @@ export const NavBar = () => {
           <FavoritesSvg />
           <div className="selected-indication"></div>
         </button>
-        <button className="btn btn-svg btn-invite" title='Invite members'><InviteSvg /></button>
-        <button className="btn btn-svg btn-search" title='Search everything'><SearchSvg /></button>
-        <button className="btn btn-svg btn-help" title='Help'><HelpSvg /></button>
+        {/* <button className="btn btn-svg btn-invite" title='Invite members'><InviteSvg /></button> */}
+        {/* <button className="btn btn-svg btn-search" title='Search everything'><SearchSvg /></button> */}
+        {/* <button className="btn btn-svg btn-help" title='Help'><HelpSvg /></button> */}
         <div className="divider-horizontal"></div>
         <button className="btn btn-svg btn-menu"><MenuSvg /></button>
         {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} />}

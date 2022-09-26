@@ -18,9 +18,9 @@ export const TaskAdd = ({ group, boardId }) => {
             {/* <div className="sticky-helper"></div> */}
             <li className={`task-add-group-color ${group.style}`}>
             </li>
-            <li className='task-add-checkbox'>
+            {/* <li className='task-add-checkbox'>
                 <input disabled type="checkbox" />
-            </li>
+            </li> */}
             <li className="task-add-item">
                 <form onSubmit={(ev) => onAddTask(ev)}>
                     <input type="text" placeholder="+ Add item" />
