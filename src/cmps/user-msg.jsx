@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { eventBusService } from '../services/event-bus.service'
 import { HiCheck } from 'react-icons/hi'
+import { GrClose } from 'react-icons/gr'
 
 export class UserMsg extends Component {
 
@@ -15,7 +16,7 @@ export class UserMsg extends Component {
             this.setState({ msg })
             setTimeout(() => {
                 this.setState({ msg: null })
-            }, 3000)
+            }, 5000000)
         })
     }
 
@@ -29,10 +30,10 @@ export class UserMsg extends Component {
         const msgClass = msg.type || ''
         return (
             <section className={'user-msg ' + msgClass}>
-                <HiCheck />
+                {msg.type === 'success' && <HiCheck />}
                 {this.state.msg.txt}
-                <button className='btn-close-user-msg' onClick={() => { this.setState({ msg: null }) }}>
-                    X
+                <button className='btn btn-svg btn-close-user-msg' onClick={() => { this.setState({ msg: null }) }}>
+                <GrClose className='close-user-msg' />
                 </button>
             </section>
         )

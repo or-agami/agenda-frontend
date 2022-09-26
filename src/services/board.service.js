@@ -47,12 +47,15 @@ function getById(boardId, sortBy, filterBy) {
           }
 
           if (sortBy.by === 'status') {
+            console.log('here:')
             const res = []
             statusOpts.forEach(currStatus => {
               group.tasks.forEach(task => {
+                if (!task.status) task.status = ''
                 if (task.status.toLowerCase() === currStatus) res.push(task)
               })
             })
+            console.log('res:', res)
             group.tasks = res
           }
 
@@ -64,13 +67,13 @@ function getById(boardId, sortBy, filterBy) {
                 if (task.priority.toLowerCase() === currPriority) res.push(task)
               })
             })
+
             group.tasks = res
           }
 
           if (sortBy.isDecending) group.tasks = group.tasks.reverse()
         })
       }
-
       if (filterBy) {
         board.groups.map((group) =>
           group.tasks = group.tasks.filter((task) =>

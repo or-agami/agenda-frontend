@@ -46,8 +46,6 @@ export const TaskDetail = () => {
         }, 100);
     }
 
-    console.log('params:', params)
-    console.log('searchParams:', searchParams)
     if (!task) return
     return <section className='task-detail'>
         <button className="btn btn-svg btn-svg-x" onClick={() => closeTaskDetail()}><GrClose /></button>

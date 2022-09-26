@@ -62,7 +62,6 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     }
 
     const makeClass = (status) => {
-        // console.log('status:', status)
         if (!status) return 
         // if(status === 'undefined') return ''
         return status.split(' ').join('')
