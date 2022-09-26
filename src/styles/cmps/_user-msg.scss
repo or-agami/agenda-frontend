@@ -16,20 +16,22 @@
   }
 
   &.success {
-      background-color: #25874f;
+    background-color: #25874f;
   }
 
   &.error {
-      background-color: #d83a52;
+    background-color: #d83a52;
   }
 
   .btn-close-user-msg {
     border-radius: 0.3em;
     padding: 4px;
 
-    
+    svg *{
+      stroke: white;
+    }
+
     &:hover {
-      
       background-color: rgba(0, 0, 0, 0.266)
     }
   }

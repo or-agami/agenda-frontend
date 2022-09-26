@@ -29,7 +29,6 @@ export const Kanban = () => {
     }, [board])
 
     const handleOnDragEnd = (ev) => {
-        console.log('groups:', groups)
         const updatedGroups = [...groups]
         const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
         updatedGroups.splice(ev.destination.index, 0, draggedItem)
@@ -39,7 +38,6 @@ export const Kanban = () => {
         dispatch(updateBoard(board))
     }
 
-    console.log('board:', board)
     if (!board || !groups) return
     return <section className="kanban">
         <BoardHeader board={board} />

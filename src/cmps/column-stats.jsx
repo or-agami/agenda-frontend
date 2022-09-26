@@ -32,7 +32,6 @@ const StatusStat = ({ group }) => {
         for (const status in counter) {
             forInCounter++
             const counts = counter[status]
-            console.log('status:', status)
             statusProgressBar.push(
                 <div key={forInCounter} className={`status-progress ${status === 'undefined'? 'none' : makeClass(status)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
