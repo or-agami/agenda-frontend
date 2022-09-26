@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
-import { removeBoard, removeComment, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
+import { addGroup, removeBoard, removeComment, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
 import { GrClose } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
+import { ReactComponent as NewGroupIcon } from '../assets/icons/new-group-icon.svg'
 
 export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment }) => {
   const dispatch = useDispatch()
@@ -156,6 +157,11 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     dispatch(removeComment({ task, groupId: group.id, boardId: board._id }))
   }
 
+  const onAddGroup = () => {
+    dispatch(addGroup(board._id))
+    closeTaskDetailPersonMenu()
+  }
+
   switch (modalName) {
     case 'TASK_MENU':
       return <section className="task-menu modal" onClick={(ev) => ev.stopPropagation()}>
@@ -256,6 +262,12 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       return <section className='task-detail-post-menu' onClick={(ev) => ev.stopPropagation()}>
         <button onClick={() => onRemovePost()} className='btn btn-svg btn-trash-post'><Trash /> Delete update for everyone</button>
       </section>
+
+    case 'NEW_TASK_MENU':
+      return <section className='new-task-menu' onClick={(ev) => ev.stopPropagation()}>
+        <div onClick={onAddGroup} className='new-task-menu-item'><NewGroupIcon /> <span>Add new group</span></div>
+      </section>
+
     default: return console.error('cannot open modal!')
   }
 }
