@@ -30,10 +30,11 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   })
 
   const onUpdateStatus = (status) => {
-    // if(status === 'undefined') status
-    console.log(status)
     const updatedTask = { ...task, status }
     const activity = { type: "status", data: status }
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
     updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
     dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
   }
@@ -46,6 +47,9 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   const onUpdatePriority = (priority) => {
     const updatedTask = { ...task, priority }
     const activity = { type: "priority", data: priority }
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
     updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
     dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
   }

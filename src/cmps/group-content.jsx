@@ -69,21 +69,24 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                 {...provided.draggableProps}
             >
                 <div className='group-content-title' {...provided.dragHandleProps}>
-                    <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
-                    <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
-                        <ArrowRightSvg className={`${group.style} no-background`} />
-                    </button>
-                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`} title='Click to edit'>{group.title}<span className='tooltip'>Click to edit</span></h4>}
-                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-                    </form>}
+                    <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'open' : ''}`}>
+                        <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
+                        <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
+                            <ArrowRightSvg className={`${group.style} no-background`} />
+                        </button>
+                        {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`} title='Click to edit'>{group.title}<span className='tooltip'>Click to edit</span></h4>}
+                        {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                            <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+                        </form>}    
+                        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
+                    </div>
                 </div>
 
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId='group-category' direction="horizontal">
                         {(droppableProvided) => {
-                            return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-content-header">
-                                <div className="sticky-container">
+                            return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className={`group-content-header ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
+                                <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
                                     <li className={`group-content-header-color ${group.style}`}>
                                     </li>
                                     <li className='flex justify-center group-content-header-checkbox'>
@@ -125,7 +128,6 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         board={board}
                     />
                 </div>
-                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
             </section>
 
         }}

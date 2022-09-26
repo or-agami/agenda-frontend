@@ -44,3 +44,14 @@
 .profile-img-icon {
   border-radius: 50%;
 }
+
+.sticky-container {
+  display: flex;
+  position: sticky;
+  left: 135px;
+  z-index: 1;
+  background-color: white;
+  .group-content-header-item {
+      // border-inline-end: 1px solid var(--clr-disabled);
+  }
+}
