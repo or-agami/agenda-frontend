@@ -100,9 +100,9 @@ export const BoardHeader = ({ board }) => {
               <InviteSvg />
               <span>Invite</span>
             </button>
-            <button className="btn btn-svg invite">
+            {/* <button className="btn btn-svg menu">
               <BoardMenuSvg />
-            </button>
+            </button> */}
           </div>
         </div>
         {!isDashboard && <div className="flex board-nav">
@@ -164,7 +164,7 @@ const BoardControls = ({ board }) => {
           <span>Search</span>
         </button>
       }
-      <button className="btn btn-svg btn-person">
+      {/* <button className="btn btn-svg btn-person">
         <PersonSvg />
         <span>Person</span>
       </button>
@@ -182,7 +182,7 @@ const BoardControls = ({ board }) => {
       </button>
       <button className="btn btn-svg btn-task-menu">
         <BoardMenuSvg />
-      </button>
+      </button> */}
     </div>
   )
 }

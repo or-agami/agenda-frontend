@@ -89,9 +89,9 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                                 <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
                                     <li className={`group-content-header-color ${group.style}`}>
                                     </li>
-                                    <li className='flex justify-center group-content-header-checkbox'>
+                                    {/* <li className='flex justify-center group-content-header-checkbox'>
                                         <input type="checkbox" />
-                                    </li>
+                                    </li> */}
                                     <li className="flex justify-center group-head-row group-content-header-item">
                                         <div className="sort-container">
                                             <button onClick={() => onSortBy('title')} className='btn btn-sort'> <SortArrows />

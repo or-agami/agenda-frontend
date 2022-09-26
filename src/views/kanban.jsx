@@ -3,10 +3,10 @@ import { BoardHeader } from "../cmps/board-header"
 import { TaskTimeline } from "../cmps/task-timeline"
 import { PopUpModal } from "../cmps/pop-up-modal"
 import { useState } from "react"
-import { Link, Route, Routes } from "react-router-dom"
+import { Link, Route, Routes, useParams } from "react-router-dom"
 import { TaskDetail } from "../cmps/task-detail"
 import { useDispatch } from "react-redux"
-import { addTask, updateBoard, updateGroup, updateTask } from "../store/board/board.action"
+import { addTask, loadBoard, setLoader, updateBoard, updateGroup, updateTask } from "../store/board/board.action"
 import { useForm } from "../hooks/useForm"
 import { ReactComponent as StartConversation } from "../assets/icons/start-conversation.svg"
 import { ReactComponent as StartConversationEmptySvg } from '../assets/icons/start-conversation-empty.svg'
@@ -18,15 +18,35 @@ import { useEffect } from "react"
 
 export const Kanban = () => {
 
+    const params = useParams()
     const dispatch = useDispatch()
-    const board = useSelector(state => state.boardModule.board)
+    const { board, isLoading, sortBy, filterBy } = useSelector(state => state.boardModule)
     const [groups, setGroups] = useState(board?.groups || null)
 
     useEffect(() => {
-        if (board && groups !== board?.groups) {
+        if (isLoading) return
+        const boardId = params.boardId
+        if ((board && (board._id !== boardId))) {
+            dispatch(setLoader())
+            dispatch(loadBoard(boardId))
+        }
+        if (board && (groups !== board?.groups)) {
             setGroups(board.groups)
         }
-    }, [board])
+    }, [params, board])
+
+    useEffect(() => {
+        if (board) {
+            dispatch(loadBoard(board._id, sortBy, filterBy))
+        }
+    }, [sortBy, filterBy])
+
+
+    // useEffect(() => {
+    //     if (board && groups !== board?.groups) {
+    //         setGroups(board.groups)
+    //     }
+    // }, [board])
 
     const handleOnDragEnd = (ev) => {
         const updatedGroups = [...groups]
@@ -37,7 +57,6 @@ export const Kanban = () => {
         board.groups = updatedGroups
         dispatch(updateBoard(board))
     }
-
     if (!board || !groups) return
     return <section className="kanban">
         <BoardHeader board={board} />
@@ -72,16 +91,9 @@ const KanbanGroupPreview = ({ group, board, idx }) => {
         const updatedTasks = [...tasks]
         const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
         updatedTasks.splice(ev.destination.index, 0, draggedItem)
-        setTasks(updatedTasks)
+        group.tasks = updatedTasks
+        dispatch(updateGroup({ group, boardId: board._id }))
     }
-
-
-    useEffect(() => {
-        if (tasks !== group.tasks) {
-            group.tasks = tasks
-            dispatch(updateGroup({ group, boardId: board._id }))
-        }
-    }, [tasks])
 
     const onAddTask = () => {
         dispatch(addTask({ groupId: group.id, title: 'New Task', boardId: board._id }))
@@ -97,7 +109,7 @@ const KanbanGroupPreview = ({ group, board, idx }) => {
                                 {...provided.draggableProps}>
                                 <h3  {...provided.dragHandleProps}>{group.title} / {group.tasks.length}</h3>
                                 <div className={`kanban-task-list`} >
-                                    {tasks.map((task, idx) => {
+                                    {group.tasks.map((task, idx) => {
                                         return <Draggable key={task.id} draggableId={task.id} index={idx} >
                                             {(provided) => {
                                                 return <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -134,8 +146,8 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
     }
 
     useEffect(() => {
-        if (group.tasks !== tasks)
-            setTasks(group.tasks)
+        if ((group.tasks !== tasks))
+        setTasks(group.tasks)
     }, [group.tasks])
 
     const onModalOpen = (str) => {
@@ -151,7 +163,6 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
         setIsRenaming(false)
         dispatch(updateTask({ task: task, groupId: group.id, boardId: board._id }))
     }
-
 
     return <section className={`kanban-task-preview`}>
         {modalName && <PopUpModal modalName={modalName}

@@ -152,7 +152,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isUsernameVerified === 'LOGGEDIN_SUCCESSFULLY') {
-        navigate('/workspace/home')
+      navigate('/workspace/home')
     }
   })
 
@@ -162,7 +162,7 @@ const Login = () => {
     if (isUsernameVerified !== 'VERIFIED' && password === '') {
       dispatch(checkUsername(username))
     }
-    if (isUsernameVerified === 'VERIFIED') {
+    if (isUsernameVerified === 'VERIFIED' || isUsernameVerified === 'INVALID_CREDS') {
       dispatch(login(loginFields))
     }
   }
@@ -182,6 +182,13 @@ const Login = () => {
               <NavLink to='/auth/signup'>sign up instead?</NavLink>
             </div>
           </div>}
+        {isUsernameVerified === 'INVALID_CREDS' &&
+          <div className="flex align-center username-not-found">
+            <div className="icon icon-svg"><MdDoNotDisturbAlt /></div>
+            <div className="flex column align-center not-found-txt">
+              <span className="msg">Invalid password</span>
+            </div>
+          </div>}
         <form className="flex column form form-user-login-signup"
           onSubmit={(ev) => onUserLogin(ev)}>
           {isUsernameVerified === 'VERIFIED' ?
@@ -196,7 +203,7 @@ const Login = () => {
             placeholder="Example@company.com"
             onChange={handleLoginChange}
           />
-          {isUsernameVerified === 'VERIFIED' &&
+          {(isUsernameVerified === 'VERIFIED' || isUsernameVerified === 'INVALID_CREDS') &&
             <Fragment>
               <label className="label-username verified" htmlFor="password">Password</label>
               <input className="input input-password"
@@ -209,7 +216,7 @@ const Login = () => {
             </Fragment>
           }
           <input type="submit" hidden />
-          {isUsernameVerified === 'VERIFIED' ?
+          {(isUsernameVerified === 'VERIFIED' || isUsernameVerified === 'INVALID_CREDS') ?
             <button className="btn btn-svg btn-next"><span>Log</span>In<RightArrowSvg /></button>
             :
             <button className="btn btn-svg btn-next">Next<RightArrowSvg /></button>

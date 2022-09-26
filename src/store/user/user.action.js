@@ -19,9 +19,8 @@ export function login(creds) {
             const loggedinUser = await userService.login(creds)
             dispatch({ type: 'SET_USER', loggedinUser })
             isUsernameVerified('LOGGEDIN_SUCCESSFULLY')
-            // showSuccessMsg('Logged in successfully')
         } catch (err) {
-            showErrorMsg('Failed to login')
+            isUsernameVerified('INVALID_CREDS')
         }
     }
 }

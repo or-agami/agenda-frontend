@@ -49,9 +49,9 @@ export const TaskPreview = ({ task, group, board }) => {
       {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} task={task} group={group} board={board} />}
       <li className={`task-preview-group-color ${group.style}`}>
       </li>
-      <li className='flex justify-center task-preview-checkbox'>
+      {/* <li className='flex justify-center task-preview-checkbox'>
         <input className='task-check-input' type="checkbox" />
-      </li>
+      </li> */}
       <div className='item-container' onClick={() => navigate(`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`)} >
         <li className='item-preview-sub-task-expansion'>
 
@@ -64,10 +64,15 @@ export const TaskPreview = ({ task, group, board }) => {
             </form>}
           </li>
           <li className="task-preview-start-conversation" title='Add to conversation'>
-            <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
-              {!task.comments && <StartConversationSvg />}
-              {task.comments && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
-            </Link>
+            {/* <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation"> */}
+            <button className="btn btn-svg btn-start-conversation">
+              {(!task.comments || task.comments?.length === 0) && <StartConversationSvg />}
+              {(task.comments && task.comments.length > 0) && 
+              <div className='with-comments-container'>
+                <StartConversationEmptySvg />
+                <span>{task.comments.length}</span></div>}
+            {/* </Link> */}
+            </button>
           </li>
         </div>
       </div>

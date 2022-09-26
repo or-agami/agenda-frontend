@@ -6,11 +6,9 @@ import { socketService, SOCKET_EMIT_SET_BOARD_ID_CHANNEL, SOCKET_EMIT_SEND_BOARD
 /* ?- WebSocket */;
 (() => {
   socketService.on(SOCKET_EMIT_SEND_BOARD_CHANGES, (board) => {
-    console.log('emeting Changes:', board)
     store.dispatch(getActionUpdateBoard(board))
   })
   socketService.on(SOCKET_EVENT_ADD_BOARD_CHANGES, (board) => {
-    console.log('adding Changes:', board)
     store.dispatch(getActionUpdateBoard(board))
   })
 })()
@@ -47,7 +45,6 @@ function getById(boardId, sortBy, filterBy) {
           }
 
           if (sortBy.by === 'status') {
-            console.log('here:')
             const res = []
             statusOpts.forEach(currStatus => {
               group.tasks.forEach(task => {
@@ -55,7 +52,6 @@ function getById(boardId, sortBy, filterBy) {
                 if (task.status.toLowerCase() === currStatus) res.push(task)
               })
             })
-            console.log('res:', res)
             group.tasks = res
           }
 
