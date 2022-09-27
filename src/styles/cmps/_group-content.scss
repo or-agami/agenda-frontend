@@ -46,7 +46,7 @@
         margin-bottom: 10px;
         font-size: 18px;
         width: 100%;
-        z-index: 2;
+        z-index: 3;
         background-color: var(--clr-item-bg);
 
         input {
@@ -126,6 +126,14 @@
         padding: 0;
         display: flex;
         list-style-type: none;
+
+        .mask {
+            position: absolute;
+            width:40px;
+            height: 50px;
+            translate: -40px -5px;
+            background-color: white;
+        }
     }
 
 

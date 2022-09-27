@@ -26,14 +26,6 @@
     &:hover .task-preview-status {
         filter: opacity(.7);
     }
-    
-    .sticky-container {
-        position: sticky;
-        display: flex;
-        left: 135px;
-        z-index: 1;
-        background-color: white;
-    }
 
     .developer-container {
         display: grid;

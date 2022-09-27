@@ -87,6 +87,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         {(droppableProvided) => {
                             return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className={`group-content-header ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
                                 <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
+                                    <div className="mask"></div>
                                     <li className={`group-content-header-color ${group.style}`}>
                                     </li>
                                     {/* <li className='flex justify-center group-content-header-checkbox'>

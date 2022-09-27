@@ -58,7 +58,7 @@ const Inbox = () => {
 
 const InboxContent = () => {
     return <div className='app-home-inbox-content-container'>
-        <img src={fistBumpGif} width={320} height={320} alt="" />
+        <img className='fist-bump' src={fistBumpGif} alt="" />
         <p>Fist Bumb!</p>
         <p>Your inbox is empty, We'll let you know when we get news</p>
     </div>

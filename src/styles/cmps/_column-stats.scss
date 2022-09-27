@@ -5,11 +5,11 @@
     border-end-start-radius: 8px;
     height: 35px;
     border: 0;
+    translate: -50px;
 
 
     .empty-start {
-        min-width: 363px;
-        box-shadow: inset 0px 16px 33px -27px rgba(0, 0, 0, 0.08);
+        min-width: 413px;
         border-right: 1px solid var(--clr-disabled);
     }
 
