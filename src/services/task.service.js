@@ -48,6 +48,7 @@ async function remove({ taskId, groupId, boardId }) {
 }
 
 async function update({ task, groupId, boardId }, activity) {
+  console.log(activity);
   if (activity) task = await addActivity(task, activity)
   socketService.emit(SOCKET_EMIT_SET_TASK_ID_CHANNEL, task.id)
   socketService.emit(SOCKET_EMIT_SEND_TASK_CHANGES, task)
@@ -65,6 +66,7 @@ async function save({ title, groupId, boardId }) {
 
 function addActivity(task, activity) {
   const user = userService.getLoggedinUser()
+  if (!user) return task
   delete user.assignments
   delete user.userName
 

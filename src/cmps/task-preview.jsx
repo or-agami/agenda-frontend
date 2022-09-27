@@ -29,10 +29,10 @@ export const TaskPreview = ({ task, group, board }) => {
     if (ev) ev.preventDefault()
     if (task.title !== editedTask.title) {
       // Todo: Prevent guests from editing tasks
-      editedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-      const activity = { type: "title", data: editedTask.title }
       task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-      dispatch(updateTask({ task: editedTask, groupId: group.id, boardId: board._id }, activity))
+      task.title = editedTask.title
+      const activity = { type: "title", data: task.title }
+      dispatch(updateTask({ task: task, groupId: group.id, boardId: board._id }, activity))
     }
     setIsEditTitle(prevState => prevState = !isEditTitle)
   }
@@ -67,11 +67,11 @@ export const TaskPreview = ({ task, group, board }) => {
             {/* <Link to={`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation"> */}
             <button className="btn btn-svg btn-start-conversation">
               {(!task.comments || task.comments?.length === 0) && <StartConversationSvg />}
-              {(task.comments && task.comments.length > 0) && 
-              <div className='with-comments-container'>
-                <StartConversationEmptySvg />
-                <span>{task.comments.length}</span></div>}
-            {/* </Link> */}
+              {(task.comments && task.comments.length > 0) &&
+                <div className='with-comments-container'>
+                  <StartConversationEmptySvg />
+                  <span>{task.comments.length}</span></div>}
+              {/* </Link> */}
             </button>
           </li>
         </div>

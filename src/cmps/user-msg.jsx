@@ -16,7 +16,7 @@ export class UserMsg extends Component {
             this.setState({ msg })
             setTimeout(() => {
                 this.setState({ msg: null })
-            }, 5000000)
+            }, 3500)
         })
     }
 

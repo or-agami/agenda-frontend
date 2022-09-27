@@ -29,8 +29,7 @@ export function signup(creds) {
     return async (dispatch) => {
         try {
             const savedUser = await userService.signup(creds)
-            dispatch({ type: 'SET_USER', loggedinUser: creds })
-            showSuccessMsg('User added')
+            dispatch({ type: 'SET_USER', loggedinUser: savedUser })
         } catch (err) {
             console.error('Oops:', err)
             showErrorMsg('Cannot signup')
@@ -43,9 +42,8 @@ export function updateUser(creds) {
         try {
             const savedUser = await userService.update(creds)
             dispatch({ type: 'SET_USER', loggedinUser: savedUser })
-            showSuccessMsg('user updated')
         } catch (err) {
-            showErrorMsg('Failed to update user')
+           console.error('Oops:', err)
         }
     }
 }
