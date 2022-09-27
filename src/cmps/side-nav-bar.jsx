@@ -1,6 +1,5 @@
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
 import { ReactComponent as PlusIcon } from '../assets/icons/plus-icon.svg'
-import { ReactComponent as FilterIcon } from '../assets/icons/filter.svg'
 import { ReactComponent as SearchIcon } from '../assets/icons/nav-bar/search.svg'
 import { ReactComponent as BoardIcon } from '../assets/icons/board-icon.svg'
 import { ReactComponent as Arrow } from '../assets/icons/down-arrow.svg'

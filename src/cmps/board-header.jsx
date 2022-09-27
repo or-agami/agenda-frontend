@@ -1,9 +1,4 @@
 import { ReactComponent as InviteSvg } from '../assets/icons/invite.svg'
-import { ReactComponent as BoardMenuSvg } from '../assets/icons/board-menu.svg'
-import { ReactComponent as PersonSvg } from '../assets/icons/person.svg'
-import { ReactComponent as FilterSvg } from '../assets/icons/filter.svg'
-import { ReactComponent as SortSvg } from '../assets/icons/sort.svg'
-import { ReactComponent as HideSvg } from '../assets/icons/hide.svg'
 import { ReactComponent as DownArrowSvg } from '../assets/icons/down-arrow.svg'
 import { BiSearch } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
@@ -88,21 +83,21 @@ export const BoardHeader = ({ board }) => {
               {user?.favBoards?.includes(board._id) ?
                 <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />
                 : <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />}
+              <div className="flex btns-container">
+                <button className="btn btn-svg invite" onClick={() => setIsInviteMemberOpen(true)}>
+                  <InviteSvg />
+                  <span>Invite</span>
+                </button>
+                {/* <button className="btn btn-svg menu">
+              <BoardMenuSvg />
+            </button> */}
+              </div>
             </div>
             <div className="board-header-nav-container">
               <NavLink to={`/workspace/board/${board._id}`} className="board-header-nav-link"><HomeIcon /> Main Table</NavLink>
               <NavLink to={`/workspace/board/kanban/${board._id}`} className="board-header-nav-link">Kanban</NavLink>
               <NavLink to={`/workspace/board/dashboard/${board._id}`} className="board-header-nav-link">Dashboard</NavLink>
             </div>
-          </div>
-          <div className="flex btns-container">
-            <button className="btn btn-svg invite" onClick={() => setIsInviteMemberOpen(true)}>
-              <InviteSvg />
-              <span>Invite</span>
-            </button>
-            {/* <button className="btn btn-svg menu">
-              <BoardMenuSvg />
-            </button> */}
           </div>
         </div>
         {!isDashboard && <div className="flex board-nav">

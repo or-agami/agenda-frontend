@@ -1,14 +1,10 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { userService } from "../services/user.service"
 import { addBoard } from "../store/board/board.action"
 
 export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
 
-    const navigate = useNavigate()
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
-    const board = useSelector(state => state.boardModule.board)
     const dispatch = useDispatch()
 
     useEffect(() => {

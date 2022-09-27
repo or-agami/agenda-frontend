@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useForm } from '../hooks/useForm'
 import { updateTask } from '../store/board/board.action'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { DynamicTaskCmp } from './dynamic-task-cmp'
 import { PopUpModal } from './pop-up-modal'
 
@@ -15,7 +15,7 @@ export const TaskPreview = ({ task, group, board }) => {
 
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const [isEditTitle, setIsEditTitle] = useState(false)
-  const [editedTask, handleChange, setTask] = useForm(task)
+  const [editedTask, handleChange] = useForm(task)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

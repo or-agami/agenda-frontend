@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import bgImg from '../assets/img/home-bg-img.jpg'
-import smallBgImg from '../assets/img/small-bg-img.png'
 import { Logo } from '../cmps/logo'
 
 

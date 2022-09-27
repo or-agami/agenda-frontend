@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { useForm } from "../hooks/useForm"
 import { eventBusService } from "../services/event-bus.service"
-import { addBoard, updateBoard } from "../store/board/board.action"
+import { updateBoard } from "../store/board/board.action"
 import { checkUsername } from "../store/user/user.action"
 import { GrClose } from 'react-icons/gr'
 import { RiVipCrownFill } from 'react-icons/ri'
 import { MdDoNotDisturbAlt } from 'react-icons/md'
 import { userService } from "../services/user.service"
 
-export const InviteMemberModal = ({ isInviteMemberOpen, setIsInviteMemberOpen }) => {
+export const InviteMemberModal = ({ setIsInviteMemberOpen }) => {
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const board = useSelector(state => state.boardModule.board)
   const [isUsernameVerified, setUserNameVerified] = useState(false)

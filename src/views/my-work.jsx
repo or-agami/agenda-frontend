@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Loader } from "../cmps/loader"
-import { loadBoard, loadBoards, setLoader } from "../store/board/board.action"
+import { loadBoards, setLoader } from "../store/board/board.action"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { TaskTimeline } from "../cmps/task-timeline"
 import '../styles/cmps/_task-timeline.scss'

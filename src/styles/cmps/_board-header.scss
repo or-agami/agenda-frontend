@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: 20px 10px 20px 20px;
   position: fixed;
-  width: calc(100vw - var(--board-grid-column) - 28px);
+  width: calc(100vw - var(--board-grid-column) - 20px);
   background-color: var(--clr-item-bg);
   z-index: 5;
 
@@ -25,6 +25,7 @@
     }
 
     .header-main {
+      width: 100%;
       padding-bottom: 5px;
 
       .board-header-title {
@@ -39,6 +40,7 @@
           width: 31.5px;
           border-radius: 0.3em;
           padding: 8px;
+          margin-right: auto;
 
           &.starred {
             fill: gold;
@@ -108,9 +110,8 @@
 
     .btns-container {
       align-items: flex-start;
-      align-items: center;
-      padding-bottom: 50px;
       gap: 12px;
+      margin-inline-end: 10px;
     }
   }
 

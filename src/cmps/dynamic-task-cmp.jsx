@@ -4,7 +4,6 @@ import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.sv
 import { FaPlusCircle } from "react-icons/fa"
 import { PopUpModal } from "./pop-up-modal"
 import { TaskTimeline } from "./task-timeline"
-import fi from "date-fns/esm/locale/fi/index.js"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
