@@ -53,6 +53,11 @@
                     font-family: sofia-pro-light;
                     transition: 0.3s;
 
+                    @media (max-width: 450px) {
+                        display: none;
+                    }
+
+
 
                     &:hover {
                         background-color: #4545a5;
@@ -86,9 +91,17 @@
         justify-content: center;
         flex-grow: 1;
 
+        @media (max-width: 450px) {
+            background-image: linear-gradient(to top, #14145e, #13135a, #121256, #111152, #10104e);
+        }
+
         .bg-img {
             width: 100%;
             object-fit: cover;
+
+            @media (max-width: 450px) {
+                display: none;
+            }
         }
 
         .home-hero {
@@ -108,6 +121,22 @@
                 font-size: 70px;
                 letter-spacing: 2px;
                 margin-bottom: 100px;
+                width: 85%;
+
+                @media (max-width: 1450px) {
+                    margin-block: 20px;
+                }
+                
+                @media (max-width: 1000px) {
+                    font-size: 50px;
+                }
+
+                @media (max-width: 800px) {
+                    font-size: 40px;
+                    margin-block: 40px;
+                }
+
+
             }
 
             .home-btn-txt {
@@ -132,6 +161,13 @@
                 font-family: sofia-pro-light;
                 transition: 0.3s;
                 margin-bottom: 5px;
+
+                @media (max-width: 450px) {
+                    width: 80%;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(103, 73, 255, 1);
+                }
 
                 &:hover {
                     background-color: #4545a5;
@@ -181,20 +217,3 @@
         }
     }
 }
-
-/* SMALL */
-@media (max-width: 450px) {
-    .home {
-        .home-bg-div {
-
-            .home-hero h2 {
-                font-size: 40px;
-                margin-bottom: 50px;
-            }
-        }
-    }
-}
-
-
-/* MEDIUM */
-@media (max-width: 800px) {}
