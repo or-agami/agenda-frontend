@@ -399,7 +399,11 @@
         }
 
         .task-preview-last-updated {
-            min-width: 82px;
+            min-width: 120px;
+        }
+
+        .task-preview-timeline {
+            font-size: 10px;
         }
     }
 }
