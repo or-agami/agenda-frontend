@@ -17,12 +17,20 @@
         background-color: var(--clr-item-bg);
         box-shadow: var(--box-shadow-medium);
         height: fit-content;
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-inline: 20px;
         margin-bottom: 40px;
 
+        @media (max-width: 600px) {
+            margin-inline: 10px;
+        }
+
         .app-home-myboards {
-            margin: 24px 24px;
+            margin: 24px;
+
+            @media (max-width: 600px) {
+                margin: 10px;
+                margin-bottom: 40px;
+            }
 
             .app-home-myboards-header {
                 margin: 24px;
@@ -45,7 +53,11 @@
         }
 
         .app-home-recent {
-            margin: 24px 24px;
+            margin: 24px;
+
+            @media (max-width: 600px) {
+                margin: 10px;
+            }
 
             .app-home-recent-header {
                 margin: 24px;
@@ -69,13 +81,21 @@
         }
 
         .app-home-inbox {
-            margin: 24px 24px;
+            margin: 24px;
+
+            @media (max-width: 600px) {
+                margin: 10px;
+            }
 
 
             .app-home-inbox-content {
                 text-align: center;
-                padding: 10px 10px;
+                padding: 10px;
                 font-size: 15px;
+
+                @media (max-width: 600px) {
+                    padding: 4px;
+                }
 
                 .fist-bump {
                     width: 100%;
@@ -112,12 +132,16 @@
 
     .app-home-header {
         background-color: var(--clr-item-bg);
-        display: grid;
-        grid-template-columns: 0.8fr 3fr;
-        grid-template-rows: 1fr;
+        display: flex;
+        // grid-template-columns: 0.8fr 3fr;
         height: 88px;
         box-shadow: 9px 1px 12px #e6e9ef;
-        // box-shadow: 0px 3px 12px #e6e9ef;
+
+        @media (max-width: 500px) {
+            svg {
+                display: none;
+            }
+        }
 
 
         img {
@@ -132,6 +156,12 @@
             display: flex;
             width: fit-content;
             flex-direction: column;
+
+            @media (max-width: 600px) {
+                margin-left: 20px;
+            }
+
+            @media (max-width: 450px) {}
 
             h2 {
                 font-size: 16px;

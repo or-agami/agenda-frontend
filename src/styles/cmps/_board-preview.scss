@@ -9,6 +9,10 @@
     cursor: pointer;
     position: relative;
 
+    @media (max-width: 450px) {
+        width: 260px;
+    }
+
 
     &:hover {
         border: 1px solid transparent;
