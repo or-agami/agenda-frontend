@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import bgImg from '../assets/img/home-bg-img.jpg'
+import smallBgImg from '../assets/img/small-bg-img.png'
 import { Logo } from '../cmps/logo'
 
 
@@ -43,8 +44,6 @@ const Header = () => {
             <div className="main-header-container main-layout">
                 <Logo />
                 <nav className="header-nav">
-                    {/* <NavLink to="/workspace/board">Board</NavLink>
-                    <NavLink to="/workspace/home">Board Home</NavLink> */}
                     {!loggedinUser && <NavLink to="/auth/login">Log in</NavLink>}
                     <button className="btn-get-started" onClick={() => navigate(`/workspace/home`)}>
                         Get Started
