@@ -231,6 +231,10 @@
             .side-img-wrapper {
                 width: 262px;
 
+                @media (max-width: 700px) {
+                    display: none;
+                }
+
                 .img-container {
                     height: 100%;
 
@@ -261,6 +265,10 @@
             font-size: 40px;
             font-weight: 100;
             margin-bottom: 32px;
+
+            @media (max-width: 800px) {
+                text-align: center;
+            }
         }
 
         .username-not-found {
@@ -323,6 +331,14 @@
                 border: .5px solid #c5c7d0;
                 width: 200px;
                 margin: 16px;
+
+                @media (max-width: 800px) {
+                    width: 140px;
+                }
+
+                @media (max-width: 450px) {
+                    width: 100px;
+                }
             }
         }
 

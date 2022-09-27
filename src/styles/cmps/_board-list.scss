@@ -4,6 +4,10 @@
     gap: 30px;
     flex-wrap: wrap;
 
+    @media (max-width: 840px) {
+        justify-content: center;
+    }
+
     a {
         text-decoration: none;
     }
