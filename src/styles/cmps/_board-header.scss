@@ -64,6 +64,10 @@
         font-family: roboto;
         color: var(--clr-logo-txt);
 
+        @media (max-width: 450px) {
+          padding: 4px 10px;
+        }
+
         svg {
           transform: translateY(-1px);
         }
