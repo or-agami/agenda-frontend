@@ -35,7 +35,12 @@
             display: grid;
             align-items: center;
             justify-content: center;
-            grid-template-columns: 100px 200px 150px 50px 1fr;
+            grid-template-columns: 20% 20% 25% 10% 1fr;
+
+            @media (max-width: 700px) {
+                grid-template-columns: 30% 30% 40%;
+            }
+
         }
 
         .activity-time {
@@ -98,6 +103,16 @@
                 background-color: var(--clr-low);
             }
 
+        }
+
+
+        @media (max-width: 700px) {
+
+            .task-preview-timeline,
+            .activity-status,
+            .arrow-right-activity {
+                display: none;
+            }
         }
 
     }
