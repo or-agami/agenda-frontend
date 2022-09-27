@@ -268,3 +268,34 @@
 
 
 }
+
+
+/* MEDIUM */
+@media (max-width: 800px) {}
+
+
+/* SMALL */
+@media (max-width: 450px) {
+    .board-app {
+        padding-left: 10px;
+    }
+
+    .group-content {
+        padding-left: 0px;
+
+        .sticky-container {
+            left: var(--board-grid-column);
+        }
+        .group-content-header {
+
+            .group-content-header-item {
+                min-width: 170px;
+            }
+
+            .same-width {
+                min-width: 69px;
+            }
+        }
+    }
+
+}
