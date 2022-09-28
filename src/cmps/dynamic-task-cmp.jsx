@@ -172,9 +172,9 @@ const AddFile = ({ task, group, board }) => {
     }
     
     return <div className="img-container">
-        {isFile ? <img title="Import image" className='file-img' src={src} ref={fileRef} />
+        {isFile ? <img className='file-img' src={src} ref={fileRef} />
             : <button className='btn add-file-btn'>
-                <input className="import-img-input" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
+                <input className="import-img-input" title="Import image" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
                 <BiImageAdd />
             </button>}
     </div>
