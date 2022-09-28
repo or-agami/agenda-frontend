@@ -1,13 +1,17 @@
 import moment from "moment/moment"
-import { Fragment, useState } from "react"
+import { Fragment, useRef, useState } from "react"
 import { ReactComponent as NoPersonSvg } from '../assets/icons/no-person-icon.svg'
 import { FaPlusCircle } from "react-icons/fa"
 import { PopUpModal } from "./pop-up-modal"
 import { TaskTimeline } from "./task-timeline"
+import { BiImageAdd } from "react-icons/bi"
+import { uploadService } from "../services/upload.service"
+import { useDispatch } from "react-redux"
+import { updateTask } from "../store/board/board.action"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
-    const [modalName,setModalName] = useState(null)
+    const [modalName, setModalName] = useState(null)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
     let className = `flex justify-center task-preview-`
     let headerTxt, cmp
@@ -16,20 +20,20 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     const getFormattedDateTime = (date) => {
         if (!date) return
         moment.updateLocale('en', {
-            relativeTime : {
-                s  : 'just now',
-                ss : '%d seconds ago',
-                m:  'a minute ago',
+            relativeTime: {
+                s: 'just now',
+                ss: '%d seconds ago',
+                m: 'a minute ago',
                 mm: '%d minutes ago',
-                h:  'an hour ago',
+                h: 'an hour ago',
                 hh: '%d hours ago',
-                d:  'a day ago',
+                d: 'a day ago',
                 dd: '%d days ago',
-                w:  'a week ago',
+                w: 'a week ago',
                 ww: '%d weeks ago',
-                M:  'a month ago',
+                M: 'a month ago',
                 MM: '%d months ago',
-                y:  'a year ago',
+                y: 'a year ago',
                 yy: '%d years ago'
             }
         })
@@ -61,7 +65,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
     }
 
     const makeClass = (status) => {
-        if (!status) return 
+        if (!status) return
         // if(status === 'undefined') return ''
         return status.split(' ').join('')
     }
@@ -74,14 +78,14 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
         case 'status':
             cmp = <span className='fold'></span>
-            headerTxt = (task[category] === undefined)? '' : task[category]
+            headerTxt = (task[category] === undefined) ? '' : task[category]
             className += `status same-width `
             cb = onSetTaskStatusMenuOpen
 
             break;
         case 'priority':
             cmp = <span className='fold'></span>
-            headerTxt = (task[category] === undefined)? '' : task[category]
+            headerTxt = (task[category] === undefined) ? '' : task[category]
             className += `priority same-width `
             if (task[category] === 'Critical') {
                 headerTxt += " ⚠"
@@ -90,7 +94,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
             break;
         case 'attachments':
-            // cmp = <AddFile task={task} />
+            cmp = <AddFile task={task} group={group} board={board} />
             className += 'attachments same-width '
 
 
@@ -121,7 +125,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
             {category === 'member' &&
                 <Fragment>
                     <button className="btn btn-add-developer" onClick={() => onSetTaskPersonMenuOpen()}>
-                        <FaPlusCircle/>
+                        <FaPlusCircle />
                     </button>
                     <div className='developer-container'>
                         {(task.memberIds && task.memberIds.length > 0) ?
@@ -137,11 +141,41 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                         GetMemberImgFromId(board, task.lastUpdated.byUserId)}
                 </div>}
             {category === 'timeline' &&
-                    <TaskTimeline task={task} group={group} board={board} />}
+                <TaskTimeline task={task} group={group} board={board} />}
             {isCategoryInc && <>
                 <h4>{headerTxt}</h4>
                 {cmp}
             </>}
         </li>
     </>
+}
+
+const AddFile = ({ task, group, board }) => {
+    
+    const dispatch = useDispatch()
+    const fileRef = useRef()
+    const [isFile, setIsFile] = useState(task.files ? true : false)
+    const [src, setSrc] = useState(task.files || false)
+
+    const importImg = async (ev) => {
+        try {
+            const {secure_url : imgSrc} = await uploadService.uploadImg(ev)
+            setIsFile(true)
+            setSrc(imgSrc)
+            task.files = imgSrc
+            dispatch(updateTask({ task, groupId: group.id, boardId: board._id }))
+        }
+        catch{
+            
+        }
+        
+    }
+    
+    return <div className="img-container">
+        {isFile ? <img className='file-img' src={src} ref={fileRef} />
+            : <button className='btn add-file-btn'>
+                <input className="import-img-input" title="Import image" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
+                <BiImageAdd />
+            </button>}
+    </div>
 }

@@ -1,0 +1,45 @@
+.task-preview-attachments {
+    position: relative;
+    cursor: pointer;
+
+    .img-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+    }
+
+    .import-img-input {
+        width: 100%;
+        cursor: pointer;
+        opacity: 0;
+        left: 0;
+        position: absolute;
+    }
+
+    .file-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        cursor: pointer;
+
+    }
+
+    &:hover {
+        .add-file-btn {
+            display: flex;
+        }
+    }
+
+    .add-file-btn {
+        display: none;
+        cursor: pointer;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    }
+}

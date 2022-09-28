@@ -114,8 +114,10 @@ export function addTask(task) {
 }
 
 export function updateTask(task, activity) {
+    console.log('task:', task)
     return async (dispatch, getState) => {
         try {
+            console.log('task:', task)
             await taskService.update(task, activity)
             // const updatedBoard = await taskService.update(task, activity)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
