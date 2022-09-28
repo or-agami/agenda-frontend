@@ -155,7 +155,7 @@ const AddFile = ({ task, group, board }) => {
     const dispatch = useDispatch()
     const fileRef = useRef()
     const [isFile, setIsFile] = useState(task.files ? true : false)
-    const [src, setSrc] = useState(task.files || false)
+    const [src, setSrc] = useState(task.files || '')
     const [modalName,setModalName] = useState(null)
 
     const importImg = async (ev) => {
@@ -179,7 +179,7 @@ const AddFile = ({ task, group, board }) => {
     }
     
     return <div className="img-container">
-        {modalName && <PopUpModal modalName={modalName} setModalName={setModalName} task={task} group={group} board={board}/>}
+        {modalName && <PopUpModal modalName={modalName} setModalName={setModalName} task={task} group={group} board={board} setIsFile={setIsFile}/>}
         {isFile ? <img className='file-img' src={src} ref={fileRef} onClick={openFileMenu} />
             : <button className='btn add-file-btn'>
                 <input className="import-img-input" title="Import image" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
