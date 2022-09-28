@@ -1,7 +1,7 @@
 import { ReactComponent as ArrowRightSvg } from '../assets/icons/agenda-arrow-icon-right.svg'
 import { TaskList } from './task-list'
 import { ReactComponent as BoardMenu } from '../assets/icons/board-menu.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from '../hooks/useForm'
 import { setSort, updateBoard, updateGroup } from '../store/board/board.action'
@@ -13,10 +13,17 @@ import { PopUpModal } from './pop-up-modal'
 export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx }) => {
     const [modalName, setModalName] = useState(null)
     const [isEditTitle, setIsEditTitle] = useState(false)
-    const [editedGroup, handleChange] = useForm(group)
+    const [editedGroup, handleChange, setGroup] = useForm(group)
     const [isDecending, setIsDecending] = useState(false)
     const dispatch = useDispatch()
     const [categories, setCategories] = useState(board.cmpsOrder)
+
+
+    useEffect(() => {
+        if (!isEditTitle && (group !== editedGroup)) {
+            setGroup(group)
+        }
+    }, [group])
 
     const onSetIsGroupMenuOpen = () => {
         setTimeout(() => {
@@ -66,11 +73,11 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     return <Draggable key={idx} draggableId={group.id + idx} index={idx}>
         {(provided) => {
             return <section className="group-content" ref={provided.innerRef}
-            {...provided.draggableProps}
+                {...provided.draggableProps}
             >
                 <div className='group-content-title' {...provided.dragHandleProps}>
                     <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'open' : ''}`}>
-                {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
+                        {modalName && <PopUpModal setModalName={setModalName} modalName={modalName} group={group} board={board} />}
                         <button className='btn btn-svg btn-task-menu' onClick={() => onSetIsGroupMenuOpen()}><BoardMenu /></button>
                         <button className="btn btn-svg  btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }}>
                             <ArrowRightSvg className={`${group.style} no-background`} />
@@ -78,7 +85,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                         {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-content-title-h4`} title='Click to edit'>{group.title}<span className='tooltip'>Click to edit</span></h4>}
                         {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
                             <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-                        </form>}    
+                        </form>}
                     </div>
                 </div>
 
@@ -174,7 +181,7 @@ const DynamicCmp = ({ category, isDecending, setIsDecending, clearSort }) => {
             break;
         case 'lastUpdated':
             text = `Last updated`
-            className += ' same-width'
+            className += ' same-width last-updated'
 
             break;
         case 'attachments':

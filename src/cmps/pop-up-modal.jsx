@@ -6,6 +6,7 @@ import { addGroup, removeBoard, removeComment, removeGroup, removeTask, updateGr
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
+import { ReactComponent as ImgFileSvg } from '../assets/icons/img-file.svg'
 import { GrClose } from 'react-icons/gr'
 import { BiLogIn } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
@@ -152,7 +153,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     navigate('/')
   }
 
-  const closeTaskDetailPersonMenu = () => {
+  const closeMenu = () => {
     setTimeout(() => {
       setModalName(null)
     }, 100);
@@ -166,7 +167,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
 
   const onAddGroup = () => {
     dispatch(addGroup(board._id))
-    closeTaskDetailPersonMenu()
+    closeMenu()
   }
 
   switch (modalName) {
@@ -252,14 +253,14 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     case 'USER_MENU':
       return <section className="user-menu" onClick={(ev) => ev.stopPropagation()}>
         {loggedinUser ?
-        <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button> :
-        // <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><IoLogInOutline />Login</Link>
-        <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><BiLogIn />Login</Link>
+          <button className='btn btn-svg btn-logout' onClick={() => onLogout()}><LogoutSvg />Logout</button> :
+          // <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><IoLogInOutline />Login</Link>
+          <Link to={'/auth/login'} className='btn btn-svg btn-logout' onClick={() => onLogout()}><BiLogIn />Login</Link>
         }
       </section>
     case 'TASK_DETAIL_PERSON_MENU':
       return <section className='task-detail-person-menu' onClick={(ev) => ev.stopPropagation()}>
-        <button className="btn btn-svg btn-svg-x" onClick={() => closeTaskDetailPersonMenu()}><GrClose /></button>
+        <button className="btn btn-svg btn-svg-x" onClick={() => closeMenu()}><GrClose /></button>
         {getAvailableMembers().map(member => {
           return <div key={member._id} className="member-container-available">
             <div className="available-img-container">
@@ -278,7 +279,20 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       return <section className='new-task-menu' onClick={(ev) => ev.stopPropagation()}>
         <div onClick={onAddGroup} className='new-task-menu-item'><NewGroupIcon /> <span>Add new group</span></div>
       </section>
-
+    case 'FILE_MENU':
+      return <section className='file-menu' onClick={(ev) => ev.stopPropagation()}>
+        <div className='file-menu-main'>
+          <div className='file-header'>
+            <div className='file-title'>
+              <ImgFileSvg />
+              <span>{task.title}</span>
+            </div>
+            <GrClose onClick={() => closeMenu()} />
+          </div>
+          <div className='file-container'><img src={task.files} alt={task.title} />
+          </div>
+        </div>
+      </section>
     default: return console.error('cannot open modal!')
   }
 }
