@@ -138,10 +138,10 @@ export function removeTask(task) {
     }
 }
 
-export function addGroup(boardId) {
+export function addGroup(boardId, isFromTop) {
     return async (dispatch, getState) => {
         try {
-            await groupService.save(boardId)
+            await groupService.save(boardId, isFromTop)
             // const updatedBoard = await groupService.save(boardId)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {

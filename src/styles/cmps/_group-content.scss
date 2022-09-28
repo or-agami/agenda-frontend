@@ -37,9 +37,9 @@
 
 
     .group-content-title {
-        padding-top: 40px;
+        padding-top: 0;
         position: sticky;
-        top: 140px;
+        top: 170px;
         display: flex;
         align-self: flex-start;
         padding-left: 7px;
@@ -48,6 +48,10 @@
         width: 100%;
         z-index: 3;
         background-color: var(--clr-item-bg);
+        
+        @media (max-width: 450px) {
+            top: 160px;
+        }
 
         input {
             padding: 5px;
@@ -114,7 +118,7 @@
     .group-content-header {
         padding-top: 40px;
         position: sticky;
-        top: 215px;
+        top: 202px;
         background-color: var(--clr-item-bg);
         z-index: 2;
         border: 1px solid var(--clr-disabled);
@@ -126,10 +130,13 @@
         padding: 0;
         display: flex;
         list-style-type: none;
+        @media (max-width: 450px) {
+            top: 235px;
+        }
 
         .mask {
             position: absolute;
-            width:40px;
+            width: 40px;
             height: 50px;
             translate: -40px -5px;
             background-color: white;
@@ -277,7 +284,7 @@
 /* SMALL */
 @media (max-width: 450px) {
     .board-app {
-        padding-left: 10px;
+        padding-left: 0;
     }
 
     .group-content {
@@ -286,6 +293,7 @@
         .sticky-container {
             left: var(--board-grid-column);
         }
+
         .group-content-header {
 
             .group-content-header-item {
