@@ -11,18 +11,30 @@
     .empty-start {
         min-width: 413px;
         border-right: 1px solid var(--clr-disabled);
+
+        @media (max-width: 450px) {
+            min-width: 192px;
+        }
     }
 
     .member-stat {
         min-width: 138px;
         border-bottom: 1px solid var(--clr-disabled);
+
         // border-end-start-radius: 8px;
+        @media (max-width: 450px) {
+            min-width: 134px;
+        }
     }
 
     .status-stat {
         min-width: 138px;
         border-left: 1px solid var(--clr-disabled);
         border-bottom: 1px solid var(--clr-disabled);
+
+        @media (max-width: 450px) {
+            min-width: 100px;
+        }
 
         .status-progress-bar {
             width: 100%;
@@ -47,6 +59,10 @@
     .priority-stat {
         min-width: 138px;
         border-bottom: 1px solid var(--clr-disabled);
+
+        @media (max-width: 450px) {
+            min-width: 100px;
+        }
 
         .priority-progress-bar {
             width: 100%;
@@ -122,11 +138,19 @@
     .lastUpdated-stat {
         border-bottom: 1px solid var(--clr-disabled);
         min-width: 138px;
+
+        @media (max-width: 450px) {
+            min-width: 120px;
+        }
     }
 
     .attachments-stat {
         min-width: 138px;
         border-bottom: 1px solid var(--clr-disabled);
+
+        @media (max-width: 450px) {
+            min-width: 100px;
+        }
     }
 
     .timeline-stat {
