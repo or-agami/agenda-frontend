@@ -288,8 +288,8 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
         <div onClick={onAddGroup} className='new-task-menu-item'><NewGroupIcon /> <span>Add new group</span></div>
       </section>
     case 'FILE_MENU':
-      return <section className='file-menu' onClick={(ev) => ev.stopPropagation()}>
-        <div className='file-menu-main'>
+      return <section className='file-menu'>
+        <div className='file-menu-main' onClick={(ev) => ev.stopPropagation()}>
           <div className='file-header'>
             <div className='file-title'>
               <ImgFileSvg />
