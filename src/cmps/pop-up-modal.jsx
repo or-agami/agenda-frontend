@@ -165,7 +165,7 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   }
 
   const onAddGroup = () => {
-    dispatch(addGroup(board._id))
+    dispatch(addGroup(board._id, true))
     closeMenu()
   }
 

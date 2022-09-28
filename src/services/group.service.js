@@ -15,21 +15,18 @@ async function getById({ groupId, boardId }) {
 
 async function remove({ groupId, boardId }) {
   const board = await boardService.getById(boardId)
-  // Todo: add user activity
   board.groups = board.groups.filter(g => g.id !== groupId)
   return boardService.save(board)
 }
 
 async function update({ group, boardId }) {
   const board = await boardService.getById(boardId)
-  // Todo: add user activity
   board.groups = board.groups.map(g => (g.id !== group.id) ? g : group)
   return boardService.save(board)
 }
 
 async function save(boardId, isFromTop) {
   const board = await boardService.getById(boardId)
-  // Todo: add user activity
   if (isFromTop) board.groups = [{ id: utilService.makeId(), title: 'New Group', tasks: [] }, ...board.groups]
   else board.groups.push({ id: utilService.makeId(), title: 'New Group', tasks: [] })
   return boardService.save(board)
