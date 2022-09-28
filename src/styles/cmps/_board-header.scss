@@ -6,6 +6,11 @@
   width: calc(100vw - var(--board-grid-column) - 20px);
   background-color: var(--clr-item-bg);
   z-index: 5;
+  
+  @media (max-width: 450px) {
+    padding: 10px 5px 10px 15px;
+    width: calc(100vw - var(--board-grid-column));
+  }
 
   .board-info {
     justify-content: space-between;

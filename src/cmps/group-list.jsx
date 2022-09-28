@@ -18,12 +18,11 @@ export const GroupList = ({ board }) => {
     dispatch(addGroup(board._id))
   }
 
-
   const handleOnDragEnd = (ev) => {
     const updatedGroups = [...groups]
     const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
     updatedGroups.splice(ev.destination.index, 0, draggedItem)
-   
+
     setGroups(updatedGroups)
     board.groups = updatedGroups
     dispatch(updateBoard(board))
@@ -52,7 +51,7 @@ export const GroupList = ({ board }) => {
                 key={idx}
                 idx={idx}
                 group={group}
-                board={board}/>
+                board={board} />
             )}
             <button className="btn btn-svg add-group-btn" onClick={onAddGroup}><PlusIcon /> Add new group</button>
             {droppableProvided.placeholder}
