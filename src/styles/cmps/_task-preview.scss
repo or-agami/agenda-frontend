@@ -140,31 +140,6 @@
         }
     }
 
-    .task-preview-attachments {
-        position: relative;
-
-        .file-img {
-            width: 30px;
-            height: 30px;
-            border-radius: 2em;
-            object-fit: contain;
-        }
-
-        &:hover {
-            .add-file-btn {
-                display: flex;
-            }
-        }
-
-        .add-file-btn {
-            display: none;
-
-            svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
-    }
 
     .task-preview-item h4:hover {
         outline: 1px solid var(--clr-disabled);
@@ -320,12 +295,7 @@
         }
     }
 
-    .import-img-input {
-        max-width: 120px;
-        opacity: 0;
-        left: 0;
-        position: absolute;
-    }
+   
 
     .Workingonit {
         background-color: var(--clr-workingOnIt);
