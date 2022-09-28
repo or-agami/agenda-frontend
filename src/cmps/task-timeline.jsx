@@ -54,14 +54,16 @@ export const TaskTimeline = ({ task, group, board, isReadOnly }) => {
         {task.timeline &&
           <Fragment>
             {task.timeline?.endDate && <div className="background-time-progress-bar" style={{ width: `${100 - getTimeProgress(task.timeline)}%` }}></div>}
-            {task.timeline?.startDate && <>
-              <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%`}}></div>
-              <span >{getFormattedDateTime(task.timeline.startDate)}</span>
-            </>}
-            {task.timeline?.startDate && task.timeline?.endDate &&
-              <span> - </span>}
-            {task.timeline?.endDate &&
-              <span>{getFormattedDateTime(task.timeline.endDate)}</span>}
+            {task.timeline?.startDate &&
+              <div className={"time-progress-bar " + group.style || ''} style={{ width: `${getTimeProgress(task.timeline)}%` }}></div>}
+            <div className="dates">
+              {task.timeline?.startDate &&
+                <span >{getFormattedDateTime(task.timeline.startDate)}</span>}
+              {task.timeline?.startDate && task.timeline?.endDate &&
+                <span> - </span>}
+              {task.timeline?.endDate &&
+                <span>{getFormattedDateTime(task.timeline.endDate)}</span>}
+            </div>
           </Fragment>
         }
       </div>
@@ -83,8 +85,8 @@ export const DatePicker = ({ setDatePickerIsOpen, taskTimeline, handleDateChange
     }, 100)
     return () => {
       document.body.removeEventListener('click', closeDatePicker)
-      
-      const activity = { type: "timeline", data: task.timeline}
+
+      const activity = { type: "timeline", data: task.timeline }
       task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
       dispatch(updateTask({ task, groupId, boardId }, activity))
     }

@@ -42,8 +42,8 @@
             }
         }
 
-        span {
-            z-index: 1;
+        .dates {
+            position: absolute;
         }
     }
 }

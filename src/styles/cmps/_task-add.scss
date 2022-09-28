@@ -68,6 +68,9 @@
             outline: none;
             border-radius: 3px;
             border: 1px solid transparent;
+            @media (max-width: 450px) {
+                min-width: 270px;
+            }
 
             &:hover {
                 border: 1px solid var(--clr-disabled)
