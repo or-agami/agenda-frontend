@@ -174,7 +174,7 @@ const DynamicCmp = ({ category, isDecending, setIsDecending, clearSort }) => {
             break;
         case 'lastUpdated':
             text = `Last updated`
-            className += ' same-width'
+            className += ' same-width last-updated'
 
             break;
         case 'attachments':
