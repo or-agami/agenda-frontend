@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Trash } from '../assets/icons/trash-icon.svg'
-import { addGroup, removeBoard, removeComment, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
+import { addGroup, loadTask, removeBoard, removeComment, removeGroup, removeTask, updateGroup, updateTask } from '../store/board/board.action'
 import { ReactComponent as TrashIcon } from '../assets/icons/trash-icon.svg'
 import { ReactComponent as PencilIcon } from '../assets/icons/pencil.svg'
 import { ReactComponent as LogoutSvg } from '../assets/icons/logout.svg'
@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
 import { ReactComponent as NewGroupIcon } from '../assets/icons/new-group-icon.svg'
 
-export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment }) => {
+export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment,setIsFile }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
@@ -112,7 +112,6 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   }
 
   const openColorMenu = () => {
-    // dispatch(openModal('isColorMenuOpen',group.id))
     setTimeout(() => {
       setModalName('COLOR_MENU')
     }, 100);
@@ -168,6 +167,15 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   const onAddGroup = () => {
     dispatch(addGroup(board._id))
     closeMenu()
+  }
+
+  const removeFile =() => {
+    delete task['files']
+    dispatch(updateTask({task,groupId:group.id,boardId:board._id}))
+    setIsFile(false)
+    setTimeout(() => {
+      setModalName(null)
+    }, 100);
   }
 
   switch (modalName) {
@@ -287,7 +295,10 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
               <ImgFileSvg />
               <span>{task.title}</span>
             </div>
+            <div className='file-close-remove'>
+              <Trash onClick={()=>removeFile()}/>
             <GrClose onClick={() => closeMenu()} />
+            </div>
           </div>
           <div className='file-container'><img src={task.files} alt={task.title} />
           </div>

@@ -6,17 +6,15 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.342);
     z-index: 30;
-    padding: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .file-menu-main {
         width: 700px;
-        height: 700px;
+        height: fit-content;
     }
     .file-container {
-        width: 100%;
         background-color: var(--clr-item-bg);
 
         img {
@@ -39,6 +37,16 @@
         .file-title {
             display: flex;
             align-items: center;
+        }
+
+        .file-close-remove {
+            display: flex;
+            gap: 10px;
+
+            & > * {
+                display: flex;
+                align-self: center;
+            }
         }
     }
 
