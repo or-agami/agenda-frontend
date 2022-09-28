@@ -3,7 +3,7 @@
   grid-column: 2;
   // overflow-y: hidden;
   // min-height: 100vh;
-  // overflow: auto; // ! 👈
+  overflow: auto; // ! 👈
   padding-left: 20px;
   max-height: 100vh;
   background-color: white;
@@ -11,6 +11,8 @@
   .board-details {
     position: relative;
     top: 170px;
+    width: fit-content;
+    padding-left: 19px;
   }
 
 }

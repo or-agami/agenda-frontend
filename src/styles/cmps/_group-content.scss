@@ -10,7 +10,7 @@
     // position: relative;
     display: flex;
     padding: 0;
-    padding-left: 20px;
+    // padding-left: 20px;
     flex-direction: column;
     font-size: 14px;
     color: #323338;
@@ -18,7 +18,7 @@
     line-height: 23px;
     font-weight: 400;
     margin-right: 0;
-    width: 98%;
+    // width: 98%;
     background-color: var(--clr-item-bg);
 
     li {
@@ -50,7 +50,7 @@
         background-color: var(--clr-item-bg);
         
         @media (max-width: 450px) {
-            top: 160px;
+            top: 150px;
         }
 
         input {
@@ -291,10 +291,11 @@
         padding-left: 0px;
 
         .sticky-container {
-            left: var(--board-grid-column);
+            // left: var(--board-grid-column);
         }
 
         .group-content-header {
+            top: 185px;
 
             .group-content-header-item {
                 min-width: 170px;
@@ -303,6 +304,8 @@
             .same-width {
                 min-width: 100px;
             }
+
+            
         }
     }
 

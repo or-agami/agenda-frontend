@@ -48,7 +48,8 @@
 .sticky-container {
   display: flex;
   position: sticky;
-  left: calc(var(--board-grid-column) + 40px);
+  // left: calc(var(--board-grid-column) + 40px);
+  left: 19px;
   z-index: 1;
   background-color: white;
 }
