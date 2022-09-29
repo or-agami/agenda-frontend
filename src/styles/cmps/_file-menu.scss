@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: initial;
 
     .file-menu-main {
         width: 500px;
@@ -42,6 +43,7 @@
         .file-close-remove {
             display: flex;
             gap: 10px;
+            cursor: pointer;
 
             & > * {
                 display: flex;

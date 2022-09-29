@@ -41,13 +41,6 @@ export const Kanban = () => {
         }
     }, [sortBy, filterBy])
 
-
-    // useEffect(() => {
-    //     if (board && groups !== board?.groups) {
-    //         setGroups(board.groups)
-    //     }
-    // }, [board])
-
     const handleOnDragEnd = (ev) => {
         const updatedGroups = [...groups]
         const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
@@ -147,7 +140,7 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
 
     useEffect(() => {
         if ((group.tasks !== tasks))
-        setTasks(group.tasks)
+            setTasks(group.tasks)
     }, [group.tasks])
 
     const onModalOpen = (str) => {
@@ -164,6 +157,12 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
         dispatch(updateTask({ task: task, groupId: group.id, boardId: board._id }))
     }
 
+    const openFileMenu = () => {
+        setTimeout(() => {
+            setModalName('FILE_MENU')
+        }, 100);
+    }
+
     return <section className={`kanban-task-preview`}>
         {modalName && <PopUpModal modalName={modalName}
             setModalName={setModalName}
@@ -176,8 +175,8 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
             </form>
                 : <h6 onClick={() => setIsRenaming(true)}>{task.title}</h6>}
             <Link to={`/workspace/board/kanban/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
-                {!task.comments && <StartConversation className="svg svg-chat" />}
-                {task.comments && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
+                {(!task.comments || task.comments.length <= 0) && <StartConversation className="svg svg-chat" />}
+                {(task.comments && task.comments.length > 0) && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
             </Link>
         </div>
         <div className="kanban-task-item status"><span className="item-category"><MenuIcon className="svg svg-menu" />
@@ -189,6 +188,8 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
         <div className="kanban-task-item "><span className="item-category"><TimelineMenu className="svg svg-menu" />
             Timeline</span> <span className="card kanban-timeline task-preview-timeline"><TaskTimeline task={task} group={group} board={board} /></span>
         </div>
-
+        {task.files && <div onClick={openFileMenu} className="kanban-img-item">
+            <img src={task.files} alt="img" />
+        </div>}
     </section>
 }
