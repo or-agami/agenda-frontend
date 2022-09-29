@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../store/user/user.action'
 import { ReactComponent as NewGroupIcon } from '../assets/icons/new-group-icon.svg'
 
-export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment,setIsFile }) => {
+export const PopUpModal = ({ modalName, setModalName, task, group, board, boards, setCurrBoard, setIsRenaming, isRenaming, comment, setIsFile }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
@@ -33,13 +33,13 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   })
 
   const onUpdateStatus = (status) => {
-    const updatedTask = { ...task, status }
+    task.status = status
+    // const updatedTask = { ...task, status }
     const activity = { type: "status", data: status }
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
-    updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-    dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
+    setTimeout(() => { setModalName(null) }, 100)
+    // updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }, activity))
   }
 
   const onRemoveTask = () => {
@@ -48,35 +48,36 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   }
 
   const onUpdatePriority = (priority) => {
-    const updatedTask = { ...task, priority }
+    task.priority = priority
+    // const updatedTask = { ...task, priority }
     const activity = { type: "priority", data: priority }
     setTimeout(() => {
       setModalName(null)
     }, 100);
-    updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-    dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
+    // updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }, activity))
   }
 
   const addMemberToTask = (member) => {
     let updatedTask
     if (task.memberIds) {
       if (task.memberIds.includes(member._id)) {
-        setTimeout(() => {
-          setModalName(null)
-        }, 100);
+        setTimeout(() => { setModalName(null) }, 100);
         return
       }
-      updatedTask = { ...task, memberIds: [...task.memberIds, member._id] }
+      // updatedTask = { ...task, memberIds: [...task.memberIds, member._id] }
+      task.memberIds = [...task.memberIds, member._id]
     }
     else {
-      updatedTask = { ...task, memberIds: [member._id] }
+      // updatedTask = { ...task, memberIds: [member._id] }
+      task.memberIds = [member._id]
     }
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100);
     const activity = { type: "add member", data: member }
-    updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-    dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
+    // updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }, activity))
     return
   }
 
@@ -84,13 +85,13 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     let updatedTask
     if (task.memberIds) {
       if (task.memberIds.includes(member._id)) {
-        updatedTask = { ...task, memberIds: task.memberIds.filter(memberId => memberId !== member._id) }
-        setTimeout(() => {
-          setModalName(null)
-        }, 100);
+        // updatedTask = { ...task, memberIds: task.memberIds.filter(memberId => memberId !== member._id) }
+        task.memberIds = task.memberIds.filter(memberId => memberId !== member._id)
+        setTimeout(() => { setModalName(null) }, 100);
         const activity = { type: "remove member", data: member }
-        updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
-        dispatch(updateTask({ task: updatedTask, groupId: group.id, boardId: board._id }, activity))
+        // updatedTask.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+        task.lastUpdated = { date: Date.now(), byUserId: loggedinUser?._id || 'Guest' }
+        dispatch(updateTask({ task, groupId: group.id, boardId: board._id }, activity))
       }
     }
 
@@ -105,32 +106,24 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
 
   const onRemoveGroup = () => {
     const removeObj = { groupId: group.id, boardId: board._id }
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100);
     dispatch(removeGroup(removeObj))
   }
 
   const openColorMenu = () => {
-    setTimeout(() => {
-      setModalName('COLOR_MENU')
-    }, 100);
+    setTimeout(() => { setModalName('COLOR_MENU') }, 100);
   }
 
   const changeGroupColor = (color) => {
     let updatedGroup = { ...group, style: color }
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
     dispatch(updateGroup({ group: updatedGroup, boardId: board._id }))
   }
 
   const onRemoveBoard = (ev, boardId) => {
     ev.preventDefault()
     ev.stopPropagation()
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
     dispatch(removeBoard(boardId))
     setCurrBoard(boards[0])
   }
@@ -138,24 +131,18 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
   const onEditBoard = (ev) => {
     ev.preventDefault()
     ev.stopPropagation()
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
     setIsRenaming(!isRenaming)
   }
 
   const onLogout = () => {
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
     dispatch(logout())
     navigate('/')
   }
 
   const closeMenu = () => {
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
   }
 
   const onRemovePost = () => {
@@ -169,13 +156,11 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
     closeMenu()
   }
 
-  const removeFile =() => {
+  const removeFile = () => {
     delete task['files']
-    dispatch(updateTask({task,groupId:group.id,boardId:board._id}))
+    dispatch(updateTask({ task, groupId: group.id, boardId: board._id }))
     setIsFile(false)
-    setTimeout(() => {
-      setModalName(null)
-    }, 100);
+    setTimeout(() => { setModalName(null) }, 100)
   }
 
   switch (modalName) {
@@ -296,8 +281,8 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
               <span>{task.title}</span>
             </div>
             <div className='file-close-remove'>
-              <Trash onClick={()=>removeFile()}/>
-            <GrClose onClick={() => closeMenu()} />
+              <Trash onClick={() => removeFile()} />
+              <GrClose onClick={() => closeMenu()} />
             </div>
           </div>
           <div className='file-container'><img src={task.files} alt={task.title} />
