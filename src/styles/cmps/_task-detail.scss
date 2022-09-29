@@ -106,6 +106,9 @@
                 grid-template-columns: 1fr 1fr 5% 1fr;
                 .task-preview-timeline {
                     min-width: 120px;
+                    height: 35px;
+                    display: flex;
+                    align-items: center;
                 }
 
                 .activity-status {
