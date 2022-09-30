@@ -67,7 +67,8 @@ function addActivity(task, activity) {
   const user = userService.getLoggedinUser()
   if (!user) return task
   delete user.assignments
-  delete user.userName
+  delete user.username
+  delete user.favBoards
 
   const newActivity = {
     id: utilService.makeId(),
