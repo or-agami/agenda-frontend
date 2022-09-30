@@ -1,6 +1,6 @@
 .task-priority-menu {
     position: absolute;
-    transform: translate(655px, 35px);
+    translate:655px 35px;
     width: 175px;
     font-size: 14px;
     height: fit-content;
@@ -12,6 +12,11 @@
     z-index: 7;
     display: flex;
     flex-wrap: wrap;
+
+    @media (max-width:450px) {
+        translate: 325px 35px ;
+        width: 200px;
+    }
 
     .btn-priority {
         font-size: 14px;

@@ -253,12 +253,19 @@ export const PopUpModal = ({ modalName, setModalName, task, group, board, boards
       </section>
     case 'TASK_DETAIL_PERSON_MENU':
       return <section className='task-detail-person-menu' onClick={(ev) => ev.stopPropagation()}>
-        <button className="btn btn-svg btn-svg-x" onClick={() => closeMenu()}><GrClose /></button>
         {getAvailableMembers().map(member => {
           return <div key={member._id} className="member-container-available">
-            <div className="available-img-container">
-              <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
+            <div>
+            <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
+            <h4>{member.fullname}</h4>
             </div>
+            <button className="btn btn-svg btn-remove-person-from-task" onClick={() => removeMemberFromTask(member)}><GrClose /></button>
+          </div>
+        })}
+        <h4 className="suggested people-title">Suggested People</h4>
+        {getSuggestedMembers().map(member => {
+          return <div key={member._id} className="member-container-suggested" onClick={() => addMemberToTask(member)}>
+            <img className="profile-img-icon" src={require(`../assets/img/${member.imgUrl}.png`)} alt="" />
             <h4>{member.fullname}</h4>
           </div>
         })}
