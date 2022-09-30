@@ -15,6 +15,7 @@ export const TaskAdd = ({ group, boardId }) => {
 
     return <ul className="task-add">
         <div className="sticky-container">
+            <div className="mask"></div>
             {/* <div className="sticky-helper"></div> */}
             <li className={`task-add-group-color ${group.style}`}>
             </li>

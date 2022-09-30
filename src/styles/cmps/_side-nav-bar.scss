@@ -11,10 +11,18 @@
     z-index: 16;
     transition: 0.2s;
     border: 1px solid var(--clr-disabled);
+    
+    @media (max-width: 450px) {
+        left: 0;
+    }
 
     &.closed {
         left: -157px;
         padding-right: 50px;
+
+        @media (max-width: 450px) {
+            left: -230px;
+        }
 
         .toggle-nav-bar {
             justify-content: flex-end;
@@ -119,7 +127,7 @@
             margin: 0;
 
         }
-       
+
         .svg-star {
             width: 17px;
             margin-inline-end: 7px;

@@ -11,7 +11,8 @@
   .board-details {
     position: relative;
     top: 170px;
-    width: fit-content;
+    width: 100%;
+    min-width: fit-content;
     padding-left: 19px;
     padding-bottom: 60px;
   }
