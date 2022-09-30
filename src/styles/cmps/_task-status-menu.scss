@@ -1,6 +1,6 @@
 .task-status-menu {
     position: absolute;
-    transform: translate(420px, 35px);
+    translate:420px 35px;
     width: 360px;
     font-size: 14px;
     height: fit-content;
@@ -12,6 +12,11 @@
     z-index: 7;
     display: flex;
     flex-wrap: wrap;
+
+    @media (max-width:450px) {
+        translate: 225px 35px ;
+        width: 200px;
+    }
 
     .btn-status {
         font-size: 14px;
