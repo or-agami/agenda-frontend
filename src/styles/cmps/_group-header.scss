@@ -98,6 +98,9 @@
     font-weight: 500;
     height: 100%;
 
+    @media (max-width: 450px) {
+      min-width: 170px;
+    }
 
     .group-header-name-container {
       flex-direction: column;
@@ -125,6 +128,9 @@
     height: 100%;
     border-right: 1px solid var(--clr-disabled);
 
+    @media (max-width: 450px) {
+      min-width: 100px;
+    }
   }
 
   .status-stat {
@@ -137,6 +143,10 @@
     justify-content: space-between;
     align-items: center;
     border-right: 1px solid var(--clr-disabled);
+
+    @media (max-width: 450px) {
+      min-width: 100px;
+    }
 
     .status-progress-bar {
       width: 100%;
@@ -171,6 +181,10 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 450px) {
+      min-width: 100px;
+    }
 
     .priority-progress-bar {
       width: 100%;
@@ -263,12 +277,20 @@
     min-width: 150px;
     height: 100%;
     border-right: 1px solid var(--clr-disabled);
+
+    @media (max-width: 450px) {
+      min-width: 100px;
+    }
   }
 
   .lastUpdated-stat {
     min-width: 150px;
     height: 100%;
     border-right: 1px solid var(--clr-disabled);
+
+    @media (max-width: 450px) {
+      min-width: 120px;
+    }
   }
 
   &>li:nth-last-child(2) {
