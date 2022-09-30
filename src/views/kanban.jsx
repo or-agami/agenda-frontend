@@ -42,6 +42,7 @@ export const Kanban = () => {
     }, [sortBy, filterBy])
 
     const handleOnDragEnd = (ev) => {
+        if (!ev.destination) return
         const updatedGroups = [...groups]
         const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
         updatedGroups.splice(ev.destination.index, 0, draggedItem)
