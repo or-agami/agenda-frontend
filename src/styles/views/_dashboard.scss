@@ -8,10 +8,10 @@
     }
 
     .chart {
-        min-width: 400px;
-        min-height: 200px;
-        max-height: 300px;
-        max-width: 600px;
+        min-width: 350px;
+        min-height: 150px;
+        max-height: 250px;
+        max-width: 500px;
     }
 
     .dashboard-main-container {
@@ -48,7 +48,6 @@
             border: 1px solid #9ec6ffb3;
             border-radius: 0.5em;
             display: flex;
-
         }
     }
 }

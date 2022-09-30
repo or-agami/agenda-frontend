@@ -18,6 +18,11 @@
         width: calc(100% - 95px);
     }
 
+    @media (max-width: 450px) {
+        width: calc(100%);
+        z-index: 16;
+    }
+
     .profile-img-icon {
         width: 25px;
         margin-inline-end: 3px;
@@ -29,13 +34,19 @@
         overflow-y: auto;
 
         .activity-container {
-            padding: 10px 0px;
+            padding: 0px 10px;
             border-bottom: 1px solid var(--clr-disabled);
             font-size: 15px;
+            gap: 5px;
+            height: 60px;
             display: grid;
             align-items: center;
             justify-content: center;
-            grid-template-columns: 20% 22% 25% 5% 1fr;
+            grid-template-columns: 14% 24% 22% 5% 1fr;
+       
+            @media (max-width:450px) {
+                height: 70px;
+            }
         }
 
         .activity-time {
@@ -46,13 +57,26 @@
         .activity-by {
             display: flex;
             align-items: center;
+            gap: 5px;
         }
+
+        .activity-type {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
 
         .activity-status {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 5px;
             padding-block: 8px;
+            min-width: 180px;
+            margin: auto;
+
 
             &.clr {
                 color: white;
@@ -100,10 +124,23 @@
 
         }
 
+        .task-preview-timeline {
+            display: flex;
+            height: 40px;
+            align-items: center;
+            min-width: 180px;
+            margin: auto;
+            padding: 0;
+
+            .timeline-wrapper {
+                align-items: center;
+                justify-content: center;
+
+            }
+        }
 
         @media (max-width: 700px) {
             .activity-container {
-                grid-template-columns: 1fr 1fr 5% 1fr;
                 .task-preview-timeline {
                     min-width: 120px;
                     height: 35px;
@@ -114,16 +151,12 @@
                 .activity-status {
                     min-width: 120px;
                 }
-
-                .activity-type {
-                    display: none;
-                }
             }
         }
 
         @media (max-width: 500px) {
             .activity-container {
-                font-size: 11px;
+                font-size: 14px;
             }
         }
 
@@ -134,8 +167,14 @@
         margin-top: 25px;
     }
 
-    svg * {
-        fill: var(--clr-icon-svg);
+    svg {
+        width: 13px;
+        height: 13px;
+        min-width: 13px;
+
+        * {
+            stroke: var(--clr-icon-svg);
+        }
     }
 
     .task-detail-header {
@@ -180,19 +219,28 @@
         }
 
         .task-detail-header-bottom {
-            font-size: 14px;
+            font-size: 17px;
             color: var(--clr-txt);
 
             button {
-                padding-bottom: 10px;
                 border-bottom: 1px solid transparent;
                 margin: 0;
+                padding-block: 15px;
+
+               
             }
 
             button span {
                 border-right: 1px solid var(--clr-btn-bg-hover);
-                padding-right: 10px;
-                padding-left: 10px;
+                padding-inline: 25px;
+
+                &:hover {
+                    background-color: var(--clr-btn-bg-hover);
+                    border-radius: 0.3em;
+                    padding-block: 5px;
+                    border: 0;
+                    
+                }
             }
 
             button:hover {

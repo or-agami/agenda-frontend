@@ -35,7 +35,7 @@ export const Dashboard = () => {
                 }
             })
         })
-       
+
         setStatusCounter(statusCounts)
 
         priorityOpts.forEach((priority, idx) => {
@@ -48,12 +48,12 @@ export const Dashboard = () => {
                 }
             })
         })
-       
+
         setPriorityCounter(priorityCounts)
     }
-    
+
     const doungnutData = {
-        labels: board?.groups.map(group => (group.title + ': ' + group.tasks.length)),
+        labels: board?.groups.map(group => (group.title)),
         datasets: [
             {
                 label: '# of Votes',
@@ -94,7 +94,7 @@ export const Dashboard = () => {
         priorities.splice(priorities.length - 1, 1, 'no priority')
         return priorities
     }
-  
+
     const statusData = {
         labels: statusLabels(),
         datasets: [
@@ -114,47 +114,41 @@ export const Dashboard = () => {
             },
 
         ],
-        
+
     }
+
 
     const options = {
         responsive: true,
         plugins: {
             legend: {
                 position: 'right',
-            },
-        }
-
-    }
-
-    const getPriorityCounter = async (priority) => {
-        if (!board) return
-        let priorityCounts = []
-
-        board.groups.forEach((group, idx) => {
-            priorityCounts[idx] = 0
-            group.tasks.forEach(task => {
-                if (task.priority) {
-                    if (task.priority.toLowerCase() === priority) priorityCounts[idx] += 1
-                } else if (!task.priority) {
-                    priorityCounts[priorityOpts.length - 1] += 1
+                labels: {
+                    usePointStyle: 'true',
+                    pointStyle: 'circle',
                 }
-            })
-        })
-       
-        setPriorityCounter(priorityCounts)
-    }
-
-    const datasets = priorityOpts.map(priority => {
-        return {label: priority}
-    })
+            },
+            title: {
+                display: true,
+                text: 'Chart',
+            },
+        },
+    };
 
     const priorityData = {
         labels: priorityLabels(),
         datasets: [
             {
-                label: 'group 1',
+                fill: true,
+                label: 'Priority count',
                 data: priorityCounter,
+                borderColor: [
+                    "#333333",
+                    "#579bfc",
+                    "#5559df",
+                    "#401694",
+                    "#c4c4c4",
+                ],
                 backgroundColor: [
                     "#333333",
                     "#579bfc",
@@ -173,18 +167,18 @@ export const Dashboard = () => {
 
         <div className="dashboard-main-container">
             <div className="table-chart">
-                {/* <h3 className="chart-title">Task Per Group</h3> */}
+                <h3 className="chart-title">Task Per Group</h3>
                 <Doughnut className="chart" data={doungnutData} options={options} />
             </div>
 
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Status</h3>
-                <Bar className="chart" data={statusData} options={options}  />
+                <Bar className="chart" data={statusData} options={options} />
             </div>
 
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Priority</h3>
-                <Line className="chart" data={priorityData} options={options}  />
+                <Line className="chart" data={priorityData} options={options} />
             </div>
         </div>
 
