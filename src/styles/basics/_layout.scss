@@ -7,6 +7,10 @@
 .agenda-app {
     display: grid;
     grid-template-columns: var(--board-grid-column) 1fr;
+
+    @media (max-width: 450px) {
+        grid-template-columns: calc(var(--board-grid-column) - 66px) 1fr;
+    }
 }
 
 .add-board-modal-open {
