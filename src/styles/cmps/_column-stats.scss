@@ -5,14 +5,14 @@
     border-end-start-radius: 8px;
     height: 35px;
     border: 0;
-    translate: -50px;
+    // translate: -50px;
 
 
     .empty-start {
-        min-width: 413px;
+        min-width: 363px;
 
         @media (max-width: 450px) {
-            min-width: 192px;
+            min-width: 142px;
         }
     }
 
@@ -34,7 +34,7 @@
 
         // border-end-start-radius: 8px;
         @media (max-width: 450px) {
-            min-width: 134px;
+            min-width: 126px;
         }
     }
 

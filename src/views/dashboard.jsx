@@ -35,7 +35,7 @@ export const Dashboard = () => {
                 }
             })
         })
-       
+
         setStatusCounter(statusCounts)
 
         priorityOpts.forEach((priority, idx) => {
@@ -48,10 +48,10 @@ export const Dashboard = () => {
                 }
             })
         })
-       
+
         setPriorityCounter(priorityCounts)
     }
-    
+
     const doungnutData = {
         labels: board?.groups.map(group => (group.title + ': ' + group.tasks.length)),
         datasets: [
@@ -94,7 +94,7 @@ export const Dashboard = () => {
         priorities.splice(priorities.length - 1, 1, 'no priority')
         return priorities
     }
-  
+
     const statusData = {
         labels: statusLabels(),
         datasets: [
@@ -114,7 +114,7 @@ export const Dashboard = () => {
             },
 
         ],
-        
+
     }
 
     const options = {
@@ -141,12 +141,12 @@ export const Dashboard = () => {
                 }
             })
         })
-       
+
         setPriorityCounter(priorityCounts)
     }
 
     const datasets = priorityOpts.map(priority => {
-        return {label: priority}
+        return { label: priority }
     })
 
     const priorityData = {
@@ -170,7 +170,6 @@ export const Dashboard = () => {
     if (!board) return <Loader />
     return <section className="dashboard">
         <BoardHeader board={board} />
-
         <div className="dashboard-main-container">
             <div className="table-chart">
                 {/* <h3 className="chart-title">Task Per Group</h3> */}
@@ -179,12 +178,12 @@ export const Dashboard = () => {
 
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Status</h3>
-                <Bar className="chart" data={statusData} options={options}  />
+                <Bar className="chart" data={statusData} options={options} />
             </div>
 
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Priority</h3>
-                <Line className="chart" data={priorityData} options={options}  />
+                <Line className="chart" data={priorityData} options={options} />
             </div>
         </div>
 
