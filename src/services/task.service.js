@@ -1,6 +1,6 @@
 import { groupService } from "./group.service";
 import { httpService } from "./http.service"
-import { socketService, SOCKET_EMIT_SEND_TASK_CHANGES,  SOCKET_EVENT_ADD_TASK_CHANGES } from "./socket.service";
+import { socketService, SOCKET_EMIT_SEND_TASK_CHANGES, SOCKET_EVENT_ADD_TASK_CHANGES } from "./socket.service";
 import { userService } from "./user.service";
 import { utilService } from "./util.service";
 import { SOCKET_EMIT_SET_TASK_ID_CHANNEL } from "./socket.service";
@@ -76,9 +76,13 @@ function addActivity(task, activity) {
     byMember: user,
     data: activity.data
   }
-  if (!task.activities) task.activities = [newActivity]
-  else task.activities.unshift(newActivity)
 
+  if (!task.activities) task.activities = [newActivity]
+
+  else {
+    task.activities.unshift(newActivity)
+    if (task.activities.length > 15) task.pop()
+  }
 
   return Promise.resolve(task)
 }
