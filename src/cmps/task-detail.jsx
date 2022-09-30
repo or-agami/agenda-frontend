@@ -33,10 +33,12 @@ export const TaskDetail = () => {
 
     useEffect(() => {
         dispatch(loadTask(taskId))
-    }, [])
+    }, [taskId])
 
     const closeTaskDetail = () => {
-        navigate(-1)
+        window.location.href = (window.location.toString().includes('kanban')) ?
+            `/#/workspace/board/kanban/${boardId}` :
+            `/#/workspace/board/${boardId}`
     }
 
 
@@ -268,7 +270,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
                 <button onClick={() => onReplyToComment()} className="btn btn-svg btn-reply"><Reply />Reply</button>
             </div>
         </div>
-        {(isReplyOpen || comment?.replies?.length>0) && <CommentReply comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />}
+        {(isReplyOpen || comment?.replies?.length > 0) && <CommentReply comment={comment} commentIdx={commentIdx} task={task} groupId={groupId} board={board} />}
     </section>
 }
 
