@@ -28,13 +28,6 @@ export const GroupList = ({ board }) => {
     dispatch(updateBoard(board))
   }
 
-  // useEffect(() => {
-  //   if (groups !== board.groups) {
-  //     board.groups = groups
-  //     dispatch(updateBoard(board))
-  //   }
-  // }, [groups])
-
   useEffect(() => {
     if (groups !== board.groups) {
       setGroups(board.groups)

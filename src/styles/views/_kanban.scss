@@ -12,7 +12,7 @@
         top: 181px;
         display: flex;
         padding-inline-start: 35px;
-        gap: 50px;
+        gap: 16px;
         flex-wrap: nowrap;
         padding: 30px;
     }
@@ -36,6 +36,7 @@
             padding-block: 10px;
             padding-inline-start: 10px;
             cursor: pointer;
+            font-size: 14px;
         }
 
         &.undefined {
@@ -59,7 +60,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 5px;
         padding-inline: 8px;
         padding-block: 8px;
         overflow-y: scroll;
@@ -67,7 +68,7 @@
         .kanban-task-preview {
             position: relative;
             background-color: var(--clr-item-bg);
-            box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.222);
+            box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.244);
             padding: 5px;
             border-radius: 0.4em;
             display: flex;
@@ -91,7 +92,7 @@
 
                 img {
                     width: 100%;
-                    height: 80px;
+                    height: 55px;
                     object-fit: cover;
                 }
             }
@@ -129,11 +130,9 @@
 
                 h6 {
                     font-size: 13px;
-                    padding-left: 5px;
                 }
 
                 .svg-chat {
-                    margin-inline-end: 5px;
                     width: 23px;
                     cursor: pointer;
 
@@ -152,11 +151,12 @@
             .item-category {
                 display: flex;
                 align-items: center;
+                font-size: 13px;
             }
 
             .svg-menu {
-                width: 15px;
-                height: 15px;
+                width: 12px;
+                height: 12px;
                 margin-inline-end: 5px;
                 stroke: black;
                 stroke-width: 5;
