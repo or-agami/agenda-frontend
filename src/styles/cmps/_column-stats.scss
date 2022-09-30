@@ -5,14 +5,23 @@
     border-end-start-radius: 8px;
     height: 35px;
     border: 0;
-    translate: -50px;
+    // translate: -50px;
 
+    .mask {
+        justify-content: center;
+        background-color: white;
+        position: absolute;
+        left: -38px;
+        width: 38px;
+        height: 58px;
+        border: none;
+    }
 
     .empty-start {
-        min-width: 413px;
+        min-width: 363px;
 
         @media (max-width: 450px) {
-            min-width: 192px;
+            min-width: 142px;
         }
     }
 
@@ -34,7 +43,7 @@
 
         // border-end-start-radius: 8px;
         @media (max-width: 450px) {
-            min-width: 134px;
+            min-width: 126px;
         }
     }
 
@@ -152,7 +161,6 @@
         border-bottom: 1px solid var(--clr-disabled);
         // min-width: 138px;
         min-width: 150px;
-        border-bottom-right-radius: 8px;
 
         @media (max-width: 450px) {
             min-width: 120px;

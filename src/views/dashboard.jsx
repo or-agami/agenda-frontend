@@ -164,7 +164,6 @@ export const Dashboard = () => {
     if (!board) return <Loader />
     return <section className="dashboard">
         <BoardHeader board={board} />
-
         <div className="dashboard-main-container">
             <div className="table-chart">
                 <h3 className="chart-title">Task Per Group</h3>
