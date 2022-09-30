@@ -2,7 +2,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { addComment, loadTask, updateTask } from "../store/board/board.action"
+import { addComment, loadTask, setTask, updateTask } from "../store/board/board.action"
 import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
@@ -33,6 +33,7 @@ export const TaskDetail = () => {
 
     useEffect(() => {
         dispatch(loadTask(taskId))
+        return (() => dispatch(setTask(null)))
     }, [taskId])
 
     const closeTaskDetail = () => {

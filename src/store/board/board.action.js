@@ -101,6 +101,23 @@ export function updateBoard(board) {
     }
 }
 
+export function setTask(task) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_TASK', task })
+    }
+}
+
+export function loadTask(task) {
+    return async (dispatch) => {
+        try {
+            const savedTask = await taskService.getById(task)
+            dispatch({ type: 'SET_TASK', task: savedTask })
+        } catch (err) {
+            showErrorMsg('Failed to load task')
+        }
+    }
+}
+
 export function addTask(task) {
     return async (dispatch, getState) => {
         try {
@@ -171,17 +188,6 @@ export function removeGroup(group) {
             showSuccessMsg('Group removed successfully')
         } catch (err) {
             showErrorMsg('Failed to remove group')
-        }
-    }
-}
-
-export function loadTask(task) {
-    return async (dispatch) => {
-        try {
-            const savedTask = await taskService.getById(task)
-            dispatch({ type: 'SET_TASK', task: savedTask })
-        } catch (err) {
-            showErrorMsg('Failed to load task')
         }
     }
 }
