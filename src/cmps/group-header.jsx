@@ -24,22 +24,25 @@ export const GroupHeader = ({ group, setIsHeaderOpen, isHeaderOpen, board }) => 
     }
 
     return <ul className="group-header">
-        <li className={`group-header-color ${group.style}`}></li>
-        <li className="group-header-name">
-            <button className="btn btn-svg btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }} title='Expand group'>
-                <ArrowRightSvg className={`${group.style} no-background`} />
-            </button>
-            <div className='group-header-name-container'>
-                {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-header-title-h4`}>{group.title}</h4>}
-                {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
-                    <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
-                </form>}
-                <p>{group.tasks.length} Items</p>
-            </div>
-        </li>
+        <div className="sticky-container">
+            <li className="mask"></li>
+            <li className={`group-header-color ${group.style}`}></li>
+            <li className="group-header-name">
+                <button className="btn btn-svg btn-arrow-down" onClick={(ev) => { onSetIsHeaderOpen(ev) }} title='Expand group'>
+                    <ArrowRightSvg className={`${group.style} no-background`} />
+                </button>
+                <div className='group-header-name-container'>
+                    {!isEditTitle && <h4 onClick={() => setIsEditTitle(!isEditTitle)} className={`${group.style} no-background group-header-title-h4`}>{group.title}</h4>}
+                    {isEditTitle && <form onSubmit={(ev) => updateGroupName(ev)} onBlur={updateGroupName}>
+                        <input type="text" autoFocus value={editedGroup.title} name="title" onChange={handleChange} className={`${group.style} no-background`} />
+                    </form>}
+                    <p>{group.tasks.length} Items</p>
+                </div>
+            </li>
+        </div>
         {board.cmpsOrder?.map(cmp => {
             return <li key={cmp} className={`group-header-${cmp} ${cmp}-stat`}>
-                <h4><GetNameFromSwitch cmp={cmp}/></h4>
+                <h4><GetNameFromSwitch cmp={cmp} /></h4>
                 <GetCmpsFromSwitch group={group} cmp={cmp} />
             </li>
         })}
@@ -99,7 +102,7 @@ const StatusStat = ({ group }) => {
             forInCounter++
             const counts = counter[status]
             statusProgressBar.push(
-                <div key={forInCounter} className={`status-progress ${(status==='undefined')? 'none': makeClass(status)}`}
+                <div key={forInCounter} className={`status-progress ${(status === 'undefined') ? 'none' : makeClass(status)}`}
                     style={{ width: `${counts / group.tasks.length * 100}%` }}
                     title={`${status === 'undefined' ? 'none' : status}: ${(counts / group.tasks.length * 100).toFixed()}%`}>
                 </div>

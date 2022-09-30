@@ -7,8 +7,14 @@ import { ReactComponent as Like } from '../assets/icons/like.svg'
 import { ReactComponent as Reply } from '../assets/icons/reply.svg'
 import { ReactComponent as Clock } from '../assets/icons/clock.svg'
 import { ReactComponent as Menu } from '../assets/icons/board-menu.svg'
+import { ReactComponent as PersonAddIcon } from '../assets/icons/preson-add.svg'
+import { ReactComponent as PersonRemoveIcon } from '../assets/icons/person-remove.svg'
+import { ReactComponent as TimelineMenu } from "../assets/icons/timeline-menu.svg"
+import { ReactComponent as StatusActivityIcon } from "../assets/icons/status-activity-icon.svg"
 import { GrClose } from 'react-icons/gr'
-import { FaArrowRight, FaPlusCircle } from "react-icons/fa"
+import { FaPlusCircle } from "react-icons/fa"
+import { MdArrowForwardIos } from "react-icons/md"
+import { AiOutlineFontSize } from "react-icons/ai"
 import moment from "moment"
 import { utilService } from "../services/util.service"
 import { useRef } from "react"
@@ -105,7 +111,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
             let info
             switch (activity.type) {
                 case 'add member':
-                    title = 'Added'
+                    title = <span className="activity-type"> <PersonAddIcon /> Added</span>
                     info = <span className="activity-status">
                         <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} alt='profile img' />
                         {activity.data.fullname}
@@ -113,7 +119,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
 
                     break;
                 case 'remove member':
-                    title = 'Removed'
+                    title = <span className="activity-type"> <PersonRemoveIcon /> Removed</span>
                     info = <span className="activity-status">
                         <img className="profile-img-icon" src={require(`../assets/img/${activity.data.imgUrl}.png`)} alt='profile img' />
                         {activity.data.fullname}
@@ -121,28 +127,28 @@ const TaskDetailActivity = ({ task, group, board }) => {
 
                     break;
                 case 'status':
-                    title = 'Changed Status'
+                    title = <span className="activity-type"> <StatusActivityIcon /> Status</span>
                     info = <span className={"activity-status clr " + makeClass(activity.data)}>
                         {activity.data}
                     </span>
 
                     break;
                 case 'priority':
-                    title = 'Changed Priority'
+                    title = <span className="activity-type"> <StatusActivityIcon /> Priority</span>
                     info = <span className={"activity-status clr " + makeClass(activity.data)}>
                         {activity.data}
                     </span>
 
                     break;
                 case 'title':
-                    title = 'Changed Title'
+                    title = <span className="activity-type"> <AiOutlineFontSize /> Name</span>
                     info = <span className="activity-status">
                         {activity.data}
                     </span>
 
                     break;
                 case 'timeline':
-                    title = 'Changed Timeline'
+                    title = <span className="activity-type"><TimelineMenu /> Timeline</span>
                     info = <span className="task-preview-timeline">
                         <TaskTimeline task={{ ...task, timeline: activity.data }} group={group} board={board} isReadOnly={true} />
                     </span>
@@ -160,7 +166,7 @@ const TaskDetailActivity = ({ task, group, board }) => {
                     {activity.byMember.fullname}
                 </span>
                 <span className="activity-type">{title}</span>
-                <FaArrowRight className="svg arrow-right-activity" />
+                <MdArrowForwardIos className="svg arrow-right-activity" />
                 {info}
             </div>
         })}
@@ -174,11 +180,17 @@ const getFormattedDateTime = (date) => {
             s: 'now',
             ss: '%ds',
             mm: "%dm",
+            m: "%dm",
             hh: "%dh",
+            h: "%dh",
             dd: "%dd",
+            d: "%dd",
             ww: "%dw",
+            w: "%dw",
             MM: "%dm",
-            yy: "%dy"
+            M: "%dm",
+            yy: "%dy",
+            y: "%dy",
         }
     });
     return moment(date).fromNow(true)
