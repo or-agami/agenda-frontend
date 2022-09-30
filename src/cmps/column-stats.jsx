@@ -5,6 +5,7 @@ export const ColumnStats = ({ group, board }) => {
     return <ul className="column-stats">
         <div className="sticky-container">
         <li className="empty-start"></li>
+        <li className="border-start"></li>
         </div>
         {board.cmpsOrder?.map(cmp => {
             return <li key={cmp} className={`${cmp}-stat`}>

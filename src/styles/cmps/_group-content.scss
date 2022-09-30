@@ -170,7 +170,8 @@
     }
 
     .same-width {
-        min-width: 138px;
+        // min-width: 138px;
+        min-width: 150px;
     }
 
     .group-content-header-color {
@@ -276,11 +277,6 @@
 
 }
 
-
-/* MEDIUM */
-@media (max-width: 800px) {}
-
-
 /* SMALL */
 @media (max-width: 450px) {
     .board-app {
@@ -289,10 +285,6 @@
 
     .group-content {
         padding-left: 0px;
-
-        .sticky-container {
-            // left: var(--board-grid-column);
-        }
 
         .group-content-header {
             top: 185px;
@@ -309,5 +301,4 @@
             }
         }
     }
-
 }
