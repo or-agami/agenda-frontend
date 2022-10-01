@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
 export const HoverModal = ({ task, modalHoverName, setModalHoverName, board, currMemberId }) => {
-
+console.log('entered:')
     const closeModal = () => {
         setTimeout(() => {
+            console.log('left:')
             setModalHoverName(null)
         }, 100);
     }

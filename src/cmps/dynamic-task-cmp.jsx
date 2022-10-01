@@ -81,7 +81,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                 clearTimeout(mouseHoverRef.current)
                 setHoverModalName(null)
                 setCurrMemberId(null)
-            }, 100);
+            }, 200);
         }
         const imgUrl = (memberId !== 'Guest') ?
             board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
@@ -201,7 +201,7 @@ const AddFile = ({ task, group, board }) => {
     const openFileMenu = () => {
         setTimeout(() => {
             setModalName('FILE_MENU')
-        }, 100);
+        }, 200);
     }
 
     const mouseHoverRef = useRef()
@@ -213,9 +213,10 @@ const AddFile = ({ task, group, board }) => {
 
     const mouseHoverLeave = () => {
         setTimeout(() => {
+            console.log('left :')
             clearTimeout(mouseHoverRef.current)
             setHoverModalName(null)
-        }, 100);
+        }, 200);
     }
 
     return <div className="img-container">
