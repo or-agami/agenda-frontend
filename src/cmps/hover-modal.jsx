@@ -49,6 +49,6 @@ const GetMemberNameFromId = (board, memberId) => {
 const GetMemberTasksFormId = (board, memberId) => {
     const tasks = board.groups.map(group => group.tasks).flat()
     return tasks.reduce(
-        (acc, task) => (task.memberIds.includes(memberId)) ?
+        (acc, task) => (task.memberIds?.includes(memberId)) ?
             acc + 1 : acc, 0)
 }

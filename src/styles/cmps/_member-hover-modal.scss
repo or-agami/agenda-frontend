@@ -8,21 +8,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 150px;
-    gap: 30px;
-    translate: -70px -155px;
+    width: 250px;
+    height: 110px;
+    gap: 15px;
+    translate: -70px -115px;
     animation: img-hover 0.3s linear;
 
     .profile-img-icon-hover {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
     }
     .container {
         display: flex;
         flex-direction: column;
-        gap: 10px;
     }
     .name {
         font-size: 18px;
@@ -32,7 +31,7 @@
 
 @keyframes img-hover {
     from {
-        translate: -30px -200px;
+        translate: -30px -55px;
         scale: 0;
     }
 
