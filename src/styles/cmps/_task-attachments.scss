@@ -28,17 +28,17 @@
         cursor: pointer;
         transition: all .3s ease-out;
         
-        &:hover {
-            transition-delay: .6s;
-            scale: 6;
-            translate: -50px;
-            position: absolute;
-            z-index: 10;
-            padding: 2px;
-            background-color: white;
-            box-shadow: 0px 0px 4px 1px #00000049;
-            border-radius: 0.15em;
-        }
+        // &:hover {
+        //     transition-delay: .6s;
+        //     scale: 6;
+        //     translate: -50px;
+        //     position: absolute;
+        //     z-index: 10;
+        //     padding: 2px;
+        //     background-color: white;
+        //     box-shadow: 0px 0px 4px 1px #00000049;
+        //     border-radius: 0.15em;
+        // }
     }
 
     &:hover {

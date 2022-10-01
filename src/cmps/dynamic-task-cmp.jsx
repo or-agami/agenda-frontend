@@ -8,10 +8,14 @@ import { BiImageAdd } from "react-icons/bi"
 import { uploadService } from "../services/upload.service"
 import { useDispatch } from "react-redux"
 import { updateTask } from "../store/board/board.action"
+import { useEffect } from "react"
+import { HoverModal } from "./hover-modal"
 
 
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
     const [modalName, setModalName] = useState(null)
+    const [modalHoverName, setHoverModalName] = useState(null)
+    const [currMemberId,setCurrMemberId] = useState(null)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
     let className = `flex justify-center task-preview-`
     let headerTxt, cmp
@@ -62,6 +66,26 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
         const imgUrl = (memberId !== 'Guest') ?
             board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+    }
+    const GetMemberImgFromIdHover = (board, memberId,modalHoverName,setHoverModalName,setCurrMemberId) => {
+        const mouseHoverRef = useRef()
+        const mouseHoverEnter = () => {
+            mouseHoverRef.current = setTimeout(() => {
+                setHoverModalName('MEMBER')
+                setCurrMemberId(memberId)
+            }, 750);
+        }
+
+        const mouseHoverLeave = () => {
+            setTimeout(() => {
+                clearTimeout(mouseHoverRef.current)
+                setHoverModalName(null)
+                setCurrMemberId(null)
+            }, 200);
+        }
+        const imgUrl = (memberId !== 'Guest') ?
+            board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
+        return <img key={memberId} onMouseEnter={() => mouseHoverEnter()} onMouseLeave={() => mouseHoverLeave()} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
     const makeClass = (status) => {
@@ -128,8 +152,9 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                         <FaPlusCircle />
                     </button>
                     <div className='developer-container'>
+                    {modalHoverName && <HoverModal modalHoverName={modalHoverName} setModalHoverName={setHoverModalName} task={task} board={board} currMemberId={currMemberId}/>}
                         {(task.memberIds && task.memberIds.length > 0) ?
-                            task.memberIds.map(memberId => GetMemberImgFromId(board, memberId))
+                            task.memberIds.map(memberId => GetMemberImgFromIdHover(board, memberId, modalHoverName, setHoverModalName,setCurrMemberId))
                             :
                             <NoPersonSvg className="svg-no-person" />}
                     </div>
@@ -151,36 +176,53 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 }
 
 const AddFile = ({ task, group, board }) => {
-    
+
     const dispatch = useDispatch()
     const fileRef = useRef()
     const [isFile, setIsFile] = useState(task.files ? true : false)
     const [src, setSrc] = useState(task.files || '')
-    const [modalName,setModalName] = useState(null)
+    const [modalName, setModalName] = useState(null)
+    const [modalHoverName, setHoverModalName] = useState(null)
 
     const importImg = async (ev) => {
         try {
-            const {secure_url : imgSrc} = await uploadService.uploadImg(ev)
+            const { secure_url: imgSrc } = await uploadService.uploadImg(ev)
             setIsFile(true)
             setSrc(imgSrc)
             task.files = imgSrc
             dispatch(updateTask({ task, groupId: group.id, boardId: board._id }))
         }
-        catch{
-            
+        catch {
+
         }
-        
+
     }
 
     const openFileMenu = () => {
         setTimeout(() => {
             setModalName('FILE_MENU')
-        }, 100);
+        }, 200);
     }
-    
+
+    const mouseHoverRef = useRef()
+    const mouseHoverEnter = () => {
+        mouseHoverRef.current = setTimeout(() => {
+            setHoverModalName('FILE')
+        }, 750);
+    }
+
+    const mouseHoverLeave = () => {
+        setTimeout(() => {
+            console.log('left :')
+            clearTimeout(mouseHoverRef.current)
+            setHoverModalName(null)
+        }, 200);
+    }
+
     return <div className="img-container">
-        {modalName && <PopUpModal modalName={modalName} setModalName={setModalName} task={task} group={group} board={board} setIsFile={setIsFile}/>}
-        {isFile ? <img className='file-img' src={src} ref={fileRef} onClick={openFileMenu} />
+        {modalHoverName && <HoverModal modalHoverName={modalHoverName} setModalHoverName={setHoverModalName} task={task} />}
+        {modalName && <PopUpModal modalName={modalName} setModalName={setModalName} task={task} group={group} board={board} setIsFile={setIsFile} />}
+        {isFile ? <img className='file-img' src={src} ref={fileRef} onClick={openFileMenu} onMouseEnter={() => mouseHoverEnter()} onMouseLeave={() => mouseHoverLeave()} />
             : <button className='btn add-file-btn'>
                 <input className="import-img-input" title="Import image" type='file' onChange={(ev) => importImg(ev, 'img')} accept="image/*" />
                 <BiImageAdd />
