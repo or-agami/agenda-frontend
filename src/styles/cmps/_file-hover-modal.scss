@@ -10,14 +10,15 @@
     align-items: center;
     justify-content: center;
     width: 200px;
-    height: fit-content;
+    height: 150px;
     gap: 5px;
-    translate: 0px -100px;
+    translate: 0px -95px;
     animation: file-hover 0.3s linear;
 
     img {
-        width: 100%;
-        object-fit: cover;
+        width: 180px;
+        height: 120px;
+        object-fit: contain;
     }
 
 }
@@ -30,6 +31,6 @@
 
     to {
         scale: 1;
-        translate: 0px -100px;
+        translate: 0px -95px;
     }
 }
