@@ -154,8 +154,8 @@ export const Dashboard = () => {
             <div className="top-dashboard-item">
                 <div className="icon members"><BsPeopleFill /></div>
                 <div className="flex">
-                    <span><span className="info-number">{board.members.length}</span> Developers</span>
-                     <div className="members-container">{board.members.map(member => {
+                    <span><span className="info-number">{board.members?.length}</span> Developers</span>
+                     <div className="members-container">{board.members?.map(member => {
                         return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)}/>
                      })}</div>
                 </div>
