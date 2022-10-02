@@ -102,12 +102,12 @@
             color: var(--status-clr17);
 
             .task-status-menu {
-                overflow: scroll;
-                transform: translate(40px, 80px);
+                flex-direction: column;
+                translate:20px 80px;
             }
 
             .task-priority-menu {
-                transform: translate(50px, 110px);
+                translate:35px 110px;
             }
 
             .kanban-img-item {
