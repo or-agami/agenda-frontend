@@ -16,9 +16,9 @@ export const AppHome = () => {
         <section className="app-home main-layout-app-home">
             <Header loggedinUser={loggedinUser} />
             <section className='main-panel-container'>
-                <Inbox />
                 <Favorites boards={boards} loggedinUser={loggedinUser} />
                 <MyBoards boards={boards} />
+                <Inbox />
             </section>
         </section>
     )
