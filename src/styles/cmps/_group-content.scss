@@ -94,6 +94,10 @@
             width: 35px;
             height: 35px;
 
+            @media (max-width: 450px) {
+                opacity: 1;
+            }
+
 
             &:hover {
                 opacity: 1;

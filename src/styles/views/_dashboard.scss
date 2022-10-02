@@ -3,7 +3,7 @@
     background-color: var(--clr-bg);
 
     @media (max-width: 450px) {
-        overflow-y: hidden;
+        overflow-y: auto;
         height: calc(100vh - 66px);
     }
 
@@ -17,7 +17,18 @@
         justify-content: space-between;
         z-index: 1;
         margin-bottom: 20px;
-        display: flex;
+
+        @media (max-width: 800px) {
+            flex-direction: column;
+            gap: 10px;
+            top: 190px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 450px) {
+            margin-bottom: 80px;
+            top: 170px;
+        }
 
         .icon {
             display: flex;
@@ -85,6 +96,11 @@
     .chart {
         max-height: 300px;
         max-width: 600px;
+
+        @media (max-width: 450px) {
+            width: 250px;
+            height: 200px;
+        }
     }
 
     .dashboard-main-container {
@@ -101,7 +117,6 @@
 
         @media (max-width: 450px) {
             padding: 10px;
-            overflow: auto;
             height: calc(100vh - 186px);
             min-height: initial;
             top: 120px;
