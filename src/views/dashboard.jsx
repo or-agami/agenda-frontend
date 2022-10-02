@@ -124,7 +124,7 @@ export const Dashboard = () => {
             <div className="top-dashboard-item members">
                 <div className="icon members"><BsPeopleFill /></div>
                 <div className="flex">
-                    <span><span className="info-number">{board.members?.length}</span> Developers</span>
+                    <span><span className="info-number">{board.members?.length}</span> Members</span>
                     <div className="members-container">{board.members?.map(member => {
                         return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)} />
                     })}</div>
@@ -133,31 +133,43 @@ export const Dashboard = () => {
 
 
             <div className="table-chart tasks-status">
-                {/* <h3 className="chart-title">Tasks Status</h3> */}
                 <div className="chart-container">
                     <div className="status-battery">
                         {statusStat.elStatus}
                         {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
                     </div>
                 </div>
-            </div>
 
-            <div className="table-chart tasks-per-group">
-                <h3 className="chart-title">Tasks Per Group</h3>
-                <div className="chart-container">
-                    <Doughnut className="chart" data={doungnutData} options={options} />
+
+
+                <div className="table-chart tasks-per-group">
+                    <h3 className="chart-title">Tasks Per Group</h3>
+                    <div className="chart-container">
+                        <Doughnut className="chart" data={doungnutData} options={options} />
+                    </div>
+                </div>
+
+                <div className="table-chart tasks-priority">
+                    <h3 className="chart-title">Tasks Priority</h3>
+                    <div className="chart-container">
+                        <Line className="chart" data={priorityData} options={options} />
+                    </div>
                 </div>
             </div>
 
-            <div className="table-chart tasks-priority">
-                <h3 className="chart-title">Tasks Priority</h3>
-                <div className="chart-container">
-                    <Line className="chart" data={priorityData} options={options} />
+            <div className="table-chart member-container">
+                <h3 className="chart-title">Member's Progress</h3>
+                <div className="member-progress">
+                    {board.members.map(member => {
+                        return <div key={member._id} className="member-info">
+                            <img src={require(`../assets/img/${member.imgUrl}.png`)} />
+                            <span className="member-name">{member.fullname}</span>
+                            {getMemberTasksFormId(member._id, tasks)}
+                        </div>
+                    })}
                 </div>
             </div>
         </div>
-
-
 
     </section>
 }
@@ -242,6 +254,7 @@ const getMemberTasksFormId = (memberId, tasks) => {
             acc + 1 : acc, 0)
 
     return <div className="user-done-progress-bar-wrapper">
+        <span className="precentage">{userTasksCount !== 0 ? (userTaskDoneCount / userTasksCount * 100).toFixed() + '%' : '0%'}</span>
         {(userTasksCount !== 0) ?
             <div className="user-done-progress-bar"
                 style={{ width: `${userTaskDoneCount / userTasksCount * 100}%` }}>
