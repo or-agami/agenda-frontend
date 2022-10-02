@@ -10,6 +10,7 @@
 
     @media (max-width: 450px) {
         grid-template-columns: calc(var(--board-grid-column) - 74px) 1fr;
+        overflow: hidden;
     }
 }
 

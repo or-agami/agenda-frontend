@@ -4,6 +4,10 @@
     min-height: fit-content;
     position: relative;
 
+    @media (max-width: 450px) {
+        padding-bottom: 60px;
+    }
+
     .board-header {
         padding-inline-start: 40px;
         width: calc(100vw - var(--board-grid-column));
@@ -95,6 +99,10 @@
                 /*  ├──────────────────┤ */
                 '     tasks-priority ';
             /*      ╰──────────────────╯ */
+        }
+
+        @media (max-width: 450px) {
+            padding-top: 150px;
         }
 
         .groups {
@@ -293,6 +301,10 @@
         // flex-direction: column;
         gap: 20px;
 
+        @media (max-width: 680px) {
+            justify-content: space-between;
+        }
+
         .status-progress-bar {
             flex-direction: column-reverse;
             height: 100%;
@@ -302,6 +314,17 @@
             position: relative;
             margin-left: 40px;
             border-radius: 8px;
+
+            @media (max-width: 680px) {
+                rotate: 90deg;
+                height: 214px;
+                translate: 20px;
+            }
+
+            @media (max-width: 450px) {
+                height: 160px;
+                // translate: 20px;
+            }
 
 
             .status-progress:not(.Done, :hover) {
