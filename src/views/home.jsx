@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import bgImg from '../assets/img/home-bg-img.jpg'
 import { Logo } from '../cmps/logo'
+import { BsStars } from 'react-icons/bs'
 
 
 
@@ -27,7 +28,7 @@ export const Home = () => {
                             <svg width="10" height="14" viewBox="0 0 9 7" ><path fillRule="evenodd" clipRule="evenodd" d="M4.628.616a.5.5 0 1 0-.64.768L6.203 3.23H.5a.5.5 0 0 0 0 1h5.612L3.988 6a.5.5 0 1 0 .64.769l3.23-2.693a.5.5 0 0 0 0-.768L4.628.616z"></path></svg>
                         </div>
                     </button>
-                    <p className='home-btn-txt'>Start here your own <span>agenda</span></p>
+                    <p className='home-btn-txt'>Free use no limit <BsStars /> Start here your own agenda</p>
                 </div>
             </div>
             <Footer />
