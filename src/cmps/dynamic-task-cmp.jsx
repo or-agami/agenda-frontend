@@ -15,7 +15,7 @@ import { HoverModal } from "./hover-modal"
 export const DynamicTaskCmp = ({ board, task, category, group }) => {
     const [modalName, setModalName] = useState(null)
     const [modalHoverName, setHoverModalName] = useState(null)
-    const [currMemberId,setCurrMemberId] = useState(null)
+    const [currMemberId, setCurrMemberId] = useState(null)
     const isCategoryInc = ['priority', 'status', 'lastUpdated', 'attachments'].includes(category)
     let className = `flex justify-center task-preview-`
     let headerTxt, cmp
@@ -68,16 +68,18 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
-    const GetMemberImgFromIdHover = (board, memberId,modalHoverName,setHoverModalName,setCurrMemberId) => {
-        
+    const imgHoverRef = useRef()
+    const GetMemberImgFromIdHover = (board, memberId, modalHoverName, setHoverModalName, setCurrMemberId) => {
+
         const mouseHoverEnter = () => {
-            setTimeout(() => {
+            imgHoverRef.current = setTimeout(() => {
                 setHoverModalName('MEMBER')
                 setCurrMemberId(memberId)
-            }, 100);
+            }, 500);
         }
 
         const mouseHoverLeave = () => {
+            clearTimeout(imgHoverRef.current)
             setTimeout(() => {
                 setHoverModalName(null)
                 setCurrMemberId(null)
@@ -86,7 +88,7 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
 
         const imgUrl = (memberId !== 'Guest') ?
             board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
-        return <img key={memberId} onMouseOver={() => mouseHoverEnter()} onMouseLeave={() => mouseHoverLeave()} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+        return <img key={memberId} onMouseOver={mouseHoverEnter} onMouseLeave={mouseHoverLeave} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
     const makeClass = (status) => {
@@ -153,9 +155,9 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
                         <FaPlusCircle />
                     </button>
                     <div className='developer-container'>
-                    {modalHoverName && <HoverModal modalHoverName={modalHoverName} setModalHoverName={setHoverModalName} task={task} board={board} currMemberId={currMemberId}/>}
+                        {modalHoverName && <HoverModal modalHoverName={modalHoverName} setModalHoverName={setHoverModalName} task={task} board={board} currMemberId={currMemberId} />}
                         {(task.memberIds && task.memberIds.length > 0) ?
-                            task.memberIds.map(memberId => GetMemberImgFromIdHover(board, memberId, modalHoverName, setHoverModalName,setCurrMemberId))
+                            task.memberIds.map(memberId => GetMemberImgFromIdHover(board, memberId, modalHoverName, setHoverModalName, setCurrMemberId))
                             :
                             <NoPersonSvg className="svg-no-person" />}
                     </div>
@@ -214,7 +216,6 @@ const AddFile = ({ task, group, board }) => {
 
     const mouseHoverLeave = () => {
         setTimeout(() => {
-            console.log('left :')
             clearTimeout(mouseHoverRef.current)
             setHoverModalName(null)
         }, 200);

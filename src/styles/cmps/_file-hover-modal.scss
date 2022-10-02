@@ -13,7 +13,7 @@
     height: 150px;
     gap: 5px;
     translate: 0px -95px;
-    animation: file-hover 0.3s linear;
+    animation: file-hover 0.15s linear;
 
     img {
         width: 180px;
@@ -25,7 +25,7 @@
 
 @keyframes file-hover {
     from {
-        translate: 0px -200px;
+        translate: 0px -20px;
         scale: 0;
     }
 

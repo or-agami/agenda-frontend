@@ -82,7 +82,7 @@ function addActivity(task, activity) {
 
   else {
     task.activities.unshift(newActivity)
-    if (task.activities.length > 15) task.pop()
+    if (task.activities.length > 15) task.activities.pop()
   }
 
   return Promise.resolve(task)
