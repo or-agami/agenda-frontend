@@ -42,14 +42,19 @@ export const NavBar = () => {
       dispatch(loadBoards())
     }
     if (boards.length > 0 && !board) {
-      if (!params.boardId) {
-        dispatch(loadBoard(boards[0]._id))
+      const currParams = params['*'].split('/')
+      // console.log('currParams:', currParams)
+      const boardId = (currParams[0] === 'home' || currParams[0] === 'mywork') ? boards[0]._id : currParams[currParams.length - 1]
+      // console.log('boardId:', boardId)
+      // console.log('params:', params)
+      if (!params.boardId && boardId) {
+        dispatch(loadBoard(boardId))
       }
       else {
         dispatch(setLoader())
         dispatch(loadBoard(params.boardId))
       }
-      setCurrBoard(boards[0])
+      // setCurrBoard(boards[0])
     }
   }, [boards, board])
 

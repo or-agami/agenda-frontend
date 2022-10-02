@@ -25,7 +25,7 @@ export const Dashboard = () => {
     }, [board])
 
 
-    const doungnutData = {
+    const doughnutData = {
         labels: board?.groups.map(group => (group.title)),
         datasets: [
             {
@@ -132,38 +132,45 @@ export const Dashboard = () => {
             </div>
 
 
+            {/* <div className="table-chart tasks-status"> */}
             <div className="table-chart tasks-status">
-                <div className="chart-container">
-                    <div className="status-battery">
-                        {statusStat.elStatus}
-                        {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
-                    </div>
-                </div>
-
-
-
-                <div className="table-chart tasks-per-group">
-                    <h3 className="chart-title">Tasks Per Group</h3>
-                    <div className="chart-container">
-                        <Doughnut className="chart" data={doungnutData} options={options} />
-                    </div>
-                </div>
-
-                <div className="table-chart tasks-priority">
-                    <h3 className="chart-title">Tasks Priority</h3>
-                    <div className="chart-container">
-                        <Line className="chart" data={priorityData} options={options} />
-                    </div>
+                <div className="status-battery">
+                    {statusStat.elStatus}
+                    <span>
+                        <span className="info-number">
+                            {(statusStat.doneCount / tasks.length * 100).toFixed(1) + '%'}
+                        </span>
+                        Done
+                    </span>
                 </div>
             </div>
+
+
+
+            <div className="table-chart tasks-per-group">
+                <h3 className="chart-title">Tasks Per Group</h3>
+                <div className="chart-container">
+                    <Doughnut className="chart" data={doughnutData} options={options} />
+                </div>
+            </div>
+
+            <div className="table-chart tasks-priority">
+                <h3 className="chart-title">Tasks Priority</h3>
+                <div className="chart-container">
+                    <Line className="chart" data={priorityData} options={options} />
+                </div>
+            </div>
+            {/* </div> */}
 
             <div className="table-chart member-container">
                 <h3 className="chart-title">Member's Progress</h3>
                 <div className="member-progress">
                     {board.members.map(member => {
                         return <div key={member._id} className="member-info">
-                            <img src={require(`../assets/img/${member.imgUrl}.png`)} />
-                            <span className="member-name">{member.fullname}</span>
+                            <div className="member-img-name">
+                                <img src={require(`../assets/img/${member.imgUrl}.png`)} />
+                                <span className="member-name">{member.fullname}</span>
+                            </div>
                             {getMemberTasksFormId(member._id, tasks)}
                         </div>
                     })}
@@ -190,7 +197,7 @@ const StatusStat = (tasks) => {
             if (status === 'Done') doneCount = counts
             statusProgressBar.push(
                 <div key={forInCounter} className={`status-progress ${status === 'undefined' ? 'none' : makeClass(status)}`}
-                    style={{ width: `${counts / tasks.length * 100}%` }}
+                    style={{ height: `${counts / tasks.length * 100}%` }}
                     title={`${status === 'undefined' ? 'none' : status}: ${(counts / tasks.length * 100).toFixed()}%`}>
                 </div>
             )

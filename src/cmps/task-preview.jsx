@@ -52,7 +52,7 @@ export const TaskPreview = ({ task, group, board }) => {
       {/* <li className='flex justify-center task-preview-checkbox'>
         <input className='task-check-input' type="checkbox" />
       </li> */}
-      <div className='item-container' onClick={() => navigate(`/workspace/board/${board._id}/details?groupId=${group.id}&taskId=${task.id}`)} >
+      <div className='item-container' onClick={() => navigate(`/workspace/board/${board._id}/details/${board._id}?groupId=${group.id}&taskId=${task.id}`)} >
         <li className='item-preview-sub-task-expansion'>
 
         </li>
