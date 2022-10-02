@@ -26,7 +26,7 @@ export function loadBoards() {
             const boards = await boardService.query()
             dispatch({ type: 'SET_BOARDS', boards })
         } catch (err) {
-            showErrorMsg('Failed to load boards')
+            // showErrorMsg('Failed to load boards')
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -41,7 +41,7 @@ export function removeBoard(boardId) {
             dispatch({ type: 'REMOVE_BOARD', boardId })
             showSuccessMsg('Board removed succesfully')
         } catch (err) {
-            showErrorMsg('Failed to remove board')
+            // showErrorMsg('Failed to remove board')
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -66,7 +66,7 @@ export function loadBoard(boardId, sortBy, filterBy) {
             const board = await boardService.getById(boardId, sortBy, filterBy)
             dispatch({ type: 'SET_BOARD', board })
         } catch (err) {
-            showErrorMsg('Failed to load board try again later')
+            // showErrorMsg('Failed to load board try again later')
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -80,7 +80,7 @@ export function addBoard(board) {
             const savedBoard = await boardService.save(board)
             dispatch({ type: 'ADD_BOARD', board: savedBoard })
         } catch (err) {
-            showErrorMsg('Failed to add board try again')
+            // showErrorMsg('Failed to add board try again')
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -94,7 +94,7 @@ export function updateBoard(board) {
             // const updatedBoard = await boardService.save(board)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
-            showErrorMsg('Failed to update board')
+            // showErrorMsg('Failed to update board')
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -113,7 +113,7 @@ export function loadTask(task) {
             const savedTask = await taskService.getById(task)
             dispatch({ type: 'SET_TASK', task: savedTask })
         } catch (err) {
-            showErrorMsg('Failed to load task')
+            // showErrorMsg('Failed to load task')
         }
     }
 }
@@ -125,7 +125,7 @@ export function addTask(task) {
             // const updatedBoard = await taskService.save(task)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
-            showErrorMsg('Failed to add task')
+            // showErrorMsg('Failed to add task')
         }
     }
 }
@@ -137,7 +137,7 @@ export function updateTask(task, activity) {
             // const updatedBoard = await taskService.update(task, activity)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
-            showErrorMsg('Failed to update task')
+            // showErrorMsg('Failed to update task')
         }
     }
 }
@@ -150,7 +150,7 @@ export function removeTask(task) {
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
             showSuccessMsg('Task removed succesfully')
         } catch (err) {
-            showErrorMsg('Failed to remove task')
+            // showErrorMsg('Failed to remove task')
         }
     }
 }
@@ -162,7 +162,7 @@ export function addGroup(boardId, isFromTop) {
             // const updatedBoard = await groupService.save(boardId)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
-            showErrorMsg('Failed to add group')
+            // showErrorMsg('Failed to add group')
         }
     }
 }
@@ -174,7 +174,7 @@ export function updateGroup(group) { // 👈 group is obj prop: { group, boardId
             // const updatedBoard = await groupService.update(group)
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
         } catch (err) {
-            showErrorMsg('Failed to update group')
+            // showErrorMsg('Failed to update group')
         }
     }
 }
@@ -187,7 +187,7 @@ export function removeGroup(group) {
             // dispatch({ type: 'UPDATE_BOARD', board: updatedBoard })
             showSuccessMsg('Group removed successfully')
         } catch (err) {
-            showErrorMsg('Failed to remove group')
+            // showErrorMsg('Failed to remove group')
         }
     }
 }
@@ -199,7 +199,7 @@ export function addComment(task, activity) {
             // const savedBoard = await taskService.update(task, activity)
             // dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
-            showErrorMsg('Failed to add comment')
+            // showErrorMsg('Failed to add comment')
         }
     }
 }
@@ -211,7 +211,7 @@ export function removeComment(task, activity) {
             // const savedBoard = await taskService.update(task, activity)
             // dispatch({ type: 'UPDATE_BOARD', board: savedBoard })
         } catch (err) {
-            showErrorMsg('Failed to add comment')
+            // showErrorMsg('Failed to add comment')
         }
     }
 }
