@@ -67,25 +67,26 @@ export const DynamicTaskCmp = ({ board, task, category, group }) => {
             board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
         return <img key={memberId} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
+
     const GetMemberImgFromIdHover = (board, memberId,modalHoverName,setHoverModalName,setCurrMemberId) => {
-        const mouseHoverRef = useRef()
+        
         const mouseHoverEnter = () => {
-            mouseHoverRef.current = setTimeout(() => {
+            setTimeout(() => {
                 setHoverModalName('MEMBER')
                 setCurrMemberId(memberId)
-            }, 750);
+            }, 100);
         }
 
         const mouseHoverLeave = () => {
             setTimeout(() => {
-                clearTimeout(mouseHoverRef.current)
                 setHoverModalName(null)
                 setCurrMemberId(null)
-            }, 200);
+            }, 100);
         }
+
         const imgUrl = (memberId !== 'Guest') ?
             board.members.find(member => member._id === memberId).imgUrl : 'profile-img-guest'
-        return <img key={memberId} onMouseEnter={() => mouseHoverEnter()} onMouseLeave={() => mouseHoverLeave()} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
+        return <img key={memberId} onMouseOver={() => mouseHoverEnter()} onMouseLeave={() => mouseHoverLeave()} className='profile-img-icon' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
     }
 
     const makeClass = (status) => {
