@@ -69,7 +69,7 @@ export const Kanban = () => {
             </Droppable >
         </DragDropContext >
         <Routes>
-            <Route path="/details" element={<TaskDetail />}></Route>
+            <Route path="/details/:boardId" element={<TaskDetail />}></Route>
         </Routes>
     </section >
 
@@ -175,7 +175,7 @@ const KanbanTaskPreview = ({ task, group, board, tasks, setTasks }) => {
                 <input autoFocus type="text" name='title' value={renameTask.title} onChange={handleChange} />
             </form>
                 : <h6 onClick={() => setIsRenaming(true)}>{task.title}</h6>}
-            <Link to={`/workspace/board/kanban/${board._id}/details?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
+            <Link to={`/workspace/board/kanban/${board._id}/details/${board._id}?groupId=${group.id}&taskId=${task.id}`} className="btn btn-svg btn-start-conversation">
                 {(!task.comments || task.comments.length <= 0) && <StartConversation className="svg svg-chat" />}
                 {(task.comments && task.comments.length > 0) && <div className='with-comments-container'><StartConversationEmptySvg /><span>{task.comments.length}</span></div>}
             </Link>

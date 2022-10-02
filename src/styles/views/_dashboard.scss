@@ -1,6 +1,8 @@
 .dashboard {
     grid-column: 2;
     background-color: var(--clr-bg);
+    min-height: fit-content;
+    position: relative;
 
     .board-header {
         padding-inline-start: 40px;
@@ -15,27 +17,85 @@
 
     .dashboard-main-container {
         position: relative;
-        top: 150px;
-        min-height: calc(100vh - 181px);
+        // top: 150px;
+        min-height: calc(100vh - 150px);
+        max-width: 1440px;
+        margin: 0 auto;
         background-color: var(--clr-bg);
         display: grid;
         gap: 30px;
         padding: 30px;
+        padding-top: 180px;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 100px minmax(300px, 500px);
+        grid-template-rows: 100px 100px 100px 1fr;
         grid-template-areas:
-            //     /*  ╭────────────────┬─────────────────┬─────────────────╮ */
-            //     ' groups           tasks             members      '
-            //     /*  ├────────────────┼─────────────────┼─────────────────┤ */
-            //     ' tasks-status     tasks-per-group   tasks-per-group '
+            /*  ╭────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+            '     tasks-status     groups           member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-status     tasks            member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-status     members          member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-priority   tasks-priority   tasks-per-group    tasks-per-group  ';
+        /*      ╰────────────────┴────────────────┴──────────────────┴──────────────────╯ */
 
-            /*  ╭────────────────┬─────────────────┬─────────────────╮ */
-            ' groups           tasks             members      tasks-status'
-            /*  ├────────────────┼─────────────────┼─────────────────┤ */
-            ' tasks-per-group     tasks-per-group tasks-priority   tasks-priority'
-            //     /*  ├────────────────┼─────────────────┼─────────────────┤ */
-            ' member-container    member-container     member-container    member-container';
-        // /*  ╰────────────────┴─────────────────┴─────────────────╯ */
+
+        @media (max-width: 1200px) {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 110px 110px 110px 390px;
+            grid-template-areas:
+                /*  ╭─────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+                '     tasks-status      member-container   member-container              '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   groups  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   tasks  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   members  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-per-group   tasks-per-group tasks-per-group  ';
+            /*      ╰─────────────────┴─────────────────┴──────────────────┴──────────────────╯ */
+        }
+
+        @media (max-width: 950px) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 100px 100px 100px 2fr 3fr 3fr;
+            grid-template-areas:
+                /*  ╭─────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+                '     tasks-status     groups  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-status     tasks  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-status     members  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     member-container   member-container              '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '      tasks-per-group tasks-per-group  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority tasks-priority  ';
+            /*      ╰─────────────────┴─────────────────┴──────────────────┴──────────────────╯ */
+        }
+
+        @media (max-width: 680px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: 100px 100px 100px 150px 2fr 3fr 3fr;
+            grid-template-areas:
+                /*  ╭──────────────────╮ */
+                '     groups  '
+                /*  ├──────────────────┤ */
+                '     tasks  '
+                /*  ├──────────────────┤ */
+                '     members  '
+                /*  ├──────────────────┤ */
+                '     tasks-status     '
+                /*  ├──────────────────┤ */
+                '     member-container '
+                /*  ├──────────────────┤ */
+                '     tasks-per-group '
+                /*  ├──────────────────┤ */
+                '     tasks-priority ';
+            /*      ╰──────────────────╯ */
+        }
 
         .groups {
             grid-area: groups;
@@ -51,6 +111,7 @@
 
         .tasks-status {
             grid-area: tasks-status;
+            padding-left: 50px;
         }
 
         .tasks-per-group {
@@ -71,7 +132,7 @@
             background-color: var(--clr-item-bg);
             border: 1px solid #9ec6ffb3;
             border-radius: 0.3em;
-            padding: 10px;
+            padding: 10px 20px;
             display: flex;
             gap: 20px;
             font-size: 18px;
@@ -81,12 +142,13 @@
 
             .flex {
                 flex-direction: column;
+                flex: 1;
                 gap: 5px;
             }
 
             .info-number {
                 font-family: roboto-medium;
-                font-size: 30px;
+                font-size: 22px;
                 margin-inline-end: 3px;
             }
 
@@ -100,8 +162,13 @@
                 align-items: center;
                 justify-content: center;
                 border-radius: 2em;
-                width: 40px;
-                height: 40px;
+                width: 57px;
+                height: 57px;
+
+                svg {
+                    width: 25px;
+                    height: 25px;
+                }
 
                 &.members {
                     background-color: var(--clr-logo-green);
@@ -134,7 +201,7 @@
             border-bottom: 1px solid #9ec6ffb3;
             height: 35px;
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
         }
 
         .table-chart {
@@ -143,6 +210,7 @@
             // align-items: center;
             background-color: var(--clr-item-bg);
             // max-width: 800px;
+            width: 100%;
             padding: 20px;
             border: 1px solid #9ec6ffb3;
             border-radius: 0.5em;
@@ -165,24 +233,28 @@
         display: flex;
         flex-direction: column;
         gap: 13px;
+
         .member-info {
             display: flex;
+            justify-content: space-between;
+        }
+
+        .member-img-name {
+            display: flex;
             align-items: center;
-            justify-content: flex-start;
             gap: 10px;
-        }
 
-        img {
-            width: 33px;
-            border-radius: 2em;
-        }
+            img {
+                width: 33px;
+                border-radius: 2em;
+            }
 
-        .member-name {
-            font-family: roboto;
-            font-size: 16px;
-            min-width: 130px;
+            .member-name {
+                font-family: roboto;
+                font-size: 16px;
+                min-width: 130px;
+            }
         }
-
 
     }
 
@@ -193,7 +265,7 @@
         border-radius: 2em;
         text-align: center;
         position: relative;
-        max-width: 300px;
+        max-width: 350px;
 
         .user-done-progress-bar {
             background-color: var(--clr-done);
@@ -214,54 +286,75 @@
 
     .status-battery {
         // padding: 30px 80px;
-        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         // flex-direction: column;
-        gap: 10px;
+        gap: 20px;
 
         .status-progress-bar {
-            height: 60px;
-            width: 100%;
+            flex-direction: column-reverse;
+            height: 100%;
+            width: 100px;
             display: flex;
-            border: 4px solid rgb(232, 232, 232);
+            // border: 4px solid rgb(232, 232, 232);
             position: relative;
+            margin-left: 40px;
             border-radius: 8px;
-            min-width: 300px;
+
+
+            .status-progress:not(.Done, :hover) {
+                // filter: grayscale(100%);
+                background-color: var(--clr-disabled);
+            }
 
             &>*:last-child {
-                border-top-right-radius: 4px;
-                border-bottom-right-radius: 4px;
+                border-top-right-radius: 8px;
+                border-top-left-radius: 8px;
             }
 
             .battery-top {
-                width: 6px;
-                background: #e8e8e8;
+                width: 30px;
+                background: var(--clr-disabled);
                 position: absolute;
-                top: 50%;
-                height: 20px;
-                right: -5px;
-                translate: 50% -50%;
+                top: 0;
+                height: 8px;
+                right: 50%;
+                translate: 50% -100%;
                 border-top-right-radius: 0.2em;
-                border-bottom-right-radius: 0.2em;
+                border-top-left-radius: 0.2em;
+            }
+
+        }
+
+        &>span {
+            display: flex;
+            flex-direction: column;
+
+            .info-number {
+                font-family: roboto-medium;
+                font-size: 24px;
+                margin-inline-end: 3px;
             }
         }
 
         .status-progress {
-            transition: all .3s ease-out;
+            width: 100%;
+            transition: scale .3s ease-out, border-radius .3s ease-out;
 
             &:hover {
                 transition-delay: .4s;
-                scale: 1 1.3;
+                // scale: 1.1 1;
+                scale: 1.1 1;
                 border-radius: 4px;
                 // opacity: 0.85;
             }
         }
 
         .status-progress.Done {
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
             order: -1;
         }
     }
