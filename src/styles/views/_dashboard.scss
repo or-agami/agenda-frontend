@@ -2,55 +2,66 @@
     grid-column: 2;
     background-color: var(--clr-bg);
 
-    @media (max-width: 450px) {
-        overflow-y: auto;
-        height: calc(100vh - 66px);
-    }
-
-    .dashboard-info {
-        position: relative;
-        top: 170px;
-        padding-inline: 40px;
-        display: flex;
-        width: 100%;
-        gap: 30px;
-        justify-content: space-between;
-        z-index: 1;
-        margin-bottom: 20px;
-
-        @media (max-width: 800px) {
-            flex-direction: column;
-            gap: 10px;
-            top: 190px;
-            margin-bottom: 40px;
-        }
+    .board-header {
+        padding-inline-start: 40px;
+        width: calc(100vw - var(--board-grid-column));
 
         @media (max-width: 450px) {
-            margin-bottom: 80px;
-            top: 170px;
+            padding-inline-start: 15px;
+            width: calc(100vw - 22px);
+        }
+    }
+
+
+    .dashboard-main-container {
+        position: relative;
+        top: 150px;
+        min-height: calc(100vh - 181px);
+        background-color: var(--clr-bg);
+        display: grid;
+        gap: 30px;
+        padding: 30px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 100px minmax(300px, 500px);
+        grid-template-areas:
+            //     /*  ╭────────────────┬─────────────────┬─────────────────╮ */
+            //     ' groups           tasks             members      '
+            //     /*  ├────────────────┼─────────────────┼─────────────────┤ */
+            //     ' tasks-status     tasks-per-group   tasks-per-group '
+            //     /*  ├────────────────┼─────────────────┼─────────────────┤ */
+            //     ' tasks-priority   tasks-priority    tasks-priority  ';
+            // /*  ╰────────────────┴─────────────────┴─────────────────╯ */
+            /*  ╭────────────────┬─────────────────┬─────────────────╮ */
+            ' groups           tasks             members      tasks-status'
+            /*  ├────────────────┼─────────────────┼─────────────────┤ */
+            ' tasks-per-group     tasks-per-group tasks-priority   tasks-priority  ';
+        /*  ╰────────────────┴─────────────────┴─────────────────╯ */
+
+        .groups {
+            grid-area: groups;
         }
 
-        .icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 2em;
-            width: 40px;
-            height: 40px;
-
-            &.members {
-                background-color: var(--clr-logo-green);
-            }
-
-            &.groups {
-                background-color: var(--clr-logo-red);
-            }
-
-            &.tasks {
-                background-color: var(--clr-logo-yellow);
-
-            }
+        .tasks {
+            grid-area: tasks;
         }
+
+        .members {
+            grid-area: members;
+        }
+
+        .tasks-status {
+            grid-area: tasks-status;
+        }
+
+        .tasks-per-group {
+            grid-area: tasks-per-group;
+        }
+
+        .tasks-priority {
+            grid-area: tasks-priority;
+        }
+
+        @media (max-width: 450px) {}
 
         .top-dashboard-item {
             background-color: var(--clr-item-bg);
@@ -79,51 +90,40 @@
                 padding-inline-start: 6px;
                 font-size: 14px;
             }
-        }
-    }
 
+            .icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 2em;
+                width: 40px;
+                height: 40px;
 
-    .board-header {
-        padding-inline-start: 40px;
-        width: calc(100vw - var(--board-grid-column));
+                &.members {
+                    background-color: var(--clr-logo-green);
+                }
 
-        @media (max-width: 450px) {
-            padding-inline-start: 15px;
-            width: calc(100vw - 22px);
-        }
-    }
+                &.groups {
+                    background-color: var(--clr-logo-red);
+                }
 
-    .chart {
-        max-height: 300px;
-        max-width: 600px;
+                &.tasks {
+                    background-color: var(--clr-logo-yellow);
 
-        @media (max-width: 450px) {
-            width: 250px;
-            height: 200px;
-        }
-    }
-
-    .dashboard-main-container {
-        position: relative;
-        min-height: calc(100vh - 181px);
-        top: 150px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        justify-content: start;
-        background-color: var(--clr-bg);
-        padding: 20px 40px;
-        justify-content: center;
-
-        @media (max-width: 450px) {
-            padding: 10px;
-            height: calc(100vh - 186px);
-            min-height: initial;
-            top: 120px;
+                }
+            }
         }
 
-        >* {
-            flex: 1;
+
+
+        .chart {
+            max-height: 300px;
+            max-width: 600px;
+
+            @media (max-width: 450px) {
+                width: 250px;
+                height: 200px;
+            }
         }
 
         .chart-title {
@@ -137,7 +137,7 @@
             flex-direction: column;
             align-items: center;
             background-color: var(--clr-item-bg);
-            max-width: 800px;
+            // max-width: 800px;
             padding: 20px;
             border: 1px solid #9ec6ffb3;
             border-radius: 0.5em;
@@ -157,21 +157,39 @@
     }
 
     .status-battery {
-        padding: 30px 80px;
+        // padding: 30px 80px;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
+        // flex-direction: column;
         gap: 10px;
 
         .status-progress-bar {
-            height: 100px;
+            height: 60px;
             width: 100%;
             display: flex;
+
+            &>*:last-child {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+        }
+
+        .status-progress {
+            transition: all .3s ease-out;
+
+            &:hover {
+                transition-delay: .4s;
+                scale: 1 1.3;
+                border-radius: 4px;
+                // opacity: 0.85;
+            }
         }
 
         .status-progress.Done {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
             order: -1;
         }
     }

@@ -108,7 +108,6 @@ export const Dashboard = () => {
         labels: priorityLabels(),
         datasets: [
             {
-                fill: true,
                 label: 'Priority count',
                 data: dataCounter?.priority,
                 borderColor: [
@@ -126,6 +125,8 @@ export const Dashboard = () => {
                     "#c4c4c4",
                 ],
                 borderWidth: 1,
+                tension: 0.4,
+                fill: true,
             },
         ],
     }
@@ -137,54 +138,52 @@ export const Dashboard = () => {
     return <section className="dashboard">
         <BoardHeader board={board} />
 
-        <section className="dashboard-info">
-            <div className="top-dashboard-item">
+        <div className="dashboard-main-container">
+            <div className="top-dashboard-item groups">
                 <div className="icon groups"><BsFillHddStackFill /></div>
                 <div className="flex">
                     <span><span className="info-number">{board.groups.length}</span> Groups</span>
                 </div>
             </div>
-            <div className="top-dashboard-item">
+            <div className="top-dashboard-item tasks">
                 <div className="icon tasks"><FaCheckCircle /></div>
                 <div className="flex">
                     <span><span className="info-number">{tasks.length}</span> Tasks</span>
                     <div className="task-count">{statusStat.doneCount + " Done"}</div>
                 </div>
             </div>
-            <div className="top-dashboard-item">
+            <div className="top-dashboard-item members">
                 <div className="icon members"><BsPeopleFill /></div>
                 <div className="flex">
                     <span><span className="info-number">{board.members?.length}</span> Developers</span>
-                     <div className="members-container">{board.members?.map(member => {
-                        return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)}/>
-                     })}</div>
+                    <div className="members-container">{board.members?.map(member => {
+                        return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)} />
+                    })}</div>
                 </div>
             </div>
-        </section>
 
-        <div className="dashboard-main-container">
 
-            <div className="table-chart">
-                <h3 className="chart-title">Tasks Status</h3>
+            <div className="table-chart tasks-status">
+                {/* <h3 className="chart-title">Tasks Status</h3> */}
                 <div className="chart-container">
-                <div className="status-battery">
-                    {statusStat.elStatus}
-                {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
-                </div>
+                    <div className="status-battery">
+                        {statusStat.elStatus}
+                        {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
+                    </div>
                 </div>
             </div>
 
-            <div className="table-chart">
-                <h3 className="chart-title">Task Per Group</h3>
+            <div className="table-chart tasks-per-group">
+                <h3 className="chart-title">Tasks Per Group</h3>
                 <div className="chart-container">
-                <Doughnut className="chart" data={doungnutData} options={options} />
+                    <Doughnut className="chart" data={doungnutData} options={options} />
                 </div>
             </div>
 
-            <div className="table-chart">
+            <div className="table-chart tasks-priority">
                 <h3 className="chart-title">Tasks Priority</h3>
                 <div className="chart-container">
-                <Line className="chart" data={priorityData} options={options} />
+                    <Line className="chart" data={priorityData} options={options} />
                 </div>
             </div>
         </div>
