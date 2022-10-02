@@ -39,7 +39,7 @@ export const Dashboard = () => {
                     "#9b19f5",
                     "#e6d800",
                     "#0dd4ff",
-                    "#e60049"
+                    "#e60049",
                 ],
                 borderColor: [
                     "#00bfa0",
@@ -49,17 +49,11 @@ export const Dashboard = () => {
                     "#9b19f5",
                     "#e6d800",
                     "#0dd4ff",
-                    "#e60049"
+                    "#e60049",
                 ],
                 borderWidth: 1,
             },
         ],
-    }
-
-    const statusLabels = () => {
-        const statuses = [...statusOpts]
-        statuses.splice(statuses.length - 1, 1, 'no status')
-        return statuses
     }
 
     const priorityLabels = () => {
@@ -67,29 +61,6 @@ export const Dashboard = () => {
         priorities.splice(priorities.length - 1, 1, 'no priority')
         return priorities
     }
-
-    const statusData = {
-        labels: statusLabels(),
-        datasets: [
-            {
-                label: 'Status count',
-                data: dataCounter?.status,
-                backgroundColor: [
-                    "#00c875",
-                    "#fdab3d",
-                    "#e2445c",
-                    "#ffcb00",
-                    "#784bd1",
-                    "#ad967a",
-                    "#c4c4c4",
-                ],
-                borderWidth: 1,
-            },
-
-        ],
-
-    }
-
 
     const options = {
         responsive: true,
@@ -218,7 +189,9 @@ const StatusStat = (tasks) => {
     }
     const statusProgress = getStatusProgressBar()
     return {
-        elStatus: <div className="status-progress-bar">{statusProgress.statusProgressBar}</div>,
+        elStatus: <div className="status-progress-bar">
+            <div className="battery-top"></div>
+            {statusProgress.statusProgressBar}</div>,
         doneCount: statusProgress.doneCount
     }
 }
