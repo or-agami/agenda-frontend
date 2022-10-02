@@ -10,6 +10,16 @@
     margin-right: 1px;
     border-bottom: 1px solid var(--clr-disabled);
 
+    .task-status-menu {
+        translate:420px 35px;
+        width: 360px;
+
+        @media (max-width:450px) {
+            translate: 225px 35px ;
+            width: 200px;
+        }
+    }
+
     &:hover {
         background-color: #F4F5F8;
         // box-shadow: 0px 12px 11px -15px rgba(0, 0, 0, 0.49);
