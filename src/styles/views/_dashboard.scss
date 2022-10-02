@@ -1,7 +1,8 @@
 .dashboard {
     grid-column: 2;
     background-color: var(--clr-bg);
-    min-height: 100vh;
+    min-height: fit-content;
+    position: relative;
 
     .board-header {
         padding-inline-start: 40px;
@@ -16,7 +17,7 @@
 
     .dashboard-main-container {
         position: relative;
-        top: 150px;
+        // top: 150px;
         min-height: calc(100vh - 150px);
         max-width: 1440px;
         margin: 0 auto;
@@ -24,23 +25,77 @@
         display: grid;
         gap: 30px;
         padding: 30px;
+        padding-top: 180px;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: 100px 100px 100px 1fr;
         grid-template-areas:
-            //     /*  ╭────────────────┬─────────────────┬─────────────────╮ */
-            //     ' groups           tasks             members      '
-            //     /*  ├────────────────┼─────────────────┼─────────────────┤ */
-            //     ' tasks-status     tasks-per-group   tasks-per-group '
+            /*  ╭────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+            '     tasks-status     groups           member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-status     tasks            member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-status     members          member-container   member-container '
+            /*  ├────────────────┼────────────────┼──────────────────┼──────────────────┤ */
+            '     tasks-priority   tasks-priority   tasks-per-group    tasks-per-group  ';
+        /*      ╰────────────────┴────────────────┴──────────────────┴──────────────────╯ */
 
-            /*  ╭────────────────┬─────────────────┬─────────────────┬─────────────────╮ */
-            ' tasks-status groups     member-container member-container                  '
-            /*  ├────────────────┼─────────────────┼─────────────────┼─────────────────┤ */
-            ' tasks-status tasks   member-container member-container     '
-            /*  ├────────────────┼─────────────────┼─────────────────┼─────────────────┤ */
-            ' tasks-status members   member-container member-container        '
-            /*  ├────────────────┼─────────────────┼─────────────────┼─────────────────┤ */
-            '  tasks-priority tasks-priority  tasks-per-group    tasks-per-group';
-        /*  ╰────────────────┴─────────────────┴─────────────────┴─────────────────╯ */
+
+        @media (max-width: 1200px) {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 110px 110px 110px 390px;
+            grid-template-areas:
+                /*  ╭─────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+                '     tasks-status      member-container   member-container              '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   groups  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   tasks  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority    tasks-priority   members  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-per-group   tasks-per-group tasks-per-group  ';
+            /*      ╰─────────────────┴─────────────────┴──────────────────┴──────────────────╯ */
+        }
+
+        @media (max-width: 950px) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 100px 100px 100px 2fr 3fr 3fr;
+            grid-template-areas:
+                /*  ╭─────────────────┬────────────────┬──────────────────┬──────────────────╮ */
+                '     tasks-status     groups  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-status     tasks  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-status     members  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     member-container   member-container              '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '      tasks-per-group tasks-per-group  '
+                /*  ├─────────────────┼─────────────────┼──────────────────┼──────────────────┤ */
+                '     tasks-priority tasks-priority  ';
+            /*      ╰─────────────────┴─────────────────┴──────────────────┴──────────────────╯ */
+        }
+
+        @media (max-width: 680px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: 100px 100px 100px 150px 2fr 3fr 3fr;
+            grid-template-areas:
+                /*  ╭──────────────────╮ */
+                '     groups  '
+                /*  ├──────────────────┤ */
+                '     tasks  '
+                /*  ├──────────────────┤ */
+                '     members  '
+                /*  ├──────────────────┤ */
+                '     tasks-status     '
+                /*  ├──────────────────┤ */
+                '     member-container '
+                /*  ├──────────────────┤ */
+                '     tasks-per-group '
+                /*  ├──────────────────┤ */
+                '     tasks-priority ';
+            /*      ╰──────────────────╯ */
+        }
 
         .groups {
             grid-area: groups;
@@ -155,6 +210,7 @@
             // align-items: center;
             background-color: var(--clr-item-bg);
             // max-width: 800px;
+            width: 100%;
             padding: 20px;
             border: 1px solid #9ec6ffb3;
             border-radius: 0.5em;
