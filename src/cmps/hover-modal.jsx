@@ -28,8 +28,8 @@ console.log('entered:')
             return <section className="member-hover-modal">
                 {GetMemberImgFromId(board, currMemberId)}
                 <div className="container">
-                    <h4 className="name">{GetMemberNameFromId(board, currMemberId)}</h4>
-                    <h4>{GetMemberTasksFormId(board, currMemberId)} Assigned tasks</h4>
+                    <h4 className="name">{getMemberNameFromId(board, currMemberId)}</h4>
+                    <h4>{getMemberTasksFormId(board, currMemberId)} Assigned tasks</h4>
                 </div>
             </section>
 
@@ -43,11 +43,11 @@ const GetMemberImgFromId = (board, memberId) => {
     return <img key={memberId} className='profile-img-icon-hover' src={require(`../assets/img/${imgUrl}.png`)} alt="" />
 }
 
-const GetMemberNameFromId = (board, memberId) => {
+const getMemberNameFromId = (board, memberId) => {
     return board.members.find(member => member._id === memberId).fullname
 }
 
-const GetMemberTasksFormId = (board, memberId) => {
+const getMemberTasksFormId = (board, memberId) => {
     const tasks = board.groups.map(group => group.tasks).flat()
     return tasks.reduce(
         (acc, task) => (task.memberIds?.includes(memberId)) ?

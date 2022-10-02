@@ -130,8 +130,6 @@ export const Dashboard = () => {
         ],
     }
 
-
-
     if (!board || !tasks) return <Loader />
     const statusStat = StatusStat(tasks)
     return <section className="dashboard">
@@ -155,9 +153,9 @@ export const Dashboard = () => {
                 <div className="icon members"><BsPeopleFill /></div>
                 <div className="flex">
                     <span><span className="info-number">{board.members?.length}</span> Developers</span>
-                     <div className="members-container">{board.members?.map(member => {
-                        return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)}/>
-                     })}</div>
+                    <div className="members-container">{board.members?.map(member => {
+                        return <img key={member._id} src={require(`../assets/img/${member.imgUrl}.png`)} />
+                    })}</div>
                 </div>
             </div>
         </section>
@@ -167,24 +165,24 @@ export const Dashboard = () => {
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Status</h3>
                 <div className="chart-container">
-                <div className="status-battery">
-                    {statusStat.elStatus}
-                {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
-                </div>
+                    <div className="status-battery">
+                        {statusStat.elStatus}
+                        {(statusStat.doneCount / tasks.length * 100).toFixed(1) + "% Done"}
+                    </div>
                 </div>
             </div>
 
             <div className="table-chart">
                 <h3 className="chart-title">Task Per Group</h3>
                 <div className="chart-container">
-                <Doughnut className="chart" data={doungnutData} options={options} />
+                    <Doughnut className="chart" data={doungnutData} options={options} />
                 </div>
             </div>
 
             <div className="table-chart">
                 <h3 className="chart-title">Tasks Priority</h3>
                 <div className="chart-container">
-                <Line className="chart" data={priorityData} options={options} />
+                    <Line className="chart" data={priorityData} options={options} />
                 </div>
             </div>
         </div>
@@ -259,4 +257,25 @@ const getTablesData = async (statusOpts, priorityOpts, board, setDataCounter, se
     })
     setDataCounter({ status: statusCounts, priority: priorityCounts })
     setTasks(newTasks)
+}
+
+
+const getMemberTasksFormId = (memberId, tasks) => {
+    const userTasksCount = tasks.reduce(
+        (acc, task) => (task.memberIds?.includes(memberId)) ?
+            acc + 1 : acc, 0)
+
+    const userTaskDoneCount = tasks.reduce(
+        (acc, task) => (task.memberIds?.includes(memberId) && task.status === 'Done') ?
+            acc + 1 : acc, 0)
+
+    return <div className="user-done-progress-bar-wrapper">
+        {(userTasksCount !== 0) ?
+            <div className="user-done-progress-bar"
+                style={{ width: `${userTaskDoneCount / userTasksCount * 100}%` }}>
+            </div> : <div className="user-done-progress-bar"
+                style={{ width: '0%' }}>
+            </div>
+        }
+    </div>
 }
