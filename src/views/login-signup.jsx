@@ -105,10 +105,10 @@ const Signup = () => {
                   <h2>OR</h2>
                   <span className="separator-line"></span>
                 </div>
-                <button className="btn btn-login-google">
+                {/* <button className="btn btn-login-google">
                   <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="google" />
                   <span>Continue with Google</span>
-                </button>
+                </button> */}
                 <div className="suggest-signup">
                   <span className="suggest-signup-prefix">Already have an account?</span>
                   <NavLink to='/auth/login'>Log in</NavLink>
@@ -222,7 +222,7 @@ const Login = () => {
             <button className="btn btn-svg btn-next">Next<RightArrowSvg /></button>
           }
         </form>
-        <div className="flex justify-center align-center login-signup-separator split-line">
+        {/* <div className="flex justify-center align-center login-signup-separator split-line">
           <span className="separator-line"></span>
           <h2>Or Sign in with</h2>
           <span className="separator-line"></span>
@@ -230,7 +230,7 @@ const Login = () => {
         <button className="btn btn-login-google">
           <img className="img img-login-logo" src="https://cdn.monday.com/images/logo_google_v2.svg" aria-hidden="true" alt="" />
           <span>Google</span>
-        </button>
+        </button> */}
         <div className="suggest-signup">
           <span className="suggest-signup-prefix">Don't have an account yet?</span>
           <NavLink to='/auth/signup'>Sign up</NavLink>

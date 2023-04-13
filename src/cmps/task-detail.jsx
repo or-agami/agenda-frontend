@@ -71,12 +71,12 @@ export const TaskDetail = () => {
             </div>
             <div className='task-detail-header-bottom'>
                 <button onClick={() => setWhichRenders('isUpdates')}><span>Updates</span></button>
-                <button onClick={() => setWhichRenders('isFiles')}><span>Files</span></button>
+                {/* <button onClick={() => setWhichRenders('isFiles')}><span>Files</span></button> */}
                 <button onClick={() => setWhichRenders('isActivity')}><span>Activity Log</span></button>
             </div>
         </div>
         {(whichRenders === 'isUpdates' && task) && <TaskDetailUpdates task={task} groupId={groupId} board={board} />}
-        {whichRenders === 'isFiles' && <TaskDetailFiles />}
+        {/* {whichRenders === 'isFiles' && <TaskDetailFiles />} */}
         {whichRenders === 'isActivity' && <TaskDetailActivity task={task} group={{ id: groupId, style: "clr13" }} board={board} />}
     </section>
 }
@@ -207,12 +207,12 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 
 
     const getIsCommentLiked = () => {
-        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser?._id)
         return (idxLiked !== -1 && idxLiked !== undefined)
     }
 
     const animateLike = (ev) => {
-        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser._id)
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser?._id)
         if (idxLiked !== -1 && idxLiked !== undefined) {
             comment.likes?.splice(idxLiked, 1)
             dispatch(updateTask({ task, groupId, boardId: board._id }))
