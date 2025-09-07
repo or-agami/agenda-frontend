@@ -22,51 +22,50 @@ import { Dashboard } from '../views/dashboard';
 import { PopUpModal } from './pop-up-modal';
 import { Kanban } from '../views/kanban';
 import { MyWork } from '../views/my-work';
+import { EmptyWorkspace } from './empty-workspace';
 
 
 export const NavBar = () => {
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { board, boards } = useSelector(state => state.boardModule)
+  const { board, boards, boardsLoaded, isLoading } = useSelector(state => state.boardModule)
   const params = useParams()
   const [isOpen, setIsOpen] = useState(false)
   const [currBoard, setCurrBoard] = useState(board)
   const [modalName, setModalName] = useState(null)
   const [isFavorites, setIsFavorites] = useState(false)
+  const hasNoBoards = boardsLoaded && (!boards || boards.length === 0)
 
   useEffect(() => {
     if (board && !currBoard) setCurrBoard(board)
-    if (!boards || boards.length <= 0) {
+
+    // Fetch boards only once; if already loaded (even empty), do not refetch
+    if ((!boards || boards.length === 0) && !boardsLoaded && !isLoading) {
       dispatch(setLoader())
       dispatch(loadBoards())
     }
-    if (boards.length > 0 && !board) {
+
+    // When we have boards, make sure we load the current one if not set
+    if (boards.length > 0 && !board && !isLoading) {
       const currParams = params['*'].split('/')
-      // console.log('currParams:', currParams)
       const boardId = (currParams[0] === 'home' || currParams[0] === 'mywork') ? boards[0]._id : currParams[currParams.length - 1]
-      // console.log('boardId:', boardId)
-      // console.log('params:', params)
       if (!params.boardId && boardId) {
         dispatch(loadBoard(boardId))
-      }
-      else {
+      } else if (params.boardId) {
         dispatch(setLoader())
         dispatch(loadBoard(params.boardId))
       }
-      // setCurrBoard(boards[0])
     }
-  }, [boards, board])
+  }, [boards, board, boardsLoaded, isLoading])
 
   useEffect(() => {
-    if (isOpen) {
-      document.documentElement.style.setProperty('--board-grid-column', '317px')
-    }
-    else {
-      document.documentElement.style.setProperty('--board-grid-column', `${(params['*'] !== 'home') ? '96px' : '66px'}`)
-    }
+    const width = (isOpen || hasNoBoards)
+      ? '317px'
+      : ((params['*'] !== 'home') ? '96px' : '66px')
+    document.documentElement.style.setProperty('--board-grid-column', width)
     return (() => document.documentElement.style.removeProperty('--board-grid-column'))
-  }, [isOpen, params])
+  }, [isOpen, params, hasNoBoards])
 
   const openUserMenu = () => {
     setTimeout(() => {
@@ -76,12 +75,12 @@ export const NavBar = () => {
 
   const showFavorites = () => {
     setIsFavorites(true)
-    if (params.boardId) return
+    if (params.boardId || !currBoard) return
     navigate(`/workspace/board/${currBoard._id}`)
   }
 
 
-  if (!currBoard) return <Loader />
+  if (!currBoard && !hasNoBoards) return <Loader />
   return (
     <Fragment>
       {params['*'] !== 'home' &&
@@ -99,7 +98,7 @@ export const NavBar = () => {
         </button>
         <div className="divider-horizontal"></div>
         <button onClick={() => setIsFavorites(false)} className="btn btn-board" title='Work managment'>
-          <NavLink to={`/workspace/board/${currBoard._id}`} className={`${!isFavorites ? 'set' : ''}`}><BoardSvg />
+          <NavLink to={currBoard ? `/workspace/board/${currBoard._id}` : '/workspace/home'} className={`${!isFavorites ? 'set' : ''} ${!currBoard ? 'disabled' : ''}`}><BoardSvg />
             <div className="selected-indication"></div>
           </NavLink>
         </button>
@@ -133,14 +132,18 @@ export const NavBar = () => {
 
 
       </section>
-      <Routes>
-        <Route path="/home" element={<AppHome />} />
-        <Route path="/board/kanban/:boardId/*" element={<Kanban />} />
-        <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
-        <Route path="/board/:boardId/*" element={<Board />} />
-        <Route path="/mywork" element={<MyWork />} />
-        <Route path="/inbox" element={<Inbox />} />
-      </Routes>
+      {hasNoBoards ? (
+        <EmptyWorkspace />
+      ) : (
+        <Routes>
+          <Route path="/home" element={<AppHome />} />
+          <Route path="/board/kanban/:boardId/*" element={<Kanban />} />
+          <Route path="/board/dashboard/:boardId" element={<Dashboard />} />
+          <Route path="/board/:boardId/*" element={<Board />} />
+          <Route path="/mywork" element={<MyWork />} />
+          <Route path="/inbox" element={<Inbox />} />
+        </Routes>
+      )}
     </Fragment>
   )
 }

@@ -27,6 +27,8 @@ export function loadBoards() {
             dispatch({ type: 'SET_BOARDS', boards })
         } catch (err) {
             // showErrorMsg('Failed to load boards')
+            // Mark boards as loaded with an empty list to prevent infinite refetch loops
+            dispatch({ type: 'SET_BOARDS', boards: [] })
         } finally {
             dispatch({ type: 'SET_LOADING', isLoading: false })
         }
@@ -79,6 +81,7 @@ export function addBoard(board) {
             dispatch({ type: 'SET_LOADING', isLoading: true })
             const savedBoard = await boardService.save(board)
             dispatch({ type: 'ADD_BOARD', board: savedBoard })
+            return savedBoard
         } catch (err) {
             // showErrorMsg('Failed to add board try again')
         } finally {

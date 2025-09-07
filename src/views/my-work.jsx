@@ -9,14 +9,15 @@ import '../styles/cmps/_task-timeline.scss'
 export const MyWork = () => {
 
   const dispatch = useDispatch()
-  const { boards, isLoading } = useSelector(state => state.boardModule)
+  const { boards, isLoading, boardsLoaded } = useSelector(state => state.boardModule)
+
   const loggedinUser = useSelector(state => state.userModule.loggedinUser)
 
   useEffect(() => {
-    if (isLoading) return
+    if (isLoading || boardsLoaded) return
     dispatch(setLoader())
     dispatch(loadBoards())
-  }, [])
+  }, [isLoading, boardsLoaded])
 
   if (isLoading) return <Loader />
   return (
@@ -24,9 +25,7 @@ export const MyWork = () => {
       <div className="header">
         <h1 className="title">My Work</h1>
       </div>
-      {!loggedinUser ?
-        <div className="suggest-login">Please log in</div> :
-        <main className="my-work-tasks">
+      <main className="my-work-tasks">
           <div className="flex tasks-header">
             {/* <div className="left-color-indicator"></div> */}
             <div className="header-title">Item</div>
@@ -39,7 +38,7 @@ export const MyWork = () => {
           <div className="content">
             <TaskList boards={boards} loggedinUser={loggedinUser} />
           </div>
-        </main>}
+      </main>
     </section>
   )
 }
@@ -51,16 +50,18 @@ const TaskList = ({ boards, loggedinUser }) => {
       {boards.map(board =>
         board.groups.map(group =>
           group.tasks.map((task, idx) => {
-            if (task.byMember?._id === loggedinUser._id ||
-              task.memberIds?.includes(loggedinUser._id)) {
-              return <TaskPreview key={idx}
-                task={task}
-                group={group}
-                groupTitle={group.title}
-                boardTitle={board.title}
-                board={board}
-              />
-            }
+            const userId = loggedinUser?._id
+            const shouldShow = userId
+              ? (task.byMember?._id === userId || task.memberIds?.includes(userId))
+              : true // no user -> show all tasks for a full guest experience
+            if (!shouldShow) return null
+            return <TaskPreview key={idx}
+              task={task}
+              group={group}
+              groupTitle={group.title}
+              boardTitle={board.title}
+              board={board}
+            />
           })
         )
       )}

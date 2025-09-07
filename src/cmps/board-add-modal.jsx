@@ -1,11 +1,13 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addBoard } from "../store/board/board.action"
+import { useNavigate } from 'react-router-dom'
 
 export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
 
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         document.body.classList.add('add-board-modal-open')
@@ -14,7 +16,7 @@ export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
         }
     }, [])
 
-    const onCreateBoard = (ev) => {
+    const onCreateBoard = async (ev) => {
         ev.preventDefault()
         const title = ev.target[0].value
         const { _id, fullname, imgUrl } = loggedinUser || { _id: '0000', fullname: 'guest', imgUrl: 'profile-img-guest' }
@@ -23,8 +25,9 @@ export const AddBoardModal = ({ isAddBoard, setIsAddBoard }) => {
             createdBy: { _id, fullname, imgUrl },
             members: [{ _id, fullname, imgUrl }]
         }
-        dispatch(addBoard(board))
+        const saved = await dispatch(addBoard(board))
         setIsAddBoard(!isAddBoard)
+        if (saved?._id) navigate(`/workspace/board/${saved._id}`)
     }
 
     const onCloseAddModal = () => {

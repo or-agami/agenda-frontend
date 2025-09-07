@@ -84,8 +84,15 @@ const Favorites = ({boards ,loggedinUser }) => {
 }
 
 const FavoriteContent = ({boards , loggedinUser }) => {
-    if (!loggedinUser) return
-    const favBoards = boards.filter(board => loggedinUser.favBoards?.includes(board._id))
+    let favIds = []
+    if (loggedinUser) favIds = loggedinUser.favBoards || []
+    else {
+        try {
+            const stored = JSON.parse(localStorage.getItem('guestFavBoards') || '[]')
+            favIds = Array.isArray(stored) ? stored : []
+        } catch (_) { favIds = [] }
+    }
+    const favBoards = boards.filter(board => favIds.includes(board._id))
     return <div className='app-home-recent-content-container'>
         <BoardList boards={favBoards} isStarred={true} />
     </div>

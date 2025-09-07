@@ -2,6 +2,7 @@
 const initialState = {
     isLoading: false,
     boards: [],
+    boardsLoaded: false,
     board: null,
     filterBy: null,
     sortBy: null,
@@ -20,7 +21,7 @@ export function boardReducer(state = initialState, action) {
 
 
         case 'SET_BOARDS':
-            return { ...state, boards: action.boards }
+            return { ...state, boards: action.boards, boardsLoaded: true }
 
 
         case 'SET_BOARD':

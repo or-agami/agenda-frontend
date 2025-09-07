@@ -70,9 +70,16 @@ export const SideNavBar = ({ isOpen, setIsOpen, boards, board, setCurrBoard, isF
             </div>
             <hr />
             <div className="nav-board-list">
-                {loggedinUser?.favBoards?.map(board => {
-                    return <NavFavoritesPreview key={board} boardId={board} setCurrBoard={setCurrBoard} boards={newBoards} />
-                })}
+                {(() => {
+                    let favIds = []
+                    if (loggedinUser) favIds = loggedinUser.favBoards || []
+                    else {
+                        try { favIds = JSON.parse(localStorage.getItem('guestFavBoards') || '[]') } catch (_) { favIds = [] }
+                    }
+                    return favIds.map(boardId => (
+                        <NavFavoritesPreview key={boardId} boardId={boardId} setCurrBoard={setCurrBoard} boards={newBoards} />
+                    ))
+                })()}
             </div>
         </div>
             :

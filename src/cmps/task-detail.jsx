@@ -207,12 +207,21 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
 
 
     const getIsCommentLiked = () => {
-        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser?._id)
+        // Determine current user id (logged-in or persistent guest)
+        const userId = loggedinUser?._id || localStorage.getItem('guestUserId')
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === userId)
         return (idxLiked !== -1 && idxLiked !== undefined)
     }
 
     const animateLike = (ev) => {
-        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === loggedinUser?._id)
+        // Build user identity (logged-in or persistent guest)
+        let user = loggedinUser
+        if (!user) {
+            const guestId = localStorage.getItem('guestUserId') || utilService.makeId()
+            localStorage.setItem('guestUserId', guestId)
+            user = { _id: guestId, fullname: 'Guest', imgUrl: 'profile-img-guest' }
+        }
+        const idxLiked = comment?.likes?.findIndex(currLike => currLike.id === user._id)
         if (idxLiked !== -1 && idxLiked !== undefined) {
             comment.likes?.splice(idxLiked, 1)
             dispatch(updateTask({ task, groupId, boardId: board._id }))
@@ -233,7 +242,7 @@ const Post = ({ comment, board, task, groupId, byMember, txt, createdAt }) => {
             likeRef.current.classList.remove('wobble-ver-left')
         }, 1300)
 
-        let like = { fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl, id: loggedinUser._id || '' }
+        let like = { fullname: user.fullname, imgUrl: user.imgUrl, id: user._id || '' }
 
         if (!comment.likes) comment.likes = [like]
         else comment.likes.unshift(like)
@@ -302,7 +311,14 @@ const ChatBox = ({ setIsChatOpen, task, groupId, board }) => {
 
     const postComment = () => {
         let updatedTask
-        const comment = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
+        // Build user identity (logged-in or persistent guest)
+        let user = loggedinUser
+        if (!user) {
+            const guestId = localStorage.getItem('guestUserId') || utilService.makeId()
+            localStorage.setItem('guestUserId', guestId)
+            user = { _id: guestId, fullname: 'Guest', imgUrl: 'profile-img-guest' }
+        }
+        const comment = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl } }
         if (!task.comments) {
             updatedTask = { ...task, comments: [comment] }
             task.comments = [comment]
@@ -329,7 +345,14 @@ const ReplyBox = ({ comment, commentIdx, task, groupId, board }) => {
     const loggedinUser = useSelector(state => state.userModule.loggedinUser)
 
     const postReply = () => {
-        const reply = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: loggedinUser._id, fullname: loggedinUser.fullname, imgUrl: loggedinUser.imgUrl } }
+        // Build user identity (logged-in or persistent guest)
+        let user = loggedinUser
+        if (!user) {
+            const guestId = localStorage.getItem('guestUserId') || utilService.makeId()
+            localStorage.setItem('guestUserId', guestId)
+            user = { _id: guestId, fullname: 'Guest', imgUrl: 'profile-img-guest' }
+        }
+        const reply = { id: utilService.makeId(), txt: newText, createdAt: Date.now(), byMember: { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl } }
         if (!comment.replies) {
             comment.replies = [reply]
             task.comments.splice(commentIdx, 1, comment)

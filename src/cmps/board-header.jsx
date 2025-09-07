@@ -29,7 +29,7 @@ export const BoardHeader = ({ board }) => {
   const [isDashboard, setIsDashboard] = useState(false)
   const [user, setUser] = useState(loggedinUser)
   const [isInviteMemberOpen, setIsInviteMemberOpen] = useState(false)
-
+  const [guestFavBoards, setGuestFavBoards] = useState([])
 
   useEffect(() => {
     if (params['*'] === `board/dashboard/${board._id}`) {
@@ -37,7 +37,6 @@ export const BoardHeader = ({ board }) => {
     } else {
       setIsDashboard(false)
     }
-
   }, [params])
 
   const changeBoardTitle = () => {
@@ -48,17 +47,35 @@ export const BoardHeader = ({ board }) => {
     if (!user) setUser(loggedinUser)
   }, [loggedinUser])
 
+  useEffect(() => {
+    if (!loggedinUser) {
+      try {
+        const stored = JSON.parse(localStorage.getItem('guestFavBoards') || '[]')
+        setGuestFavBoards(Array.isArray(stored) ? stored : [])
+      } catch (_) {
+        setGuestFavBoards([])
+      }
+    }
+  }, [loggedinUser])
+
   const addBoardToFav = () => {
-    if (loggedinUser?.favBoards?.includes(board._id)) {
-      const favorites = loggedinUser?.favBoards?.filter(boardId => boardId !== board._id)
-      loggedinUser.favBoards = favorites
+    if (loggedinUser) {
+      if (loggedinUser?.favBoards?.includes(board._id)) {
+        const favorites = loggedinUser?.favBoards?.filter(boardId => boardId !== board._id)
+        loggedinUser.favBoards = favorites
+      }
+      else {
+        if (loggedinUser?.favBoards) loggedinUser.favBoards = [...loggedinUser.favBoards, board._id]
+        else loggedinUser.favBoards = [board._id]
+      }
+      setUser({ ...loggedinUser })
+      dispatch(updateUser(loggedinUser))
+    } else {
+      const exists = guestFavBoards.includes(board._id)
+      const updated = exists ? guestFavBoards.filter(id => id !== board._id) : [...guestFavBoards, board._id]
+      setGuestFavBoards(updated)
+      try { localStorage.setItem('guestFavBoards', JSON.stringify(updated)) } catch (_) {}
     }
-    else {
-      if (loggedinUser?.favBoards) loggedinUser.favBoards = [...loggedinUser.favBoards, board._id]
-      else loggedinUser.favBoards = [board._id]
-    }
-    setUser({ ...loggedinUser })
-    dispatch(updateUser(loggedinUser))
   }
 
   const onRenameBoard = (ev) => {
@@ -80,7 +97,7 @@ export const BoardHeader = ({ board }) => {
                 <input autoFocus type="text" name='title' value={renameTitle.title} onChange={handleChange} />
               </form>
                 : <h1 onClick={changeBoardTitle} className="title">{title}</h1>}
-              {user?.favBoards?.includes(board._id) ?
+              {(loggedinUser ? user?.favBoards?.includes(board._id) : guestFavBoards.includes(board._id)) ?
                 <StarClrIcon onClick={addBoardToFav} className="svg svg-star starred" title='Remove from favorites' />
                 : <StarIcon onClick={addBoardToFav} className="svg svg-star" title='Add to favorites' />}
               <div className="flex btns-container">

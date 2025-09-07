@@ -64,8 +64,22 @@ async function save({ title, groupId, boardId }) {
 }
 
 function addActivity(task, activity) {
-  const user = userService.getLoggedinUser()
-  if (!user) return task
+  // Use logged-in user if available; otherwise, use a guest identity so
+  // guests get the full experience with activity logs as well.
+  let user = userService.getLoggedinUser()
+  if (!user) {
+    try {
+      let guestId = localStorage.getItem('guestUserId')
+      if (!guestId) {
+        guestId = utilService.makeId()
+        localStorage.setItem('guestUserId', guestId)
+      }
+      user = { _id: guestId, fullname: 'Guest', imgUrl: 'profile-img-guest' }
+    } catch (_) {
+      user = { _id: '0000', fullname: 'Guest', imgUrl: 'profile-img-guest' }
+    }
+  }
+  // Remove fields that shouldn't be stored on activities
   delete user.assignments
   delete user.username
   delete user.favBoards
