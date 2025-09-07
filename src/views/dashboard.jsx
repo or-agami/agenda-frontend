@@ -12,6 +12,8 @@ import { FaCheckCircle } from 'react-icons/fa'
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LineElement, LinearScale, BarElement, Title, PointElement)
 
+
+
 export const Dashboard = () => {
 
     const board = useSelector(state => state.boardModule.board)

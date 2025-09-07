@@ -14,6 +14,8 @@ export const TaskList = ({ group, board }) => {
     const [tasks, setTasks] = useState(group.tasks)
 
     const handleOnDragEnd = (ev) => {
+        if (!ev.destination) return
+        if (ev.source.droppableId !== ev.destination.droppableId) return
         const updatedTasks = [...tasks]
         const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
         updatedTasks.splice(ev.destination.index, 0, draggedItem)
@@ -36,7 +38,7 @@ export const TaskList = ({ group, board }) => {
 
     return <>
         <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId='tasks'>
+            <Droppable droppableId={`tasks-${group.id}`}>
                 {(droppableProvided) => {
                     return <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="task-list">
 

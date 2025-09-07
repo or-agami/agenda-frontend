@@ -82,6 +82,7 @@ const KanbanGroupPreview = ({ group, board, idx }) => {
     const [tasks, setTasks] = useState(group.tasks)
 
     const handleOnDragEnd = (ev) => {
+        if (!ev.destination) return
         const updatedTasks = [...tasks]
         const [draggedItem] = updatedTasks.splice(ev.source.index, 1)
         updatedTasks.splice(ev.destination.index, 0, draggedItem)
@@ -93,10 +94,10 @@ const KanbanGroupPreview = ({ group, board, idx }) => {
         dispatch(addTask({ groupId: group.id, title: 'New Task', boardId: board._id }))
     }
 
-    return <Draggable key={idx} draggableId={group.id + idx} index={idx}>
+    return <Draggable key={group.id} draggableId={group.id} index={idx}>
         {(provided) => {
             return <DragDropContext onDragEnd={handleOnDragEnd}>
-                <Droppable droppableId='tasks'>
+                <Droppable droppableId={`tasks-${group.id}`}>
                     {(droppableProvided) => {
                         return <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="task-list">
                             <section className={`kanban-group-preview ${group.style}`} ref={provided.innerRef}

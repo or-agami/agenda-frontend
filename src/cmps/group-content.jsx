@@ -60,6 +60,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     }
 
     const handleOnDragEnd = (ev) => {
+        if (!ev.destination) return
         const updatedCategories = [...categories]
         const [draggedItem] = updatedCategories.splice(ev.source.index, 1)
         updatedCategories.splice(ev.destination.index, 0, draggedItem)
@@ -70,7 +71,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
     }
 
 
-    return <Draggable key={idx} draggableId={group.id + idx} index={idx}>
+    return <Draggable key={group.id} draggableId={group.id} index={idx}>
         {(provided) => {
             return <section className="group-content" ref={provided.innerRef}
                 {...provided.draggableProps}
@@ -90,7 +91,7 @@ export const GroupContent = ({ group, setIsHeaderOpen, isHeaderOpen, board, idx 
                 </div>
 
                 <DragDropContext onDragEnd={handleOnDragEnd}>
-                    <Droppable droppableId='group-category' direction="horizontal">
+                    <Droppable droppableId={`group-category-${group.id}`} direction="horizontal">
                         {(droppableProvided) => {
                             return <ul ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className={`group-content-header ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>
                                 <div className={`sticky-container ${modalName === 'GROUP_MENU' ? 'close' : ''}`}>

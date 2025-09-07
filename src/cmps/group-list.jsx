@@ -19,6 +19,7 @@ export const GroupList = ({ board }) => {
   }
 
   const handleOnDragEnd = (ev) => {
+    if (!ev.destination) return
     const updatedGroups = [...groups]
     const [draggedItem] = updatedGroups.splice(ev.source.index, 1)
     updatedGroups.splice(ev.destination.index, 0, draggedItem)
@@ -41,7 +42,7 @@ export const GroupList = ({ board }) => {
           return <section ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="group-list">
             {groups.map((group, idx) =>
               <GroupPreview
-                key={idx}
+                key={group.id}
                 idx={idx}
                 group={group}
                 board={board} />

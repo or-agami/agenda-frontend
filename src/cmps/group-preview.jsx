@@ -9,7 +9,7 @@ export const GroupPreview = ({ group, board, idx }) => {
     const [isHeaderOpen, setIsHeaderOpen] = useState(true)
 
     return <section className="group-preview">
-        {!isHeaderOpen && <Draggable key={idx} draggableId={group.id + idx} index={idx}>
+        {!isHeaderOpen && <Draggable key={group.id} draggableId={group.id} index={idx}>
             {(provided) => {
                 return <div ref={provided.innerRef}
                     {...provided.draggableProps}
